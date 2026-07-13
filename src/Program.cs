@@ -9,6 +9,6 @@ public partial class UndertaleModToolWASM
     [SupportedOSPlatform("browser")]
     public static string ReadFile(byte[] file)
     {
-        return "Hello from ReadFile";
+        return "Hello from ReadFile, test constant: " + UndertaleModLib.Util.GMImage.MaxImageDimension;
     }
 }
