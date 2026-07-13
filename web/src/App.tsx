@@ -1,22 +1,22 @@
 import {useState} from 'react';
+import {
+	Alert,
+	FileInput,
+	Group,
+	Loader,
+	MantineProvider,
+	Stack,
+	Title,
+} from '@mantine/core';
 import {loadFile} from './worker/worker-handler';
 import type {WorkerStatuses} from './worker/WorkerMessageTypes';
+
+import '@mantine/core/styles.css';
 
 export default function App() {
 	const [status, setStatus] = useState<WorkerStatuses | null>(null);
 	const [info, setInfo] = useState<string>('');
 	const [errorDetails, setErrorDetails] = useState<Error | null>(null);
-
-	function onFileChange(ev: React.ChangeEvent<HTMLInputElement>) {
-		const fileInput = ev.currentTarget;
-		if (!(fileInput instanceof HTMLInputElement)) {
-			throw new Error('Expected HTMLInputElement');
-		}
-
-		if (fileInput.files && fileInput.files[0]) {
-			void processFile(fileInput.files[0]);
-		}
-	}
 
 	async function processFile(file: File) {
 		console.log('Starting...');
@@ -51,31 +51,47 @@ export default function App() {
 	}
 
 	return (
-		<>
-			<h1>UndertaleModTool on the Web</h1>
+		<MantineProvider>
+			<main id="main">
+				<Stack>
+					<Title>UndertaleModTool on the Web</Title>
 
-			<input type="file" onChange={onFileChange} />
+					<FileInput
+						label="Select GameMaker data file (.win, .unx, .ios, .droid, audiogroup*.dat)"
+						onChange={(file) => {
+							if (file) {
+								void processFile(file);
+							}
+						}}
+					/>
 
-			{status === 'LOADING' ? (
-				<p>
-					<strong>Loading UndertaleModTool...</strong>
-				</p>
-			) : status === 'PROCESSING' ? (
-				<p>
-					<strong>Loading game data...</strong>
-				</p>
-			) : status === 'ERROR' ? (
-				<p>
-					⚠️ Oops, there was a problem while processing this file
-					{errorDetails ? (
-						<>
-							: <code>{errorDetails.message}</code>
-						</>
+					{status === 'LOADING' ? (
+						<Group>
+							<strong>Loading UndertaleModTool...</strong>
+							<Loader size="sm" />
+						</Group>
+					) : status === 'PROCESSING' ? (
+						<Group>
+							<strong>Loading game data...</strong>
+							<Loader size="sm" />
+						</Group>
+					) : status === 'ERROR' ? (
+						<Alert
+							variant="light"
+							color="red"
+							title="Oops, there was a problem while processing this file"
+						>
+							{errorDetails ? (
+								<>
+									: <code>{errorDetails.message}</code>
+								</>
+							) : null}
+						</Alert>
 					) : null}
-				</p>
-			) : null}
 
-			<pre>{info}</pre>
-		</>
+					<pre>{info}</pre>
+				</Stack>
+			</main>
+		</MantineProvider>
 	);
 }

@@ -1,11 +1,27 @@
-body {
-	font-family: system-ui, sans-serif;
-	cursor: default;
+* {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
-label,
-button:not(:disabled),
-input[type='checkbox']:not(:disabled),
-input[type='file']:not(:disabled) {
-	cursor: pointer;
+body {
+	cursor: default;
+	font-family: system-ui, sans-serif;
+}
+
+#noscript-error {
+	font-size: 2em;
+	padding: 2em;
+	text-align: center;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+#main {
+	margin: 0 auto;
+	padding: 30px;
 }
