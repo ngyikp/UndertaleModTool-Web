@@ -1,0 +1,3 @@
+[submodule "lib/UndertaleModTool"]
+	path = lib/UndertaleModTool
+	url = https://github.com/UnderminersTeam/UndertaleModTool
