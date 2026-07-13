@@ -1,4 +1,12 @@
+import {useState} from 'react';
+import {loadFile} from './worker/worker-handler';
+import type {WorkerStatuses} from './worker/WorkerMessageTypes';
+
 export default function App() {
+	const [status, setStatus] = useState<WorkerStatuses | null>(null);
+	const [info, setInfo] = useState<string>('');
+	const [errorDetails, setErrorDetails] = useState<Error | null>(null);
+
 	function onFileChange(ev: React.ChangeEvent<HTMLInputElement>) {
 		const fileInput = ev.currentTarget;
 		if (!(fileInput instanceof HTMLInputElement)) {
@@ -13,27 +21,33 @@ export default function App() {
 	async function processFile(file: File) {
 		console.log('Starting...');
 
-		const module = (await import(
-			new URL('/dotnet/wwwroot/_framework/dotnet.js', import.meta.url).href
-		)) as typeof import('../public/dotnet/wwwroot/_framework/dotnet.js');
+		setStatus('LOADING');
+		setInfo('');
+		setErrorDetails(null);
 
-		const {
-			// eslint-disable-next-line @typescript-eslint/unbound-method
-			getAssemblyExports,
-			getConfig,
-			Module,
-		} = await module.dotnet.withDiagnosticTracing(import.meta.env.DEV).create();
+		const bytes = await file.bytes();
+		loadFile(bytes, (response) => {
+			setStatus(response.status);
 
-		const config = getConfig();
-		const exports = await getAssemblyExports(config.mainAssemblyName);
+			switch (response.status) {
+				case 'LOADING':
+				case 'PROCESSING':
+					break;
 
-		// @ts-expect-error Module.FS doesn't exist on the types
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-		Module.FS.writeFile('data.win', await file.bytes());
+				case 'FINISHED': {
+					setInfo(response.info);
+					break;
+				}
 
-		const text = await exports.UndertaleModToolWASM.ReadFile('data.win');
+				case 'ERROR':
+					console.error(response.errorDetails);
+					setErrorDetails(new Error(response.errorDetails));
+					break;
 
-		console.log(text);
+				default:
+					break;
+			}
+		});
 	}
 
 	return (
@@ -41,6 +55,27 @@ export default function App() {
 			<h1>UndertaleModTool on the Web</h1>
 
 			<input type="file" onChange={onFileChange} />
+
+			{status === 'LOADING' ? (
+				<p>
+					<strong>Loading UndertaleModTool...</strong>
+				</p>
+			) : status === 'PROCESSING' ? (
+				<p>
+					<strong>Loading game data...</strong>
+				</p>
+			) : status === 'ERROR' ? (
+				<p>
+					⚠️ Oops, there was a problem while processing this file
+					{errorDetails ? (
+						<>
+							: <code>{errorDetails.message}</code>
+						</>
+					) : null}
+				</p>
+			) : null}
+
+			<pre>{info}</pre>
 		</>
 	);
 }
