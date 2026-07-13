@@ -1,0 +1,5 @@
+public/dotnet/
+dist/
+
+package.json
+package-lock.json

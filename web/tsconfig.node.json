@@ -1,23 +1,26 @@
 {
-  "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "target": "es2023",
-    "lib": ["ES2023"],
-    "types": ["node"],
-    "skipLibCheck": true,
+	"compilerOptions": {
+		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+		"target": "es2023",
+		"lib": ["ES2023"],
+		"types": ["node"],
+		"skipLibCheck": true,
+		"checkJs": true,
 
-    /* Bundler mode */
-    "module": "nodenext",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
+		/* Bundler mode */
+		"module": "nodenext",
+		"allowImportingTsExtensions": true,
+		"verbatimModuleSyntax": true,
+		"moduleDetection": "force",
+		"noEmit": true,
 
-    /* Linting */
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["vite.config.ts"]
+		/* Linting */
+		"erasableSyntaxOnly": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noUncheckedSideEffectImports": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true
+	},
+	"include": ["eslint.config.js", "vite.config.ts"]
 }
