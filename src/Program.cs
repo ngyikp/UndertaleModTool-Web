@@ -1,18 +1,14 @@
-using System;
 using System.Runtime.InteropServices.JavaScript;
+using System.Runtime.Versioning;
 
-Console.WriteLine("Hello, Browser!");
+return;
 
-public partial class MyClass
+public partial class UndertaleModToolWASM
 {
     [JSExport]
-    internal static string Greeting()
+    [SupportedOSPlatform("browser")]
+    public static string ReadFile(byte[] file)
     {
-        var text = $"Hello, World! Greetings from {GetHRef()}";
-        Console.WriteLine(text);
-        return text;
+        return "Hello from ReadFile";
     }
-
-    [JSImport("window.location.href", "main.js")]
-    internal static partial string GetHRef();
 }
