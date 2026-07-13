@@ -12,6 +12,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <PublishDir>$(MSBuildProjectDirectory)/../web/public/dotnet/</PublishDir>
+
+    <WasmStripILAfterAOT>true</WasmStripILAfterAOT>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantTimezone>true</InvariantTimezone>
   </PropertyGroup>
 
   <!-- https://github.com/dotnet/runtime/issues/77174#issuecomment-2746107558 -->
