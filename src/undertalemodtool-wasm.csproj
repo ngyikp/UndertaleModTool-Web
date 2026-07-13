@@ -10,5 +10,19 @@
 
     <!-- https://learn.microsoft.com/en-us/aspnet/core/client-side/dotnet-interop/wasm-browser-app?view=aspnetcore-10.0#project-configuration -->
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <PublishDir>$(MSBuildProjectDirectory)/../web/public/dotnet/</PublishDir>
   </PropertyGroup>
+
+  <!-- https://github.com/dotnet/runtime/issues/77174#issuecomment-2746107558 -->
+  <Target Name="CopyDotnetDTs" AfterTargets="ProcessFrameworkReferences">
+    <ItemGroup>
+      <_DotnetDTsPath Include="%(RuntimePack.PackageDirectory)\runtimes\browser-wasm\native\dotnet.d.ts" Condition="'%(RuntimePack.Identity)' == 'Microsoft.NETCore.App.Runtime.Mono.browser-wasm'" />
+
+      <Content Include="@(_DotnetDTsPath)">
+        <Link>../../../../web/public/dotnet/wwwroot/_framework/dotnet.d.ts</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+  </Target>
 </Project>
