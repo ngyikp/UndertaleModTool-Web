@@ -1,4 +1,5 @@
 import type {EmscriptenModule} from '../../public/dotnet/wwwroot/_framework/dotnet';
+
 import type {WorkerRequest, WorkerResponses} from './WorkerMessageTypes';
 
 type AppExports = {

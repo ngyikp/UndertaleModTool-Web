@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {
 	Alert,
 	FileInput,
@@ -8,6 +7,8 @@ import {
 	Stack,
 	Title,
 } from '@mantine/core';
+import {useState} from 'react';
+
 import {loadFile} from './worker/worker-handler';
 import type {WorkerStatuses} from './worker/WorkerMessageTypes';
 
