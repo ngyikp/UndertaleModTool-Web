@@ -1,17 +1,16 @@
-import {Title, FileInput, Group, Loader, Alert, Stack} from '@mantine/core';
+import {Stack, Title, FileInput, Group, Loader, Alert} from '@mantine/core';
+import {createFileRoute, useNavigate} from '@tanstack/react-router';
 import {useState} from 'react';
 
-import type {GameInfoType} from '../GameInfoType';
+import {useDataStore} from '../data-store';
 import {readFile} from '../messages/readFile';
-import type {PageType} from '../PageType';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
-type Props = Readonly<{
-	setInfo: (newInfo: GameInfoType | null) => void;
-	setPage: (newPage: PageType) => void;
-}>;
+function Index() {
+	const setInfo = useDataStore((state) => state.setGameInfo);
 
-export default function WelcomePage({setInfo, setPage}: Props) {
+	const navigate = useNavigate({from: '/'});
+
 	const [status, setStatus] = useState<WorkerStatuses | null>(null);
 	const [errorDetails, setErrorDetails] = useState<Error | null>(null);
 
@@ -19,7 +18,6 @@ export default function WelcomePage({setInfo, setPage}: Props) {
 		console.log('Starting...');
 
 		setStatus('LOADING');
-		setInfo(null);
 		setErrorDetails(null);
 
 		const bytes = await file.bytes();
@@ -33,7 +31,7 @@ export default function WelcomePage({setInfo, setPage}: Props) {
 
 				case 'FINISHED':
 					setInfo(response.result.info);
-					setPage('GENERAL_INFO'); // reset to first page in case this is the second time
+					void navigate({to: '/general-info'});
 					break;
 
 				case 'ERROR':
@@ -59,6 +57,7 @@ export default function WelcomePage({setInfo, setPage}: Props) {
 						void processFile(file);
 					}
 				}}
+				placeholder="Select file..."
 			/>
 
 			{status === 'LOADING' ? (
@@ -83,3 +82,7 @@ export default function WelcomePage({setInfo, setPage}: Props) {
 		</Stack>
 	);
 }
+
+export const Route = createFileRoute('/')({
+	component: Index,
+});

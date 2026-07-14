@@ -13,7 +13,18 @@ export default defineConfig(
 	importX.flatConfigs.typescript,
 	eslintReact.configs['strict-type-checked'],
 	reactHooks.configs.flat.recommended,
-	reactRefresh.configs.vite(),
+	// https://github.com/ArnaudBarre/eslint-plugin-react-refresh/issues/102#issuecomment-3881982814
+	reactRefresh.configs.vite({
+		extraHOCs: [
+			'createFileRoute',
+			'createLazyFileRoute',
+			'createRootRoute',
+			'createRootRouteWithContext',
+			'createLink',
+			'createRoute',
+			'createLazyRoute',
+		],
+	}),
 	{
 		rules: {
 			'no-var': 'error',

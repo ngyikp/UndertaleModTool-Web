@@ -26,15 +26,19 @@
   "dependencies": {
     "@mantine/core": "9.4.1",
     "@mantine/hooks": "9.4.1",
+    "@tanstack/react-router": "1.170.18",
+    "@tanstack/react-router-devtools": "1.167.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
-    "zod": "4.4.3"
+    "zod": "4.4.3",
+    "zustand": "5.0.14"
   },
   "devDependencies": {
     "@babel/core": "7.29.7",
     "@eslint-react/eslint-plugin": "5.14.8",
     "@eslint/js": "10.0.1",
     "@rolldown/plugin-babel": "0.2.3",
+    "@tanstack/router-plugin": "1.168.20",
     "@types/babel__core": "7.20.5",
     "@types/node": "24.13.2",
     "@types/react": "19.2.17",

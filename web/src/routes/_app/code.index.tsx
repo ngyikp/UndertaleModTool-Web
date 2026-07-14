@@ -1,10 +1,11 @@
-import {Stack, Alert, Group, Loader, List} from '@mantine/core';
-import {useEffect, useState} from 'react';
+import {Stack, Group, Loader, Alert, List} from '@mantine/core';
+import {createFileRoute} from '@tanstack/react-router';
+import {useState, useEffect} from 'react';
 
-import {getCodeList} from '../messages/getCodeList';
-import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
+import {getCodeList} from '../../messages/getCodeList';
+import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
 
-export default function CodePage() {
+function Code() {
 	const [status, setStatus] = useState<WorkerStatuses | null>('LOADING');
 	const [errorDetails, setErrorDetails] = useState<Error | null>(null);
 
@@ -61,3 +62,7 @@ export default function CodePage() {
 		</Stack>
 	);
 }
+
+export const Route = createFileRoute('/_app/code/')({
+	component: Code,
+});
