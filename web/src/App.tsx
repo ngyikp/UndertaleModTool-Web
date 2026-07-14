@@ -9,6 +9,8 @@ import {
 } from '@mantine/core';
 import {useState} from 'react';
 
+import type {GameInfoType} from './GameInfo';
+import GameInfoResults from './GameInfoResults';
 import {loadFile} from './worker/worker-handler';
 import type {WorkerStatuses} from './worker/WorkerMessageTypes';
 
@@ -16,14 +18,14 @@ import '@mantine/core/styles.css';
 
 export default function App() {
 	const [status, setStatus] = useState<WorkerStatuses | null>(null);
-	const [info, setInfo] = useState<string>('');
+	const [info, setInfo] = useState<GameInfoType | null>(null);
 	const [errorDetails, setErrorDetails] = useState<Error | null>(null);
 
 	async function processFile(file: File) {
 		console.log('Starting...');
 
 		setStatus('LOADING');
-		setInfo('');
+		setInfo(null);
 		setErrorDetails(null);
 
 		const bytes = await file.bytes();
@@ -90,7 +92,15 @@ export default function App() {
 						</Alert>
 					) : null}
 
-					<pre>{info}</pre>
+					{info && info.IsYYC ? (
+						<Alert
+							variant="light"
+							color="yellow"
+							title="This game uses YYC (YoYo Compiler) which means the code is embedded into the game executable. This configuration is currently not fully supported; continue at your own risk."
+						/>
+					) : null}
+
+					{info ? <GameInfoResults info={info} /> : null}
 				</Stack>
 			</main>
 		</MantineProvider>

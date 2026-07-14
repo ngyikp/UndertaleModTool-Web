@@ -1,12 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
+using System.Text.Json;
 using UndertaleModLib;
 
 return;
 
 public partial class UndertaleModToolWASM
 {
+    static UndertaleData? Data;
+
     private static void WarningHandler(string warning, bool isImportant) => Console.WriteLine($"[WARNING]: {warning}");
     private static void MessageHandler(string message) => Console.WriteLine($"[MESSAGE]: {message}");
 
@@ -109,40 +112,46 @@ public partial class UndertaleModToolWASM
     public static string ReadFile(string fileName)
     {
         FileStream fs = new FileStream(fileName, FileMode.Open);
-        UndertaleData gmData = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
-        return CliQuickInfo(gmData);
+        Data = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
+
+        return JsonSerializer.Serialize(GetGameInfo(Data), GameInfoContext.Default.GameInfo);
     }
 
-    // From UndertaleModCli.Program.CliQuickInfo
-    private static string CliQuickInfo(UndertaleData Data)
+    // Same info as UndertaleModCli.Program.CliQuickInfo
+    private static GameInfo GetGameInfo(UndertaleData Data)
     {
-        string info = "";
-        info += string.Format("Quick Information:") + "\n";
-        info += string.Format("Project Name - {0}", Data.GeneralInfo.Name) + "\n";
-        info += string.Format("Is GMS2 - {0}", Data.IsGameMaker2()) + "\n";
-        info += string.Format("Is YYC - {0}", Data.IsYYC()) + "\n";
-        info += string.Format("Bytecode version - {0}", Data.GeneralInfo.BytecodeVersion) + "\n";
-        info += string.Format("Configuration name - {0}", Data.GeneralInfo.Config) + "\n";
-
-        info += string.Format($"{Data.Sounds.Count} Sounds, {Data.Sprites.Count} Sprites, {Data.Backgrounds.Count} Backgrounds") + "\n";
-        info += string.Format($"{Data.Paths.Count} Paths, {Data.Scripts.Count} Scripts, {Data.Shaders.Count} Shaders") + "\n";
-        info += string.Format($"{Data.Fonts.Count} Fonts, {Data.Timelines.Count} Timelines, {Data.GameObjects.Count} Game Objects") + "\n";
-        info += string.Format($"{Data.Rooms.Count} Rooms, {Data.Extensions.Count} Extensions, {Data.TexturePageItems.Count} Texture Page Items") + "\n";
-        if (!Data.IsYYC())
+        return new()
         {
-            info += string.Format($"{Data.Code.Count} Code Entries, {Data.Variables.Count} Variables, {Data.Functions.Count} Functions") + "\n";
-            var codeLocalsInfo = Data.CodeLocals is not null ? $"{Data.CodeLocals.Count} Code locals, " : "";
-            info += string.Format($"{codeLocalsInfo}{Data.Strings.Count} Strings, {Data.EmbeddedTextures.Count} Embedded Textures") + "\n";
-        }
-        else
-        {
-            info += string.Format("Unknown amount of Code entries and Code locals") + "\n";
-        }
+            ProjectName = Data.GeneralInfo.Name.ToString(),
+            IsGameMaker2 = Data.IsGameMaker2(),
+            IsYYC = Data.IsYYC(),
+            BytecodeVersion = Data.GeneralInfo.BytecodeVersion,
+            ConfigurationName = Data.GeneralInfo.Config.ToString(),
+            ItemCounts = new()
+            {
+                Sounds = Data.Sounds.Count,
+                Sprites = Data.Sprites.Count,
+                Backgrounds = Data.Backgrounds.Count,
+                Paths = Data.Paths.Count,
+                Scripts = Data.Scripts.Count,
+                Shaders = Data.Shaders.Count,
+                Fonts = Data.Fonts.Count,
+                Timelines = Data.Timelines.Count,
+                GameObjects = Data.GameObjects.Count,
+                Rooms = Data.Rooms.Count,
+                Extensions = Data.Extensions.Count,
+                TexturePageItems = Data.TexturePageItems.Count,
 
-        info += string.Format($"{Data.Strings.Count} Strings") + "\n";
-        info += string.Format($"{Data.EmbeddedTextures.Count} Embedded Textures") + "\n";
-        info += string.Format($"{Data.EmbeddedAudio.Count} Embedded Audio") + "\n";
+                // could be null if YYC
+                Code = Data.Code?.Count ?? 0,
+                Variables = Data.Variables?.Count ?? 0,
+                Functions = Data.Functions?.Count ?? 0,
+                CodeLocals = Data.CodeLocals?.Count ?? 0, // some old games don't have this
 
-        return info;
+                Strings = Data.Strings.Count,
+                EmbeddedTextures = Data.EmbeddedTextures.Count,
+                EmbeddedAudio = Data.EmbeddedAudio.Count,
+            }
+        };
     }
 }

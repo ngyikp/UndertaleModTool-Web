@@ -1,3 +1,5 @@
+import type {GameInfoType} from '../GameInfo';
+
 export type WorkerRequest = {
 	messageId: number;
 	loaderUrl: string;
@@ -12,7 +14,7 @@ export type WorkerResponses =
 	  }
 	| {
 			status: 'FINISHED';
-			info: string;
+			info: GameInfoType;
 	  }
 	| {
 			status: 'ERROR';

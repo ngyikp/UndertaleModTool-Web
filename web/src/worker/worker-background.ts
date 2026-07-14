@@ -1,4 +1,5 @@
 import type {EmscriptenModule} from '../../public/dotnet/wwwroot/_framework/dotnet';
+import {GameInfoSchema} from '../GameInfo';
 
 import type {WorkerRequest, WorkerResponses} from './WorkerMessageTypes';
 
@@ -71,7 +72,7 @@ async function onMessage(request: WorkerRequest) {
 
 		reply({
 			status: 'FINISHED',
-			info,
+			info: GameInfoSchema.parse(JSON.parse(info)),
 		});
 	} catch (error) {
 		reply({
