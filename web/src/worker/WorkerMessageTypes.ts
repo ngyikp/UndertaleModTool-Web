@@ -1,3 +1,7 @@
+import type {
+	GetCodeByNameResult,
+	GetCodeByNameType,
+} from '../messages/getCodeByName';
 import type {GetCodeListResult, GetCodeListType} from '../messages/getCodeList';
 import type {ReadFileRequest, ReadFileResult} from '../messages/readFile';
 
@@ -5,10 +9,11 @@ export type WorkerStatuses = 'LOADING' | 'PROCESSING' | 'FINISHED' | 'ERROR';
 
 export type WorkerRequest = {
 	messageId: number;
-	message: ReadFileRequest | GetCodeListType;
+	message: ReadFileRequest | GetCodeListType | GetCodeByNameType;
 };
 
-export type AllResults = ReadFileResult | GetCodeListResult;
+export type AllResults =
+	ReadFileResult | GetCodeListResult | GetCodeByNameResult;
 
 export type SpecificWorkerResponses<FinishedResult extends AllResults> =
 	| {

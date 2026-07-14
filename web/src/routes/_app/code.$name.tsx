@@ -1,27 +1,30 @@
-import {Stack, Group, Loader, Alert, List} from '@mantine/core';
-import {createFileRoute, Link} from '@tanstack/react-router';
+import {Stack, Group, Loader, Alert} from '@mantine/core';
+import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useState, useEffect} from 'react';
 
-import {getCodeList} from '../../messages/getCodeList';
+import {getCodeByName} from '../../messages/getCodeByName';
 import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
 
-function Code() {
+function RouteComponent() {
 	const [status, setStatus] = useState<WorkerStatuses | null>('LOADING');
 	const [errorDetails, setErrorDetails] = useState<Error | null>(null);
 
-	const [codeList, setCodeList] = useState<string[]>([]);
+	const {name} = useParams({
+		from: '/_app/code/$name',
+	});
+
+	const [decompiledCode, setDecompiledCode] = useState('');
 
 	useEffect(() => {
-		getCodeList((response) => {
+		getCodeByName(name, (response) => {
 			setStatus(response.status);
-
 			switch (response.status) {
 				case 'LOADING':
 				case 'PROCESSING':
 					break;
 
 				case 'FINISHED':
-					setCodeList(response.result.list);
+					setDecompiledCode(response.result.decompiledCode);
 					break;
 
 				case 'ERROR':
@@ -33,7 +36,7 @@ function Code() {
 					break;
 			}
 		});
-	}, []);
+	}, [name]);
 
 	return (
 		<Stack>
@@ -52,23 +55,11 @@ function Code() {
 				</Alert>
 			) : null}
 
-			{codeList.length ? (
-				<List>
-					{codeList.map((code) => {
-						return (
-							<List.Item key={code}>
-								<Link to="/code/$name" params={{name: code}}>
-									{code}
-								</Link>
-							</List.Item>
-						);
-					})}
-				</List>
-			) : null}
+			{decompiledCode !== '' ? <pre>{decompiledCode}</pre> : null}
 		</Stack>
 	);
 }
 
-export const Route = createFileRoute('/_app/code/')({
-	component: Code,
+export const Route = createFileRoute('/_app/code/$name')({
+	component: RouteComponent,
 });

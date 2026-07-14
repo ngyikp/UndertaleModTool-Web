@@ -65,12 +65,11 @@ async function onMessage(request: WorkerRequest) {
 						info: GameInfoSchema.parse(JSON.parse(info)),
 					},
 				});
-
 				break;
 			}
 
 			case 'getCodeList': {
-				const list = dotNet.exports.UndertaleModToolWASM.GetCodeList();
+				const list = dotNet.exports.UndertaleModToolWASM.GetCodeEntries();
 
 				reply({
 					status: 'FINISHED',
@@ -80,9 +79,23 @@ async function onMessage(request: WorkerRequest) {
 						list: JSON.parse(list),
 					},
 				});
-
 				break;
 			}
+
+			case 'getCodeByName':
+				reply({
+					status: 'FINISHED',
+					result: {
+						// todo
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+						decompiledCode: JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.GetCodeByName(
+								request.message.name,
+							),
+						),
+					},
+				});
+				break;
 
 			default:
 				throw new Error('Unknown message type');

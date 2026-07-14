@@ -2,7 +2,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
 using System.Text.Json;
+using Serializers;
 using UndertaleModLib;
+using UndertaleModLib.Decompiler;
+using UndertaleModLib.Models;
 
 return;
 
@@ -157,12 +160,34 @@ public partial class UndertaleModToolWASM
 
     [JSExport]
     [SupportedOSPlatform("browser")]
-    public static string GetCodeList()
+    public static string GetCodeEntries()
     {
         UndertaleData data = DataHolder.GetNonNullData();
 
         string[] list = data.Code.Select(code => code.Name.Content).ToArray();
 
         return JsonSerializer.Serialize(list, ItemListJsonContext.Default.StringArray);
+    }
+
+    [JSExport]
+    [SupportedOSPlatform("browser")]
+    public static string GetCodeByName(string name)
+    {
+        UndertaleData data = DataHolder.GetNonNullData();
+
+        UndertaleCode code = data.Code.First(code => name == code.Name.Content);
+        string decompiled = "";
+
+        // try
+        // {
+        // mainWindow.Project.TryGetCodeSource(code, out decompiled)
+        decompiled = new Underanalyzer.Decompiler.DecompileContext(new GlobalDecompileContext(data), code, data.ToolInfo.DecompilerSettings).DecompileToString();
+        // }
+        // catch (Exception e)
+        // {
+        //     decompiled = "/*\nDECOMPILER FAILED!\n\n" + e.ToString() + "\n*/";
+        // }
+
+        return JsonSerializer.Serialize(decompiled, GetCodeByNameContext.Default.String);
     }
 }
