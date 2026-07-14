@@ -1,15 +1,24 @@
-import {Stack, Alert, Title} from '@mantine/core';
+import {Stack, Alert, Button, Group} from '@mantine/core';
 
 import type {GameInfoType} from '../GameInfoType';
 
 type Props = Readonly<{
 	info: GameInfoType;
+	setInfo: (newInfo: GameInfoType | null) => void;
 }>;
 
-export default function OverviewPage({info}: Props) {
+export default function GeneralInfoPage({info, setInfo}: Props) {
+	function unloadGame() {
+		setInfo(null);
+	}
+
 	return (
 		<Stack>
-			<Title>{info.ProjectName}</Title>
+			<Group>
+				<Button variant="default" onClick={unloadGame}>
+					Unload game
+				</Button>
+			</Group>
 
 			{info.IsYYC ? (
 				<Alert

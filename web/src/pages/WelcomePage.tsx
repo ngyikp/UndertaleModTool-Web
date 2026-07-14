@@ -33,7 +33,7 @@ export default function WelcomePage({setInfo, setPage}: Props) {
 
 				case 'FINISHED':
 					setInfo(response.info);
-					setPage('OVERVIEW');
+					setPage('GENERAL_INFO'); // reset to first page in case this is the second time
 					break;
 
 				case 'ERROR':
