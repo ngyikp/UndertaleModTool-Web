@@ -2,8 +2,8 @@ import {Title, FileInput, Group, Loader, Alert, Stack} from '@mantine/core';
 import {useState} from 'react';
 
 import type {GameInfoType} from '../GameInfoType';
+import {readFile} from '../messages/readFile';
 import type {PageType} from '../PageType';
-import {loadFile} from '../worker/worker-handler';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
 type Props = Readonly<{
@@ -23,7 +23,7 @@ export default function WelcomePage({setInfo, setPage}: Props) {
 		setErrorDetails(null);
 
 		const bytes = await file.bytes();
-		loadFile(bytes, (response) => {
+		readFile(bytes, (response) => {
 			setStatus(response.status);
 
 			switch (response.status) {

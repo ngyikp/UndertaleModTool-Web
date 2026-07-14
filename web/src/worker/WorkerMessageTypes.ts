@@ -1,24 +1,12 @@
-import type {GameInfoType} from '../GameInfoType';
-
-export type WorkerRequest = {
-	messageId: number;
-	message:
-		| {
-				type: 'readFile';
-				bytes: Uint8Array<ArrayBuffer>;
-		  }
-		| {type: 'getCodeList'};
-};
+import type {GetCodeListResult, GetCodeListType} from '../messages/getCodeList';
+import type {ReadFileRequest, ReadFileResult} from '../messages/readFile';
 
 export type WorkerStatuses = 'LOADING' | 'PROCESSING' | 'FINISHED' | 'ERROR';
 
-export interface ReadFileResult {
-	info: GameInfoType;
-}
-
-export interface GetCodeListResult {
-	list: string[];
-}
+export type WorkerRequest = {
+	messageId: number;
+	message: ReadFileRequest | GetCodeListType;
+};
 
 export type AllResults = ReadFileResult | GetCodeListResult;
 

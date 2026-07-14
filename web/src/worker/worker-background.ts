@@ -1,36 +1,16 @@
-import type {EmscriptenModule} from '../../public/dotnet/wwwroot/_framework/dotnet';
 import {GameInfoSchema} from '../GameInfoType';
 
+import type {AppExports, DotNetType} from './DotNetType';
 import type {WorkerRequest, AllWorkerResponses} from './WorkerMessageTypes';
 
-type AppExports = {
-	UndertaleModToolWASM: {
-		ReadFile(fileName: string): string;
-		GetCodeList(): string;
-	};
-};
-
-declare module '../../public/dotnet/wwwroot/_framework/dotnet' {
-	export interface EmscriptenModule {
-		FS: {
-			// https://emscripten.org/docs/api_reference/Filesystem-API.html#FS.writeFile
-			writeFile(
-				path: string,
-				data: string | ArrayBufferView,
-				opts?: {flags: string},
-			): void;
-		};
-	}
-}
-
-let dotNet: {exports: AppExports; Module: EmscriptenModule} | null = null;
+let dotNet: DotNetType | null = null;
 
 const LOADER_URL = new URL(
 	'/dotnet/wwwroot/_framework/dotnet.js',
 	import.meta.url,
 ).href;
 
-async function loadAssembly<AppExports>() {
+async function loadAssembly() {
 	const module = (await import(
 		/* @vite-ignore */ LOADER_URL
 	)) as typeof import('../../public/dotnet/wwwroot/_framework/dotnet.js');
@@ -47,7 +27,9 @@ async function loadAssembly<AppExports>() {
 		throw new Error('Missing main assembly name');
 	}
 
-	const exports = (await getAssemblyExports(mainAssemblyName)) as AppExports;
+	const exports = (await getAssemblyExports(
+		mainAssemblyName,
+	)) as AppExports | null;
 	if (!exports) {
 		throw new Error('Missing assembly exports');
 	}

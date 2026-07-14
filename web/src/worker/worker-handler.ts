@@ -3,8 +3,6 @@
 import type {
 	AllResults,
 	AllWorkerResponses,
-	GetCodeListResult,
-	ReadFileResult,
 	SpecificWorkerResponses,
 	WorkerRequest,
 } from './WorkerMessageTypes';
@@ -53,7 +51,7 @@ function startWorker() {
 	return worker;
 }
 
-function sendMessage<FinishedResult extends AllResults>(
+export function sendMessageToWorker<FinishedResult extends AllResults>(
 	message: WorkerRequest['message'],
 	onStatusChanged: (response: SpecificWorkerResponses<FinishedResult>) => void,
 ) {
@@ -67,30 +65,4 @@ function sendMessage<FinishedResult extends AllResults>(
 		messageId: messageNewId,
 		message,
 	});
-}
-
-export function loadFile(
-	bytes: Uint8Array<ArrayBuffer>,
-	onStatusChanged: (response: SpecificWorkerResponses<ReadFileResult>) => void,
-) {
-	sendMessage(
-		{
-			type: 'readFile',
-			bytes,
-		},
-		onStatusChanged,
-	);
-}
-
-export function getCodeList(
-	onStatusChanged: (
-		response: SpecificWorkerResponses<GetCodeListResult>,
-	) => void,
-) {
-	sendMessage(
-		{
-			type: 'getCodeList',
-		},
-		onStatusChanged,
-	);
 }

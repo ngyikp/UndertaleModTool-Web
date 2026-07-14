@@ -1,7 +1,7 @@
 import {Stack, Alert, Group, Loader, List} from '@mantine/core';
 import {useEffect, useState} from 'react';
 
-import {getCodeList} from '../worker/worker-handler';
+import {getCodeList} from '../messages/getCodeList';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
 export default function CodePage() {
