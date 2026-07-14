@@ -122,11 +122,11 @@ public partial class UndertaleModToolWASM
     {
         return new()
         {
-            ProjectName = Data.GeneralInfo.Name.ToString(),
+            ProjectName = Data.GeneralInfo.Name.Content,
             IsGameMaker2 = Data.IsGameMaker2(),
             IsYYC = Data.IsYYC(),
             BytecodeVersion = Data.GeneralInfo.BytecodeVersion,
-            ConfigurationName = Data.GeneralInfo.Config.ToString(),
+            ConfigurationName = Data.GeneralInfo.Config.Content,
             ItemCounts = new()
             {
                 Sounds = Data.Sounds.Count,

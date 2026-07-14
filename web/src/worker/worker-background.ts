@@ -1,5 +1,5 @@
 import type {EmscriptenModule} from '../../public/dotnet/wwwroot/_framework/dotnet';
-import {GameInfoSchema} from '../GameInfo';
+import {GameInfoSchema} from '../GameInfoType';
 
 import type {WorkerRequest, WorkerResponses} from './WorkerMessageTypes';
 

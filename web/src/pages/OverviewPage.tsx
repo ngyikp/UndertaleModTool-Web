@@ -1,13 +1,24 @@
-import type {GameInfoType} from './GameInfo';
+import {Stack, Alert, Title} from '@mantine/core';
+
+import type {GameInfoType} from '../GameInfoType';
 
 type Props = Readonly<{
 	info: GameInfoType;
 }>;
 
-export default function GameInfoResults({info}: Props) {
+export default function OverviewPage({info}: Props) {
 	return (
-		<>
-			<p>Project Name: {info.ProjectName}</p>
+		<Stack>
+			<Title>{info.ProjectName}</Title>
+
+			{info.IsYYC ? (
+				<Alert
+					variant="light"
+					color="yellow"
+					title="This game uses YYC (YoYo Compiler) which means the code is embedded into the game executable. This configuration is currently not fully supported; continue at your own risk."
+				/>
+			) : null}
+
 			<p>Is GMS2: {info.IsGameMaker2 ? 'Yes' : 'No'}</p>
 			<p>Is YYC: {info.IsYYC ? 'Yes' : 'No'}</p>
 			<p>Bytecode version: {info.BytecodeVersion}</p>
@@ -41,6 +52,6 @@ export default function GameInfoResults({info}: Props) {
 					</>
 				) : null}
 			</ul>
-		</>
+		</Stack>
 	);
 }

@@ -1,4 +1,4 @@
-import type {GameInfoType} from '../GameInfo';
+import type {GameInfoType} from '../GameInfoType';
 
 export type WorkerRequest = {
 	messageId: number;
