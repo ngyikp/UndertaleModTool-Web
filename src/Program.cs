@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
@@ -9,8 +8,6 @@ return;
 
 public partial class UndertaleModToolWASM
 {
-    static UndertaleData? Data;
-
     private static void WarningHandler(string warning, bool isImportant) => Console.WriteLine($"[WARNING]: {warning}");
     private static void MessageHandler(string message) => Console.WriteLine($"[MESSAGE]: {message}");
 
@@ -113,9 +110,11 @@ public partial class UndertaleModToolWASM
     public static string ReadFile(string fileName)
     {
         FileStream fs = new FileStream(fileName, FileMode.Open);
-        Data = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
 
-        return JsonSerializer.Serialize(GetGameInfo(Data), GameInfoContext.Default.GameInfo);
+        UndertaleData data = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
+        DataHolder.SetData(data);
+
+        return JsonSerializer.Serialize(GetGameInfo(data), GameInfoContext.Default.GameInfo);
     }
 
     // Same info as UndertaleModCli.Program.CliQuickInfo
@@ -160,20 +159,10 @@ public partial class UndertaleModToolWASM
     [SupportedOSPlatform("browser")]
     public static string GetCodeList()
     {
-        UndertaleData data = EnsureDataLoaded();
+        UndertaleData data = DataHolder.GetNonNullData();
 
         string[] list = data.Code.Select(code => code.Name.Content).ToArray();
 
         return JsonSerializer.Serialize(list, ItemListJsonContext.Default.StringArray);
-    }
-
-    private static UndertaleData EnsureDataLoaded()
-    {
-        if (Data is null)
-        {
-            throw new Exception("No data file is currently loaded.");
-        }
-
-        return Data;
     }
 }
