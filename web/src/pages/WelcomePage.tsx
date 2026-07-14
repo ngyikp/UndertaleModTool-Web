@@ -32,7 +32,7 @@ export default function WelcomePage({setInfo, setPage}: Props) {
 					break;
 
 				case 'FINISHED':
-					setInfo(response.info);
+					setInfo(response.result.info);
 					setPage('GENERAL_INFO'); // reset to first page in case this is the second time
 					break;
 
@@ -75,13 +75,9 @@ export default function WelcomePage({setInfo, setPage}: Props) {
 				<Alert
 					variant="light"
 					color="red"
-					title="Oops, there was a problem while processing this file"
+					title="Oops, there was a problem processing this file"
 				>
-					{errorDetails ? (
-						<>
-							: <code>{errorDetails.message}</code>
-						</>
-					) : null}
+					{errorDetails ? <code>{errorDetails.message}</code> : null}
 				</Alert>
 			) : null}
 		</Stack>

@@ -1,8 +1,18 @@
 // Based on https://github.com/dotnet/blazor-samples/blob/main/10.0/DotNetOnWebWorkersReact/react/src/
 
-import type {WorkerResponses} from './WorkerMessageTypes';
+import type {
+	AllResults,
+	AllWorkerResponses,
+	GetCodeListResult,
+	ReadFileResult,
+	SpecificWorkerResponses,
+	WorkerRequest,
+} from './WorkerMessageTypes';
 
-const messagePorts = new Map<number, (response: WorkerResponses) => void>();
+const messagePorts = new Map<
+	number,
+	(response: SpecificWorkerResponses<AllResults>) => void
+>();
 let messageNewId = 0;
 
 let worker: Worker | null = null;
@@ -19,22 +29,22 @@ function startWorker() {
 	worker.addEventListener(
 		'message',
 		({
-			data: response,
+			data,
 		}: MessageEvent<{
 			messageId: number;
-			result: WorkerResponses;
+			response: AllWorkerResponses;
 		}>) => {
-			const port = messagePorts.get(response.messageId);
+			const port = messagePorts.get(data.messageId);
 			if (!port) {
 				return;
 			}
-			port(response.result);
+			port(data.response);
 
 			if (
-				response.result.status === 'FINISHED' ||
-				response.result.status === 'ERROR'
+				data.response.status === 'FINISHED' ||
+				data.response.status === 'ERROR'
 			) {
-				messagePorts.delete(response.messageId);
+				messagePorts.delete(data.messageId);
 			}
 		},
 		false,
@@ -43,19 +53,44 @@ function startWorker() {
 	return worker;
 }
 
-export function loadFile(
-	bytes: Uint8Array<ArrayBuffer>,
-	onStatusChanged: (response: WorkerResponses) => void,
+function sendMessage<FinishedResult extends AllResults>(
+	message: WorkerRequest['message'],
+	onStatusChanged: (response: SpecificWorkerResponses<FinishedResult>) => void,
 ) {
-	const worker = startWorker();
+	worker = startWorker();
 
 	messageNewId += 1;
+	// @ts-expect-error this is a headache to fix
 	messagePorts.set(messageNewId, onStatusChanged);
 
 	worker.postMessage({
 		messageId: messageNewId,
-		loaderUrl: new URL('/dotnet/wwwroot/_framework/dotnet.js', import.meta.url)
-			.href,
-		bytes,
+		message,
 	});
+}
+
+export function loadFile(
+	bytes: Uint8Array<ArrayBuffer>,
+	onStatusChanged: (response: SpecificWorkerResponses<ReadFileResult>) => void,
+) {
+	sendMessage(
+		{
+			type: 'readFile',
+			bytes,
+		},
+		onStatusChanged,
+	);
+}
+
+export function getCodeList(
+	onStatusChanged: (
+		response: SpecificWorkerResponses<GetCodeListResult>,
+	) => void,
+) {
+	sendMessage(
+		{
+			type: 'getCodeList',
+		},
+		onStatusChanged,
+	);
 }

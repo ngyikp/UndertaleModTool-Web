@@ -2,21 +2,37 @@ import type {GameInfoType} from '../GameInfoType';
 
 export type WorkerRequest = {
 	messageId: number;
-	loaderUrl: string;
-	bytes: Uint8Array<ArrayBuffer>;
+	message:
+		| {
+				type: 'readFile';
+				bytes: Uint8Array<ArrayBuffer>;
+		  }
+		| {type: 'getCodeList'};
 };
 
 export type WorkerStatuses = 'LOADING' | 'PROCESSING' | 'FINISHED' | 'ERROR';
 
-export type WorkerResponses =
+export interface ReadFileResult {
+	info: GameInfoType;
+}
+
+export interface GetCodeListResult {
+	list: string[];
+}
+
+export type AllResults = ReadFileResult | GetCodeListResult;
+
+export type SpecificWorkerResponses<FinishedResult extends AllResults> =
 	| {
 			status: Exclude<WorkerStatuses, 'FINISHED' | 'ERROR'>;
 	  }
 	| {
 			status: 'FINISHED';
-			info: GameInfoType;
+			result: FinishedResult;
 	  }
 	| {
 			status: 'ERROR';
 			errorDetails: string;
 	  };
+
+export type AllWorkerResponses = SpecificWorkerResponses<AllResults>;

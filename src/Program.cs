@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
@@ -153,5 +154,26 @@ public partial class UndertaleModToolWASM
                 EmbeddedAudio = Data.EmbeddedAudio.Count,
             }
         };
+    }
+
+    [JSExport]
+    [SupportedOSPlatform("browser")]
+    public static string GetCodeList()
+    {
+        UndertaleData data = EnsureDataLoaded();
+
+        string[] list = data.Code.Select(code => code.Name.Content).ToArray();
+
+        return JsonSerializer.Serialize(list, ItemListJsonContext.Default.StringArray);
+    }
+
+    private static UndertaleData EnsureDataLoaded()
+    {
+        if (Data is null)
+        {
+            throw new Exception("No data file is currently loaded.");
+        }
+
+        return Data;
     }
 }

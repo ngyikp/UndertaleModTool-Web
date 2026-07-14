@@ -1,11 +1,12 @@
 import type {EmscriptenModule} from '../../public/dotnet/wwwroot/_framework/dotnet';
 import {GameInfoSchema} from '../GameInfoType';
 
-import type {WorkerRequest, WorkerResponses} from './WorkerMessageTypes';
+import type {WorkerRequest, AllWorkerResponses} from './WorkerMessageTypes';
 
 type AppExports = {
 	UndertaleModToolWASM: {
 		ReadFile(fileName: string): string;
+		GetCodeList(): string;
 	};
 };
 
@@ -24,9 +25,14 @@ declare module '../../public/dotnet/wwwroot/_framework/dotnet' {
 
 let dotNet: {exports: AppExports; Module: EmscriptenModule} | null = null;
 
-async function loadAssembly<AppExports>(loaderUrl: string) {
+const LOADER_URL = new URL(
+	'/dotnet/wwwroot/_framework/dotnet.js',
+	import.meta.url,
+).href;
+
+async function loadAssembly<AppExports>() {
 	const module = (await import(
-		/* @vite-ignore */ loaderUrl
+		/* @vite-ignore */ LOADER_URL
 	)) as typeof import('../../public/dotnet/wwwroot/_framework/dotnet.js');
 
 	const {
@@ -50,10 +56,10 @@ async function loadAssembly<AppExports>(loaderUrl: string) {
 }
 
 async function onMessage(request: WorkerRequest) {
-	const reply = (result: WorkerResponses) => {
+	const reply = (response: AllWorkerResponses) => {
 		self.postMessage({
 			messageId: request.messageId,
-			result,
+			response,
 		});
 	};
 
@@ -61,19 +67,44 @@ async function onMessage(request: WorkerRequest) {
 		if (!dotNet) {
 			reply({status: 'LOADING'});
 
-			dotNet = await loadAssembly(request.loaderUrl);
+			dotNet = await loadAssembly();
 		}
 
 		reply({status: 'PROCESSING'});
 
-		dotNet.Module.FS.writeFile('data.win', request.bytes);
+		switch (request.message.type) {
+			case 'readFile': {
+				dotNet.Module.FS.writeFile('data.win', request.message.bytes);
+				const info = dotNet.exports.UndertaleModToolWASM.ReadFile('data.win');
 
-		const info = dotNet.exports.UndertaleModToolWASM.ReadFile('data.win');
+				reply({
+					status: 'FINISHED',
+					result: {
+						info: GameInfoSchema.parse(JSON.parse(info)),
+					},
+				});
 
-		reply({
-			status: 'FINISHED',
-			info: GameInfoSchema.parse(JSON.parse(info)),
-		});
+				break;
+			}
+
+			case 'getCodeList': {
+				const list = dotNet.exports.UndertaleModToolWASM.GetCodeList();
+
+				reply({
+					status: 'FINISHED',
+					result: {
+						// todo
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+						list: JSON.parse(list),
+					},
+				});
+
+				break;
+			}
+
+			default:
+				throw new Error('Unknown message type');
+		}
 	} catch (error) {
 		reply({
 			status: 'ERROR',
