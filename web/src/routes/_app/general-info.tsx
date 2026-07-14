@@ -1,5 +1,5 @@
 import {Stack, Group, Button, Alert, List} from '@mantine/core';
-import {createFileRoute, useNavigate} from '@tanstack/react-router';
+import {createFileRoute, useNavigate, Link} from '@tanstack/react-router';
 
 import {useDataStore} from '../../data-store';
 
@@ -62,7 +62,9 @@ function GeneralInfo() {
 
 				{!info.IsYYC ? (
 					<>
-						<List.Item>{info.ItemCounts.Code} code entries</List.Item>
+						<List.Item>
+							<Link to="/code">{info.ItemCounts.Code} code entries</Link>
+						</List.Item>
 						<List.Item>{info.ItemCounts.Variables} variables</List.Item>
 						<List.Item>{info.ItemCounts.Functions} functions</List.Item>
 						{info.ItemCounts.CodeLocals > 0 ? (

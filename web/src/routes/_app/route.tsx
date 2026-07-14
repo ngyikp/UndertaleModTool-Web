@@ -45,7 +45,7 @@ function AppLayout() {
 							value="/code"
 							renderRoot={(props) => <Link to="/code" {...props} />}
 						>
-							Code
+							Code ({info.ItemCounts.Code})
 						</Tabs.Tab>
 					) : null}
 				</Tabs.List>
