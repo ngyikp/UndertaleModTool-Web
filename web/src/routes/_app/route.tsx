@@ -12,7 +12,7 @@ function TabLink({link, text}: {link: string; text: string}) {
 	return (
 		<Tabs.Tab
 			value={link}
-			renderRoot={(props) => <Link to={link} {...props} />}
+			renderRoot={(props) => <Link to={link} preload="intent" {...props} />}
 		>
 			{text}
 		</Tabs.Tab>
@@ -60,7 +60,7 @@ function AppLayout() {
 		<Stack>
 			<Title>{info.ProjectName}</Title>
 
-			<Tabs value={pathname}>
+			<Tabs value={'/' + (pathname.split('/')[1] ?? '')}>
 				<Tabs.List>
 					<TabLink link="/general-info" text="General info" />
 
