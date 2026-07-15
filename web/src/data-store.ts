@@ -1,27 +1,25 @@
 import {create} from 'zustand';
 
+import type {SortableListSettings} from './SortableList';
 import type {GameInfoType} from './types/GameInfoType';
 
 type DataStore = {
 	gameInfo: GameInfoType | null;
-	code: {
-		entries: Map<string, string>;
-		hasLoaded: boolean;
-	};
+
+	sortableListSettings: Map<string, SortableListSettings>;
 
 	setGameInfo: (newGameInfo: GameInfoType | null) => void;
+	setSortableListSettings: (
+		id: string,
+		newSettings: SortableListSettings,
+	) => void;
 	reset: () => void;
-
-	replaceCodeEntries: (entries: Map<string, string>) => void;
-	setCodeByName: (name: string, sourceCode: string) => void;
 };
 
 export const useDataStore = create<DataStore>((set, _get, store) => ({
 	gameInfo: null,
-	code: {
-		entries: new Map(),
-		hasLoaded: false,
-	},
+
+	sortableListSettings: new Map(),
 
 	setGameInfo(newGameInfo) {
 		set(() => {
@@ -30,27 +28,17 @@ export const useDataStore = create<DataStore>((set, _get, store) => ({
 			};
 		});
 	},
-	reset() {
-		set(store.getInitialState());
-	},
-
-	// todo should be more generalized for every asset type
-	replaceCodeEntries(entries) {
-		set(() => {
+	setSortableListSettings(id, newSettings) {
+		set((state) => {
 			return {
-				code: {
-					entries,
-					hasLoaded: true,
-				},
+				sortableListSettings: new Map(state.sortableListSettings).set(
+					id,
+					newSettings,
+				),
 			};
 		});
 	},
-	setCodeByName(name, sourceCode) {
-		set((state) => ({
-			code: {
-				...state.code,
-				entries: new Map(state.code.entries).set(name, sourceCode),
-			},
-		}));
+	reset() {
+		set(store.getInitialState());
 	},
 }));

@@ -1,4 +1,4 @@
-import {List, Stack} from '@mantine/core';
+import {Stack} from '@mantine/core';
 import {useQuery} from '@tanstack/react-query';
 import {createFileRoute} from '@tanstack/react-router';
 
@@ -6,6 +6,7 @@ import BasicErrorAlert from '../../BasicErrorAlert';
 import BasicLoadingMessage from '../../BasicLoadingMessage';
 import DocumentTitle from '../../DocumentTitle';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
+import SortableList from '../../SortableList';
 import {ModelType} from '../../types/ModelType';
 
 function Sprites() {
@@ -15,8 +16,6 @@ function Sprites() {
 			return getEntriesByModelType(ModelType.Sprites);
 		},
 	});
-
-	const list = data?.list ?? [];
 
 	return (
 		<Stack>
@@ -31,13 +30,13 @@ function Sprites() {
 				/>
 			) : null}
 
-			{list.length ? (
-				<List>
-					{list.map((entry) => {
-						return <List.Item key={entry}>{entry}</List.Item>;
-					})}
-				</List>
-			) : null}
+			<SortableList
+				id="sprites"
+				list={data?.list}
+				render={(item) => {
+					return item;
+				}}
+			/>
 		</Stack>
 	);
 }

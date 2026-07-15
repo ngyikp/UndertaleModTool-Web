@@ -1,4 +1,4 @@
-import {List, Stack} from '@mantine/core';
+import {Stack} from '@mantine/core';
 import {useQuery} from '@tanstack/react-query';
 import {createFileRoute, Link} from '@tanstack/react-router';
 
@@ -6,6 +6,7 @@ import BasicErrorAlert from '../../BasicErrorAlert';
 import BasicLoadingMessage from '../../BasicLoadingMessage';
 import DocumentTitle from '../../DocumentTitle';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
+import SortableList from '../../SortableList';
 import {ModelType} from '../../types/ModelType';
 
 function Code() {
@@ -15,8 +16,6 @@ function Code() {
 			return getEntriesByModelType(ModelType.Code);
 		},
 	});
-
-	const list = data?.list ?? [];
 
 	return (
 		<Stack>
@@ -31,19 +30,17 @@ function Code() {
 				/>
 			) : null}
 
-			{list.length ? (
-				<List>
-					{list.map((entry) => {
-						return (
-							<List.Item key={entry}>
-								<Link to="/code/$name" params={{name: entry}}>
-									{entry}
-								</Link>
-							</List.Item>
-						);
-					})}
-				</List>
-			) : null}
+			<SortableList
+				id="code"
+				list={data?.list}
+				render={(item) => {
+					return (
+						<Link to="/code/$name" params={{name: item}}>
+							{item}
+						</Link>
+					);
+				}}
+			/>
 		</Stack>
 	);
 }
