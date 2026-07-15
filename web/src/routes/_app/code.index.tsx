@@ -1,74 +1,46 @@
-import {Stack, Group, Loader, Alert, List} from '@mantine/core';
+import {List, Stack} from '@mantine/core';
 import {useQuery} from '@tanstack/react-query';
 import {createFileRoute, Link} from '@tanstack/react-router';
 
+import BasicErrorAlert from '../../BasicErrorAlert';
+import BasicLoadingMessage from '../../BasicLoadingMessage';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
 function Code() {
-	const {
-		isPending,
-		error,
-		data: codeEntries,
-	} = useQuery<Map<string, string>>({
+	const {isPending, error, data} = useQuery({
 		queryKey: ['code'],
-		queryFn: () => {
-			// todo clean up
-			return new Promise((resolve, reject) => {
-				getEntriesByModelType(ModelType.Code, (response) => {
-					switch (response.status) {
-						case 'FINISHED': {
-							const map = new Map<string, string>();
-							for (const name of response.result.list) {
-								map.set(name, '');
-							}
-							resolve(map);
-							break;
-						}
-
-						case 'ERROR':
-							reject(new Error(response.errorDetails));
-							break;
-
-						default:
-							break;
-					}
-				});
-			});
+		queryFn() {
+			return getEntriesByModelType(ModelType.Code);
 		},
 	});
 
-	const listItems = [];
-	if (codeEntries && codeEntries.size > 0) {
-		for (const [name] of codeEntries) {
-			listItems.push(
-				<List.Item key={name}>
-					<Link to="/code/$name" params={{name}}>
-						{name}
-					</Link>
-				</List.Item>,
-			);
-		}
-	}
+	const list = data?.list ?? [];
 
 	return (
 		<Stack>
 			{isPending ? (
-				<Group>
-					<strong>Loading...</strong>
-					<Loader size="sm" />
-				</Group>
+				<BasicLoadingMessage />
 			) : error ? (
-				<Alert
-					variant="light"
-					color="red"
+				<BasicErrorAlert
 					title="Oops, there was a problem loading the code"
-				>
-					{error.message}
-				</Alert>
+					error={error}
+				/>
 			) : null}
 
-			{listItems.length ? <List>{listItems}</List> : null}
+			{list.length ? (
+				<List>
+					{list.map((entry) => {
+						return (
+							<List.Item key={entry}>
+								<Link to="/code/$name" params={{name: entry}}>
+									{entry}
+								</Link>
+							</List.Item>
+						);
+					})}
+				</List>
+			) : null}
 		</Stack>
 	);
 }

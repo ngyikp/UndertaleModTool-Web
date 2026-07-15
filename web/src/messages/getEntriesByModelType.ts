@@ -1,6 +1,5 @@
 import type {ModelTypeKeys} from '../types/ModelType';
-import {sendMessageToWorker} from '../worker/worker-handler';
-import type {SpecificWorkerResponses} from '../worker/WorkerMessageTypes';
+import {sendMessageToWorkerAsPromise} from '../worker/worker-handler';
 
 export type GetEntriesByModelTypeRequest = {
 	type: 'getEntriesByModelType';
@@ -11,17 +10,9 @@ export type GetEntriesByModelTypeResult = {
 	list: string[];
 };
 
-export function getEntriesByModelType(
-	modelType: ModelTypeKeys,
-	onStatusChanged: (
-		response: SpecificWorkerResponses<GetEntriesByModelTypeResult>,
-	) => void,
-) {
-	sendMessageToWorker(
-		{
-			type: 'getEntriesByModelType',
-			modelType,
-		},
-		onStatusChanged,
-	);
+export function getEntriesByModelType(modelType: ModelTypeKeys) {
+	return sendMessageToWorkerAsPromise<GetEntriesByModelTypeResult>({
+		type: 'getEntriesByModelType',
+		modelType,
+	});
 }

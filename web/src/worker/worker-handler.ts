@@ -71,3 +71,25 @@ export function sendMessageToWorker<FinishedResult extends AllResults>(
 		message,
 	});
 }
+
+export function sendMessageToWorkerAsPromise<FinishedResult extends AllResults>(
+	message: WorkerRequest['message'],
+): Promise<FinishedResult> {
+	return new Promise((resolve, reject) => {
+		sendMessageToWorker(message, (response) => {
+			switch (response.status) {
+				case 'FINISHED':
+					// @ts-expect-error this is a headache to fix
+					resolve(response.result);
+					break;
+
+				case 'ERROR':
+					reject(new Error(response.errorDetails));
+					break;
+
+				default:
+					break;
+			}
+		});
+	});
+}
