@@ -6,7 +6,8 @@ import {createRouter, RouterProvider} from '@tanstack/react-router';
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 
-// Import the generated route tree
+import BasicErrorAlert from './BasicErrorAlert';
+import BasicLoadingMessage from './BasicLoadingMessage';
 import {routeTree} from './routeTree.gen';
 
 import './index.css';
@@ -14,18 +15,6 @@ import './index.css';
 const root = document.getElementById('root');
 if (!root) {
 	throw new Error('Missing app root container');
-}
-
-const router = createRouter({
-	routeTree,
-	scrollRestoration: true,
-});
-
-// Register the router instance for type safety
-declare module '@tanstack/react-router' {
-	interface Register {
-		router: typeof router;
-	}
 }
 
 const queryClient = new QueryClient({
@@ -42,6 +31,25 @@ const queryClient = new QueryClient({
 		},
 	},
 });
+
+const router = createRouter({
+	context: {
+		queryClient,
+	},
+	defaultErrorComponent: ({error}) => <BasicErrorAlert error={error} />,
+	defaultPendingComponent: () => <BasicLoadingMessage />,
+	// https://tanstack.com/router/latest/docs/guide/data-loading#passing-all-loader-events-to-an-external-cache
+	defaultPreloadStaleTime: 0,
+	routeTree,
+	scrollRestoration: true,
+});
+
+// Register the router instance for type safety
+declare module '@tanstack/react-router' {
+	interface Register {
+		router: typeof router;
+	}
+}
 
 createRoot(root).render(
 	<StrictMode>

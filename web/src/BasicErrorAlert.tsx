@@ -5,7 +5,10 @@ type Props = Readonly<{
 	error?: Error | null;
 }>;
 
-export default function BasicErrorAlert({title = 'Error', error}: Props) {
+export default function BasicErrorAlert({
+	title = 'Oops, something went wrong',
+	error,
+}: Props) {
 	return (
 		<Alert variant="light" color="red" title={title}>
 			{error?.message}
