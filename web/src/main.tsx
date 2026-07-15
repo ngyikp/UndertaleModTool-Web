@@ -14,7 +14,10 @@ if (!root) {
 	throw new Error('Missing app root container');
 }
 
-const router = createRouter({routeTree});
+const router = createRouter({
+	routeTree,
+	scrollRestoration: true,
+});
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
