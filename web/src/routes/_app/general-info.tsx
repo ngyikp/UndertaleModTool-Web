@@ -5,12 +5,12 @@ import {useDataStore} from '../../data-store';
 
 function GeneralInfo() {
 	const info = useDataStore((state) => state.gameInfo);
-	const setInfo = useDataStore((state) => state.setGameInfo);
+	const reset = useDataStore((state) => state.reset);
 
 	const navigate = useNavigate({from: '/general-info'});
 
 	function unloadGame() {
-		setInfo(null);
+		reset();
 		void navigate({to: '/'});
 	}
 

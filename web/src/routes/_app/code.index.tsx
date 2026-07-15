@@ -2,16 +2,25 @@ import {Stack, Group, Loader, Alert, List} from '@mantine/core';
 import {createFileRoute, Link} from '@tanstack/react-router';
 import {useState, useEffect} from 'react';
 
+import {useDataStore} from '../../data-store';
 import {getCodeList} from '../../messages/getCodeList';
 import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
 
 function Code() {
-	const [status, setStatus] = useState<WorkerStatuses | null>('LOADING');
+	const hasLoaded = useDataStore((state) => state.code.hasLoaded);
+	const codeEntries = useDataStore((state) => state.code.entries);
+	const replaceCodeEntries = useDataStore((state) => state.replaceCodeEntries);
+
+	const [status, setStatus] = useState<WorkerStatuses | null>(
+		!hasLoaded ? 'LOADING' : null,
+	);
 	const [errorDetails, setErrorDetails] = useState<Error | null>(null);
 
-	const [codeList, setCodeList] = useState<string[]>([]);
-
 	useEffect(() => {
+		if (status !== 'LOADING') {
+			return;
+		}
+
 		getCodeList((response) => {
 			setStatus(response.status);
 
@@ -20,9 +29,14 @@ function Code() {
 				case 'PROCESSING':
 					break;
 
-				case 'FINISHED':
-					setCodeList(response.result.list);
+				case 'FINISHED': {
+					const map = new Map<string, string>();
+					for (const name of response.result.list) {
+						map.set(name, '');
+					}
+					replaceCodeEntries(map);
 					break;
+				}
 
 				case 'ERROR':
 					console.error(response.errorDetails);
@@ -33,7 +47,20 @@ function Code() {
 					break;
 			}
 		});
-	}, []);
+	}, [replaceCodeEntries, status]);
+
+	const listItems = [];
+	if (codeEntries.size > 0) {
+		for (const [name] of codeEntries) {
+			listItems.push(
+				<List.Item key={name}>
+					<Link to="/code/$name" params={{name}}>
+						{name}
+					</Link>
+				</List.Item>,
+			);
+		}
+	}
 
 	return (
 		<Stack>
@@ -52,19 +79,7 @@ function Code() {
 				</Alert>
 			) : null}
 
-			{codeList.length ? (
-				<List>
-					{codeList.map((code) => {
-						return (
-							<List.Item key={code}>
-								<Link to="/code/$name" params={{name: code}}>
-									{code}
-								</Link>
-							</List.Item>
-						);
-					})}
-				</List>
-			) : null}
+			{listItems.length ? <List>{listItems}</List> : null}
 		</Stack>
 	);
 }
