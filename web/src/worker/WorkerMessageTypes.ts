@@ -1,10 +1,10 @@
 import type {
-	GetCodeByNameResult,
 	GetCodeByNameRequest,
+	GetCodeByNameResult,
 } from '../messages/getCodeByName';
 import type {
-	GetEntriesByModelTypeResult,
 	GetEntriesByModelTypeRequest,
+	GetEntriesByModelTypeResult,
 } from '../messages/getEntriesByModelType';
 import type {ReadFileRequest, ReadFileResult} from '../messages/readFile';
 

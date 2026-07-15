@@ -1,4 +1,4 @@
-import {Stack, Title, FileInput, Group, Loader, Alert} from '@mantine/core';
+import {Alert, FileInput, Group, Loader, Stack, Title} from '@mantine/core';
 import {createFileRoute, useNavigate} from '@tanstack/react-router';
 import {useState} from 'react';
 

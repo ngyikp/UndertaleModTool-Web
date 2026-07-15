@@ -1,6 +1,6 @@
-import {Stack, Group, Loader, Alert} from '@mantine/core';
+import {Alert, Group, Loader, Stack} from '@mantine/core';
 import {createFileRoute, useParams} from '@tanstack/react-router';
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 import {getCodeByName} from '../../messages/getCodeByName';
 import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';

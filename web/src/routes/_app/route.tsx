@@ -1,4 +1,4 @@
-import {Stack, Title, Tabs, Alert, Button} from '@mantine/core';
+import {Alert, Button, Stack, Tabs, Title} from '@mantine/core';
 import {
 	createFileRoute,
 	Link,

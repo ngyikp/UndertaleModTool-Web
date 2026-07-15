@@ -1,7 +1,7 @@
 import {GameInfoSchema} from '../types/GameInfoType';
 
 import type {AppExports, DotNetType} from './DotNetType';
-import type {WorkerRequest, AllWorkerResponses} from './WorkerMessageTypes';
+import type {AllWorkerResponses, WorkerRequest} from './WorkerMessageTypes';
 
 let dotNet: DotNetType | null = null;
 

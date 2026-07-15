@@ -57,6 +57,7 @@ export default defineConfig(
 						order: 'asc',
 						caseInsensitive: true,
 					},
+					named: true,
 				},
 			],
 		},
