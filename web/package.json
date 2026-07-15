@@ -24,11 +24,13 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "@mantine/code-highlight": "9.4.1",
     "@mantine/core": "9.4.1",
     "@mantine/hooks": "9.4.1",
     "@tanstack/react-query": "5.101.2",
     "@tanstack/react-router": "1.170.18",
     "@tanstack/react-router-devtools": "1.167.0",
+    "highlight.js": "11.11.1",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "zod": "4.4.3",

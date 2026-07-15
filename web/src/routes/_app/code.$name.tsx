@@ -1,7 +1,8 @@
-import {Alert, Group, Loader, Stack} from '@mantine/core';
+import {Alert, Group, Loader, Stack, Title} from '@mantine/core';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
+import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
 import DocumentTitle from '../../DocumentTitle';
 import {getCodeByName} from '../../messages/getCodeByName';
 import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
@@ -58,7 +59,11 @@ function RouteComponent() {
 				</Alert>
 			) : null}
 
-			{decompiledCode !== '' ? <pre>{decompiledCode}</pre> : null}
+			<Title order={2}>{name}</Title>
+
+			{decompiledCode !== '' ? (
+				<GmlCodeHighlighter code={decompiledCode} />
+			) : null}
 		</Stack>
 	);
 }
