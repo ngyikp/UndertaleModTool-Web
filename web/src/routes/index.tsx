@@ -1,12 +1,15 @@
-import {Alert, FileInput, Group, Loader, Stack, Title} from '@mantine/core';
+import {Button, FileButton, Stack, Title} from '@mantine/core';
 import {createFileRoute, useNavigate} from '@tanstack/react-router';
 import {useState} from 'react';
 
+import BasicErrorAlert from '../BasicErrorAlert';
+import BasicLoadingMessage from '../BasicLoadingMessage';
 import {useDataStore} from '../data-store';
 import {readFile} from '../messages/readFile';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
 function Index() {
+	const [fileName, setFileName] = useState('');
 	const setInfo = useDataStore((state) => state.setGameInfo);
 
 	const navigate = useNavigate({from: '/'});
@@ -18,6 +21,7 @@ function Index() {
 		console.log('Starting...');
 
 		setStatus('LOADING');
+		setFileName(file.name);
 		setErrorDetails(null);
 
 		const bytes = await file.bytes();
@@ -49,35 +53,36 @@ function Index() {
 		<Stack>
 			<Title>UndertaleModTool on the Web</Title>
 
-			<FileInput
-				label="Select GameMaker data file (.win, .unx, .ios, .droid, audiogroup*.dat)"
-				disabled={status === 'LOADING' || status === 'PROCESSING'}
-				onChange={(file) => {
-					if (file) {
-						void processFile(file);
-					}
-				}}
-				placeholder="Select file..."
-			/>
+			{status !== 'LOADING' && status !== 'PROCESSING' ? (
+				<div>
+					<FileButton
+						onChange={(file) => {
+							if (file) {
+								void processFile(file);
+							}
+						}}
+					>
+						{(props) => (
+							<Button {...props}>
+								Select GameMaker data file (.win, .unx, .ios, .droid,
+								audiogroup*.dat)
+							</Button>
+						)}
+					</FileButton>
+				</div>
+			) : null}
 
 			{status === 'LOADING' ? (
-				<Group>
-					<strong>Loading UndertaleModTool...</strong>
-					<Loader size="sm" />
-				</Group>
+				<BasicLoadingMessage text="Loading UndertaleModTool..." />
 			) : status === 'PROCESSING' ? (
-				<Group>
-					<strong>Loading game data...</strong>
-					<Loader size="sm" />
-				</Group>
+				<BasicLoadingMessage
+					text={'Loading ' + (fileName !== '' ? fileName : 'game data') + '...'}
+				/>
 			) : status === 'ERROR' ? (
-				<Alert
-					variant="light"
-					color="red"
+				<BasicErrorAlert
 					title="Oops, there was a problem processing this file"
-				>
-					{errorDetails ? <code>{errorDetails.message}</code> : null}
-				</Alert>
+					error={errorDetails}
+				/>
 			) : null}
 		</Stack>
 	);
