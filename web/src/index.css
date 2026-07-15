@@ -10,6 +10,10 @@ body {
 	font-family: system-ui, sans-serif;
 }
 
+a {
+	color: var(--mantine-color-anchor, light-dark(#228be6, #4dabf7));
+}
+
 #noscript-error {
 	font-size: 2em;
 	padding: 2em;

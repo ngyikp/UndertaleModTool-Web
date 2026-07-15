@@ -45,7 +45,7 @@ const queryClient = new QueryClient({
 
 createRoot(root).render(
 	<StrictMode>
-		<MantineProvider>
+		<MantineProvider defaultColorScheme="auto">
 			<QueryClientProvider client={queryClient}>
 				<RouterProvider router={router} />
 
