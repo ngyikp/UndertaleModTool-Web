@@ -26,7 +26,7 @@ function Code() {
 	const onIndexPage = matchRoute({to: '/code'}) !== false;
 
 	return (
-		<Stack>
+		<>
 			<DocumentTitle text="Code" />
 
 			<Flex gap="md">
@@ -39,6 +39,8 @@ function Code() {
 								<Link
 									to="/code/$name"
 									params={{name: item}}
+									preload="intent"
+									preloadDelay={250}
 									activeProps={{style: {fontWeight: 'bold'}}}
 								>
 									{item}
@@ -50,7 +52,7 @@ function Code() {
 
 				<Outlet />
 			</Flex>
-		</Stack>
+		</>
 	);
 }
 

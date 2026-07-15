@@ -1,23 +1,17 @@
-import {sendMessageToWorker} from '../worker/worker-handler';
-import type {SpecificWorkerResponses} from '../worker/WorkerMessageTypes';
+import {sendMessageToWorkerAsPromise} from '../worker/worker-handler';
 
-export type GetCodeByNameRequest = {type: 'getCodeByName'; name: string};
+export type GetCodeByNameRequest = {
+	type: 'getCodeByName';
+	name: string;
+};
 
 export type GetCodeByNameResult = {
 	decompiledCode: string;
 };
 
-export function getCodeByName(
-	name: string,
-	onStatusChanged: (
-		response: SpecificWorkerResponses<GetCodeByNameResult>,
-	) => void,
-) {
-	sendMessageToWorker(
-		{
-			type: 'getCodeByName',
-			name,
-		},
-		onStatusChanged,
-	);
+export function getCodeByName(name: string) {
+	return sendMessageToWorkerAsPromise<GetCodeByNameResult>({
+		type: 'getCodeByName',
+		name,
+	});
 }
