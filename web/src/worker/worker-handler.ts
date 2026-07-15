@@ -51,6 +51,11 @@ function startWorker() {
 	return worker;
 }
 
+export function stopWorker() {
+	worker?.terminate();
+	worker = null;
+}
+
 export function sendMessageToWorker<FinishedResult extends AllResults>(
 	message: WorkerRequest['message'],
 	onStatusChanged: (response: SpecificWorkerResponses<FinishedResult>) => void,

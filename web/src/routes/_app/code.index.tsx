@@ -1,57 +1,45 @@
 import {Stack, Group, Loader, Alert, List} from '@mantine/core';
+import {useQuery} from '@tanstack/react-query';
 import {createFileRoute, Link} from '@tanstack/react-router';
-import {useState, useEffect} from 'react';
 
-import {useDataStore} from '../../data-store';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
-import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
 
 function Code() {
-	const hasLoaded = useDataStore((state) => state.code.hasLoaded);
-	const codeEntries = useDataStore((state) => state.code.entries);
-	const replaceCodeEntries = useDataStore((state) => state.replaceCodeEntries);
+	const {
+		isPending,
+		error,
+		data: codeEntries,
+	} = useQuery<Map<string, string>>({
+		queryKey: ['code'],
+		queryFn: () => {
+			// todo clean up
+			return new Promise((resolve, reject) => {
+				getEntriesByModelType(ModelType.Code, (response) => {
+					switch (response.status) {
+						case 'FINISHED': {
+							const map = new Map<string, string>();
+							for (const name of response.result.list) {
+								map.set(name, '');
+							}
+							resolve(map);
+							break;
+						}
 
-	const [status, setStatus] = useState<WorkerStatuses | null>(
-		!hasLoaded ? 'LOADING' : null,
-	);
-	const [errorDetails, setErrorDetails] = useState<Error | null>(null);
+						case 'ERROR':
+							reject(new Error(response.errorDetails));
+							break;
 
-	useEffect(() => {
-		if (status !== 'LOADING') {
-			return;
-		}
-
-		getEntriesByModelType(ModelType.Code, (response) => {
-			setStatus(response.status);
-
-			switch (response.status) {
-				case 'LOADING':
-				case 'PROCESSING':
-					break;
-
-				case 'FINISHED': {
-					const map = new Map<string, string>();
-					for (const name of response.result.list) {
-						map.set(name, '');
+						default:
+							break;
 					}
-					replaceCodeEntries(map);
-					break;
-				}
-
-				case 'ERROR':
-					console.error(response.errorDetails);
-					setErrorDetails(new Error(response.errorDetails));
-					break;
-
-				default:
-					break;
-			}
-		});
-	}, [replaceCodeEntries, status]);
+				});
+			});
+		},
+	});
 
 	const listItems = [];
-	if (codeEntries.size > 0) {
+	if (codeEntries && codeEntries.size > 0) {
 		for (const [name] of codeEntries) {
 			listItems.push(
 				<List.Item key={name}>
@@ -65,18 +53,18 @@ function Code() {
 
 	return (
 		<Stack>
-			{status === 'LOADING' || status === 'PROCESSING' ? (
+			{isPending ? (
 				<Group>
 					<strong>Loading...</strong>
 					<Loader size="sm" />
 				</Group>
-			) : status === 'ERROR' ? (
+			) : error ? (
 				<Alert
 					variant="light"
 					color="red"
 					title="Oops, there was a problem loading the code"
 				>
-					{errorDetails ? <code>{errorDetails.message}</code> : null}
+					{error.message}
 				</Alert>
 			) : null}
 

@@ -1,16 +1,22 @@
 import {Stack, Group, Button, Alert, List} from '@mantine/core';
+import {useQueryClient} from '@tanstack/react-query';
 import {createFileRoute, useNavigate, Link} from '@tanstack/react-router';
 
 import {useDataStore} from '../../data-store';
+import {stopWorker} from '../../worker/worker-handler';
 
 function GeneralInfo() {
 	const info = useDataStore((state) => state.gameInfo);
-	const reset = useDataStore((state) => state.reset);
+	const resetDataStore = useDataStore((state) => state.reset);
 
 	const navigate = useNavigate({from: '/general-info'});
+	const queryClient = useQueryClient();
 
 	function unloadGame() {
-		reset();
+		stopWorker();
+		resetDataStore();
+		void queryClient.invalidateQueries();
+
 		void navigate({to: '/'});
 	}
 

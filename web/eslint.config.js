@@ -1,5 +1,6 @@
 import js from '@eslint/js';
 import eslintReact from '@eslint-react/eslint-plugin';
+import tanstackQuery from '@tanstack/eslint-plugin-query';
 import {defineConfig} from 'eslint/config';
 import {importX} from 'eslint-plugin-import-x';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -13,6 +14,8 @@ export default defineConfig(
 	importX.flatConfigs.typescript,
 	eslintReact.configs['strict-type-checked'],
 	reactHooks.configs.flat.recommended,
+	tanstackQuery.configs['flat/recommended'],
+
 	// https://github.com/ArnaudBarre/eslint-plugin-react-refresh/issues/102#issuecomment-3881982814
 	reactRefresh.configs.vite({
 		extraHOCs: [
