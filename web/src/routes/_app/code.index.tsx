@@ -3,7 +3,8 @@ import {createFileRoute, Link} from '@tanstack/react-router';
 import {useState, useEffect} from 'react';
 
 import {useDataStore} from '../../data-store';
-import {getCodeList} from '../../messages/getCodeList';
+import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
+import {ModelType} from '../../types/ModelType';
 import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
 
 function Code() {
@@ -21,7 +22,7 @@ function Code() {
 			return;
 		}
 
-		getCodeList((response) => {
+		getEntriesByModelType(ModelType.Code, (response) => {
 			setStatus(response.status);
 
 			switch (response.status) {

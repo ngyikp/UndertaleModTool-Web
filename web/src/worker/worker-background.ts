@@ -1,4 +1,4 @@
-import {GameInfoSchema} from '../GameInfoType';
+import {GameInfoSchema} from '../types/GameInfoType';
 
 import type {AppExports, DotNetType} from './DotNetType';
 import type {WorkerRequest, AllWorkerResponses} from './WorkerMessageTypes';
@@ -68,8 +68,10 @@ async function onMessage(request: WorkerRequest) {
 				break;
 			}
 
-			case 'getCodeList': {
-				const list = dotNet.exports.UndertaleModToolWASM.GetCodeEntries();
+			case 'getEntriesByModelType': {
+				const list = dotNet.exports.UndertaleModToolWASM.GetEntriesByModelType(
+					request.message.modelType,
+				);
 
 				reply({
 					status: 'FINISHED',

@@ -1,4 +1,4 @@
-import type {GameInfoType} from '../GameInfoType';
+import type {GameInfoType} from '../types/GameInfoType';
 import {sendMessageToWorker} from '../worker/worker-handler';
 import type {SpecificWorkerResponses} from '../worker/WorkerMessageTypes';
 

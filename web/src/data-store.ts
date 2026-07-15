@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 
-import type {GameInfoType} from './GameInfoType';
+import type {GameInfoType} from './types/GameInfoType';
 
 type DataStore = {
 	gameInfo: GameInfoType | null;

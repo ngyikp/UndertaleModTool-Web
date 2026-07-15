@@ -1,9 +1,10 @@
 import type {EmscriptenModule} from '../../public/dotnet/wwwroot/_framework/dotnet';
+import type {ModelTypeKeys} from '../types/ModelType';
 
 export type AppExports = {
 	UndertaleModToolWASM: {
 		ReadFile(fileName: string): string;
-		GetCodeEntries(): string;
+		GetEntriesByModelType(modelType: ModelTypeKeys): string;
 		GetCodeByName(name: string): string;
 	};
 };

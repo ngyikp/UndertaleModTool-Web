@@ -1,7 +1,7 @@
 import {sendMessageToWorker} from '../worker/worker-handler';
 import type {SpecificWorkerResponses} from '../worker/WorkerMessageTypes';
 
-export type GetCodeByNameType = {type: 'getCodeByName'; name: string};
+export type GetCodeByNameRequest = {type: 'getCodeByName'; name: string};
 
 export type GetCodeByNameResult = {
 	decompiledCode: string;
