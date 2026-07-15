@@ -41,7 +41,7 @@ function RouteComponent() {
 	}, [name]);
 
 	return (
-		<Stack>
+		<Stack flex="1">
 			<DocumentTitle text={[name, 'Code']} />
 
 			{status === 'LOADING' || status === 'PROCESSING' ? (

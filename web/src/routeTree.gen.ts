@@ -12,8 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppGeneralInfoRouteImport } from './routes/_app/general-info'
+import { Route as AppCodeRouteImport } from './routes/_app/code'
 import { Route as AppSpritesIndexRouteImport } from './routes/_app/sprites.index'
-import { Route as AppCodeIndexRouteImport } from './routes/_app/code.index'
 import { Route as AppCodeNameRouteImport } from './routes/_app/code.$name'
 
 const AppRouteRoute = AppRouteRouteImport.update({
@@ -30,57 +30,57 @@ const AppGeneralInfoRoute = AppGeneralInfoRouteImport.update({
   path: '/general-info',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppCodeRoute = AppCodeRouteImport.update({
+  id: '/code',
+  path: '/code',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppSpritesIndexRoute = AppSpritesIndexRouteImport.update({
   id: '/sprites/',
   path: '/sprites/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppCodeIndexRoute = AppCodeIndexRouteImport.update({
-  id: '/code/',
-  path: '/code/',
-  getParentRoute: () => AppRouteRoute,
-} as any)
 const AppCodeNameRoute = AppCodeNameRouteImport.update({
-  id: '/code/$name',
-  path: '/code/$name',
-  getParentRoute: () => AppRouteRoute,
+  id: '/$name',
+  path: '/$name',
+  getParentRoute: () => AppCodeRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/code': typeof AppCodeRouteWithChildren
   '/general-info': typeof AppGeneralInfoRoute
   '/code/$name': typeof AppCodeNameRoute
-  '/code/': typeof AppCodeIndexRoute
   '/sprites/': typeof AppSpritesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/code': typeof AppCodeRouteWithChildren
   '/general-info': typeof AppGeneralInfoRoute
   '/code/$name': typeof AppCodeNameRoute
-  '/code': typeof AppCodeIndexRoute
   '/sprites': typeof AppSpritesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteRouteWithChildren
+  '/_app/code': typeof AppCodeRouteWithChildren
   '/_app/general-info': typeof AppGeneralInfoRoute
   '/_app/code/$name': typeof AppCodeNameRoute
-  '/_app/code/': typeof AppCodeIndexRoute
   '/_app/sprites/': typeof AppSpritesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/general-info' | '/code/$name' | '/code/' | '/sprites/'
+  fullPaths: '/' | '/code' | '/general-info' | '/code/$name' | '/sprites/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/general-info' | '/code/$name' | '/code' | '/sprites'
+  to: '/' | '/code' | '/general-info' | '/code/$name' | '/sprites'
   id:
     | '__root__'
     | '/'
     | '/_app'
+    | '/_app/code'
     | '/_app/general-info'
     | '/_app/code/$name'
-    | '/_app/code/'
     | '/_app/sprites/'
   fileRoutesById: FileRoutesById
 }
@@ -112,6 +112,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGeneralInfoRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/code': {
+      id: '/_app/code'
+      path: '/code'
+      fullPath: '/code'
+      preLoaderRoute: typeof AppCodeRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/sprites/': {
       id: '/_app/sprites/'
       path: '/sprites'
@@ -119,34 +126,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSpritesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/code/': {
-      id: '/_app/code/'
-      path: '/code'
-      fullPath: '/code/'
-      preLoaderRoute: typeof AppCodeIndexRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
     '/_app/code/$name': {
       id: '/_app/code/$name'
-      path: '/code/$name'
+      path: '/$name'
       fullPath: '/code/$name'
       preLoaderRoute: typeof AppCodeNameRouteImport
-      parentRoute: typeof AppRouteRoute
+      parentRoute: typeof AppCodeRoute
     }
   }
 }
 
-interface AppRouteRouteChildren {
-  AppGeneralInfoRoute: typeof AppGeneralInfoRoute
+interface AppCodeRouteChildren {
   AppCodeNameRoute: typeof AppCodeNameRoute
-  AppCodeIndexRoute: typeof AppCodeIndexRoute
+}
+
+const AppCodeRouteChildren: AppCodeRouteChildren = {
+  AppCodeNameRoute: AppCodeNameRoute,
+}
+
+const AppCodeRouteWithChildren =
+  AppCodeRoute._addFileChildren(AppCodeRouteChildren)
+
+interface AppRouteRouteChildren {
+  AppCodeRoute: typeof AppCodeRouteWithChildren
+  AppGeneralInfoRoute: typeof AppGeneralInfoRoute
   AppSpritesIndexRoute: typeof AppSpritesIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppCodeRoute: AppCodeRouteWithChildren,
   AppGeneralInfoRoute: AppGeneralInfoRoute,
-  AppCodeNameRoute: AppCodeNameRoute,
-  AppCodeIndexRoute: AppCodeIndexRoute,
   AppSpritesIndexRoute: AppSpritesIndexRoute,
 }
 
