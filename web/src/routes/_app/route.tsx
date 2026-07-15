@@ -11,7 +11,9 @@ import {useDataStore} from '../../data-store';
 function AppLayout() {
 	const info = useDataStore((state) => state.gameInfo);
 
-	const location = useLocation();
+	const pathname = useLocation({
+		select: (location) => location.pathname,
+	});
 
 	if (info == null) {
 		return (
@@ -31,7 +33,7 @@ function AppLayout() {
 		<Stack>
 			<Title>{info.ProjectName}</Title>
 
-			<Tabs value={location.pathname}>
+			<Tabs value={pathname}>
 				<Tabs.List>
 					<Tabs.Tab
 						value="/general-info"

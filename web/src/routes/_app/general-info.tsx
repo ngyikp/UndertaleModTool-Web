@@ -3,6 +3,7 @@ import {useQueryClient} from '@tanstack/react-query';
 import {createFileRoute, Link, useNavigate} from '@tanstack/react-router';
 
 import {useDataStore} from '../../data-store';
+import DocumentTitle from '../../DocumentTitle';
 import {stopWorker} from '../../worker/worker-handler';
 
 function GeneralInfo() {
@@ -26,6 +27,8 @@ function GeneralInfo() {
 
 	return (
 		<Stack>
+			<DocumentTitle text="General info" />
+
 			<Group>
 				<Button variant="default" onClick={unloadGame}>
 					Unload game

@@ -2,6 +2,7 @@ import {Alert, Group, Loader, Stack} from '@mantine/core';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
+import DocumentTitle from '../../DocumentTitle';
 import {getCodeByName} from '../../messages/getCodeByName';
 import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
 
@@ -40,6 +41,8 @@ function RouteComponent() {
 
 	return (
 		<Stack>
+			<DocumentTitle text={[name, 'Code']} />
+
 			{status === 'LOADING' || status === 'PROCESSING' ? (
 				<Group>
 					<strong>Loading...</strong>

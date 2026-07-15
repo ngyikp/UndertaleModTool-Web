@@ -4,6 +4,7 @@ import {createFileRoute, Link} from '@tanstack/react-router';
 
 import BasicErrorAlert from '../../BasicErrorAlert';
 import BasicLoadingMessage from '../../BasicLoadingMessage';
+import DocumentTitle from '../../DocumentTitle';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
@@ -19,6 +20,8 @@ function Code() {
 
 	return (
 		<Stack>
+			<DocumentTitle text="Code" />
+
 			{isPending ? (
 				<BasicLoadingMessage />
 			) : error ? (
