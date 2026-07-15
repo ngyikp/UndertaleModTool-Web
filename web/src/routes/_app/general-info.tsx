@@ -50,7 +50,9 @@ function GeneralInfo() {
 
 			<List>
 				<List.Item>{info.ItemCounts.Sounds} sounds</List.Item>
-				<List.Item>{info.ItemCounts.Sprites} sprites</List.Item>
+				<List.Item>
+					<Link to="/sprites">{info.ItemCounts.Sprites} sprites</Link>
+				</List.Item>
 				<List.Item>{info.ItemCounts.Backgrounds} backgrounds</List.Item>
 				<List.Item>{info.ItemCounts.Paths} paths</List.Item>
 				<List.Item>{info.ItemCounts.Scripts} scripts</List.Item>

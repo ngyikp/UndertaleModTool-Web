@@ -8,6 +8,33 @@ import {
 
 import {useDataStore} from '../../data-store';
 
+function TabLink({link, text}: {link: string; text: string}) {
+	return (
+		<Tabs.Tab
+			value={link}
+			renderRoot={(props) => <Link to={link} {...props} />}
+		>
+			{text}
+		</Tabs.Tab>
+	);
+}
+
+function TabLinkWithCount({
+	count,
+	link,
+	text,
+}: {
+	count: number;
+	link: string;
+	text: string;
+}) {
+	if (count === 0) {
+		return null;
+	}
+
+	return <TabLink link={link} text={`${text} (${count.toString()})`} />;
+}
+
 function AppLayout() {
 	const info = useDataStore((state) => state.gameInfo);
 
@@ -35,21 +62,19 @@ function AppLayout() {
 
 			<Tabs value={pathname}>
 				<Tabs.List>
-					<Tabs.Tab
-						value="/general-info"
-						renderRoot={(props) => <Link to="/general-info" {...props} />}
-					>
-						General info
-					</Tabs.Tab>
+					<TabLink link="/general-info" text="General info" />
 
-					{info.ItemCounts.Code > 0 ? (
-						<Tabs.Tab
-							value="/code"
-							renderRoot={(props) => <Link to="/code" {...props} />}
-						>
-							Code ({info.ItemCounts.Code})
-						</Tabs.Tab>
-					) : null}
+					<TabLinkWithCount
+						count={info.ItemCounts.Sprites}
+						link="/sprites"
+						text="Sprites"
+					/>
+
+					<TabLinkWithCount
+						count={info.ItemCounts.Code}
+						link="/code"
+						text="Code"
+					/>
 				</Tabs.List>
 			</Tabs>
 
