@@ -77,7 +77,9 @@ function GeneralInfo() {
 				</List.Item>
 				<List.Item>{info.ItemCounts.Strings} strings</List.Item>
 				<List.Item>
-					{info.ItemCounts.EmbeddedTextures} embedded textures
+					<Link to="/embedded-textures">
+						{info.ItemCounts.EmbeddedTextures} embedded textures
+					</Link>
 				</List.Item>
 				<List.Item>{info.ItemCounts.EmbeddedAudio} embedded audio</List.Item>
 

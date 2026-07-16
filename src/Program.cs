@@ -182,6 +182,10 @@ public partial class UndertaleModToolWASM
                 model = gameData.Code;
                 break;
 
+            case ModelType.EmbeddedTextures:
+                model = gameData.EmbeddedTextures;
+                break;
+
             default:
                 throw new NotImplementedException($"Model type {modelType} is not implemented");
         }
