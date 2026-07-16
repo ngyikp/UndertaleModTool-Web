@@ -1,4 +1,4 @@
-import {Alert, Button, Stack, Tabs, Title} from '@mantine/core';
+import {Alert, Stack, Tabs, Title} from '@mantine/core';
 import {
 	createFileRoute,
 	Link,
@@ -6,6 +6,7 @@ import {
 	useLocation,
 } from '@tanstack/react-router';
 
+import DataFileInput from '../../common/DataFileInput';
 import {useDataStore} from '../../data-store';
 
 function TabLink({link, text}: {link: string; text: string}) {
@@ -43,17 +44,7 @@ function AppLayout() {
 	});
 
 	if (info == null) {
-		return (
-			<Stack>
-				<Title>UndertaleModTool on the Web</Title>
-
-				<Alert variant="light" color="red" title="No game data is loaded.">
-					<Button component={Link} to="/">
-						Go to homepage
-					</Button>
-				</Alert>
-			</Stack>
-		);
+		throw new GameDataNotLoadedError();
 	}
 
 	return (
@@ -83,6 +74,28 @@ function AppLayout() {
 	);
 }
 
+class GameDataNotLoadedError extends Error {}
+
 export const Route = createFileRoute('/_app')({
 	component: AppLayout,
+	beforeLoad: ({context}) => {
+		if (context.gameInfo == null) {
+			throw new GameDataNotLoadedError();
+		}
+	},
+	errorComponent: ({error}) => {
+		if (error instanceof GameDataNotLoadedError) {
+			return (
+				<Stack>
+					<Title>UndertaleModTool on the Web</Title>
+
+					<Alert variant="light" color="blue" title="No game data is loaded." />
+
+					<DataFileInput />
+				</Stack>
+			);
+		}
+
+		throw error;
+	},
 });

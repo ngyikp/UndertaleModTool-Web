@@ -2,12 +2,13 @@ import {MantineProvider} from '@mantine/core';
 import '@mantine/core/styles.css';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
-import {createRouter, RouterProvider} from '@tanstack/react-router';
+import {createRouter} from '@tanstack/react-router';
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 
 import BasicErrorAlert from './BasicErrorAlert';
 import BasicLoadingMessage from './BasicLoadingMessage';
+import RouterProviderWithContext from './RouterProviderWithContext';
 import {routeTree} from './routeTree.gen';
 
 import './index.css';
@@ -28,12 +29,16 @@ const queryClient = new QueryClient({
 			// If something fails due to a .NET exception, then retrying
 			// is unlikely to help
 			retry: false,
+
+			// Disable stale data, the data is processed once anyway
+			staleTime: Infinity,
 		},
 	},
 });
 
 const router = createRouter({
 	context: {
+		gameInfo: null,
 		queryClient,
 	},
 	defaultErrorComponent: ({error}) => <BasicErrorAlert error={error} />,
@@ -55,7 +60,7 @@ createRoot(root).render(
 	<StrictMode>
 		<MantineProvider defaultColorScheme="auto">
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider router={router} />
+				<RouterProviderWithContext router={router} />
 
 				<ReactQueryDevtools />
 			</QueryClientProvider>

@@ -10,7 +10,12 @@ export default function BasicErrorAlert({
 	error,
 }: Props) {
 	return (
-		<Alert variant="light" color="red" title={title}>
+		<Alert
+			variant="light"
+			color="red"
+			title={title}
+			style={{alignSelf: 'start'}}
+		>
 			{error?.message}
 		</Alert>
 	);
