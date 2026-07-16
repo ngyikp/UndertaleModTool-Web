@@ -8,6 +8,7 @@ import {createRoot} from 'react-dom/client';
 
 import BasicErrorAlert from './BasicErrorAlert';
 import BasicLoadingMessage from './BasicLoadingMessage';
+import PageNotFound from './PageNotFound';
 import RouterProviderWithContext from './RouterProviderWithContext';
 import {routeTree} from './routeTree.gen';
 
@@ -42,6 +43,7 @@ const router = createRouter({
 		queryClient,
 	},
 	defaultErrorComponent: ({error}) => <BasicErrorAlert error={error} />,
+	defaultNotFoundComponent: () => <PageNotFound />,
 	defaultPendingComponent: () => <BasicLoadingMessage />,
 	// https://tanstack.com/router/latest/docs/guide/data-loading#passing-all-loader-events-to-an-external-cache
 	defaultPreloadStaleTime: 0,
