@@ -11,9 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
 import { Route as AppGeneralInfoRouteImport } from './routes/_app/general-info'
 import { Route as AppCodeRouteImport } from './routes/_app/code'
 import { Route as AppSpritesIndexRouteImport } from './routes/_app/sprites.index'
+import { Route as AppSoundsNameRouteImport } from './routes/_app/sounds.$name'
 import { Route as AppCodeNameRouteImport } from './routes/_app/code.$name'
 
 const AppRouteRoute = AppRouteRouteImport.update({
@@ -24,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppSoundsRoute = AppSoundsRouteImport.update({
+  id: '/sounds',
+  path: '/sounds',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppGeneralInfoRoute = AppGeneralInfoRouteImport.update({
   id: '/general-info',
@@ -40,6 +47,11 @@ const AppSpritesIndexRoute = AppSpritesIndexRouteImport.update({
   path: '/sprites/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppSoundsNameRoute = AppSoundsNameRouteImport.update({
+  id: '/$name',
+  path: '/$name',
+  getParentRoute: () => AppSoundsRoute,
+} as any)
 const AppCodeNameRoute = AppCodeNameRouteImport.update({
   id: '/$name',
   path: '/$name',
@@ -50,14 +62,18 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/code': typeof AppCodeRouteWithChildren
   '/general-info': typeof AppGeneralInfoRoute
+  '/sounds': typeof AppSoundsRouteWithChildren
   '/code/$name': typeof AppCodeNameRoute
+  '/sounds/$name': typeof AppSoundsNameRoute
   '/sprites/': typeof AppSpritesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/code': typeof AppCodeRouteWithChildren
   '/general-info': typeof AppGeneralInfoRoute
+  '/sounds': typeof AppSoundsRouteWithChildren
   '/code/$name': typeof AppCodeNameRoute
+  '/sounds/$name': typeof AppSoundsNameRoute
   '/sprites': typeof AppSpritesIndexRoute
 }
 export interface FileRoutesById {
@@ -66,21 +82,39 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteRouteWithChildren
   '/_app/code': typeof AppCodeRouteWithChildren
   '/_app/general-info': typeof AppGeneralInfoRoute
+  '/_app/sounds': typeof AppSoundsRouteWithChildren
   '/_app/code/$name': typeof AppCodeNameRoute
+  '/_app/sounds/$name': typeof AppSoundsNameRoute
   '/_app/sprites/': typeof AppSpritesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/code' | '/general-info' | '/code/$name' | '/sprites/'
+  fullPaths:
+    | '/'
+    | '/code'
+    | '/general-info'
+    | '/sounds'
+    | '/code/$name'
+    | '/sounds/$name'
+    | '/sprites/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/code' | '/general-info' | '/code/$name' | '/sprites'
+  to:
+    | '/'
+    | '/code'
+    | '/general-info'
+    | '/sounds'
+    | '/code/$name'
+    | '/sounds/$name'
+    | '/sprites'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/_app/code'
     | '/_app/general-info'
+    | '/_app/sounds'
     | '/_app/code/$name'
+    | '/_app/sounds/$name'
     | '/_app/sprites/'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +139,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/sounds': {
+      id: '/_app/sounds'
+      path: '/sounds'
+      fullPath: '/sounds'
+      preLoaderRoute: typeof AppSoundsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/general-info': {
       id: '/_app/general-info'
       path: '/general-info'
@@ -125,6 +166,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/sprites/'
       preLoaderRoute: typeof AppSpritesIndexRouteImport
       parentRoute: typeof AppRouteRoute
+    }
+    '/_app/sounds/$name': {
+      id: '/_app/sounds/$name'
+      path: '/$name'
+      fullPath: '/sounds/$name'
+      preLoaderRoute: typeof AppSoundsNameRouteImport
+      parentRoute: typeof AppSoundsRoute
     }
     '/_app/code/$name': {
       id: '/_app/code/$name'
@@ -147,15 +195,29 @@ const AppCodeRouteChildren: AppCodeRouteChildren = {
 const AppCodeRouteWithChildren =
   AppCodeRoute._addFileChildren(AppCodeRouteChildren)
 
+interface AppSoundsRouteChildren {
+  AppSoundsNameRoute: typeof AppSoundsNameRoute
+}
+
+const AppSoundsRouteChildren: AppSoundsRouteChildren = {
+  AppSoundsNameRoute: AppSoundsNameRoute,
+}
+
+const AppSoundsRouteWithChildren = AppSoundsRoute._addFileChildren(
+  AppSoundsRouteChildren,
+)
+
 interface AppRouteRouteChildren {
   AppCodeRoute: typeof AppCodeRouteWithChildren
   AppGeneralInfoRoute: typeof AppGeneralInfoRoute
+  AppSoundsRoute: typeof AppSoundsRouteWithChildren
   AppSpritesIndexRoute: typeof AppSpritesIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppCodeRoute: AppCodeRouteWithChildren,
   AppGeneralInfoRoute: AppGeneralInfoRoute,
+  AppSoundsRoute: AppSoundsRouteWithChildren,
   AppSpritesIndexRoute: AppSpritesIndexRoute,
 }
 

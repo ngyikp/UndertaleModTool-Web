@@ -174,6 +174,10 @@ public partial class UndertaleModToolWASM
                 model = data.Sprites;
                 break;
 
+            case ModelType.Sounds:
+                model = data.Sounds;
+                break;
+
             case ModelType.Code:
                 model = data.Code;
                 break;

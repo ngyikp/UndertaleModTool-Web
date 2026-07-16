@@ -57,9 +57,11 @@ function GeneralInfo() {
 			<p>Configuration name: {info.ConfigurationName}</p>
 
 			<List>
-				<List.Item>{info.ItemCounts.Sounds} sounds</List.Item>
 				<List.Item>
 					<Link to="/sprites">{info.ItemCounts.Sprites} sprites</Link>
+				</List.Item>
+				<List.Item>
+					<Link to="/sounds">{info.ItemCounts.Sounds} sounds</Link>
 				</List.Item>
 				<List.Item>{info.ItemCounts.Backgrounds} backgrounds</List.Item>
 				<List.Item>{info.ItemCounts.Paths} paths</List.Item>
