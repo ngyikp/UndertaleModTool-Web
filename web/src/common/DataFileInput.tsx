@@ -1,4 +1,4 @@
-import {Button, FileButton} from '@mantine/core';
+import {Button, FileButton, Stack} from '@mantine/core';
 import {useQueryClient} from '@tanstack/react-query';
 import {useRouter} from '@tanstack/react-router';
 import {useState} from 'react';
@@ -9,11 +9,17 @@ import {useDataStore} from '../data-store';
 import {readFile} from '../messages/readFile';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
+const noop = () => {};
+
 type Props = Readonly<{
 	onFileLoaded?: () => void;
+	onStatusChanged?: (newStatus: WorkerStatuses) => void;
 }>;
 
-export default function DataFileInput({onFileLoaded}: Props) {
+export default function DataFileInput({
+	onFileLoaded,
+	onStatusChanged = noop,
+}: Props) {
 	const setInfo = useDataStore((state) => state.setGameInfo);
 
 	const router = useRouter();
@@ -27,12 +33,14 @@ export default function DataFileInput({onFileLoaded}: Props) {
 		console.log('Starting...');
 
 		setStatus('LOADING');
+		onStatusChanged('LOADING');
 		setFileName(file.name);
 		setError(null);
 
 		const bytes = await file.bytes();
 		readFile(bytes, (response) => {
 			setStatus(response.status);
+			onStatusChanged(response.status);
 
 			switch (response.status) {
 				case 'LOADING':
@@ -67,22 +75,29 @@ export default function DataFileInput({onFileLoaded}: Props) {
 			{status !== 'LOADING' &&
 			status !== 'PROCESSING' &&
 			status !== 'FINISHED' ? (
-				<div>
-					<FileButton
-						onChange={(file) => {
-							if (file) {
-								void processFile(file);
-							}
-						}}
-					>
-						{(props) => (
-							<Button {...props}>
-								Select GameMaker data file (.win, .unx, .ios, .droid,
-								audiogroup*.dat)
-							</Button>
-						)}
-					</FileButton>
-				</div>
+				<Stack>
+					<div>
+						<FileButton
+							onChange={(file) => {
+								if (file) {
+									void processFile(file);
+								}
+							}}
+						>
+							{(props) => (
+								<Button {...props}>
+									Select GameMaker data file (.win, .unx, .ios, .droid,
+									audiogroup*.dat)
+								</Button>
+							)}
+						</FileButton>
+					</div>
+
+					<p>
+						All files are processed locally inside your browser, nothing is sent
+						off to another server.
+					</p>
+				</Stack>
 			) : null}
 
 			{status === 'LOADING' ? (

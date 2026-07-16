@@ -5,9 +5,11 @@ import {
 	Outlet,
 	useLocation,
 } from '@tanstack/react-router';
+import {useState} from 'react';
 
 import DataFileInput from '../../common/DataFileInput';
 import {useDataStore} from '../../data-store';
+import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
 
 function TabLink({link, text}: {link: string; text: string}) {
 	return (
@@ -74,6 +76,26 @@ function AppLayout() {
 	);
 }
 
+function GameDataNotLoadedComponent({error}: {error: Error}) {
+	const [status, setStatus] = useState<WorkerStatuses | null>(null);
+
+	if (error instanceof GameDataNotLoadedError) {
+		return (
+			<Stack>
+				<Title>UndertaleModTool on the Web</Title>
+
+				{status == null ? (
+					<Alert variant="light" color="blue" title="No game data is loaded." />
+				) : null}
+
+				<DataFileInput onStatusChanged={setStatus} />
+			</Stack>
+		);
+	}
+
+	throw error;
+}
+
 class GameDataNotLoadedError extends Error {}
 
 export const Route = createFileRoute('/_app')({
@@ -83,19 +105,5 @@ export const Route = createFileRoute('/_app')({
 			throw new GameDataNotLoadedError();
 		}
 	},
-	errorComponent: ({error}) => {
-		if (error instanceof GameDataNotLoadedError) {
-			return (
-				<Stack>
-					<Title>UndertaleModTool on the Web</Title>
-
-					<Alert variant="light" color="blue" title="No game data is loaded." />
-
-					<DataFileInput />
-				</Stack>
-			);
-		}
-
-		throw error;
-	},
+	errorComponent: GameDataNotLoadedComponent,
 });
