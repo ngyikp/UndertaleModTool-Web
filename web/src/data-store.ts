@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 
-import type {SortableListSettings} from './SortableList';
+import type {SortableListSettings} from './common/SortableList';
 import type {GameInfoType} from './types/GameInfoType';
 
 type DataStore = {

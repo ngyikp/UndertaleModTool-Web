@@ -1,0 +1,10 @@
+.sticky {
+	position: sticky;
+	top: 0;
+
+	height: 100vh;
+	overflow: auto;
+
+	padding-right: var(--mantine-spacing-md);
+	padding-bottom: var(--mantine-spacing-lg);
+}

@@ -22,7 +22,7 @@ function RouteComponent() {
 	const {data} = useSuspenseQuery(codeQueryOptions(name));
 
 	return (
-		<Stack flex="1" style={{minWidth: 0}}>
+		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
 			<DocumentTitle text={[name, 'Code']} />
 
 			<Title order={2}>{name}</Title>

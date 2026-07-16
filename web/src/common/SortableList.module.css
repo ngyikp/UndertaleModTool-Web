@@ -1,4 +1,9 @@
-.sticky {
+.list {
+	list-style: none;
+	overflow-wrap: break-word;
+}
+
+.filters {
 	position: sticky;
 	top: 0;
 
@@ -8,4 +13,8 @@
 	padding-bottom: var(--mantine-spacing-md);
 	margin-top: calc(var(--mantine-spacing-md) * -1);
 	margin-bottom: calc(var(--mantine-spacing-md) * -1);
+}
+
+.filtersNotOnIndexPage {
+	margin-bottom: 0;
 }

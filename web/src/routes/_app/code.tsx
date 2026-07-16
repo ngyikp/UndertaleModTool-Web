@@ -1,4 +1,3 @@
-import {Flex, Stack} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {
 	createFileRoute,
@@ -7,9 +6,10 @@ import {
 	useMatchRoute,
 } from '@tanstack/react-router';
 
+import SidebarAndContentView from '../../common/SidebarAndContentView';
+import SortableList from '../../common/SortableList';
 import DocumentTitle from '../../DocumentTitle';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
-import SortableList from '../../SortableList';
 import {ModelType} from '../../types/ModelType';
 
 const codeQueryOptions = queryOptions({
@@ -19,21 +19,32 @@ const codeQueryOptions = queryOptions({
 	},
 });
 
+// Workaround React Compiler bug
+// https://github.com/TanStack/router/issues/4499
+function useIsOnIndexPage() {
+	'use no memo';
+
+	const matchRoute = useMatchRoute();
+	return matchRoute({to: '/code'}) !== false;
+}
+
 function Code() {
 	const {data} = useSuspenseQuery(codeQueryOptions);
 
-	const matchRoute = useMatchRoute();
-	const onIndexPage = matchRoute({to: '/code'}) !== false;
+	const onIndexPage = useIsOnIndexPage();
 
 	return (
 		<>
 			<DocumentTitle text="Code" />
 
-			<Flex gap="md">
-				<Stack flex={onIndexPage ? 1 : undefined}>
+			<SidebarAndContentView
+				onIndexPage={onIndexPage}
+				content={<Outlet />}
+				sidebar={
 					<SortableList
 						id="code"
 						list={data.list}
+						onIndexPage={onIndexPage}
 						render={(item) => {
 							return (
 								<Link
@@ -48,10 +59,8 @@ function Code() {
 							);
 						}}
 					/>
-				</Stack>
-
-				<Outlet />
-			</Flex>
+				}
+			/>
 		</>
 	);
 }

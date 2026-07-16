@@ -4,9 +4,9 @@ import {createFileRoute} from '@tanstack/react-router';
 
 import BasicErrorAlert from '../../BasicErrorAlert';
 import BasicLoadingMessage from '../../BasicLoadingMessage';
+import SortableList from '../../common/SortableList';
 import DocumentTitle from '../../DocumentTitle';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
-import SortableList from '../../SortableList';
 import {ModelType} from '../../types/ModelType';
 
 function Sprites() {
@@ -33,6 +33,7 @@ function Sprites() {
 			<SortableList
 				id="sprites"
 				list={data?.list}
+				onIndexPage={true}
 				render={(item) => {
 					return item;
 				}}

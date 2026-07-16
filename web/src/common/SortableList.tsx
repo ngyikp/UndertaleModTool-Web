@@ -1,14 +1,7 @@
-import {
-	Button,
-	Group,
-	Input,
-	List,
-	Select,
-	Stack,
-	TextInput,
-} from '@mantine/core';
+import {Button, Group, Input, Select, Stack, TextInput} from '@mantine/core';
 
-import {useDataStore} from './data-store';
+import {useDataStore} from '../data-store';
+
 import styles from './SortableList.module.css';
 
 export type SortableListSettings = {
@@ -19,10 +12,11 @@ export type SortableListSettings = {
 type Props = Readonly<{
 	id: string; // used to uniquely identify lists on different pages to restore state
 	list: string[] | undefined | null;
+	onIndexPage: boolean;
 	render: (item: string) => React.ReactNode;
 }>;
 
-export default function SortableList({id, list, render}: Props) {
+export default function SortableList({id, list, onIndexPage, render}: Props) {
 	const settings = useDataStore((state) =>
 		state.sortableListSettings.get(id),
 	) ?? {
@@ -67,7 +61,13 @@ export default function SortableList({id, list, render}: Props) {
 
 	return (
 		<Stack>
-			<Group gap="xs" className={styles.sticky} pt="md">
+			<Group
+				gap="xs"
+				className={[
+					styles.filters,
+					!onIndexPage ? styles.filtersNotOnIndexPage : '',
+				].join(' ')}
+			>
 				Sort by:
 				<Select
 					data={[
@@ -106,11 +106,11 @@ export default function SortableList({id, list, render}: Props) {
 			</Group>
 
 			{sortedList.length > 0 ? (
-				<List>
+				<ul className={styles.list}>
 					{sortedList.map((item) => {
-						return <List.Item key={item}>{render(item)}</List.Item>;
+						return <li key={item}>{render(item)}</li>;
 					})}
-				</List>
+				</ul>
 			) : settings.filter ? (
 				<>
 					No results for "{settings.filter}".
