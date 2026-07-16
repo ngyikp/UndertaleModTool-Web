@@ -1,15 +1,29 @@
 import {Stack, Title} from '@mantine/core';
-import {queryOptions} from '@tanstack/react-query';
+import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
+import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../BasicErrorAlert';
 import DocumentTitle from '../../DocumentTitle';
+import {getSoundDataByName} from '../../messages/getSoundDataByName';
+
+function getMimeType(buf: Uint8Array) {
+	if (buf[0] === 82 && buf[1] === 73 && buf[2] === 70 && buf[3] === 70) {
+		return 'audio/wav';
+	}
+
+	if (buf[0] === 79 && buf[1] === 103 && buf[2] === 103 && buf[3] === 83) {
+		return 'audio/ogg';
+	}
+
+	return null;
+}
 
 const soundQueryOptions = (name: string) =>
 	queryOptions({
 		queryKey: ['sounds', name],
 		queryFn() {
-			return name;
+			return getSoundDataByName(name);
 		},
 	});
 
@@ -18,13 +32,36 @@ function RouteComponent() {
 		from: '/_app/sounds/$name',
 	});
 
-	// const {data} = useSuspenseQuery(soundQueryOptions(name));
+	const {data} = useSuspenseQuery(soundQueryOptions(name));
+	const {soundData} = data;
+
+	const [soundUrl, setSoundUrl] = useState<string | null>(null);
+
+	useEffect(() => {
+		const mimeType = getMimeType(soundData);
+		if (!mimeType) {
+			throw new Error('Unknown audio type');
+		}
+
+		const blob = new Blob([soundData], {type: mimeType});
+		const url = window.URL.createObjectURL(blob);
+		// eslint-disable-next-line react-hooks/set-state-in-effect, @eslint-react/set-state-in-effect
+		setSoundUrl(url);
+
+		return () => {
+			window.URL.revokeObjectURL(url);
+		};
+	}, [soundData]);
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
 			<DocumentTitle text={[name, 'Sounds']} />
+
 			<Title order={2}>{name}</Title>
-			Sound content
+
+			{soundUrl ? (
+				<audio src={soundUrl} controls style={{width: '100%'}} />
+			) : null}
 		</Stack>
 	);
 }

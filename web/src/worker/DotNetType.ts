@@ -6,6 +6,7 @@ export type AppExports = {
 		ReadFile(fileName: string): string;
 		GetEntriesByModelType(modelType: ModelTypeKeys): string;
 		GetCodeByName(name: string): string;
+		GetSoundDataByName(name: string): Uint8Array<ArrayBuffer>;
 	};
 };
 

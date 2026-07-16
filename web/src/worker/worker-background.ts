@@ -99,6 +99,17 @@ async function onMessage(request: WorkerRequest) {
 				});
 				break;
 
+			case 'getSoundDataByName':
+				reply({
+					status: 'FINISHED',
+					result: {
+						soundData: dotNet.exports.UndertaleModToolWASM.GetSoundDataByName(
+							request.message.name,
+						),
+					},
+				});
+				break;
+
 			default:
 				throw new Error('Unknown message type');
 		}

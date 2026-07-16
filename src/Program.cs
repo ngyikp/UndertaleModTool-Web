@@ -114,10 +114,10 @@ public partial class UndertaleModToolWASM
     {
         FileStream fs = new FileStream(fileName, FileMode.Open);
 
-        UndertaleData data = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
-        DataHolder.SetData(data);
+        UndertaleData gameData = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
+        DataHolder.SetData(gameData);
 
-        return JsonSerializer.Serialize(GetGameInfo(data), GameInfoContext.Default.GameInfo);
+        return JsonSerializer.Serialize(GetGameInfo(gameData), GameInfoContext.Default.GameInfo);
     }
 
     // Same info as UndertaleModCli.Program.CliQuickInfo
@@ -163,7 +163,7 @@ public partial class UndertaleModToolWASM
     [SupportedOSPlatform("browser")]
     public static string GetEntriesByModelType(int modelTypeInt)
     {
-        UndertaleData data = DataHolder.GetNonNullData();
+        UndertaleData gameData = DataHolder.GetNonNullData();
 
         ModelType modelType = Enum.Parse<ModelType>(modelTypeInt.ToString());
 
@@ -171,15 +171,15 @@ public partial class UndertaleModToolWASM
         switch (modelType)
         {
             case ModelType.Sprites:
-                model = data.Sprites;
+                model = gameData.Sprites;
                 break;
 
             case ModelType.Sounds:
-                model = data.Sounds;
+                model = gameData.Sounds;
                 break;
 
             case ModelType.Code:
-                model = data.Code;
+                model = gameData.Code;
                 break;
 
             default:
@@ -195,15 +195,15 @@ public partial class UndertaleModToolWASM
     [SupportedOSPlatform("browser")]
     public static string GetCodeByName(string name)
     {
-        UndertaleData data = DataHolder.GetNonNullData();
+        UndertaleData gameData = DataHolder.GetNonNullData();
 
-        UndertaleCode code = data.Code.First(code => name == code.Name.Content);
+        UndertaleCode code = gameData.Code.First(code => name == code.Name.Content);
         string decompiled = "";
 
         // try
         // {
         // mainWindow.Project.TryGetCodeSource(code, out decompiled)
-        decompiled = new Underanalyzer.Decompiler.DecompileContext(new GlobalDecompileContext(data), code, data.ToolInfo.DecompilerSettings).DecompileToString();
+        decompiled = new Underanalyzer.Decompiler.DecompileContext(new GlobalDecompileContext(gameData), code, gameData.ToolInfo.DecompilerSettings).DecompileToString();
         // }
         // catch (Exception e)
         // {
@@ -211,5 +211,33 @@ public partial class UndertaleModToolWASM
         // }
 
         return JsonSerializer.Serialize(decompiled, GetCodeByNameContext.Default.String);
+    }
+
+    [JSExport]
+    [SupportedOSPlatform("browser")]
+    public static byte[] GetSoundDataByName(string name)
+    {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
+        UndertaleSound sound = gameData.Sounds.First(sound => name == sound.Name.Content);
+        UndertaleEmbeddedAudio? target = null;
+        if (sound.AudioFile is not null)
+        {
+            target = sound.AudioFile;
+        }
+
+        if (target is null)
+        {
+            if (!sound.Flags.HasFlag(UndertaleSound.AudioEntryFlags.IsEmbedded))
+            {
+                throw new Exception("This audio file is not embedded in the game data file.");
+            }
+            else
+            {
+                throw new Exception("Cannot find audio file.");
+            }
+        }
+
+        return target.Data;
     }
 }

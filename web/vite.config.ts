@@ -40,6 +40,8 @@ function getServerHeaders() {
 			// unsafe-inline: For Vite dev
 			"style-src 'self' 'unsafe-inline'",
 
+			'media-src blob:',
+
 			"frame-ancestors 'none'",
 			"base-uri 'none'",
 			"object-src 'none'",
