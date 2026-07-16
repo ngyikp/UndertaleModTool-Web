@@ -2,6 +2,7 @@ import {Stack, Title} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 
+import BasicErrorAlert from '../../BasicErrorAlert';
 import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
 import DocumentTitle from '../../DocumentTitle';
 import {getCodeByName} from '../../messages/getCodeByName';
@@ -38,4 +39,15 @@ export const Route = createFileRoute('/_app/code/$name')({
 	component: RouteComponent,
 	loader: ({context, params}) =>
 		context.queryClient.ensureQueryData(codeQueryOptions(params.name)),
+	errorComponent: ({error}) => {
+		if (error.message === 'NoMatch') {
+			return (
+				<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+					<BasicErrorAlert title="This code name does not exist." />
+				</Stack>
+			);
+		}
+
+		throw error;
+	},
 });

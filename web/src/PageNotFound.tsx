@@ -1,6 +1,7 @@
-import {Alert, Button, Stack, Title} from '@mantine/core';
+import {Button, Stack, Title} from '@mantine/core';
 import {Link} from '@tanstack/react-router';
 
+import BasicErrorAlert from './BasicErrorAlert';
 import DocumentTitle from './DocumentTitle';
 
 export default function PageNotFound() {
@@ -10,7 +11,7 @@ export default function PageNotFound() {
 
 			<Title>UndertaleModTool on the Web</Title>
 
-			<Alert variant="light" color="red" title="Page not found." />
+			<BasicErrorAlert error="Page not found." />
 
 			<div>
 				<Button component={Link} to="/">

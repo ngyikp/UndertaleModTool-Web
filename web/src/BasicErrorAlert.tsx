@@ -2,7 +2,7 @@ import {Alert} from '@mantine/core';
 
 type Props = Readonly<{
 	title?: string;
-	error?: Error | null;
+	error?: string | Error | null;
 }>;
 
 export default function BasicErrorAlert({
@@ -16,7 +16,7 @@ export default function BasicErrorAlert({
 			title={title}
 			style={{alignSelf: 'start'}}
 		>
-			{error?.message}
+			{typeof error === 'string' ? error : error?.message}
 		</Alert>
 	);
 }
