@@ -1,4 +1,4 @@
-import {Stack, Title} from '@mantine/core';
+import {Button, Stack, Title} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
@@ -35,18 +35,15 @@ function RouteComponent() {
 	const {data} = useSuspenseQuery(soundQueryOptions(name));
 	const {soundData} = data;
 
-	const [soundUrl, setSoundUrl] = useState<string | null>(null);
+	const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
 	useEffect(() => {
 		const mimeType = getMimeType(soundData);
-		if (!mimeType) {
-			throw new Error('Unknown audio type');
-		}
 
-		const blob = new Blob([soundData], {type: mimeType});
+		const blob = new Blob([soundData], {type: mimeType ?? undefined});
 		const url = window.URL.createObjectURL(blob);
 		// eslint-disable-next-line react-hooks/set-state-in-effect, @eslint-react/set-state-in-effect
-		setSoundUrl(url);
+		setBlobUrl(url);
 
 		return () => {
 			window.URL.revokeObjectURL(url);
@@ -59,8 +56,16 @@ function RouteComponent() {
 
 			<Title order={2}>{name}</Title>
 
-			{soundUrl ? (
-				<audio src={soundUrl} controls style={{width: '100%'}} />
+			{blobUrl ? (
+				<div>
+					<Button component="a" href={blobUrl} download={name}>
+						Download raw sound
+					</Button>
+				</div>
+			) : null}
+
+			{blobUrl ? (
+				<audio src={blobUrl} controls style={{width: '100%'}} />
 			) : null}
 		</Stack>
 	);

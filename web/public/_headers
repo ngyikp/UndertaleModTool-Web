@@ -7,4 +7,4 @@
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   Permissions-Policy: accelerometer=(),bluetooth=(),camera=(),display-capture=(),geolocation=(),gyroscope=(),hid=(),magnetometer=(),microphone=(),midi=(),otp-credentials=(),payment=(),publickey-credentials-create=(),publickey-credentials-get=(),serial=(),usb=(),xr-spatial-tracking=()
-  Content-Security-Policy: default-src 'self';script-src 'self' 'wasm-unsafe-eval';media-src blob:;frame-ancestors 'none';base-uri 'none';object-src 'none'
+  Content-Security-Policy: default-src 'self';script-src 'self' 'wasm-unsafe-eval';img-src 'self' blob:;media-src blob:;frame-ancestors 'none';base-uri 'none';object-src 'none'

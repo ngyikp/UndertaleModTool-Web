@@ -244,4 +244,19 @@ public partial class UndertaleModToolWASM
 
         return target.Data;
     }
+
+    [JSExport]
+    [SupportedOSPlatform("browser")]
+    public static byte[] GetEmbeddedTextureImageById(int id)
+    {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
+        UndertaleEmbeddedTexture texture = gameData.EmbeddedTextures[id];
+
+        MemoryStream stream = new();
+        BinaryWriter writer = new(stream);
+        texture.TextureData.Image.WriteToBinaryWriter(writer, gameData.IsVersionAtLeast(2022, 5));
+
+        return stream.ToArray();
+    }
 }

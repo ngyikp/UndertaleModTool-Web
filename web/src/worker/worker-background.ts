@@ -110,6 +110,18 @@ async function onMessage(request: WorkerRequest) {
 				});
 				break;
 
+			case 'getEmbeddedTextureImageById':
+				reply({
+					status: 'FINISHED',
+					result: {
+						imageData:
+							dotNet.exports.UndertaleModToolWASM.GetEmbeddedTextureImageById(
+								request.message.id,
+							),
+					},
+				});
+				break;
+
 			default:
 				throw new Error('Unknown message type');
 		}

@@ -3,6 +3,10 @@ import type {
 	GetCodeByNameResult,
 } from '../messages/getCodeByName';
 import type {
+	GetEmbeddedTextureImageByIdRequest,
+	GetEmbeddedTextureImageByIdResult,
+} from '../messages/getEmbeddedTextureImageById';
+import type {
 	GetEntriesByModelTypeRequest,
 	GetEntriesByModelTypeResult,
 } from '../messages/getEntriesByModelType';
@@ -20,14 +24,16 @@ export type WorkerRequest = {
 		| ReadFileRequest
 		| GetEntriesByModelTypeRequest
 		| GetCodeByNameRequest
-		| GetSoundDataByNameRequest;
+		| GetSoundDataByNameRequest
+		| GetEmbeddedTextureImageByIdRequest;
 };
 
 export type AllResults =
 	| ReadFileResult
 	| GetEntriesByModelTypeResult
 	| GetCodeByNameResult
-	| GetSoundDataByNameResult;
+	| GetSoundDataByNameResult
+	| GetEmbeddedTextureImageByIdResult;
 
 export type SpecificWorkerResponses<FinishedResult extends AllResults> =
 	| {
