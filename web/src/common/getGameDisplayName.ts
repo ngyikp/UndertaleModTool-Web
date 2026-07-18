@@ -7,7 +7,10 @@ export default function getGameDisplayName(info: GameInfoType): string {
 		t += info.DisplayName;
 	}
 
-	if (info.ProjectName != null && info.DisplayName !== info.ProjectName) {
+	if (
+		info.ProjectName != null &&
+		info.DisplayName?.toLowerCase() !== info.ProjectName.toLowerCase()
+	) {
 		if (t !== '') {
 			t += ' (' + info.ProjectName + ')';
 		} else {
