@@ -1,11 +1,11 @@
 import {z} from 'zod/mini';
 
 export const GameInfoSchema = z.object({
-	ProjectName: z.string(),
+	ProjectName: z.nullable(z.string()),
 	IsGameMaker2: z.boolean(),
 	IsYYC: z.boolean(),
 	BytecodeVersion: z.int(),
-	ConfigurationName: z.string(),
+	ConfigurationName: z.nullable(z.string()),
 	ItemCounts: z.object({
 		Sounds: z.int(),
 		Sprites: z.int(),

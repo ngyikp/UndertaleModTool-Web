@@ -8,7 +8,7 @@ export default function DocumentTitle({text}: Props) {
 	const info = useDataStore((state) => state.gameInfo);
 
 	const segments = typeof text === 'string' ? [text] : [...text];
-	if (info) {
+	if (info && info.ProjectName != null) {
 		segments.push(info.ProjectName);
 	}
 	segments.push('UndertaleModTool on the Web');

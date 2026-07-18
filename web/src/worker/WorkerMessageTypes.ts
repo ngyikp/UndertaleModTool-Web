@@ -1,7 +1,7 @@
 import type {
-	GetCodeByNameRequest,
-	GetCodeByNameResult,
-} from '../messages/getCodeByName';
+	GetCodeInfoByNameRequest,
+	GetCodeInfoByNameResult,
+} from '../messages/getCodeInfoByName';
 import type {
 	GetEmbeddedTextureImageByIdRequest,
 	GetEmbeddedTextureImageByIdResult,
@@ -23,7 +23,7 @@ export type WorkerRequest = {
 	message:
 		| ReadFileRequest
 		| GetEntriesByModelTypeRequest
-		| GetCodeByNameRequest
+		| GetCodeInfoByNameRequest
 		| GetSoundDataByNameRequest
 		| GetEmbeddedTextureImageByIdRequest;
 };
@@ -31,7 +31,7 @@ export type WorkerRequest = {
 export type AllResults =
 	| ReadFileResult
 	| GetEntriesByModelTypeResult
-	| GetCodeByNameResult
+	| GetCodeInfoByNameResult
 	| GetSoundDataByNameResult
 	| GetEmbeddedTextureImageByIdResult;
 

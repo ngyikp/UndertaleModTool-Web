@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Serializers
 {
-    public class GameInfo
+    public record GameInfo
     {
         public string? ProjectName { get; set; }
         public bool IsGameMaker2 { get; set; }
@@ -13,7 +13,7 @@ namespace Serializers
         public GameInfoItemCounts? ItemCounts { get; set; }
     }
 
-    public class GameInfoItemCounts
+    public record GameInfoItemCounts
     {
         public int Sounds { get; set; }
         public int Sprites { get; set; }

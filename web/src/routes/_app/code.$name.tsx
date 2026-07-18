@@ -1,17 +1,17 @@
-import {Stack, Title} from '@mantine/core';
+import {Alert, Stack, Title} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
-import {createFileRoute, useParams} from '@tanstack/react-router';
+import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 
 import BasicErrorAlert from '../../BasicErrorAlert';
 import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
 import DocumentTitle from '../../DocumentTitle';
-import {getCodeByName} from '../../messages/getCodeByName';
+import {getCodeInfoByName} from '../../messages/getCodeInfoByName';
 
 const codeQueryOptions = (name: string) =>
 	queryOptions({
 		queryKey: ['code', name],
 		queryFn() {
-			return getCodeByName(name);
+			return getCodeInfoByName(name);
 		},
 	});
 
@@ -28,8 +28,18 @@ function RouteComponent() {
 
 			<Title order={2}>{name}</Title>
 
-			{data.decompiledCode !== '' ? (
-				<GmlCodeHighlighter code={data.decompiledCode} />
+			{data.ParentEntryName != null ? (
+				<Alert variant="light" color="blue">
+					This code entry is a reference to an anonymous function within{' '}
+					<Link to="/code/$name" params={{name: data.ParentEntryName}}>
+						{data.ParentEntryName}
+					</Link>
+					.
+				</Alert>
+			) : null}
+
+			{data.DecompiledCode != null ? (
+				<GmlCodeHighlighter code={data.DecompiledCode} />
 			) : null}
 		</Stack>
 	);

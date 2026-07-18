@@ -5,7 +5,7 @@ export type AppExports = {
 	UndertaleModToolWASM: {
 		ReadFile(fileName: string): string;
 		GetEntriesByModelType(modelType: ModelTypeKeys): string;
-		GetCodeByName(name: string): string;
+		GetCodeInfoByName(name: string): string;
 		GetSoundDataByName(name: string): Uint8Array<ArrayBuffer>;
 		GetEmbeddedTextureImageById(id: number): Uint8Array<ArrayBuffer>;
 	};

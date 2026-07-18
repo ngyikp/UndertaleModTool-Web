@@ -1,3 +1,4 @@
+import {CodeInfoSchema} from '../messages/getCodeInfoByName';
 import {GameInfoSchema} from '../types/GameInfoType';
 
 import type {AppExports, DotNetType} from './DotNetType';
@@ -84,18 +85,16 @@ async function onMessage(request: WorkerRequest) {
 				break;
 			}
 
-			case 'getCodeByName':
+			case 'getCodeInfoByName':
 				reply({
 					status: 'FINISHED',
-					result: {
-						// todo
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-						decompiledCode: JSON.parse(
-							dotNet.exports.UndertaleModToolWASM.GetCodeByName(
+					result: CodeInfoSchema.parse(
+						JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.GetCodeInfoByName(
 								request.message.name,
 							),
 						),
-					},
+					),
 				});
 				break;
 
