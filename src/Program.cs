@@ -126,6 +126,7 @@ public partial class UndertaleModToolWASM
         return new()
         {
             ProjectName = Data.GeneralInfo.Name.Content,
+            DisplayName = Data.GeneralInfo.DisplayName.Content,
             IsGameMaker2 = Data.IsGameMaker2(),
             IsYYC = Data.IsYYC(),
             IsDebuggerDisabled = Data.GeneralInfo.IsDebuggerDisabled,

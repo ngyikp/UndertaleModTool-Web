@@ -1,5 +1,7 @@
 import {useDataStore} from '../data-store';
 
+import getGameDisplayName from './getGameDisplayName';
+
 type Props = Readonly<{
 	text: string | string[];
 }>;
@@ -8,8 +10,8 @@ export default function DocumentTitle({text}: Props) {
 	const info = useDataStore((state) => state.gameInfo);
 
 	const segments = typeof text === 'string' ? [text] : [...text];
-	if (info && info.ProjectName != null) {
-		segments.push(info.ProjectName);
+	if (info) {
+		segments.push(getGameDisplayName(info));
 	}
 	segments.push('UndertaleModTool on the Web');
 

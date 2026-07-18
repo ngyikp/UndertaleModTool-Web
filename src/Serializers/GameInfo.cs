@@ -6,6 +6,7 @@ namespace Serializers
     public record GameInfo
     {
         public string? ProjectName { get; set; }
+        public string? DisplayName { get; set; }
         public bool IsGameMaker2 { get; set; }
         public bool IsYYC { get; set; }
         public bool IsDebuggerDisabled { get; set; }

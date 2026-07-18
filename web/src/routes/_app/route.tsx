@@ -8,6 +8,7 @@ import {
 import {useState} from 'react';
 
 import DataFileInput from '../../common/DataFileInput';
+import getGameDisplayName from '../../common/getGameDisplayName';
 import {useDataStore} from '../../data-store';
 import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
 
@@ -51,7 +52,7 @@ function AppLayout() {
 
 	return (
 		<Stack>
-			<Title>{info.ProjectName}</Title>
+			<Title>{getGameDisplayName(info)}</Title>
 
 			<Tabs value={'/' + (pathname.split('/')[1] ?? '')}>
 				<Tabs.List>
