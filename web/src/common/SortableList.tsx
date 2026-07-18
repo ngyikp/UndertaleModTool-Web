@@ -1,4 +1,12 @@
-import {Button, Group, Input, Select, Stack, TextInput} from '@mantine/core';
+import {
+	Button,
+	Group,
+	Input,
+	Pagination,
+	Select,
+	Stack,
+	TextInput,
+} from '@mantine/core';
 
 import {useDataStore} from '../data-store';
 
@@ -7,7 +15,10 @@ import styles from './SortableList.module.css';
 export type SortableListSettings = {
 	filter: string;
 	orderBy: 'DEFAULT' | 'A_TO_Z' | 'Z_TO_A';
+	page: number;
 };
+
+const PAGE_SIZE = 2000;
 
 type Props = Readonly<{
 	id: string; // used to uniquely identify lists on different pages to restore state
@@ -16,12 +27,18 @@ type Props = Readonly<{
 	render: (item: string) => React.ReactNode;
 }>;
 
-export default function SortableList({id, list, onIndexPage, render}: Props) {
+export default function SortableList({
+	id,
+	list: allResultsList,
+	onIndexPage,
+	render,
+}: Props) {
 	const settings = useDataStore((state) =>
 		state.sortableListSettings.get(id),
 	) ?? {
 		filter: '',
 		orderBy: 'DEFAULT',
+		page: 1,
 	};
 	const setSettings = useDataStore((state) => state.setSortableListSettings);
 
@@ -29,14 +46,15 @@ export default function SortableList({id, list, onIndexPage, render}: Props) {
 		setSettings(id, {
 			...settings,
 			filter,
+			page: 1,
 		});
 	}
 
-	if (list == null || list.length === 0) {
+	if (allResultsList == null || allResultsList.length === 0) {
 		return null;
 	}
 
-	let sortedList = list;
+	let sortedList = allResultsList;
 	if (settings.filter) {
 		const filterCompare = settings.filter
 			.trim()
@@ -57,6 +75,12 @@ export default function SortableList({id, list, onIndexPage, render}: Props) {
 
 			return 0;
 		});
+	}
+
+	const hasPages = allResultsList.length > PAGE_SIZE;
+	if (hasPages) {
+		const start = PAGE_SIZE * settings.page;
+		sortedList = sortedList.slice(start, start + PAGE_SIZE);
 	}
 
 	return (
@@ -106,11 +130,27 @@ export default function SortableList({id, list, onIndexPage, render}: Props) {
 			</Group>
 
 			{sortedList.length > 0 ? (
-				<ul className={styles.list}>
-					{sortedList.map((item) => {
-						return <li key={item}>{render(item)}</li>;
-					})}
-				</ul>
+				<>
+					<ul className={styles.list}>
+						{sortedList.map((item) => {
+							return <li key={item}>{render(item)}</li>;
+						})}
+					</ul>
+
+					{hasPages ? (
+						<Pagination
+							total={Math.floor(allResultsList.length / PAGE_SIZE)}
+							value={settings.page}
+							onChange={(newPage) => {
+								setSettings(id, {
+									...settings,
+									page: newPage,
+								});
+							}}
+							layout="responsive"
+						/>
+					) : null}
+				</>
 			) : settings.filter ? (
 				<>
 					No results for "{settings.filter}".
@@ -125,7 +165,7 @@ export default function SortableList({id, list, onIndexPage, render}: Props) {
 					</div>
 				</>
 			) : (
-				'This list is empty.'
+				<p>This list is empty.</p>
 			)}
 		</Stack>
 	);
