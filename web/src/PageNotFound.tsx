@@ -1,8 +1,8 @@
 import {Button, Stack, Title} from '@mantine/core';
 import {Link} from '@tanstack/react-router';
 
-import BasicErrorAlert from './BasicErrorAlert';
-import DocumentTitle from './DocumentTitle';
+import BasicErrorAlert from './common/BasicErrorAlert';
+import DocumentTitle from './common/DocumentTitle';
 
 export default function PageNotFound() {
 	return (

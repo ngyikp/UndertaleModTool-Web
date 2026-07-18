@@ -3,8 +3,8 @@ import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
-import BasicErrorAlert from '../../BasicErrorAlert';
-import DocumentTitle from '../../DocumentTitle';
+import BasicErrorAlert from '../../common/BasicErrorAlert';
+import DocumentTitle from '../../common/DocumentTitle';
 import {getSoundDataByName} from '../../messages/getSoundDataByName';
 
 function getMimeType(buf: Uint8Array) {

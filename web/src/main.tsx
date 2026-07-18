@@ -6,8 +6,8 @@ import {createRouter} from '@tanstack/react-router';
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 
-import BasicErrorAlert from './BasicErrorAlert';
-import BasicLoadingMessage from './BasicLoadingMessage';
+import BasicErrorAlert from './common/BasicErrorAlert';
+import BasicLoadingMessage from './common/BasicLoadingMessage';
 import PageNotFound from './PageNotFound';
 import RouterProviderWithContext from './RouterProviderWithContext';
 import {routeTree} from './routeTree.gen';

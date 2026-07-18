@@ -6,9 +6,9 @@ import {
 	useMatchRoute,
 } from '@tanstack/react-router';
 
+import DocumentTitle from '../../common/DocumentTitle';
 import SidebarAndContentView from '../../common/SidebarAndContentView';
 import SortableList from '../../common/SortableList';
-import DocumentTitle from '../../DocumentTitle';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 

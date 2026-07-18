@@ -2,9 +2,9 @@ import {Alert, Stack, Title} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 
-import BasicErrorAlert from '../../BasicErrorAlert';
+import BasicErrorAlert from '../../common/BasicErrorAlert';
+import DocumentTitle from '../../common/DocumentTitle';
 import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
-import DocumentTitle from '../../DocumentTitle';
 import {getCodeInfoByName} from '../../messages/getCodeInfoByName';
 
 const codeQueryOptions = (name: string) =>

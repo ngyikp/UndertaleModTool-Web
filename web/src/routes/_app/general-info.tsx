@@ -7,8 +7,8 @@ import {
 	useRouter,
 } from '@tanstack/react-router';
 
+import DocumentTitle from '../../common/DocumentTitle';
 import {useDataStore} from '../../data-store';
-import DocumentTitle from '../../DocumentTitle';
 import {stopWorker} from '../../worker/worker-handler';
 
 function GeneralInfo() {

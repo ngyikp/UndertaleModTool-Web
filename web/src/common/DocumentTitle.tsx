@@ -1,4 +1,4 @@
-import {useDataStore} from './data-store';
+import {useDataStore} from '../data-store';
 
 type Props = Readonly<{
 	text: string | string[];

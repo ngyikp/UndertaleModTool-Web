@@ -3,11 +3,12 @@ import {useQueryClient} from '@tanstack/react-query';
 import {useRouter} from '@tanstack/react-router';
 import {useState} from 'react';
 
-import BasicErrorAlert from '../BasicErrorAlert';
-import BasicLoadingMessage from '../BasicLoadingMessage';
 import {useDataStore} from '../data-store';
 import {readFile} from '../messages/readFile';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
+
+import BasicErrorAlert from './BasicErrorAlert';
+import BasicLoadingMessage from './BasicLoadingMessage';
 
 const noop = () => {};
 

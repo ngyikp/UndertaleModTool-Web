@@ -2,8 +2,8 @@ import {Stack} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute} from '@tanstack/react-router';
 
+import DocumentTitle from '../../common/DocumentTitle';
 import SortableList from '../../common/SortableList';
-import DocumentTitle from '../../DocumentTitle';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
