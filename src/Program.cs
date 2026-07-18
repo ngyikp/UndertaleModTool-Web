@@ -204,9 +204,16 @@ public partial class UndertaleModToolWASM
                 throw new NotImplementedException($"Model type {modelType} is not implemented");
         }
 
-        string[] entries = model.Select(m => m.Name.Content).ToArray();
+        List<string> entries = [];
+        foreach (var entry in model)
+        {
+            if (entry is not null)
+            {
+                entries.Add(entry.Name.Content);
+            }
+        }
 
-        return JsonSerializer.Serialize(entries, ItemListJsonContext.Default.StringArray);
+        return JsonSerializer.Serialize(entries, ItemListJsonContext.Default.ListString);
     }
 
     [JSExport]
