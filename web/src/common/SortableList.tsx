@@ -22,7 +22,7 @@ const PAGE_SIZE = 2000;
 
 type Props = Readonly<{
 	id: string; // used to uniquely identify lists on different pages to restore state
-	list: string[] | undefined | null;
+	list: string[];
 	onIndexPage: boolean;
 	render: (item: string) => React.ReactNode;
 }>;
@@ -48,10 +48,6 @@ export default function SortableList({
 			filter,
 			page: 1,
 		});
-	}
-
-	if (allResultsList == null || allResultsList.length === 0) {
-		return null;
 	}
 
 	let sortedList = allResultsList;
@@ -85,49 +81,51 @@ export default function SortableList({
 
 	return (
 		<Stack>
-			<Group
-				gap="xs"
-				className={[
-					styles.filters,
-					!onIndexPage ? styles.filtersNotOnIndexPage : '',
-				].join(' ')}
-			>
-				Sort by:
-				<Select
-					data={[
-						{value: 'DEFAULT', label: 'Default'},
-						{value: 'A_TO_Z', label: 'A-Z'},
-						{value: 'Z_TO_A', label: 'Z-A'},
-					]}
-					value={settings.orderBy}
-					onChange={(value) => {
-						setSettings(id, {
-							...settings,
-							orderBy: value ?? 'DEFAULT',
-						});
-					}}
-					style={{width: '7rem'}}
-				/>
-				<TextInput
-					value={settings.filter}
-					placeholder="Find"
-					onChange={(event) => {
-						setFilter(event.currentTarget.value);
-					}}
-					rightSection={
-						settings.filter !== '' ? (
-							<Input.ClearButton
-								title="Clear"
-								onClick={() => {
-									setFilter('');
-								}}
-							/>
-						) : undefined
-					}
-					rightSectionPointerEvents="auto"
-					flex={1}
-				/>
-			</Group>
+			{allResultsList.length > 0 ? (
+				<Group
+					gap="xs"
+					className={[
+						styles.filters,
+						!onIndexPage ? styles.filtersNotOnIndexPage : '',
+					].join(' ')}
+				>
+					Sort by:
+					<Select
+						data={[
+							{value: 'DEFAULT', label: 'Default'},
+							{value: 'A_TO_Z', label: 'A-Z'},
+							{value: 'Z_TO_A', label: 'Z-A'},
+						]}
+						value={settings.orderBy}
+						onChange={(value) => {
+							setSettings(id, {
+								...settings,
+								orderBy: value ?? 'DEFAULT',
+							});
+						}}
+						style={{width: '7rem'}}
+					/>
+					<TextInput
+						value={settings.filter}
+						placeholder="Find"
+						onChange={(event) => {
+							setFilter(event.currentTarget.value);
+						}}
+						rightSection={
+							settings.filter !== '' ? (
+								<Input.ClearButton
+									title="Clear"
+									onClick={() => {
+										setFilter('');
+									}}
+								/>
+							) : undefined
+						}
+						rightSectionPointerEvents="auto"
+						flex={1}
+					/>
+				</Group>
+			) : null}
 
 			{sortedList.length > 0 ? (
 				<>
