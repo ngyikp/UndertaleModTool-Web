@@ -204,15 +204,22 @@ public partial class UndertaleModToolWASM
         UndertaleCode code = gameData.Code.First(code => name == code.Name.Content);
         string decompiled = "";
 
-        // try
-        // {
-        // mainWindow.Project.TryGetCodeSource(code, out decompiled)
-        decompiled = new Underanalyzer.Decompiler.DecompileContext(new GlobalDecompileContext(gameData), code, gameData.ToolInfo.DecompilerSettings).DecompileToString();
-        // }
-        // catch (Exception e)
-        // {
-        //     decompiled = "/*\nDECOMPILER FAILED!\n\n" + e.ToString() + "\n*/";
-        // }
+        if (code.ParentEntry != null)
+        {
+            decompiled = "// This code entry is a reference to an anonymous function within " + code.ParentEntry.Name.Content + ", view it there.";
+        }
+        else
+        {
+            // try
+            // {
+            // mainWindow.Project.TryGetCodeSource(code, out decompiled)
+            decompiled = new Underanalyzer.Decompiler.DecompileContext(new GlobalDecompileContext(gameData), code, gameData.ToolInfo.DecompilerSettings).DecompileToString();
+            // }
+            // catch (Exception e)
+            // {
+            //     decompiled = "/*\nDECOMPILER FAILED!\n\n" + e.ToString() + "\n*/";
+            // }            
+        }
 
         return JsonSerializer.Serialize(decompiled, GetCodeByNameContext.Default.String);
     }
