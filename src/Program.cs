@@ -130,6 +130,13 @@ public partial class UndertaleModToolWASM
             IsGameMaker2 = Data.IsGameMaker2(),
             IsYYC = Data.IsYYC(),
             IsDebuggerDisabled = Data.GeneralInfo.IsDebuggerDisabled,
+            Version = new()
+            {
+                Major = Data.GeneralInfo.Major,
+                Minor = Data.GeneralInfo.Minor,
+                Release = Data.GeneralInfo.Release,
+                Build = Data.GeneralInfo.Build,
+            },
 
             BytecodeVersion = Data.GeneralInfo.BytecodeVersion,
             ConfigurationName = Data.GeneralInfo.Config.Content,
@@ -179,6 +186,10 @@ public partial class UndertaleModToolWASM
 
             case ModelType.Sounds:
                 model = gameData.Sounds;
+                break;
+
+            case ModelType.Backgrounds:
+                model = gameData.Backgrounds;
                 break;
 
             case ModelType.Code:

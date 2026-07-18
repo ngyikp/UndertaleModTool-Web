@@ -6,6 +6,12 @@ export const GameInfoSchema = z.object({
 	IsGameMaker2: z.boolean(),
 	IsYYC: z.boolean(),
 	IsDebuggerDisabled: z.boolean(),
+	Version: z.object({
+		Major: z.int(),
+		Minor: z.int(),
+		Release: z.int(),
+		Build: z.int(),
+	}),
 
 	BytecodeVersion: z.int(),
 	ConfigurationName: z.nullable(z.string()),

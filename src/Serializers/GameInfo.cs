@@ -10,10 +10,19 @@ namespace Serializers
         public bool IsGameMaker2 { get; set; }
         public bool IsYYC { get; set; }
         public bool IsDebuggerDisabled { get; set; }
+        public required GameInfoVersion Version { get; set; }
 
         public int BytecodeVersion { get; set; }
         public string? ConfigurationName { get; set; }
-        public GameInfoItemCounts? ItemCounts { get; set; }
+        public required GameInfoItemCounts ItemCounts { get; set; }
+    }
+
+    public record GameInfoVersion
+    {
+        public uint Major { get; set; }
+        public uint Minor { get; set; }
+        public uint Release { get; set; }
+        public uint Build { get; set; }
     }
 
     public record GameInfoItemCounts

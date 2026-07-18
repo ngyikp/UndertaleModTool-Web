@@ -7,7 +7,7 @@ import SortableList from '../../common/SortableList';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
-const spriteQueryOptions = queryOptions({
+const spritesQueryOptions = queryOptions({
 	queryKey: ['sprites'],
 	queryFn() {
 		return getEntriesByModelType(ModelType.Sprites);
@@ -15,7 +15,7 @@ const spriteQueryOptions = queryOptions({
 });
 
 function Sprites() {
-	const {data} = useSuspenseQuery(spriteQueryOptions);
+	const {data} = useSuspenseQuery(spritesQueryOptions);
 
 	return (
 		<Stack>
@@ -36,5 +36,5 @@ function Sprites() {
 export const Route = createFileRoute('/_app/sprites/')({
 	component: Sprites,
 	loader: ({context}) =>
-		context.queryClient.ensureQueryData(spriteQueryOptions),
+		context.queryClient.ensureQueryData(spritesQueryOptions),
 });

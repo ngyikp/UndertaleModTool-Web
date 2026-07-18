@@ -10,6 +10,7 @@ import {
 import DocumentTitle from '../../common/DocumentTitle';
 import {useDataStore} from '../../data-store';
 import {stopWorker} from '../../worker/worker-handler';
+import getTileSetsLabel from '../../common/getTileSetsLabel';
 
 function GeneralInfo() {
 	const info = useDataStore((state) => state.gameInfo);
@@ -83,7 +84,11 @@ function GeneralInfo() {
 				<List.Item>
 					<Link to="/sounds">{info.ItemCounts.Sounds} sounds</Link>
 				</List.Item>
-				<List.Item>{info.ItemCounts.Backgrounds} backgrounds</List.Item>
+				<List.Item>
+					<Link to="/tile-sets">
+						{info.ItemCounts.Backgrounds} {getTileSetsLabel(info)}
+					</Link>
+				</List.Item>
 				<List.Item>{info.ItemCounts.Paths} paths</List.Item>
 				<List.Item>{info.ItemCounts.Scripts} scripts</List.Item>
 				<List.Item>{info.ItemCounts.Shaders} shaders</List.Item>

@@ -11,6 +11,7 @@ import DataFileInput from '../../common/DataFileInput';
 import getGameDisplayName from '../../common/getGameDisplayName';
 import {useDataStore} from '../../data-store';
 import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
+import getTileSetsLabel from '../../common/getTileSetsLabel';
 
 function TabLink({link, text}: {link: string; text: string}) {
 	return (
@@ -68,6 +69,12 @@ function AppLayout() {
 						count={info.ItemCounts.Sounds}
 						link="/sounds"
 						text="Sounds"
+					/>
+
+					<TabLinkWithCount
+						count={info.ItemCounts.Backgrounds}
+						link="/tile-sets"
+						text={getTileSetsLabel(info, true)}
 					/>
 
 					<TabLinkWithCount
