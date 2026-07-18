@@ -128,6 +128,8 @@ public partial class UndertaleModToolWASM
             ProjectName = Data.GeneralInfo.Name.Content,
             IsGameMaker2 = Data.IsGameMaker2(),
             IsYYC = Data.IsYYC(),
+            IsDebuggerDisabled = Data.GeneralInfo.IsDebuggerDisabled,
+
             BytecodeVersion = Data.GeneralInfo.BytecodeVersion,
             ConfigurationName = Data.GeneralInfo.Config.Content,
             ItemCounts = new()

@@ -4,6 +4,8 @@ export const GameInfoSchema = z.object({
 	ProjectName: z.nullable(z.string()),
 	IsGameMaker2: z.boolean(),
 	IsYYC: z.boolean(),
+	IsDebuggerDisabled: z.boolean(),
+
 	BytecodeVersion: z.int(),
 	ConfigurationName: z.nullable(z.string()),
 	ItemCounts: z.object({

@@ -8,6 +8,8 @@ namespace Serializers
         public string? ProjectName { get; set; }
         public bool IsGameMaker2 { get; set; }
         public bool IsYYC { get; set; }
+        public bool IsDebuggerDisabled { get; set; }
+
         public int BytecodeVersion { get; set; }
         public string? ConfigurationName { get; set; }
         public GameInfoItemCounts? ItemCounts { get; set; }

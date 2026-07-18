@@ -47,7 +47,27 @@ function GeneralInfo() {
 				<Alert
 					variant="light"
 					color="yellow"
-					title="This game uses YYC (YoYo Compiler) which means the code is embedded into the game executable. This configuration is currently not fully supported; continue at your own risk."
+					title={
+						<>
+							This game uses{' '}
+							<a
+								href="https://manual.gamemaker.io/monthly/en/Settings/YoYo_Compiler.htm"
+								target="_blank"
+								rel="noreferrer"
+							>
+								YYC (YoYo Compiler)
+							</a>{' '}
+							which means viewing the source code is not possible.
+						</>
+					}
+				/>
+			) : null}
+
+			{!info.IsDebuggerDisabled ? (
+				<Alert
+					variant="light"
+					color="yellow"
+					title="This game is set to run with the GameMaker debugger and the normal runtime will simply hang after loading if the debugger is not running."
 				/>
 			) : null}
 
