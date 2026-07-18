@@ -23,11 +23,14 @@ export default function SidebarAndContentView({
 			gap="md"
 			mt={onIndexPage ? undefined : '-md'}
 			mb={onIndexPage ? undefined : '-md'}
-			className={onIndexPage ? undefined : styles.outerWrap}
 		>
 			<Stack
 				flex={onIndexPage ? 1 : undefined}
 				style={{width: onIndexPage ? undefined : sidebarWidth}}
+				className={[
+					styles.sidebar,
+					onIndexPage ? styles.sidebarOnIndexPage : undefined,
+				].join(' ')}
 			>
 				<div className={onIndexPage ? undefined : styles.sticky}>{sidebar}</div>
 			</Stack>

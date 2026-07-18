@@ -1,10 +1,27 @@
 .sticky {
-	position: sticky;
-	top: 0;
-
-	height: 100vh;
-	overflow: auto;
-
 	padding-right: var(--mantine-spacing-md);
 	padding-bottom: var(--mantine-spacing-lg);
+}
+
+.sidebar {
+	display: none;
+}
+
+.sidebarOnIndexPage {
+	display: block;
+}
+
+@media only screen and (min-width: 768px) {
+	.sticky {
+		position: sticky;
+		top: 0;
+
+		height: 100vh;
+		overflow: auto;
+		overscroll-behavior: contain;
+	}
+
+	.sidebar {
+		display: block;
+	}
 }
