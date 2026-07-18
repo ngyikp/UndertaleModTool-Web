@@ -8,9 +8,9 @@ import {
 } from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
+import getTileSetsLabel from '../../common/getTileSetsLabel';
 import {useDataStore} from '../../data-store';
 import {stopWorker} from '../../worker/worker-handler';
-import getTileSetsLabel from '../../common/getTileSetsLabel';
 
 function GeneralInfo() {
 	const info = useDataStore((state) => state.gameInfo);
@@ -72,10 +72,17 @@ function GeneralInfo() {
 				/>
 			) : null}
 
+			<p>Display name: {info.DisplayName}</p>
+			<p>Project name: {info.ProjectName}</p>
+
 			<p>Is GMS2: {info.IsGameMaker2 ? 'Yes' : 'No'}</p>
 			<p>Is YYC: {info.IsYYC ? 'Yes' : 'No'}</p>
 			<p>Bytecode version: {info.BytecodeVersion}</p>
 			<p>Configuration name: {info.ConfigurationName}</p>
+			<p>
+				Engine version: {info.Version.Major}.{info.Version.Minor}.
+				{info.Version.Release}.{info.Version.Build}
+			</p>
 
 			<List>
 				<List.Item>
