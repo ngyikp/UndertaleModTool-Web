@@ -9,36 +9,31 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
-import { Route as AppGeneralInfoRouteImport } from './routes/_app/general-info'
-import { Route as AppEmbeddedTexturesRouteImport } from './routes/_app/embedded-textures'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppCodeRouteImport } from './routes/_app/code'
-import { Route as AppTileSetsIndexRouteImport } from './routes/_app/tile-sets.index'
-import { Route as AppSpritesIndexRouteImport } from './routes/_app/sprites.index'
+import { Route as AppEmbeddedTexturesRouteImport } from './routes/_app/embedded-textures'
+import { Route as AppGeneralInfoRouteImport } from './routes/_app/general-info'
+import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
+import { Route as AppCodeNameRouteImport } from './routes/_app/code.$name'
+import { Route as AppEmbeddedTexturesIdRouteImport } from './routes/_app/embedded-textures.$id'
 import { Route as AppPathsIndexRouteImport } from './routes/_app/paths.index'
 import { Route as AppSoundsNameRouteImport } from './routes/_app/sounds.$name'
-import { Route as AppEmbeddedTexturesIdRouteImport } from './routes/_app/embedded-textures.$id'
-import { Route as AppCodeNameRouteImport } from './routes/_app/code.$name'
+import { Route as AppSpritesIndexRouteImport } from './routes/_app/sprites.index'
+import { Route as AppTileSetsIndexRouteImport } from './routes/_app/tile-sets.index'
 
-const AppRouteRoute = AppRouteRouteImport.update({
-  id: '/_app',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppSoundsRoute = AppSoundsRouteImport.update({
-  id: '/sounds',
-  path: '/sounds',
-  getParentRoute: () => AppRouteRoute,
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AppGeneralInfoRoute = AppGeneralInfoRouteImport.update({
-  id: '/general-info',
-  path: '/general-info',
+const AppCodeRoute = AppCodeRouteImport.update({
+  id: '/code',
+  path: '/code',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppEmbeddedTexturesRoute = AppEmbeddedTexturesRouteImport.update({
@@ -46,20 +41,25 @@ const AppEmbeddedTexturesRoute = AppEmbeddedTexturesRouteImport.update({
   path: '/embedded-textures',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppCodeRoute = AppCodeRouteImport.update({
-  id: '/code',
-  path: '/code',
+const AppGeneralInfoRoute = AppGeneralInfoRouteImport.update({
+  id: '/general-info',
+  path: '/general-info',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppTileSetsIndexRoute = AppTileSetsIndexRouteImport.update({
-  id: '/tile-sets/',
-  path: '/tile-sets/',
+const AppSoundsRoute = AppSoundsRouteImport.update({
+  id: '/sounds',
+  path: '/sounds',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppSpritesIndexRoute = AppSpritesIndexRouteImport.update({
-  id: '/sprites/',
-  path: '/sprites/',
-  getParentRoute: () => AppRouteRoute,
+const AppCodeNameRoute = AppCodeNameRouteImport.update({
+  id: '/$name',
+  path: '/$name',
+  getParentRoute: () => AppCodeRoute,
+} as any)
+const AppEmbeddedTexturesIdRoute = AppEmbeddedTexturesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AppEmbeddedTexturesRoute,
 } as any)
 const AppPathsIndexRoute = AppPathsIndexRouteImport.update({
   id: '/paths/',
@@ -71,15 +71,15 @@ const AppSoundsNameRoute = AppSoundsNameRouteImport.update({
   path: '/$name',
   getParentRoute: () => AppSoundsRoute,
 } as any)
-const AppEmbeddedTexturesIdRoute = AppEmbeddedTexturesIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AppEmbeddedTexturesRoute,
+const AppSpritesIndexRoute = AppSpritesIndexRouteImport.update({
+  id: '/sprites/',
+  path: '/sprites/',
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const AppCodeNameRoute = AppCodeNameRouteImport.update({
-  id: '/$name',
-  path: '/$name',
-  getParentRoute: () => AppCodeRoute,
+const AppTileSetsIndexRoute = AppTileSetsIndexRouteImport.update({
+  id: '/tile-sets/',
+  path: '/tile-sets/',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -173,13 +173,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_app': {
-      id: '/_app'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AppRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -187,18 +180,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/sounds': {
-      id: '/_app/sounds'
-      path: '/sounds'
-      fullPath: '/sounds'
-      preLoaderRoute: typeof AppSoundsRouteImport
-      parentRoute: typeof AppRouteRoute
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/general-info': {
-      id: '/_app/general-info'
-      path: '/general-info'
-      fullPath: '/general-info'
-      preLoaderRoute: typeof AppGeneralInfoRouteImport
+    '/_app/code': {
+      id: '/_app/code'
+      path: '/code'
+      fullPath: '/code'
+      preLoaderRoute: typeof AppCodeRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/embedded-textures': {
@@ -208,26 +201,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEmbeddedTexturesRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/code': {
-      id: '/_app/code'
-      path: '/code'
-      fullPath: '/code'
-      preLoaderRoute: typeof AppCodeRouteImport
+    '/_app/general-info': {
+      id: '/_app/general-info'
+      path: '/general-info'
+      fullPath: '/general-info'
+      preLoaderRoute: typeof AppGeneralInfoRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/tile-sets/': {
-      id: '/_app/tile-sets/'
-      path: '/tile-sets'
-      fullPath: '/tile-sets/'
-      preLoaderRoute: typeof AppTileSetsIndexRouteImport
+    '/_app/sounds': {
+      id: '/_app/sounds'
+      path: '/sounds'
+      fullPath: '/sounds'
+      preLoaderRoute: typeof AppSoundsRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/sprites/': {
-      id: '/_app/sprites/'
-      path: '/sprites'
-      fullPath: '/sprites/'
-      preLoaderRoute: typeof AppSpritesIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+    '/_app/code/$name': {
+      id: '/_app/code/$name'
+      path: '/$name'
+      fullPath: '/code/$name'
+      preLoaderRoute: typeof AppCodeNameRouteImport
+      parentRoute: typeof AppCodeRoute
+    }
+    '/_app/embedded-textures/$id': {
+      id: '/_app/embedded-textures/$id'
+      path: '/$id'
+      fullPath: '/embedded-textures/$id'
+      preLoaderRoute: typeof AppEmbeddedTexturesIdRouteImport
+      parentRoute: typeof AppEmbeddedTexturesRoute
     }
     '/_app/paths/': {
       id: '/_app/paths/'
@@ -243,19 +243,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSoundsNameRouteImport
       parentRoute: typeof AppSoundsRoute
     }
-    '/_app/embedded-textures/$id': {
-      id: '/_app/embedded-textures/$id'
-      path: '/$id'
-      fullPath: '/embedded-textures/$id'
-      preLoaderRoute: typeof AppEmbeddedTexturesIdRouteImport
-      parentRoute: typeof AppEmbeddedTexturesRoute
+    '/_app/sprites/': {
+      id: '/_app/sprites/'
+      path: '/sprites'
+      fullPath: '/sprites/'
+      preLoaderRoute: typeof AppSpritesIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/_app/code/$name': {
-      id: '/_app/code/$name'
-      path: '/$name'
-      fullPath: '/code/$name'
-      preLoaderRoute: typeof AppCodeNameRouteImport
-      parentRoute: typeof AppCodeRoute
+    '/_app/tile-sets/': {
+      id: '/_app/tile-sets/'
+      path: '/tile-sets'
+      fullPath: '/tile-sets/'
+      preLoaderRoute: typeof AppTileSetsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
   }
 }
