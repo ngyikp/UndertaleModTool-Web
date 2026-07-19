@@ -204,6 +204,10 @@ public partial class UndertaleModToolWASM
                 model = gameData.Shaders;
                 break;
 
+            case ModelType.Fonts:
+                model = gameData.Fonts;
+                break;
+
             case ModelType.Code:
                 model = gameData.Code;
                 break;
