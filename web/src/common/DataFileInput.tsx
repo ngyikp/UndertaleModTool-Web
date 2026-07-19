@@ -1,4 +1,6 @@
-import {Button, FileButton, Stack} from '@mantine/core';
+import {Button, Stack} from '@mantine/core';
+import '@mantine/dropzone/styles.css';
+import {Dropzone} from '@mantine/dropzone';
 import {useQueryClient} from '@tanstack/react-query';
 import {useRouter} from '@tanstack/react-router';
 import {useState} from 'react';
@@ -73,34 +75,6 @@ export default function DataFileInput({
 
 	return (
 		<>
-			{status !== 'LOADING' &&
-			status !== 'PROCESSING' &&
-			status !== 'FINISHED' ? (
-				<Stack>
-					<div>
-						<FileButton
-							onChange={(file) => {
-								if (file) {
-									void processFile(file);
-								}
-							}}
-						>
-							{(props) => (
-								<Button {...props}>
-									Select GameMaker data file (.win, .unx, .ios, .droid,
-									audiogroup*.dat)
-								</Button>
-							)}
-						</FileButton>
-					</div>
-
-					<p>
-						All files are processed locally inside your browser, nothing is sent
-						off to another server.
-					</p>
-				</Stack>
-			) : null}
-
 			{status === 'LOADING' ? (
 				<BasicLoadingMessage text="Loading UndertaleModTool..." />
 			) : status === 'PROCESSING' ? (
@@ -112,6 +86,34 @@ export default function DataFileInput({
 					title="Oops, there was a problem loading this file. Make sure it is a valid GameMaker data file."
 					error={error}
 				/>
+			) : null}
+
+			{status !== 'LOADING' &&
+			status !== 'PROCESSING' &&
+			status !== 'FINISHED' ? (
+				<Stack>
+					<Dropzone
+						multiple={false}
+						onDrop={(files) => {
+							const file = files[0];
+							if (file) {
+								void processFile(file);
+							}
+						}}
+					>
+						<Stack justify="center" mih={125} style={{textAlign: 'center'}}>
+							<div>
+								<Button>Select GameMaker data file</Button>
+							</div>
+							.win, .unx, .ios, .droid, audiogroup*.dat
+						</Stack>
+					</Dropzone>
+
+					<p>
+						All files are processed locally inside your browser, nothing is sent
+						off to another server.
+					</p>
+				</Stack>
 			) : null}
 		</>
 	);
