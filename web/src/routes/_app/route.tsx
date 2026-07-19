@@ -90,6 +90,12 @@ function AppLayout() {
 					/>
 
 					<TabLinkWithCount
+						count={info.ItemCounts.Shaders}
+						link="/shaders"
+						text="Shaders"
+					/>
+
+					<TabLinkWithCount
 						count={info.ItemCounts.Code}
 						link="/code"
 						text="Code"

@@ -200,6 +200,10 @@ public partial class UndertaleModToolWASM
                 model = gameData.Scripts;
                 break;
 
+            case ModelType.Shaders:
+                model = gameData.Shaders;
+                break;
+
             case ModelType.Code:
                 model = gameData.Code;
                 break;
