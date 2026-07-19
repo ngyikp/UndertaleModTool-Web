@@ -216,6 +216,10 @@ public partial class UndertaleModToolWASM
                 model = gameData.GameObjects;
                 break;
 
+            case ModelType.Rooms:
+                model = gameData.Rooms;
+                break;
+
             case ModelType.Code:
                 model = gameData.Code;
                 break;

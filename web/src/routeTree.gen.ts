@@ -20,6 +20,7 @@ import { Route as AppEmbeddedTexturesIdRouteImport } from './routes/_app/embedde
 import { Route as AppFontsIndexRouteImport } from './routes/_app/fonts.index'
 import { Route as AppObjectsIndexRouteImport } from './routes/_app/objects.index'
 import { Route as AppPathsIndexRouteImport } from './routes/_app/paths.index'
+import { Route as AppRoomsIndexRouteImport } from './routes/_app/rooms.index'
 import { Route as AppScriptsIndexRouteImport } from './routes/_app/scripts.index'
 import { Route as AppShadersIndexRouteImport } from './routes/_app/shaders.index'
 import { Route as AppSoundsNameRouteImport } from './routes/_app/sounds.$name'
@@ -81,6 +82,11 @@ const AppPathsIndexRoute = AppPathsIndexRouteImport.update({
   path: '/paths/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppRoomsIndexRoute = AppRoomsIndexRouteImport.update({
+  id: '/rooms/',
+  path: '/rooms/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppScriptsIndexRoute = AppScriptsIndexRouteImport.update({
   id: '/scripts/',
   path: '/scripts/',
@@ -124,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/fonts/': typeof AppFontsIndexRoute
   '/objects/': typeof AppObjectsIndexRoute
   '/paths/': typeof AppPathsIndexRoute
+  '/rooms/': typeof AppRoomsIndexRoute
   '/scripts/': typeof AppScriptsIndexRoute
   '/shaders/': typeof AppShadersIndexRoute
   '/sprites/': typeof AppSpritesIndexRoute
@@ -142,6 +149,7 @@ export interface FileRoutesByTo {
   '/fonts': typeof AppFontsIndexRoute
   '/objects': typeof AppObjectsIndexRoute
   '/paths': typeof AppPathsIndexRoute
+  '/rooms': typeof AppRoomsIndexRoute
   '/scripts': typeof AppScriptsIndexRoute
   '/shaders': typeof AppShadersIndexRoute
   '/sprites': typeof AppSpritesIndexRoute
@@ -162,6 +170,7 @@ export interface FileRoutesById {
   '/_app/fonts/': typeof AppFontsIndexRoute
   '/_app/objects/': typeof AppObjectsIndexRoute
   '/_app/paths/': typeof AppPathsIndexRoute
+  '/_app/rooms/': typeof AppRoomsIndexRoute
   '/_app/scripts/': typeof AppScriptsIndexRoute
   '/_app/shaders/': typeof AppShadersIndexRoute
   '/_app/sprites/': typeof AppSpritesIndexRoute
@@ -182,6 +191,7 @@ export interface FileRouteTypes {
     | '/fonts/'
     | '/objects/'
     | '/paths/'
+    | '/rooms/'
     | '/scripts/'
     | '/shaders/'
     | '/sprites/'
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/fonts'
     | '/objects'
     | '/paths'
+    | '/rooms'
     | '/scripts'
     | '/shaders'
     | '/sprites'
@@ -219,6 +230,7 @@ export interface FileRouteTypes {
     | '/_app/fonts/'
     | '/_app/objects/'
     | '/_app/paths/'
+    | '/_app/rooms/'
     | '/_app/scripts/'
     | '/_app/shaders/'
     | '/_app/sprites/'
@@ -310,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPathsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/rooms/': {
+      id: '/_app/rooms/'
+      path: '/rooms'
+      fullPath: '/rooms/'
+      preLoaderRoute: typeof AppRoomsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/scripts/': {
       id: '/_app/scripts/'
       path: '/scripts'
@@ -397,6 +416,7 @@ interface AppRouteRouteChildren {
   AppFontsIndexRoute: typeof AppFontsIndexRoute
   AppObjectsIndexRoute: typeof AppObjectsIndexRoute
   AppPathsIndexRoute: typeof AppPathsIndexRoute
+  AppRoomsIndexRoute: typeof AppRoomsIndexRoute
   AppScriptsIndexRoute: typeof AppScriptsIndexRoute
   AppShadersIndexRoute: typeof AppShadersIndexRoute
   AppSpritesIndexRoute: typeof AppSpritesIndexRoute
@@ -412,6 +432,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppFontsIndexRoute: AppFontsIndexRoute,
   AppObjectsIndexRoute: AppObjectsIndexRoute,
   AppPathsIndexRoute: AppPathsIndexRoute,
+  AppRoomsIndexRoute: AppRoomsIndexRoute,
   AppScriptsIndexRoute: AppScriptsIndexRoute,
   AppShadersIndexRoute: AppShadersIndexRoute,
   AppSpritesIndexRoute: AppSpritesIndexRoute,
