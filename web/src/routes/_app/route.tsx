@@ -120,6 +120,12 @@ function AppLayout() {
 					/>
 
 					<TabLinkWithCount
+						count={info.ItemCounts.Extensions}
+						link="/extensions"
+						text="Extensions"
+					/>
+
+					<TabLinkWithCount
 						count={info.ItemCounts.Code}
 						link="/code"
 						text="Code"

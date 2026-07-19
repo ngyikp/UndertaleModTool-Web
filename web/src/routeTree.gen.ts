@@ -17,6 +17,7 @@ import { Route as AppGeneralInfoRouteImport } from './routes/_app/general-info'
 import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
 import { Route as AppCodeNameRouteImport } from './routes/_app/code.$name'
 import { Route as AppEmbeddedTexturesIdRouteImport } from './routes/_app/embedded-textures.$id'
+import { Route as AppExtensionsIndexRouteImport } from './routes/_app/extensions.index'
 import { Route as AppFontsIndexRouteImport } from './routes/_app/fonts.index'
 import { Route as AppObjectsIndexRouteImport } from './routes/_app/objects.index'
 import { Route as AppPathsIndexRouteImport } from './routes/_app/paths.index'
@@ -66,6 +67,11 @@ const AppEmbeddedTexturesIdRoute = AppEmbeddedTexturesIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => AppEmbeddedTexturesRoute,
+} as any)
+const AppExtensionsIndexRoute = AppExtensionsIndexRouteImport.update({
+  id: '/extensions/',
+  path: '/extensions/',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppFontsIndexRoute = AppFontsIndexRouteImport.update({
   id: '/fonts/',
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/code/$name': typeof AppCodeNameRoute
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/sounds/$name': typeof AppSoundsNameRoute
+  '/extensions/': typeof AppExtensionsIndexRoute
   '/fonts/': typeof AppFontsIndexRoute
   '/objects/': typeof AppObjectsIndexRoute
   '/paths/': typeof AppPathsIndexRoute
@@ -146,6 +153,7 @@ export interface FileRoutesByTo {
   '/code/$name': typeof AppCodeNameRoute
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/sounds/$name': typeof AppSoundsNameRoute
+  '/extensions': typeof AppExtensionsIndexRoute
   '/fonts': typeof AppFontsIndexRoute
   '/objects': typeof AppObjectsIndexRoute
   '/paths': typeof AppPathsIndexRoute
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   '/_app/code/$name': typeof AppCodeNameRoute
   '/_app/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/_app/sounds/$name': typeof AppSoundsNameRoute
+  '/_app/extensions/': typeof AppExtensionsIndexRoute
   '/_app/fonts/': typeof AppFontsIndexRoute
   '/_app/objects/': typeof AppObjectsIndexRoute
   '/_app/paths/': typeof AppPathsIndexRoute
@@ -188,6 +197,7 @@ export interface FileRouteTypes {
     | '/code/$name'
     | '/embedded-textures/$id'
     | '/sounds/$name'
+    | '/extensions/'
     | '/fonts/'
     | '/objects/'
     | '/paths/'
@@ -207,6 +217,7 @@ export interface FileRouteTypes {
     | '/code/$name'
     | '/embedded-textures/$id'
     | '/sounds/$name'
+    | '/extensions'
     | '/fonts'
     | '/objects'
     | '/paths'
@@ -227,6 +238,7 @@ export interface FileRouteTypes {
     | '/_app/code/$name'
     | '/_app/embedded-textures/$id'
     | '/_app/sounds/$name'
+    | '/_app/extensions/'
     | '/_app/fonts/'
     | '/_app/objects/'
     | '/_app/paths/'
@@ -300,6 +312,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/embedded-textures/$id'
       preLoaderRoute: typeof AppEmbeddedTexturesIdRouteImport
       parentRoute: typeof AppEmbeddedTexturesRoute
+    }
+    '/_app/extensions/': {
+      id: '/_app/extensions/'
+      path: '/extensions'
+      fullPath: '/extensions/'
+      preLoaderRoute: typeof AppExtensionsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/fonts/': {
       id: '/_app/fonts/'
@@ -413,6 +432,7 @@ interface AppRouteRouteChildren {
   AppEmbeddedTexturesRoute: typeof AppEmbeddedTexturesRouteWithChildren
   AppGeneralInfoRoute: typeof AppGeneralInfoRoute
   AppSoundsRoute: typeof AppSoundsRouteWithChildren
+  AppExtensionsIndexRoute: typeof AppExtensionsIndexRoute
   AppFontsIndexRoute: typeof AppFontsIndexRoute
   AppObjectsIndexRoute: typeof AppObjectsIndexRoute
   AppPathsIndexRoute: typeof AppPathsIndexRoute
@@ -429,6 +449,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppEmbeddedTexturesRoute: AppEmbeddedTexturesRouteWithChildren,
   AppGeneralInfoRoute: AppGeneralInfoRoute,
   AppSoundsRoute: AppSoundsRouteWithChildren,
+  AppExtensionsIndexRoute: AppExtensionsIndexRoute,
   AppFontsIndexRoute: AppFontsIndexRoute,
   AppObjectsIndexRoute: AppObjectsIndexRoute,
   AppPathsIndexRoute: AppPathsIndexRoute,

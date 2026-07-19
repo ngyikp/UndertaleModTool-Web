@@ -118,7 +118,9 @@ function GeneralInfo() {
 				<List.Item>
 					<Link to="/rooms">{info.ItemCounts.Rooms} rooms</Link>
 				</List.Item>
-				<List.Item>{info.ItemCounts.Extensions} extensions</List.Item>
+				<List.Item>
+					<Link to="/extensions">{info.ItemCounts.Extensions} extensions</Link>
+				</List.Item>
 				<List.Item>
 					{info.ItemCounts.TexturePageItems} texture page items
 				</List.Item>
