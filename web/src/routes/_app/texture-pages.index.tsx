@@ -7,23 +7,24 @@ import SortableList from '../../common/SortableList';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
-const texturePageItemsQueryOptions = queryOptions({
-	queryKey: ['texture-page-items'],
+const texturePagesQueryOptions = queryOptions({
+	queryKey: ['texture-pages'],
 	queryFn() {
 		return getEntriesByModelType(ModelType.TexturePageItems);
 	},
 });
 
-function TexturePageItems() {
-	const {data} = useSuspenseQuery(texturePageItemsQueryOptions);
+// https://manual.gamemaker.io/monthly/en/Settings/Texture_Information/Texture_Pages.htm
+function TexturePages() {
+	const {data} = useSuspenseQuery(texturePagesQueryOptions);
 
 	return (
 		<Stack>
-			<DocumentTitle text="Texture page items" />
+			<DocumentTitle text="Texture pages" />
 
 			<SortableList
 				id="paths"
-				emptyListMessage="This game has no texture page items."
+				emptyListMessage="This game has no texture pages."
 				list={data.list}
 				onIndexPage={true}
 				render={(item) => {
@@ -34,8 +35,8 @@ function TexturePageItems() {
 	);
 }
 
-export const Route = createFileRoute('/_app/texture-page-items/')({
-	component: TexturePageItems,
+export const Route = createFileRoute('/_app/texture-pages/')({
+	component: TexturePages,
 	loader: ({context}) =>
-		context.queryClient.ensureQueryData(texturePageItemsQueryOptions),
+		context.queryClient.ensureQueryData(texturePagesQueryOptions),
 });

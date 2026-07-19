@@ -26,7 +26,7 @@ import { Route as AppScriptsIndexRouteImport } from './routes/_app/scripts.index
 import { Route as AppShadersIndexRouteImport } from './routes/_app/shaders.index'
 import { Route as AppSoundsNameRouteImport } from './routes/_app/sounds.$name'
 import { Route as AppSpritesIndexRouteImport } from './routes/_app/sprites.index'
-import { Route as AppTexturePageItemsIndexRouteImport } from './routes/_app/texture-page-items.index'
+import { Route as AppTexturePagesIndexRouteImport } from './routes/_app/texture-pages.index'
 import { Route as AppTileSetsIndexRouteImport } from './routes/_app/tile-sets.index'
 import { Route as AppTimelinesIndexRouteImport } from './routes/_app/timelines.index'
 
@@ -114,12 +114,11 @@ const AppSpritesIndexRoute = AppSpritesIndexRouteImport.update({
   path: '/sprites/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppTexturePageItemsIndexRoute =
-  AppTexturePageItemsIndexRouteImport.update({
-    id: '/texture-page-items/',
-    path: '/texture-page-items/',
-    getParentRoute: () => AppRouteRoute,
-  } as any)
+const AppTexturePagesIndexRoute = AppTexturePagesIndexRouteImport.update({
+  id: '/texture-pages/',
+  path: '/texture-pages/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppTileSetsIndexRoute = AppTileSetsIndexRouteImport.update({
   id: '/tile-sets/',
   path: '/tile-sets/',
@@ -148,7 +147,7 @@ export interface FileRoutesByFullPath {
   '/scripts/': typeof AppScriptsIndexRoute
   '/shaders/': typeof AppShadersIndexRoute
   '/sprites/': typeof AppSpritesIndexRoute
-  '/texture-page-items/': typeof AppTexturePageItemsIndexRoute
+  '/texture-pages/': typeof AppTexturePagesIndexRoute
   '/tile-sets/': typeof AppTileSetsIndexRoute
   '/timelines/': typeof AppTimelinesIndexRoute
 }
@@ -169,7 +168,7 @@ export interface FileRoutesByTo {
   '/scripts': typeof AppScriptsIndexRoute
   '/shaders': typeof AppShadersIndexRoute
   '/sprites': typeof AppSpritesIndexRoute
-  '/texture-page-items': typeof AppTexturePageItemsIndexRoute
+  '/texture-pages': typeof AppTexturePagesIndexRoute
   '/tile-sets': typeof AppTileSetsIndexRoute
   '/timelines': typeof AppTimelinesIndexRoute
 }
@@ -192,7 +191,7 @@ export interface FileRoutesById {
   '/_app/scripts/': typeof AppScriptsIndexRoute
   '/_app/shaders/': typeof AppShadersIndexRoute
   '/_app/sprites/': typeof AppSpritesIndexRoute
-  '/_app/texture-page-items/': typeof AppTexturePageItemsIndexRoute
+  '/_app/texture-pages/': typeof AppTexturePagesIndexRoute
   '/_app/tile-sets/': typeof AppTileSetsIndexRoute
   '/_app/timelines/': typeof AppTimelinesIndexRoute
 }
@@ -215,7 +214,7 @@ export interface FileRouteTypes {
     | '/scripts/'
     | '/shaders/'
     | '/sprites/'
-    | '/texture-page-items/'
+    | '/texture-pages/'
     | '/tile-sets/'
     | '/timelines/'
   fileRoutesByTo: FileRoutesByTo
@@ -236,7 +235,7 @@ export interface FileRouteTypes {
     | '/scripts'
     | '/shaders'
     | '/sprites'
-    | '/texture-page-items'
+    | '/texture-pages'
     | '/tile-sets'
     | '/timelines'
   id:
@@ -258,7 +257,7 @@ export interface FileRouteTypes {
     | '/_app/scripts/'
     | '/_app/shaders/'
     | '/_app/sprites/'
-    | '/_app/texture-page-items/'
+    | '/_app/texture-pages/'
     | '/_app/tile-sets/'
     | '/_app/timelines/'
   fileRoutesById: FileRoutesById
@@ -389,11 +388,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSpritesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/texture-page-items/': {
-      id: '/_app/texture-page-items/'
-      path: '/texture-page-items'
-      fullPath: '/texture-page-items/'
-      preLoaderRoute: typeof AppTexturePageItemsIndexRouteImport
+    '/_app/texture-pages/': {
+      id: '/_app/texture-pages/'
+      path: '/texture-pages'
+      fullPath: '/texture-pages/'
+      preLoaderRoute: typeof AppTexturePagesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/tile-sets/': {
@@ -460,7 +459,7 @@ interface AppRouteRouteChildren {
   AppScriptsIndexRoute: typeof AppScriptsIndexRoute
   AppShadersIndexRoute: typeof AppShadersIndexRoute
   AppSpritesIndexRoute: typeof AppSpritesIndexRoute
-  AppTexturePageItemsIndexRoute: typeof AppTexturePageItemsIndexRoute
+  AppTexturePagesIndexRoute: typeof AppTexturePagesIndexRoute
   AppTileSetsIndexRoute: typeof AppTileSetsIndexRoute
   AppTimelinesIndexRoute: typeof AppTimelinesIndexRoute
 }
@@ -478,7 +477,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppScriptsIndexRoute: AppScriptsIndexRoute,
   AppShadersIndexRoute: AppShadersIndexRoute,
   AppSpritesIndexRoute: AppSpritesIndexRoute,
-  AppTexturePageItemsIndexRoute: AppTexturePageItemsIndexRoute,
+  AppTexturePagesIndexRoute: AppTexturePagesIndexRoute,
   AppTileSetsIndexRoute: AppTileSetsIndexRoute,
   AppTimelinesIndexRoute: AppTimelinesIndexRoute,
 }

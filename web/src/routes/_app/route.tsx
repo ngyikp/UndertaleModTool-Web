@@ -127,8 +127,8 @@ function AppLayout() {
 
 					<TabLinkWithCount
 						count={info.ItemCounts.TexturePageItems}
-						link="/texture-page-items"
-						text="Texture page items"
+						link="/texture-pages"
+						text="Texture pages"
 					/>
 
 					<TabLinkWithCount
