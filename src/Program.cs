@@ -154,6 +154,7 @@ public partial class UndertaleModToolWASM
                 Rooms = Data.Rooms.Count,
                 Extensions = Data.Extensions.Count,
                 TexturePageItems = Data.TexturePageItems.Count,
+                TextureGroupInfo = Data.TextureGroupInfo.Count,
 
                 // could be null if YYC
                 Code = Data.Code?.Count ?? 0,
@@ -226,6 +227,10 @@ public partial class UndertaleModToolWASM
 
             case ModelType.TexturePageItems:
                 model = gameData.TexturePageItems;
+                break;
+
+            case ModelType.TextureGroupInfo:
+                model = gameData.TextureGroupInfo;
                 break;
 
             case ModelType.Code:

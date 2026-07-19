@@ -39,6 +39,7 @@ namespace Serializers
         public int Rooms { get; set; }
         public int Extensions { get; set; }
         public int TexturePageItems { get; set; }
+        public int TextureGroupInfo { get; set; }
 
         public int Code { get; set; }
         public int Variables { get; set; }

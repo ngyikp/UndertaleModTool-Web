@@ -28,6 +28,7 @@ export const GameInfoSchema = z.object({
 		Rooms: z.int(),
 		Extensions: z.int(),
 		TexturePageItems: z.int(),
+		TextureGroupInfo: z.int(),
 
 		Code: z.int(),
 		Variables: z.int(),
