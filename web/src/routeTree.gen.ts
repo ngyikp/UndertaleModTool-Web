@@ -18,6 +18,7 @@ import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
 import { Route as AppCodeNameRouteImport } from './routes/_app/code.$name'
 import { Route as AppEmbeddedTexturesIdRouteImport } from './routes/_app/embedded-textures.$id'
 import { Route as AppFontsIndexRouteImport } from './routes/_app/fonts.index'
+import { Route as AppObjectsIndexRouteImport } from './routes/_app/objects.index'
 import { Route as AppPathsIndexRouteImport } from './routes/_app/paths.index'
 import { Route as AppScriptsIndexRouteImport } from './routes/_app/scripts.index'
 import { Route as AppShadersIndexRouteImport } from './routes/_app/shaders.index'
@@ -70,6 +71,11 @@ const AppFontsIndexRoute = AppFontsIndexRouteImport.update({
   path: '/fonts/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppObjectsIndexRoute = AppObjectsIndexRouteImport.update({
+  id: '/objects/',
+  path: '/objects/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppPathsIndexRoute = AppPathsIndexRouteImport.update({
   id: '/paths/',
   path: '/paths/',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/sounds/$name': typeof AppSoundsNameRoute
   '/fonts/': typeof AppFontsIndexRoute
+  '/objects/': typeof AppObjectsIndexRoute
   '/paths/': typeof AppPathsIndexRoute
   '/scripts/': typeof AppScriptsIndexRoute
   '/shaders/': typeof AppShadersIndexRoute
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/sounds/$name': typeof AppSoundsNameRoute
   '/fonts': typeof AppFontsIndexRoute
+  '/objects': typeof AppObjectsIndexRoute
   '/paths': typeof AppPathsIndexRoute
   '/scripts': typeof AppScriptsIndexRoute
   '/shaders': typeof AppShadersIndexRoute
@@ -152,6 +160,7 @@ export interface FileRoutesById {
   '/_app/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/_app/sounds/$name': typeof AppSoundsNameRoute
   '/_app/fonts/': typeof AppFontsIndexRoute
+  '/_app/objects/': typeof AppObjectsIndexRoute
   '/_app/paths/': typeof AppPathsIndexRoute
   '/_app/scripts/': typeof AppScriptsIndexRoute
   '/_app/shaders/': typeof AppShadersIndexRoute
@@ -171,6 +180,7 @@ export interface FileRouteTypes {
     | '/embedded-textures/$id'
     | '/sounds/$name'
     | '/fonts/'
+    | '/objects/'
     | '/paths/'
     | '/scripts/'
     | '/shaders/'
@@ -188,6 +198,7 @@ export interface FileRouteTypes {
     | '/embedded-textures/$id'
     | '/sounds/$name'
     | '/fonts'
+    | '/objects'
     | '/paths'
     | '/scripts'
     | '/shaders'
@@ -206,6 +217,7 @@ export interface FileRouteTypes {
     | '/_app/embedded-textures/$id'
     | '/_app/sounds/$name'
     | '/_app/fonts/'
+    | '/_app/objects/'
     | '/_app/paths/'
     | '/_app/scripts/'
     | '/_app/shaders/'
@@ -282,6 +294,13 @@ declare module '@tanstack/react-router' {
       path: '/fonts'
       fullPath: '/fonts/'
       preLoaderRoute: typeof AppFontsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/objects/': {
+      id: '/_app/objects/'
+      path: '/objects'
+      fullPath: '/objects/'
+      preLoaderRoute: typeof AppObjectsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/paths/': {
@@ -376,6 +395,7 @@ interface AppRouteRouteChildren {
   AppGeneralInfoRoute: typeof AppGeneralInfoRoute
   AppSoundsRoute: typeof AppSoundsRouteWithChildren
   AppFontsIndexRoute: typeof AppFontsIndexRoute
+  AppObjectsIndexRoute: typeof AppObjectsIndexRoute
   AppPathsIndexRoute: typeof AppPathsIndexRoute
   AppScriptsIndexRoute: typeof AppScriptsIndexRoute
   AppShadersIndexRoute: typeof AppShadersIndexRoute
@@ -390,6 +410,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppGeneralInfoRoute: AppGeneralInfoRoute,
   AppSoundsRoute: AppSoundsRouteWithChildren,
   AppFontsIndexRoute: AppFontsIndexRoute,
+  AppObjectsIndexRoute: AppObjectsIndexRoute,
   AppPathsIndexRoute: AppPathsIndexRoute,
   AppScriptsIndexRoute: AppScriptsIndexRoute,
   AppShadersIndexRoute: AppShadersIndexRoute,

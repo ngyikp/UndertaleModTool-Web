@@ -112,7 +112,9 @@ function GeneralInfo() {
 				<List.Item>
 					<Link to="/timelines">{info.ItemCounts.Timelines} timelines</Link>
 				</List.Item>
-				<List.Item>{info.ItemCounts.GameObjects} game objects</List.Item>
+				<List.Item>
+					<Link to="/objects">{info.ItemCounts.GameObjects} objects</Link>
+				</List.Item>
 				<List.Item>{info.ItemCounts.Rooms} rooms</List.Item>
 				<List.Item>{info.ItemCounts.Extensions} extensions</List.Item>
 				<List.Item>
