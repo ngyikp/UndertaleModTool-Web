@@ -9,9 +9,9 @@ import {useState} from 'react';
 
 import DataFileInput from '../../common/DataFileInput';
 import getGameDisplayName from '../../common/getGameDisplayName';
+import getTileSetsLabel from '../../common/getTileSetsLabel';
 import {useDataStore} from '../../data-store';
 import type {WorkerStatuses} from '../../worker/WorkerMessageTypes';
-import getTileSetsLabel from '../../common/getTileSetsLabel';
 
 function TabLink({link, text}: {link: string; text: string}) {
 	return (
@@ -75,6 +75,12 @@ function AppLayout() {
 						count={info.ItemCounts.Backgrounds}
 						link="/tile-sets"
 						text={getTileSetsLabel(info, true)}
+					/>
+
+					<TabLinkWithCount
+						count={info.ItemCounts.Paths}
+						link="/paths"
+						text="Paths"
 					/>
 
 					<TabLinkWithCount

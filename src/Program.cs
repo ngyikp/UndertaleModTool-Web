@@ -192,6 +192,10 @@ public partial class UndertaleModToolWASM
                 model = gameData.Backgrounds;
                 break;
 
+            case ModelType.Paths:
+                model = gameData.Paths;
+                break;
+
             case ModelType.Code:
                 model = gameData.Code;
                 break;

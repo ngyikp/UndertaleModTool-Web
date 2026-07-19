@@ -96,7 +96,9 @@ function GeneralInfo() {
 						{info.ItemCounts.Backgrounds} {getTileSetsLabel(info)}
 					</Link>
 				</List.Item>
-				<List.Item>{info.ItemCounts.Paths} paths</List.Item>
+				<List.Item>
+					<Link to="/paths">{info.ItemCounts.Paths} paths</Link>
+				</List.Item>
 				<List.Item>{info.ItemCounts.Scripts} scripts</List.Item>
 				<List.Item>{info.ItemCounts.Shaders} shaders</List.Item>
 				<List.Item>{info.ItemCounts.Fonts} fonts</List.Item>
