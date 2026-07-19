@@ -78,7 +78,7 @@ export default function SortableList({
 
 	const hasPages = allResultsList.length > PAGE_SIZE;
 	if (hasPages) {
-		const start = PAGE_SIZE * settings.page;
+		const start = PAGE_SIZE * (settings.page - 1);
 		sortedList = sortedList.slice(start, start + PAGE_SIZE);
 	}
 
@@ -140,7 +140,7 @@ export default function SortableList({
 
 					{hasPages ? (
 						<Pagination
-							total={Math.floor(allResultsList.length / PAGE_SIZE)}
+							total={Math.ceil(allResultsList.length / PAGE_SIZE)}
 							value={settings.page}
 							onChange={(newPage) => {
 								setSettings(id, {
