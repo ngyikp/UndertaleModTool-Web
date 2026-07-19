@@ -9,6 +9,7 @@ import {
 
 import DocumentTitle from '../../common/DocumentTitle';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
+import YycWarningAlert from '../../common/YycWarningAlert';
 import {useDataStore} from '../../data-store';
 import {stopWorker} from '../../worker/worker-handler';
 
@@ -44,25 +45,7 @@ function GeneralInfo() {
 				</Button>
 			</Group>
 
-			{info.IsYYC ? (
-				<Alert
-					variant="light"
-					color="yellow"
-					title={
-						<>
-							This game uses{' '}
-							<a
-								href="https://manual.gamemaker.io/monthly/en/Settings/YoYo_Compiler.htm"
-								target="_blank"
-								rel="noreferrer"
-							>
-								YYC (YoYo Compiler)
-							</a>{' '}
-							which means viewing the source code is not possible.
-						</>
-					}
-				/>
-			) : null}
+			{info.IsYYC ? <YycWarningAlert /> : null}
 
 			{!info.IsDebuggerDisabled ? (
 				<Alert

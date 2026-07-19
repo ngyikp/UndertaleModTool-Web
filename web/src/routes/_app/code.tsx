@@ -9,6 +9,8 @@ import {
 import DocumentTitle from '../../common/DocumentTitle';
 import SidebarAndContentView from '../../common/SidebarAndContentView';
 import SortableList from '../../common/SortableList';
+import YycWarningAlert from '../../common/YycWarningAlert';
+import {useDataStore} from '../../data-store';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
@@ -29,6 +31,8 @@ function useIsOnIndexPage() {
 }
 
 function Code() {
+	const info = useDataStore((state) => state.gameInfo);
+
 	const {data} = useSuspenseQuery(codeQueryOptions);
 
 	const onIndexPage = useIsOnIndexPage();
@@ -43,7 +47,13 @@ function Code() {
 				sidebar={
 					<SortableList
 						id="code"
-						emptyListMessage="This game has no code entries." // todo could be better
+						emptyListMessage={
+							info?.IsYYC ? (
+								<YycWarningAlert />
+							) : (
+								'This game has no code entries.'
+							)
+						}
 						list={data.list}
 						onIndexPage={onIndexPage}
 						render={(item) => {

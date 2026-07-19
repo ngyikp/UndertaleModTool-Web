@@ -225,11 +225,14 @@ public partial class UndertaleModToolWASM
         }
 
         List<string> entries = [];
-        foreach (var entry in model)
+        if (model is not null)
         {
-            if (entry is not null)
+            foreach (var entry in model)
             {
-                entries.Add(entry.Name.Content);
+                if (entry is not null)
+                {
+                    entries.Add(entry.Name.Content);
+                }
             }
         }
 
