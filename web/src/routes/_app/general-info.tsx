@@ -117,7 +117,9 @@ function GeneralInfo() {
 				<List.Item>
 					<Link to="/paths">{info.ItemCounts.Paths} paths</Link>
 				</List.Item>
-				<List.Item>{info.ItemCounts.Scripts} scripts</List.Item>
+				<List.Item>
+					<Link to="/scripts">{info.ItemCounts.Scripts} scripts</Link>
+				</List.Item>
 				<List.Item>{info.ItemCounts.Shaders} shaders</List.Item>
 				<List.Item>{info.ItemCounts.Fonts} fonts</List.Item>
 				<List.Item>{info.ItemCounts.Timelines} timelines</List.Item>

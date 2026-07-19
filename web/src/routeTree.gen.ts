@@ -18,6 +18,7 @@ import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
 import { Route as AppCodeNameRouteImport } from './routes/_app/code.$name'
 import { Route as AppEmbeddedTexturesIdRouteImport } from './routes/_app/embedded-textures.$id'
 import { Route as AppPathsIndexRouteImport } from './routes/_app/paths.index'
+import { Route as AppScriptsIndexRouteImport } from './routes/_app/scripts.index'
 import { Route as AppSoundsNameRouteImport } from './routes/_app/sounds.$name'
 import { Route as AppSpritesIndexRouteImport } from './routes/_app/sprites.index'
 import { Route as AppTileSetsIndexRouteImport } from './routes/_app/tile-sets.index'
@@ -66,6 +67,11 @@ const AppPathsIndexRoute = AppPathsIndexRouteImport.update({
   path: '/paths/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppScriptsIndexRoute = AppScriptsIndexRouteImport.update({
+  id: '/scripts/',
+  path: '/scripts/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppSoundsNameRoute = AppSoundsNameRouteImport.update({
   id: '/$name',
   path: '/$name',
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/sounds/$name': typeof AppSoundsNameRoute
   '/paths/': typeof AppPathsIndexRoute
+  '/scripts/': typeof AppScriptsIndexRoute
   '/sprites/': typeof AppSpritesIndexRoute
   '/tile-sets/': typeof AppTileSetsIndexRoute
 }
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/sounds/$name': typeof AppSoundsNameRoute
   '/paths': typeof AppPathsIndexRoute
+  '/scripts': typeof AppScriptsIndexRoute
   '/sprites': typeof AppSpritesIndexRoute
   '/tile-sets': typeof AppTileSetsIndexRoute
 }
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/_app/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/_app/sounds/$name': typeof AppSoundsNameRoute
   '/_app/paths/': typeof AppPathsIndexRoute
+  '/_app/scripts/': typeof AppScriptsIndexRoute
   '/_app/sprites/': typeof AppSpritesIndexRoute
   '/_app/tile-sets/': typeof AppTileSetsIndexRoute
 }
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/embedded-textures/$id'
     | '/sounds/$name'
     | '/paths/'
+    | '/scripts/'
     | '/sprites/'
     | '/tile-sets/'
   fileRoutesByTo: FileRoutesByTo
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/embedded-textures/$id'
     | '/sounds/$name'
     | '/paths'
+    | '/scripts'
     | '/sprites'
     | '/tile-sets'
   id:
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/_app/embedded-textures/$id'
     | '/_app/sounds/$name'
     | '/_app/paths/'
+    | '/_app/scripts/'
     | '/_app/sprites/'
     | '/_app/tile-sets/'
   fileRoutesById: FileRoutesById
@@ -236,6 +248,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPathsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/scripts/': {
+      id: '/_app/scripts/'
+      path: '/scripts'
+      fullPath: '/scripts/'
+      preLoaderRoute: typeof AppScriptsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/sounds/$name': {
       id: '/_app/sounds/$name'
       path: '/$name'
@@ -300,6 +319,7 @@ interface AppRouteRouteChildren {
   AppGeneralInfoRoute: typeof AppGeneralInfoRoute
   AppSoundsRoute: typeof AppSoundsRouteWithChildren
   AppPathsIndexRoute: typeof AppPathsIndexRoute
+  AppScriptsIndexRoute: typeof AppScriptsIndexRoute
   AppSpritesIndexRoute: typeof AppSpritesIndexRoute
   AppTileSetsIndexRoute: typeof AppTileSetsIndexRoute
 }
@@ -310,6 +330,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppGeneralInfoRoute: AppGeneralInfoRoute,
   AppSoundsRoute: AppSoundsRouteWithChildren,
   AppPathsIndexRoute: AppPathsIndexRoute,
+  AppScriptsIndexRoute: AppScriptsIndexRoute,
   AppSpritesIndexRoute: AppSpritesIndexRoute,
   AppTileSetsIndexRoute: AppTileSetsIndexRoute,
 }
