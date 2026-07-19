@@ -224,6 +224,10 @@ public partial class UndertaleModToolWASM
                 model = gameData.Extensions;
                 break;
 
+            case ModelType.TexturePageItems:
+                model = gameData.TexturePageItems;
+                break;
+
             case ModelType.Code:
                 model = gameData.Code;
                 break;
