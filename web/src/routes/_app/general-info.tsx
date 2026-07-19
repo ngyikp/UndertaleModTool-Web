@@ -76,9 +76,27 @@ function GeneralInfo() {
 			<p>Project name: {info.ProjectName}</p>
 
 			<p>Is GMS2: {info.IsGameMaker2 ? 'Yes' : 'No'}</p>
-			<p>Is YYC: {info.IsYYC ? 'Yes' : 'No'}</p>
+			<p>
+				<a
+					href="https://manual.gamemaker.io/monthly/en/Settings/YoYo_Compiler.htm"
+					target="_blank"
+					rel="noreferrer"
+				>
+					Is YYC:
+				</a>{' '}
+				{info.IsYYC ? 'Yes' : 'No'}
+			</p>
 			<p>Bytecode version: {info.BytecodeVersion}</p>
-			<p>Configuration name: {info.ConfigurationName}</p>
+			<p>
+				<a
+					href="https://manual.gamemaker.io/monthly/en/Settings/Configurations.htm"
+					target="_blank"
+					rel="noreferrer"
+				>
+					Configuration name:
+				</a>{' '}
+				{info.ConfigurationName}
+			</p>
 			<p>
 				Engine version: {info.Version.Major}.{info.Version.Minor}.
 				{info.Version.Release}.{info.Version.Build}
