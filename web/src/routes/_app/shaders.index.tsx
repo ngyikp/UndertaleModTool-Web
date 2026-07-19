@@ -4,7 +4,6 @@ import {createFileRoute} from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
 import SortableList from '../../common/SortableList';
-import {useDataStore} from '../../data-store';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
@@ -16,16 +15,15 @@ const shadersQueryOptions = queryOptions({
 });
 
 function Shaders() {
-	const info = useDataStore((state) => state.gameInfo);
-
 	const {data} = useSuspenseQuery(shadersQueryOptions);
 
 	return (
 		<Stack>
-			{info ? <DocumentTitle text="Shaders" /> : null}
+			<DocumentTitle text="Shaders" />
 
 			<SortableList
 				id="shaders"
+				emptyListMessage="This game has no shaders."
 				list={data.list}
 				onIndexPage={true}
 				render={(item) => {

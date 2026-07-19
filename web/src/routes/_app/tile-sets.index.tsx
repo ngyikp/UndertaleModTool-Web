@@ -24,10 +24,11 @@ function Tilesets() {
 
 	return (
 		<Stack>
-			{info ? <DocumentTitle text={getTileSetsLabel(info, true)} /> : null}
+			<DocumentTitle text={getTileSetsLabel(info, true)} />
 
 			<SortableList
 				id="backgrounds"
+				emptyListMessage={`This game has no ${getTileSetsLabel(info)}.`}
 				list={data.list}
 				onIndexPage={true}
 				render={(item) => {

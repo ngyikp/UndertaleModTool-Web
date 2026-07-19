@@ -43,6 +43,7 @@ function Code() {
 				sidebar={
 					<SortableList
 						id="code"
+						emptyListMessage="This game has no code entries." // todo could be better
 						list={data.list}
 						onIndexPage={onIndexPage}
 						render={(item) => {

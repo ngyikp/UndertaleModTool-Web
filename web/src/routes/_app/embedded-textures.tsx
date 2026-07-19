@@ -43,6 +43,7 @@ function EmbeddedTextures() {
 				sidebar={
 					<SortableList
 						id="embedded-textures"
+						emptyListMessage="This game has no embedded textures."
 						list={data.list}
 						onIndexPage={onIndexPage}
 						render={(item) => {

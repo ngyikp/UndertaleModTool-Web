@@ -19,9 +19,11 @@ export type SortableListSettings = {
 };
 
 const PAGE_SIZE = 2000;
+const DEFAULT_EMPTY_LIST_MESSAGE = <p>This list is empty.</p>;
 
 type Props = Readonly<{
 	id: string; // used to uniquely identify lists on different pages to restore state
+	emptyListMessage?: React.ReactNode;
 	list: string[];
 	onIndexPage: boolean;
 	render: (item: string) => React.ReactNode;
@@ -29,6 +31,7 @@ type Props = Readonly<{
 
 export default function SortableList({
 	id,
+	emptyListMessage = DEFAULT_EMPTY_LIST_MESSAGE,
 	list: allResultsList,
 	onIndexPage,
 	render,
@@ -163,7 +166,7 @@ export default function SortableList({
 					</div>
 				</>
 			) : (
-				<p>This list is empty.</p>
+				emptyListMessage
 			)}
 		</Stack>
 	);

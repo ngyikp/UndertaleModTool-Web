@@ -43,6 +43,7 @@ function Sounds() {
 				sidebar={
 					<SortableList
 						id="sounds"
+						emptyListMessage="This game has no sounds."
 						list={data.list}
 						onIndexPage={onIndexPage}
 						render={(item) => {

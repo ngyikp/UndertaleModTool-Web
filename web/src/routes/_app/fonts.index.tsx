@@ -4,7 +4,6 @@ import {createFileRoute} from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
 import SortableList from '../../common/SortableList';
-import {useDataStore} from '../../data-store';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
@@ -16,16 +15,15 @@ const fontsQueryOptions = queryOptions({
 });
 
 function Fonts() {
-	const info = useDataStore((state) => state.gameInfo);
-
 	const {data} = useSuspenseQuery(fontsQueryOptions);
 
 	return (
 		<Stack>
-			{info ? <DocumentTitle text="Fonts" /> : null}
+			<DocumentTitle text="Fonts" />
 
 			<SortableList
 				id="fonts"
+				emptyListMessage="This game has no fonts."
 				list={data.list}
 				onIndexPage={true}
 				render={(item) => {

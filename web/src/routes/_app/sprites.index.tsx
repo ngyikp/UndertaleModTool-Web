@@ -23,6 +23,7 @@ function Sprites() {
 
 			<SortableList
 				id="sprites"
+				emptyListMessage="This game has no sprites."
 				list={data.list}
 				onIndexPage={true}
 				render={(item) => {

@@ -4,7 +4,6 @@ import {createFileRoute} from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
 import SortableList from '../../common/SortableList';
-import {useDataStore} from '../../data-store';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
@@ -16,16 +15,15 @@ const scriptsQueryOptions = queryOptions({
 });
 
 function Scripts() {
-	const info = useDataStore((state) => state.gameInfo);
-
 	const {data} = useSuspenseQuery(scriptsQueryOptions);
 
 	return (
 		<Stack>
-			{info ? <DocumentTitle text="Scripts" /> : null}
+			<DocumentTitle text="Scripts" />
 
 			<SortableList
 				id="scripts"
+				emptyListMessage="This game has no scripts."
 				list={data.list}
 				onIndexPage={true}
 				render={(item) => {

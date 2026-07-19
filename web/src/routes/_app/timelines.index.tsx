@@ -4,7 +4,6 @@ import {createFileRoute} from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
 import SortableList from '../../common/SortableList';
-import {useDataStore} from '../../data-store';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
@@ -16,16 +15,15 @@ const timelinesQueryOptions = queryOptions({
 });
 
 function Timelines() {
-	const info = useDataStore((state) => state.gameInfo);
-
 	const {data} = useSuspenseQuery(timelinesQueryOptions);
 
 	return (
 		<Stack>
-			{info ? <DocumentTitle text="Timelines" /> : null}
+			<DocumentTitle text="Timelines" />
 
 			<SortableList
 				id="Timelines"
+				emptyListMessage="This game has no timelines."
 				list={data.list}
 				onIndexPage={true}
 				render={(item) => {

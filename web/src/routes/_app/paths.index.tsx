@@ -4,7 +4,6 @@ import {createFileRoute} from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
 import SortableList from '../../common/SortableList';
-import {useDataStore} from '../../data-store';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
 
@@ -16,16 +15,15 @@ const pathsQueryOptions = queryOptions({
 });
 
 function Paths() {
-	const info = useDataStore((state) => state.gameInfo);
-
 	const {data} = useSuspenseQuery(pathsQueryOptions);
 
 	return (
 		<Stack>
-			{info ? <DocumentTitle text="Paths" /> : null}
+			<DocumentTitle text="Paths" />
 
 			<SortableList
 				id="paths"
+				emptyListMessage="This game has no paths."
 				list={data.list}
 				onIndexPage={true}
 				render={(item) => {
