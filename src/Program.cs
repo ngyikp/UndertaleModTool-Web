@@ -154,7 +154,7 @@ public partial class UndertaleModToolWASM
                 Rooms = Data.Rooms.Count,
                 Extensions = Data.Extensions.Count,
                 TexturePageItems = Data.TexturePageItems.Count,
-                TextureGroupInfo = Data.TextureGroupInfo.Count,
+                TextureGroupInfo = Data.TextureGroupInfo?.Count ?? 0, // some old games don't have this
 
                 // could be null if YYC
                 Code = Data.Code?.Count ?? 0,
