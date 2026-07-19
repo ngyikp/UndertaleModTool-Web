@@ -208,6 +208,10 @@ public partial class UndertaleModToolWASM
                 model = gameData.Fonts;
                 break;
 
+            case ModelType.Timelines:
+                model = gameData.Timelines;
+                break;
+
             case ModelType.Code:
                 model = gameData.Code;
                 break;

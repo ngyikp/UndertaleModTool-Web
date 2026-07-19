@@ -102,6 +102,12 @@ function AppLayout() {
 					/>
 
 					<TabLinkWithCount
+						count={info.ItemCounts.Timelines}
+						link="/timelines"
+						text="Timelines"
+					/>
+
+					<TabLinkWithCount
 						count={info.ItemCounts.Code}
 						link="/code"
 						text="Code"

@@ -24,6 +24,7 @@ import { Route as AppShadersIndexRouteImport } from './routes/_app/shaders.index
 import { Route as AppSoundsNameRouteImport } from './routes/_app/sounds.$name'
 import { Route as AppSpritesIndexRouteImport } from './routes/_app/sprites.index'
 import { Route as AppTileSetsIndexRouteImport } from './routes/_app/tile-sets.index'
+import { Route as AppTimelinesIndexRouteImport } from './routes/_app/timelines.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -99,6 +100,11 @@ const AppTileSetsIndexRoute = AppTileSetsIndexRouteImport.update({
   path: '/tile-sets/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppTimelinesIndexRoute = AppTimelinesIndexRouteImport.update({
+  id: '/timelines/',
+  path: '/timelines/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -115,6 +121,7 @@ export interface FileRoutesByFullPath {
   '/shaders/': typeof AppShadersIndexRoute
   '/sprites/': typeof AppSpritesIndexRoute
   '/tile-sets/': typeof AppTileSetsIndexRoute
+  '/timelines/': typeof AppTimelinesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByTo {
   '/shaders': typeof AppShadersIndexRoute
   '/sprites': typeof AppSpritesIndexRoute
   '/tile-sets': typeof AppTileSetsIndexRoute
+  '/timelines': typeof AppTimelinesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -149,6 +157,7 @@ export interface FileRoutesById {
   '/_app/shaders/': typeof AppShadersIndexRoute
   '/_app/sprites/': typeof AppSpritesIndexRoute
   '/_app/tile-sets/': typeof AppTileSetsIndexRoute
+  '/_app/timelines/': typeof AppTimelinesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
     | '/shaders/'
     | '/sprites/'
     | '/tile-sets/'
+    | '/timelines/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -183,6 +193,7 @@ export interface FileRouteTypes {
     | '/shaders'
     | '/sprites'
     | '/tile-sets'
+    | '/timelines'
   id:
     | '__root__'
     | '/'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/_app/shaders/'
     | '/_app/sprites/'
     | '/_app/tile-sets/'
+    | '/_app/timelines/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -314,6 +326,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTileSetsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/timelines/': {
+      id: '/_app/timelines/'
+      path: '/timelines'
+      fullPath: '/timelines/'
+      preLoaderRoute: typeof AppTimelinesIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
   }
 }
 
@@ -362,6 +381,7 @@ interface AppRouteRouteChildren {
   AppShadersIndexRoute: typeof AppShadersIndexRoute
   AppSpritesIndexRoute: typeof AppSpritesIndexRoute
   AppTileSetsIndexRoute: typeof AppTileSetsIndexRoute
+  AppTimelinesIndexRoute: typeof AppTimelinesIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
@@ -375,6 +395,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppShadersIndexRoute: AppShadersIndexRoute,
   AppSpritesIndexRoute: AppSpritesIndexRoute,
   AppTileSetsIndexRoute: AppTileSetsIndexRoute,
+  AppTimelinesIndexRoute: AppTimelinesIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
