@@ -6,6 +6,7 @@ import {
 	Select,
 	Stack,
 	TextInput,
+	Tooltip,
 } from '@mantine/core';
 
 import {useDataStore} from '../data-store';
@@ -116,12 +117,13 @@ export default function SortableList({
 						}}
 						rightSection={
 							settings.filter !== '' ? (
-								<Input.ClearButton
-									title="Clear"
-									onClick={() => {
-										setFilter('');
-									}}
-								/>
+								<Tooltip label="Clear">
+									<Input.ClearButton
+										onClick={() => {
+											setFilter('');
+										}}
+									/>
+								</Tooltip>
 							) : undefined
 						}
 						rightSectionPointerEvents="auto"
