@@ -53,19 +53,19 @@ export default function SortableList({
 		});
 	}
 
-	let sortedList = allResultsList;
+	let filteredList = allResultsList;
 	if (settings.filter) {
 		const filterCompare = settings.filter
 			.trim()
 			.replace(/ /g, '_')
 			.toLowerCase();
 
-		sortedList = sortedList.filter((item) => {
+		filteredList = filteredList.filter((item) => {
 			return item.toLowerCase().includes(filterCompare);
 		});
 	}
 	if (settings.orderBy !== 'DEFAULT') {
-		sortedList = sortedList.concat().sort((a, b) => {
+		filteredList = filteredList.concat().sort((a, b) => {
 			if (a < b) {
 				return settings.orderBy === 'A_TO_Z' ? -1 : 1;
 			} else if (a > b) {
@@ -76,11 +76,11 @@ export default function SortableList({
 		});
 	}
 
-	const hasPages = allResultsList.length > PAGE_SIZE;
-	if (hasPages) {
-		const start = PAGE_SIZE * (settings.page - 1);
-		sortedList = sortedList.slice(start, start + PAGE_SIZE);
-	}
+	const hasPages = filteredList.length > PAGE_SIZE;
+	const startIndex = PAGE_SIZE * (settings.page - 1);
+	const onePageList = hasPages
+		? filteredList.slice(startIndex, startIndex + PAGE_SIZE)
+		: filteredList;
 
 	return (
 		<Stack>
@@ -130,17 +130,27 @@ export default function SortableList({
 				</Group>
 			) : null}
 
-			{sortedList.length > 0 ? (
+			{onePageList.length > 0 ? (
 				<>
+					<p>
+						{hasPages
+							? (startIndex + 1).toString() +
+								'-' +
+								(startIndex + onePageList.length).toString() +
+								' of '
+							: ''}
+						{filteredList.length} items
+					</p>
+
 					<ul className={styles.list}>
-						{sortedList.map((item) => {
+						{onePageList.map((item) => {
 							return <li key={item}>{render(item)}</li>;
 						})}
 					</ul>
 
 					{hasPages ? (
 						<Pagination
-							total={Math.ceil(allResultsList.length / PAGE_SIZE)}
+							total={Math.ceil(filteredList.length / PAGE_SIZE)}
 							value={settings.page}
 							onChange={(newPage) => {
 								setSettings(id, {
