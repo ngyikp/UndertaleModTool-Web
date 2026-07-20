@@ -160,6 +160,12 @@ function GeneralInfo() {
 					</Link>
 				</List.Item>
 
+				<List.Item>
+					<Link to="/embedded-images">
+						{info.ItemCounts.EmbeddedImages} embedded images
+					</Link>
+				</List.Item>
+
 				<List.Item>{info.ItemCounts.EmbeddedAudio} embedded audio</List.Item>
 
 				{!info.IsYYC ? (

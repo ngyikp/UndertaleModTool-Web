@@ -111,6 +111,9 @@ namespace Serializers
         /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedTextures"/>
         public int EmbeddedTextures { get; set; }
 
+        /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedImages"/>
+        public int EmbeddedImages { get; set; }
+
         /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedAudio"/>
         public int EmbeddedAudio { get; set; }
     }

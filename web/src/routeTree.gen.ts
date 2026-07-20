@@ -18,6 +18,7 @@ import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
 import { Route as AppAudioGroupsIndexRouteImport } from './routes/_app/audio-groups.index'
 import { Route as AppCodeLocalsIndexRouteImport } from './routes/_app/code-locals.index'
 import { Route as AppCodeNameRouteImport } from './routes/_app/code.$name'
+import { Route as AppEmbeddedImagesIndexRouteImport } from './routes/_app/embedded-images.index'
 import { Route as AppEmbeddedTexturesIdRouteImport } from './routes/_app/embedded-textures.$id'
 import { Route as AppExtensionsIndexRouteImport } from './routes/_app/extensions.index'
 import { Route as AppFontsIndexRouteImport } from './routes/_app/fonts.index'
@@ -79,6 +80,11 @@ const AppCodeNameRoute = AppCodeNameRouteImport.update({
   id: '/$name',
   path: '/$name',
   getParentRoute: () => AppCodeRoute,
+} as any)
+const AppEmbeddedImagesIndexRoute = AppEmbeddedImagesIndexRouteImport.update({
+  id: '/embedded-images/',
+  path: '/embedded-images/',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppEmbeddedTexturesIdRoute = AppEmbeddedTexturesIdRouteImport.update({
   id: '/$id',
@@ -177,6 +183,7 @@ export interface FileRoutesByFullPath {
   '/sounds/$name': typeof AppSoundsNameRoute
   '/audio-groups/': typeof AppAudioGroupsIndexRoute
   '/code-locals/': typeof AppCodeLocalsIndexRoute
+  '/embedded-images/': typeof AppEmbeddedImagesIndexRoute
   '/extensions/': typeof AppExtensionsIndexRoute
   '/fonts/': typeof AppFontsIndexRoute
   '/functions/': typeof AppFunctionsIndexRoute
@@ -204,6 +211,7 @@ export interface FileRoutesByTo {
   '/sounds/$name': typeof AppSoundsNameRoute
   '/audio-groups': typeof AppAudioGroupsIndexRoute
   '/code-locals': typeof AppCodeLocalsIndexRoute
+  '/embedded-images': typeof AppEmbeddedImagesIndexRoute
   '/extensions': typeof AppExtensionsIndexRoute
   '/fonts': typeof AppFontsIndexRoute
   '/functions': typeof AppFunctionsIndexRoute
@@ -233,6 +241,7 @@ export interface FileRoutesById {
   '/_app/sounds/$name': typeof AppSoundsNameRoute
   '/_app/audio-groups/': typeof AppAudioGroupsIndexRoute
   '/_app/code-locals/': typeof AppCodeLocalsIndexRoute
+  '/_app/embedded-images/': typeof AppEmbeddedImagesIndexRoute
   '/_app/extensions/': typeof AppExtensionsIndexRoute
   '/_app/fonts/': typeof AppFontsIndexRoute
   '/_app/functions/': typeof AppFunctionsIndexRoute
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
     | '/sounds/$name'
     | '/audio-groups/'
     | '/code-locals/'
+    | '/embedded-images/'
     | '/extensions/'
     | '/fonts/'
     | '/functions/'
@@ -289,6 +299,7 @@ export interface FileRouteTypes {
     | '/sounds/$name'
     | '/audio-groups'
     | '/code-locals'
+    | '/embedded-images'
     | '/extensions'
     | '/fonts'
     | '/functions'
@@ -317,6 +328,7 @@ export interface FileRouteTypes {
     | '/_app/sounds/$name'
     | '/_app/audio-groups/'
     | '/_app/code-locals/'
+    | '/_app/embedded-images/'
     | '/_app/extensions/'
     | '/_app/fonts/'
     | '/_app/functions/'
@@ -403,6 +415,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/code/$name'
       preLoaderRoute: typeof AppCodeNameRouteImport
       parentRoute: typeof AppCodeRoute
+    }
+    '/_app/embedded-images/': {
+      id: '/_app/embedded-images/'
+      path: '/embedded-images'
+      fullPath: '/embedded-images/'
+      preLoaderRoute: typeof AppEmbeddedImagesIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/embedded-textures/$id': {
       id: '/_app/embedded-textures/$id'
@@ -567,6 +586,7 @@ interface AppRouteRouteChildren {
   AppSoundsRoute: typeof AppSoundsRouteWithChildren
   AppAudioGroupsIndexRoute: typeof AppAudioGroupsIndexRoute
   AppCodeLocalsIndexRoute: typeof AppCodeLocalsIndexRoute
+  AppEmbeddedImagesIndexRoute: typeof AppEmbeddedImagesIndexRoute
   AppExtensionsIndexRoute: typeof AppExtensionsIndexRoute
   AppFontsIndexRoute: typeof AppFontsIndexRoute
   AppFunctionsIndexRoute: typeof AppFunctionsIndexRoute
@@ -591,6 +611,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppSoundsRoute: AppSoundsRouteWithChildren,
   AppAudioGroupsIndexRoute: AppAudioGroupsIndexRoute,
   AppCodeLocalsIndexRoute: AppCodeLocalsIndexRoute,
+  AppEmbeddedImagesIndexRoute: AppEmbeddedImagesIndexRoute,
   AppExtensionsIndexRoute: AppExtensionsIndexRoute,
   AppFontsIndexRoute: AppFontsIndexRoute,
   AppFunctionsIndexRoute: AppFunctionsIndexRoute,

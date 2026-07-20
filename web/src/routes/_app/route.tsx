@@ -178,6 +178,12 @@ function AppLayout() {
 						link="/embedded-textures"
 						text="Embedded textures"
 					/>
+
+					<TabLinkWithCount
+						count={info.ItemCounts.EmbeddedImages}
+						link="/embedded-images"
+						text="Embedded images"
+					/>
 				</Tabs.List>
 			</Tabs>
 
