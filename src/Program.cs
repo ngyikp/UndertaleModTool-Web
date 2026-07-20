@@ -339,6 +339,11 @@ public partial class UndertaleModToolWASM
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
+        if (gameData.Code is null)
+        {
+            throw new Exception("This game has no code entries.");
+        }
+
         UndertaleCode code = gameData.Code.First(code => name == code.Name.Content);
 
         CodeInfo codeInfo = new();
