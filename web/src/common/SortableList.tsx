@@ -23,8 +23,12 @@ const PAGE_SIZE = 2000;
 const DEFAULT_EMPTY_LIST_MESSAGE = <p>This list is empty.</p>;
 
 type Props = Readonly<{
-	id: string; // used to uniquely identify lists on different pages to restore state
+	// Used to uniquely identify lists on different pages to restore state
+	id: string;
 	emptyListMessage?: React.ReactNode;
+	// Some lists (e.g. variables) have non-unique items, we can't use them for unique keys
+	// so fall back to array index (very inefficient)
+	itemsAreNonUnique?: boolean;
 	list: string[];
 	onIndexPage: boolean;
 	render: (item: string) => React.ReactNode;
@@ -33,6 +37,7 @@ type Props = Readonly<{
 export default function SortableList({
 	id,
 	emptyListMessage = DEFAULT_EMPTY_LIST_MESSAGE,
+	itemsAreNonUnique = false,
 	list: allResultsList,
 	onIndexPage,
 	render,
@@ -145,8 +150,11 @@ export default function SortableList({
 					</p>
 
 					<ul className={styles.list}>
-						{onePageList.map((item) => {
-							return <li key={item}>{render(item)}</li>;
+						{onePageList.map((item, index) => {
+							return (
+								// eslint-disable-next-line @eslint-react/no-array-index-key
+								<li key={!itemsAreNonUnique ? item : index}>{render(item)}</li>
+							);
 						})}
 					</ul>
 

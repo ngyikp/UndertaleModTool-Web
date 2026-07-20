@@ -150,6 +150,12 @@ function AppLayout() {
 					/>
 
 					<TabLinkWithCount
+						count={info.ItemCounts.Variables}
+						link="/variables"
+						text="Variables"
+					/>
+
+					<TabLinkWithCount
 						count={info.ItemCounts.EmbeddedTextures}
 						link="/embedded-textures"
 						text="Embedded textures"

@@ -89,56 +89,71 @@ function GeneralInfo() {
 				<List.Item>
 					<Link to="/sprites">{info.ItemCounts.Sprites} sprites</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/sounds">{info.ItemCounts.Sounds} sounds</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/tile-sets">
 						{info.ItemCounts.Backgrounds} {getTileSetsLabel(info)}
 					</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/paths">{info.ItemCounts.Paths} paths</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/scripts">{info.ItemCounts.Scripts} scripts</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/shaders">{info.ItemCounts.Shaders} shaders</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/fonts">{info.ItemCounts.Fonts} fonts</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/timelines">{info.ItemCounts.Timelines} timelines</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/objects">{info.ItemCounts.GameObjects} objects</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/rooms">{info.ItemCounts.Rooms} rooms</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/extensions">{info.ItemCounts.Extensions} extensions</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/texture-pages">
 						{info.ItemCounts.TexturePageItems} texture pages
 					</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/texture-groups">
 						{info.ItemCounts.TextureGroupInfo} texture groups
 					</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/strings">{info.ItemCounts.Strings} strings</Link>
 				</List.Item>
+
 				<List.Item>
 					<Link to="/embedded-textures">
 						{info.ItemCounts.EmbeddedTextures} embedded textures
 					</Link>
 				</List.Item>
+
 				<List.Item>{info.ItemCounts.EmbeddedAudio} embedded audio</List.Item>
 
 				{!info.IsYYC ? (
@@ -146,8 +161,13 @@ function GeneralInfo() {
 						<List.Item>
 							<Link to="/code">{info.ItemCounts.Code} code entries</Link>
 						</List.Item>
-						<List.Item>{info.ItemCounts.Variables} variables</List.Item>
+
+						<List.Item>
+							<Link to="/variables">{info.ItemCounts.Variables} variables</Link>
+						</List.Item>
+
 						<List.Item>{info.ItemCounts.Functions} functions</List.Item>
+
 						{info.ItemCounts.CodeLocals > 0 ? (
 							<List.Item>{info.ItemCounts.CodeLocals} code locals</List.Item>
 						) : null}

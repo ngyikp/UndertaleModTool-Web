@@ -31,6 +31,7 @@ import { Route as AppTextureGroupsIndexRouteImport } from './routes/_app/texture
 import { Route as AppTexturePagesIndexRouteImport } from './routes/_app/texture-pages.index'
 import { Route as AppTileSetsIndexRouteImport } from './routes/_app/tile-sets.index'
 import { Route as AppTimelinesIndexRouteImport } from './routes/_app/timelines.index'
+import { Route as AppVariablesIndexRouteImport } from './routes/_app/variables.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -141,6 +142,11 @@ const AppTimelinesIndexRoute = AppTimelinesIndexRouteImport.update({
   path: '/timelines/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppVariablesIndexRoute = AppVariablesIndexRouteImport.update({
+  id: '/variables/',
+  path: '/variables/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -164,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/texture-pages/': typeof AppTexturePagesIndexRoute
   '/tile-sets/': typeof AppTileSetsIndexRoute
   '/timelines/': typeof AppTimelinesIndexRoute
+  '/variables/': typeof AppVariablesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -187,6 +194,7 @@ export interface FileRoutesByTo {
   '/texture-pages': typeof AppTexturePagesIndexRoute
   '/tile-sets': typeof AppTileSetsIndexRoute
   '/timelines': typeof AppTimelinesIndexRoute
+  '/variables': typeof AppVariablesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -212,6 +220,7 @@ export interface FileRoutesById {
   '/_app/texture-pages/': typeof AppTexturePagesIndexRoute
   '/_app/tile-sets/': typeof AppTileSetsIndexRoute
   '/_app/timelines/': typeof AppTimelinesIndexRoute
+  '/_app/variables/': typeof AppVariablesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -237,6 +246,7 @@ export interface FileRouteTypes {
     | '/texture-pages/'
     | '/tile-sets/'
     | '/timelines/'
+    | '/variables/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -260,6 +270,7 @@ export interface FileRouteTypes {
     | '/texture-pages'
     | '/tile-sets'
     | '/timelines'
+    | '/variables'
   id:
     | '__root__'
     | '/'
@@ -284,6 +295,7 @@ export interface FileRouteTypes {
     | '/_app/texture-pages/'
     | '/_app/tile-sets/'
     | '/_app/timelines/'
+    | '/_app/variables/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -447,6 +459,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTimelinesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/variables/': {
+      id: '/_app/variables/'
+      path: '/variables'
+      fullPath: '/variables/'
+      preLoaderRoute: typeof AppVariablesIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
   }
 }
 
@@ -502,6 +521,7 @@ interface AppRouteRouteChildren {
   AppTexturePagesIndexRoute: typeof AppTexturePagesIndexRoute
   AppTileSetsIndexRoute: typeof AppTileSetsIndexRoute
   AppTimelinesIndexRoute: typeof AppTimelinesIndexRoute
+  AppVariablesIndexRoute: typeof AppVariablesIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
@@ -522,6 +542,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppTexturePagesIndexRoute: AppTexturePagesIndexRoute,
   AppTileSetsIndexRoute: AppTileSetsIndexRoute,
   AppTimelinesIndexRoute: AppTimelinesIndexRoute,
+  AppVariablesIndexRoute: AppVariablesIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

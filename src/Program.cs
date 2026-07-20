@@ -237,12 +237,16 @@ public partial class UndertaleModToolWASM
                 model = gameData.Strings;
                 break;
 
+            case ModelType.EmbeddedTextures:
+                model = gameData.EmbeddedTextures;
+                break;
+
             case ModelType.Code:
                 model = gameData.Code;
                 break;
 
-            case ModelType.EmbeddedTextures:
-                model = gameData.EmbeddedTextures;
+            case ModelType.Variables:
+                model = gameData.Variables;
                 break;
 
             default:
