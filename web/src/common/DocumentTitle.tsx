@@ -13,7 +13,10 @@ export default function DocumentTitle({text}: Props) {
 	if (info) {
 		segments.push(getGameDisplayName(info));
 	}
-	segments.push('UndertaleModTool on the Web');
+	segments.push(
+		(import.meta.env.MODE === 'development' ? '(DEV) ' : '') +
+			'UndertaleModTool on the Web',
+	);
 
 	return <title>{segments.filter(Boolean).join(' - ')}</title>;
 }
