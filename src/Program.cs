@@ -112,9 +112,19 @@ public partial class UndertaleModToolWASM
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleTexturePageItem))]
     public static string ReadFile(string fileName)
     {
-        FileStream fs = new FileStream(fileName, FileMode.Open);
+        UndertaleData gameData;
+        try
+        {
+            using (FileStream fs = new FileStream(fileName, FileMode.Open))
+            {
+                gameData = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
+            }
+        }
+        finally
+        {
+            File.Delete(fileName); 
+        }
 
-        UndertaleData gameData = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
         DataHolder.SetData(gameData);
 
         return JsonSerializer.Serialize(GetGameInfo(gameData), GameInfoContext.Default.GameInfo);
