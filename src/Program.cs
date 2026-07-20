@@ -178,7 +178,7 @@ public partial class UndertaleModToolWASM
 
         ModelType modelType = Enum.Parse<ModelType>(modelTypeInt.ToString());
 
-        IEnumerable<UndertaleNamedResource> model;
+        IEnumerable<UndertaleResource> model;
         switch (modelType)
         {
             case ModelType.Sprites:
@@ -233,6 +233,10 @@ public partial class UndertaleModToolWASM
                 model = gameData.TextureGroupInfo;
                 break;
 
+            case ModelType.Strings:
+                model = gameData.Strings;
+                break;
+
             case ModelType.Code:
                 model = gameData.Code;
                 break;
@@ -252,7 +256,19 @@ public partial class UndertaleModToolWASM
             {
                 if (entry is not null)
                 {
-                    entries.Add(entry.Name.Content);
+                    if (entry is UndertaleNamedResource namedEntry)
+                    {
+                        entries.Add(namedEntry.Name.Content);
+                    }
+                    else if (entry is Underanalyzer.IGMString gmStringEntry)
+                    {
+                        // UndertaleString goes here
+                        entries.Add(gmStringEntry.Content);
+                    }
+                    else
+                    {
+                        throw new NotImplementedException($"Model type {modelType} does not have a valid name implementation");
+                    }
                 }
             }
         }

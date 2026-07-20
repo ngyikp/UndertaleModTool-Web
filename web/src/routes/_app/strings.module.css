@@ -1,0 +1,4 @@
+.item {
+	font-family: var(--mantine-font-family-monospace);
+	white-space: pre-wrap;
+}

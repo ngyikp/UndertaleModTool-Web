@@ -26,6 +26,7 @@ import { Route as AppScriptsIndexRouteImport } from './routes/_app/scripts.index
 import { Route as AppShadersIndexRouteImport } from './routes/_app/shaders.index'
 import { Route as AppSoundsNameRouteImport } from './routes/_app/sounds.$name'
 import { Route as AppSpritesIndexRouteImport } from './routes/_app/sprites.index'
+import { Route as AppStringsIndexRouteImport } from './routes/_app/strings.index'
 import { Route as AppTextureGroupsIndexRouteImport } from './routes/_app/texture-groups.index'
 import { Route as AppTexturePagesIndexRouteImport } from './routes/_app/texture-pages.index'
 import { Route as AppTileSetsIndexRouteImport } from './routes/_app/tile-sets.index'
@@ -115,6 +116,11 @@ const AppSpritesIndexRoute = AppSpritesIndexRouteImport.update({
   path: '/sprites/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppStringsIndexRoute = AppStringsIndexRouteImport.update({
+  id: '/strings/',
+  path: '/strings/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppTextureGroupsIndexRoute = AppTextureGroupsIndexRouteImport.update({
   id: '/texture-groups/',
   path: '/texture-groups/',
@@ -153,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/scripts/': typeof AppScriptsIndexRoute
   '/shaders/': typeof AppShadersIndexRoute
   '/sprites/': typeof AppSpritesIndexRoute
+  '/strings/': typeof AppStringsIndexRoute
   '/texture-groups/': typeof AppTextureGroupsIndexRoute
   '/texture-pages/': typeof AppTexturePagesIndexRoute
   '/tile-sets/': typeof AppTileSetsIndexRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByTo {
   '/scripts': typeof AppScriptsIndexRoute
   '/shaders': typeof AppShadersIndexRoute
   '/sprites': typeof AppSpritesIndexRoute
+  '/strings': typeof AppStringsIndexRoute
   '/texture-groups': typeof AppTextureGroupsIndexRoute
   '/texture-pages': typeof AppTexturePagesIndexRoute
   '/tile-sets': typeof AppTileSetsIndexRoute
@@ -199,6 +207,7 @@ export interface FileRoutesById {
   '/_app/scripts/': typeof AppScriptsIndexRoute
   '/_app/shaders/': typeof AppShadersIndexRoute
   '/_app/sprites/': typeof AppSpritesIndexRoute
+  '/_app/strings/': typeof AppStringsIndexRoute
   '/_app/texture-groups/': typeof AppTextureGroupsIndexRoute
   '/_app/texture-pages/': typeof AppTexturePagesIndexRoute
   '/_app/tile-sets/': typeof AppTileSetsIndexRoute
@@ -223,6 +232,7 @@ export interface FileRouteTypes {
     | '/scripts/'
     | '/shaders/'
     | '/sprites/'
+    | '/strings/'
     | '/texture-groups/'
     | '/texture-pages/'
     | '/tile-sets/'
@@ -245,6 +255,7 @@ export interface FileRouteTypes {
     | '/scripts'
     | '/shaders'
     | '/sprites'
+    | '/strings'
     | '/texture-groups'
     | '/texture-pages'
     | '/tile-sets'
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/_app/scripts/'
     | '/_app/shaders/'
     | '/_app/sprites/'
+    | '/_app/strings/'
     | '/_app/texture-groups/'
     | '/_app/texture-pages/'
     | '/_app/tile-sets/'
@@ -400,6 +412,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSpritesIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/strings/': {
+      id: '/_app/strings/'
+      path: '/strings'
+      fullPath: '/strings/'
+      preLoaderRoute: typeof AppStringsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/texture-groups/': {
       id: '/_app/texture-groups/'
       path: '/texture-groups'
@@ -478,6 +497,7 @@ interface AppRouteRouteChildren {
   AppScriptsIndexRoute: typeof AppScriptsIndexRoute
   AppShadersIndexRoute: typeof AppShadersIndexRoute
   AppSpritesIndexRoute: typeof AppSpritesIndexRoute
+  AppStringsIndexRoute: typeof AppStringsIndexRoute
   AppTextureGroupsIndexRoute: typeof AppTextureGroupsIndexRoute
   AppTexturePagesIndexRoute: typeof AppTexturePagesIndexRoute
   AppTileSetsIndexRoute: typeof AppTileSetsIndexRoute
@@ -497,6 +517,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppScriptsIndexRoute: AppScriptsIndexRoute,
   AppShadersIndexRoute: AppShadersIndexRoute,
   AppSpritesIndexRoute: AppSpritesIndexRoute,
+  AppStringsIndexRoute: AppStringsIndexRoute,
   AppTextureGroupsIndexRoute: AppTextureGroupsIndexRoute,
   AppTexturePagesIndexRoute: AppTexturePagesIndexRoute,
   AppTileSetsIndexRoute: AppTileSetsIndexRoute,

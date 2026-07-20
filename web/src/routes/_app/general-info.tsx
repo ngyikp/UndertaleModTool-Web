@@ -131,7 +131,9 @@ function GeneralInfo() {
 						{info.ItemCounts.TextureGroupInfo} texture groups
 					</Link>
 				</List.Item>
-				<List.Item>{info.ItemCounts.Strings} strings</List.Item>
+				<List.Item>
+					<Link to="/strings">{info.ItemCounts.Strings} strings</Link>
+				</List.Item>
 				<List.Item>
 					<Link to="/embedded-textures">
 						{info.ItemCounts.EmbeddedTextures} embedded textures
