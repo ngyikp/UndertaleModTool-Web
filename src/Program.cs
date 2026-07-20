@@ -177,6 +177,7 @@ public partial class UndertaleModToolWASM
                 EmbeddedImages = Data.EmbeddedImages.Count,
                 EmbeddedAudio = Data.EmbeddedAudio.Count,
                 ParticleSystems = Data.ParticleSystems.Count,
+                ParticleSystemEmitters = Data.ParticleSystemEmitters.Count,
             }
         };
     }
@@ -283,6 +284,10 @@ public partial class UndertaleModToolWASM
 
             case ModelType.ParticleSystems:
                 model = gameData.ParticleSystems;
+                break;
+
+            case ModelType.ParticleSystemEmitters:
+                model = gameData.ParticleSystemEmitters;
                 break;
 
             default:

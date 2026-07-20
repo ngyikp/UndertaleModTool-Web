@@ -119,6 +119,9 @@ namespace Serializers
 
         /// <seealso cref="UndertaleModLib.UndertaleData.ParticleSystems"/>
         public int ParticleSystems { get; set; }
+
+        /// <seealso cref="UndertaleModLib.UndertaleData.ParticleSystemEmitters"/>
+        public int ParticleSystemEmitters { get; set; }
     }
 
     [JsonSerializable(typeof(GameInfo))]

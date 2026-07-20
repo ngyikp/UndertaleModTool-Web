@@ -196,6 +196,12 @@ function AppLayout() {
 						link="/particle-systems"
 						text="Particle systems"
 					/>
+
+					<TabLinkWithCount
+						count={info.ItemCounts.ParticleSystemEmitters}
+						link="/particle-system-emitters"
+						text="Particle system emitters"
+					/>
 				</Tabs.List>
 			</Tabs>
 
