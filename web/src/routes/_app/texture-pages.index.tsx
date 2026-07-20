@@ -23,7 +23,7 @@ function TexturePages() {
 			<DocumentTitle text="Texture pages" />
 
 			<SortableList
-				id="paths"
+				id="texture-pages"
 				emptyListMessage="This game has no texture pages."
 				list={data.list}
 				onIndexPage={true}

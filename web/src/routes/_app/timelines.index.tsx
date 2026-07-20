@@ -22,7 +22,7 @@ function Timelines() {
 			<DocumentTitle text="Timelines" />
 
 			<SortableList
-				id="Timelines"
+				id="timelines"
 				emptyListMessage="This game has no timelines."
 				list={data.list}
 				onIndexPage={true}

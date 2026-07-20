@@ -26,7 +26,7 @@ function CodeLocals() {
 			<DocumentTitle text="Code locals" />
 
 			<SortableList
-				id="paths"
+				id="code-locals"
 				emptyListMessage={
 					info?.IsYYC ? <YycWarningAlert /> : 'This game has no code locals.'
 				}

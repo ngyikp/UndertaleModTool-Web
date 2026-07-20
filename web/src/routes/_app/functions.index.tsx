@@ -26,7 +26,7 @@ function Functions() {
 			<DocumentTitle text="Functions" />
 
 			<SortableList
-				id="paths"
+				id="functions"
 				emptyListMessage={
 					info?.IsYYC ? <YycWarningAlert /> : 'This game has no functions.'
 				}
