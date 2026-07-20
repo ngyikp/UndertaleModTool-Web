@@ -46,7 +46,7 @@ Use [Prettier](https://prettier.io). Run `npm run prettier -- --write` to auto-f
 
 ### Type-checking
 
-Use [TypeScript](https://www.typescriptlang.org). Run `node npm run tsc -- -b` to see errors.
+Use [TypeScript](https://www.typescriptlang.org). Run `npm run tsc -- -b` to see errors.
 
 ### Linting
 
