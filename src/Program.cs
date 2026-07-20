@@ -164,21 +164,21 @@ public partial class UndertaleModToolWASM
                 Rooms = Data.Rooms.Count,
                 Extensions = Data.Extensions.Count,
                 TexturePageItems = Data.TexturePageItems.Count,
-                TextureGroupInfo = Data.TextureGroupInfo?.Count ?? 0, // some old games don't have this
+                TextureGroupInfo = Data.TextureGroupInfo?.Count ?? 0,
 
                 // could be null if YYC
                 Code = Data.Code?.Count ?? 0,
                 Variables = Data.Variables?.Count ?? 0,
                 Functions = Data.Functions?.Count ?? 0,
-                CodeLocals = Data.CodeLocals?.Count ?? 0, // some old games don't have this
+                CodeLocals = Data.CodeLocals?.Count ?? 0,
 
                 Strings = Data.Strings.Count,
-                GlobalInitScripts = Data.GlobalInitScripts.Count,
+                GlobalInitScripts = Data.GlobalInitScripts?.Count ?? 0,
                 EmbeddedTextures = Data.EmbeddedTextures.Count,
-                EmbeddedImages = Data.EmbeddedImages.Count,
+                EmbeddedImages = Data.EmbeddedImages?.Count ?? 0,
                 EmbeddedAudio = Data.EmbeddedAudio.Count,
-                ParticleSystems = Data.ParticleSystems.Count,
-                ParticleSystemEmitters = Data.ParticleSystemEmitters.Count,
+                ParticleSystems = Data.ParticleSystems?.Count ?? 0,
+                ParticleSystemEmitters = Data.ParticleSystemEmitters?.Count ?? 0,
             }
         };
     }
