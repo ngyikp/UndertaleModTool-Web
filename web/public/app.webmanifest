@@ -1,0 +1,8 @@
+{
+	"short_name": "UndertaleModTool",
+	"name": "UndertaleModTool on the Web",
+	"start_url": "/",
+	"display": "minimal-ui",
+	"scope": "/",
+	"description": "Port of UndertaleModTool (the popular modding, decompiling and unpacking tool for Undertale/GameMaker) running in a web browser."
+}

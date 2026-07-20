@@ -1,6 +1,6 @@
 # UndertaleModTool on the Web
 
-This is a port of [UndertaleModTool](https://github.com/UnderminersTeam/UndertaleModTool) (the popular modding, decompiling and unpacking tool for GameMaker games) running in a web browser through the power of [WebAssembly](https://webassembly.org)!
+This is a port of [UndertaleModTool](https://github.com/UnderminersTeam/UndertaleModTool) (the popular modding, decompiling and unpacking tool for Undertale/GameMaker) running in a web browser through the power of [WebAssembly](https://webassembly.org)!
 
 The GUI is rebuilt from scratch using web technologies, many features are not available yet.
 
