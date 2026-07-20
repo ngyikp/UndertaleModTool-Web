@@ -59,7 +59,7 @@ function RouteComponent() {
 			{blobUrl ? (
 				<div>
 					<Button component="a" href={blobUrl} download={'Texture ' + id}>
-						Download raw image
+						Export raw image
 					</Button>
 				</div>
 			) : null}

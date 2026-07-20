@@ -59,7 +59,7 @@ function RouteComponent() {
 			{blobUrl ? (
 				<div>
 					<Button component="a" href={blobUrl} download={name}>
-						Download raw sound
+						Export raw sound
 					</Button>
 				</div>
 			) : null}
