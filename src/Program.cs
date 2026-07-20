@@ -415,4 +415,33 @@ public partial class UndertaleModToolWASM
 
         return JsonSerializer.Serialize(embeddedTextureInfo, EmbeddedTextureInfoContext.Default.EmbeddedTextureInfo);
     }
+
+    [JSExport]
+    [SupportedOSPlatform("browser")]
+    public static string GetTexturePageInfoById(int id)
+    {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
+        UndertaleTexturePageItem item = gameData.TexturePageItems[id];
+
+        TexturePageInfo texturePageInfo = new()
+        {
+            EmbeddedTextureID = gameData.EmbeddedTextures.IndexOf(item.TexturePage),
+
+            SourceX = item.SourceX,
+            SourceY = item.SourceY,
+            SourceWidth = item.SourceWidth,
+            SourceHeight = item.SourceHeight,
+
+            TargetX = item.TargetX,
+            TargetY = item.TargetY,
+            TargetWidth = item.TargetWidth,
+            TargetHeight = item.TargetHeight,
+
+            BoundingWidth = item.BoundingWidth,
+            BoundingHeight = item.BoundingHeight,
+        };
+
+        return JsonSerializer.Serialize(texturePageInfo, TexturePageInfoContext.Default.TexturePageInfo);
+    }
 }

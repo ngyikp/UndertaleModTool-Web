@@ -2,6 +2,7 @@ import {CodeInfoSchema} from '../messages/getCodeInfoByName';
 import {EmbeddedTextureInfoSchema} from '../messages/getEmbeddedTextureInfoById.js';
 import {EntriesListInfoSchema} from '../messages/getEntriesByModelType';
 import {SoundInfoSchema} from '../messages/getSoundInfoByName';
+import {TexturePageInfoSchema} from '../messages/getTexturePageInfoById.js';
 import {GameInfoSchema} from '../types/GameInfoType';
 
 import type {AppExports, DotNetType} from './DotNetType';
@@ -123,6 +124,19 @@ async function onMessage(request: WorkerRequest) {
 					result: EmbeddedTextureInfoSchema.parse(
 						JSON.parse(
 							dotNet.exports.UndertaleModToolWASM.GetEmbeddedTextureInfoById(
+								request.message.id,
+							),
+						),
+					),
+				});
+				break;
+
+			case 'getTexturePageInfoById':
+				reply({
+					status: 'FINISHED',
+					result: TexturePageInfoSchema.parse(
+						JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.GetTexturePageInfoById(
 								request.message.id,
 							),
 						),

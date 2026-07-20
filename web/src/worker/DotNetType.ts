@@ -5,9 +5,11 @@ export type AppExports = {
 	UndertaleModToolWASM: {
 		ReadFile(fileName: string): string;
 		GetEntriesByModelType(modelType: ModelTypeKeys): string;
+
 		GetCodeInfoByName(name: string): string;
 		GetSoundInfoByName(name: string): string;
 		GetEmbeddedTextureInfoById(id: number): string;
+		GetTexturePageInfoById(id: number): string;
 	};
 };
 
