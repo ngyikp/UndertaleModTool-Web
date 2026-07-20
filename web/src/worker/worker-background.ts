@@ -1,4 +1,5 @@
 import {CodeInfoSchema} from '../messages/getCodeInfoByName';
+import {EntriesListInfoSchema} from '../messages/getEntriesByModelType';
 import {SoundInfoSchema} from '../messages/getSoundInfoByName';
 import {GameInfoSchema} from '../types/GameInfoType';
 
@@ -59,28 +60,31 @@ async function onMessage(request: WorkerRequest) {
 		switch (request.message.type) {
 			case 'readFile': {
 				dotNet.Module.FS.writeFile('data.win', request.message.bytes);
-				const info = dotNet.exports.UndertaleModToolWASM.ReadFile('data.win');
 
 				reply({
 					status: 'FINISHED',
 					result: {
-						info: GameInfoSchema.parse(JSON.parse(info)),
+						info: GameInfoSchema.parse(
+							JSON.parse(
+								dotNet.exports.UndertaleModToolWASM.ReadFile('data.win'),
+							),
+						),
 					},
 				});
 				break;
 			}
 
 			case 'getEntriesByModelType': {
-				const list = dotNet.exports.UndertaleModToolWASM.GetEntriesByModelType(
-					request.message.modelType,
-				);
-
 				reply({
 					status: 'FINISHED',
 					result: {
-						// todo
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-						list: JSON.parse(list),
+						list: EntriesListInfoSchema.parse(
+							JSON.parse(
+								dotNet.exports.UndertaleModToolWASM.GetEntriesByModelType(
+									request.message.modelType,
+								),
+							),
+						),
 					},
 				});
 				break;

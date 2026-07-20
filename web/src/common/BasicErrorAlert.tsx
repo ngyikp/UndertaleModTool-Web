@@ -6,7 +6,7 @@ type Props = Readonly<{
 }>;
 
 export default function BasicErrorAlert({
-	title = 'Oops, something went wrong',
+	title = 'Oops, something went wrong.',
 	error,
 }: Props) {
 	return (
