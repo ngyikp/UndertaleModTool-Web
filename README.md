@@ -24,3 +24,7 @@ cd web
 npm install
 npm run dev
 ```
+
+## Caveats
+
+- Attempting to use ImageMagick functions (such as in `UndertaleModLib.Util.GMImage`) will result in an error: `TypeInitialization_Type, NativeMagickSettings`

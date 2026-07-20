@@ -48,7 +48,17 @@ const router = createRouter({
 			console.error('Exception in .NET:\n\n' + error.stack);
 		}
 	},
-	defaultErrorComponent: ({error}) => <BasicErrorAlert error={error} />,
+	defaultErrorComponent: ({error}) => {
+		if (error instanceof ManagedErrorFromDotNet) {
+			if (error.message.endsWith('NativeMagickSettings')) {
+				return (
+					<BasicErrorAlert error="This functionality requires ImageMagick which is not implemented on the web version yet." />
+				);
+			}
+		}
+
+		return <BasicErrorAlert error={error} />;
+	},
 	defaultNotFoundComponent: () => <PageNotFound />,
 	defaultPendingComponent: () => <BasicLoadingMessage />,
 	// https://tanstack.com/router/latest/docs/guide/data-loading#passing-all-loader-events-to-an-external-cache
