@@ -123,6 +123,7 @@ public partial class UndertaleModToolWASM
     // Same info as UndertaleModCli.Program.CliQuickInfo
     private static GameInfo GetGameInfo(UndertaleData Data)
     {
+        // todo doesn't work for audiogroup*.dat
         return new()
         {
             ProjectName = Data.GeneralInfo.Name.Content,
@@ -328,11 +329,16 @@ public partial class UndertaleModToolWASM
             target = sound.AudioFile;
         }
 
+        // todo move this to JS side
         if (target is null)
         {
             if (!sound.Flags.HasFlag(UndertaleSound.AudioEntryFlags.IsEmbedded))
             {
-                throw new Exception("This audio file is not embedded in the game data file.");
+                throw new Exception($"This audio file is not embedded in the game data file, try looking for ‘{sound.File.Content}’ next to the data file.");
+            }
+            else if (sound.AudioGroup is not null)
+            {
+                throw new Exception($"This audio file is stored on another file: audiogroup{sound.GroupID}.dat");
             }
             else
             {
