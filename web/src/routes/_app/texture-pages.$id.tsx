@@ -4,7 +4,10 @@ import {createFileRoute, useParams} from '@tanstack/react-router';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
+import ImageViewer from '../../common/ImageViewer';
 import {getTexturePageInfoById} from '../../messages/getTexturePageInfoById';
+
+import {embeddedTexturesByIdQueryOptions} from './embedded-textures.$id';
 
 const texturePageByIdQueryOptions = (id: number) =>
 	queryOptions({
@@ -19,30 +22,12 @@ function RouteComponent() {
 		from: '/_app/texture-pages/$id',
 	});
 
-	const {data} = useSuspenseQuery(
+	const {data: texturePageData} = useSuspenseQuery(
 		texturePageByIdQueryOptions(parseInt(id, 10)),
 	);
-	// const {FileContents: fileContents} = data;
-
-	// const [blobUrl, setBlobUrl] = useState<string | null>(null);
-
-	// useEffect(() => {
-	// 	if (fileContents.length <= 0) {
-	// 		return;
-	// 	}
-
-	// 	const blob = new Blob([fileContents], {
-	// 		type: mimeType ?? 'application/octet-stream',
-	// 	});
-	// 	const url = window.URL.createObjectURL(blob);
-	// 	// eslint-disable-next-line react-hooks/set-state-in-effect, @eslint-react/set-state-in-effect
-	// 	setBlobUrl(url);
-
-	// 	return () => {
-	// 		setBlobUrl(null);
-	// 		window.URL.revokeObjectURL(url);
-	// 	};
-	// }, [fileContents, mimeType]);
+	const {data: embeddedTextureData} = useSuspenseQuery(
+		embeddedTexturesByIdQueryOptions(texturePageData.EmbeddedTextureID),
+	);
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
@@ -51,49 +36,45 @@ function RouteComponent() {
 			<Title order={2}>Texture {id}</Title>
 
 			<p>
-				Source position: {data.SourceX}x{data.SourceY}
+				Source position: {texturePageData.SourceX}x{texturePageData.SourceY}
 				<br />
-				Source size: {data.SourceWidth}x{data.SourceHeight}
+				Source size: {texturePageData.SourceWidth}x
+				{texturePageData.SourceHeight}
 			</p>
 
 			<p>
-				Target position: {data.TargetX}x{data.TargetY}
+				Target position: {texturePageData.TargetX}x{texturePageData.TargetY}
 				<br />
-				Target size: {data.TargetWidth}x{data.TargetHeight}
+				Target size: {texturePageData.TargetWidth}x
+				{texturePageData.TargetHeight}
 			</p>
 
 			<p>
-				Bounding size: {data.BoundingWidth}x{data.BoundingHeight}
+				Bounding size: {texturePageData.BoundingWidth}x
+				{texturePageData.BoundingHeight}
 			</p>
 
-			{/* {blobUrl ? (
-				<div>
-					<Button component="a" href={blobUrl} download={'Texture ' + id}>
-						Export raw image
-					</Button>
-				</div>
-			) : null}
-
-			{blobUrl && mimeType === 'image/png' ? (
-				<div style={{overflowX: 'auto'}}>
-					<img
-						src={blobUrl}
-						alt={'Texture ' + id}
-						className="checkerboard"
-						style={{display: 'block'}}
-					/>
-				</div>
-			) : null} */}
+			<ImageViewer
+				fileContents={embeddedTextureData.FileContents}
+				fileName={'Texture ' + id}
+			/>
 		</Stack>
 	);
 }
 
 export const Route = createFileRoute('/_app/texture-pages/$id')({
 	component: RouteComponent,
-	loader: ({context, params}) =>
-		context.queryClient.ensureQueryData(
+	loader: async ({context, params}) => {
+		const texturePageData = await context.queryClient.ensureQueryData(
 			texturePageByIdQueryOptions(parseInt(params.id, 10)),
-		),
+		);
+
+		await context.queryClient.ensureQueryData(
+			embeddedTexturesByIdQueryOptions(texturePageData.EmbeddedTextureID),
+		);
+
+		return texturePageData;
+	},
 	errorComponent: ({error}) => {
 		if (error.message === 'NoMatch') {
 			return (
