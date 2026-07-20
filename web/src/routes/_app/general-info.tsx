@@ -177,7 +177,11 @@ function GeneralInfo() {
 						</List.Item>
 
 						{info.ItemCounts.CodeLocals > 0 ? (
-							<List.Item>{info.ItemCounts.CodeLocals} code locals</List.Item>
+							<List.Item>
+								<Link to="/code-locals">
+									{info.ItemCounts.CodeLocals} code locals
+								</Link>
+							</List.Item>
 						) : null}
 					</>
 				) : null}

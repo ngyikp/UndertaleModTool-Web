@@ -168,6 +168,12 @@ function AppLayout() {
 					/>
 
 					<TabLinkWithCount
+						count={info.ItemCounts.CodeLocals}
+						link="/code-locals"
+						text="Code locals"
+					/>
+
+					<TabLinkWithCount
 						count={info.ItemCounts.EmbeddedTextures}
 						link="/embedded-textures"
 						text="Embedded textures"

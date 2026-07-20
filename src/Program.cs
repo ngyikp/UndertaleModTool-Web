@@ -267,6 +267,10 @@ public partial class UndertaleModToolWASM
                 model = gameData.Functions;
                 break;
 
+            case ModelType.CodeLocals:
+                model = gameData.CodeLocals;
+                break;
+
             default:
                 throw new NotImplementedException($"Model type {modelType} is not implemented");
         }
