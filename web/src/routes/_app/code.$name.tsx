@@ -1,4 +1,4 @@
-import {Alert, Stack, Title} from '@mantine/core';
+import {Alert, Button, CopyButton, Group, Stack, Title} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 
@@ -39,7 +39,30 @@ function RouteComponent() {
 			) : null}
 
 			{data.DecompiledCode != null ? (
-				<GmlCodeHighlighter code={data.DecompiledCode} />
+				<>
+					<Group gap="xs">
+						<Button
+							component="a"
+							href={
+								'data:text/plain;charset=utf-8,' +
+								encodeURIComponent(data.DecompiledCode)
+							}
+							download={name + '.gml'}
+						>
+							Export code
+						</Button>
+
+						<CopyButton value={data.DecompiledCode}>
+							{({copied, copy}) => (
+								<Button color={copied ? 'teal' : undefined} onClick={copy}>
+									{copied ? 'Copied' : 'Copy code'}
+								</Button>
+							)}
+						</CopyButton>
+					</Group>
+
+					<GmlCodeHighlighter code={data.DecompiledCode} />
+				</>
 			) : null}
 		</Stack>
 	);

@@ -19,7 +19,12 @@ type Props = Readonly<{
 export default function GmlCodeHighlighter({code}: Props) {
 	return (
 		<CodeHighlightAdapterProvider adapter={highlightJsAdapter}>
-			<CodeHighlight code={code} language="gml" withLineNumbers />
+			<CodeHighlight
+				code={code}
+				language="gml"
+				withLineNumbers
+				withCopyButton={false}
+			/>
 		</CodeHighlightAdapterProvider>
 	);
 }
