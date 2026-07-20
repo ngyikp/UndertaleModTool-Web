@@ -20,6 +20,7 @@ import { Route as AppCodeNameRouteImport } from './routes/_app/code.$name'
 import { Route as AppEmbeddedTexturesIdRouteImport } from './routes/_app/embedded-textures.$id'
 import { Route as AppExtensionsIndexRouteImport } from './routes/_app/extensions.index'
 import { Route as AppFontsIndexRouteImport } from './routes/_app/fonts.index'
+import { Route as AppFunctionsIndexRouteImport } from './routes/_app/functions.index'
 import { Route as AppObjectsIndexRouteImport } from './routes/_app/objects.index'
 import { Route as AppPathsIndexRouteImport } from './routes/_app/paths.index'
 import { Route as AppRoomsIndexRouteImport } from './routes/_app/rooms.index'
@@ -86,6 +87,11 @@ const AppExtensionsIndexRoute = AppExtensionsIndexRouteImport.update({
 const AppFontsIndexRoute = AppFontsIndexRouteImport.update({
   id: '/fonts/',
   path: '/fonts/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppFunctionsIndexRoute = AppFunctionsIndexRouteImport.update({
+  id: '/functions/',
+  path: '/functions/',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppObjectsIndexRoute = AppObjectsIndexRouteImport.update({
@@ -166,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/audio-groups/': typeof AppAudioGroupsIndexRoute
   '/extensions/': typeof AppExtensionsIndexRoute
   '/fonts/': typeof AppFontsIndexRoute
+  '/functions/': typeof AppFunctionsIndexRoute
   '/objects/': typeof AppObjectsIndexRoute
   '/paths/': typeof AppPathsIndexRoute
   '/rooms/': typeof AppRoomsIndexRoute
@@ -191,6 +198,7 @@ export interface FileRoutesByTo {
   '/audio-groups': typeof AppAudioGroupsIndexRoute
   '/extensions': typeof AppExtensionsIndexRoute
   '/fonts': typeof AppFontsIndexRoute
+  '/functions': typeof AppFunctionsIndexRoute
   '/objects': typeof AppObjectsIndexRoute
   '/paths': typeof AppPathsIndexRoute
   '/rooms': typeof AppRoomsIndexRoute
@@ -218,6 +226,7 @@ export interface FileRoutesById {
   '/_app/audio-groups/': typeof AppAudioGroupsIndexRoute
   '/_app/extensions/': typeof AppExtensionsIndexRoute
   '/_app/fonts/': typeof AppFontsIndexRoute
+  '/_app/functions/': typeof AppFunctionsIndexRoute
   '/_app/objects/': typeof AppObjectsIndexRoute
   '/_app/paths/': typeof AppPathsIndexRoute
   '/_app/rooms/': typeof AppRoomsIndexRoute
@@ -245,6 +254,7 @@ export interface FileRouteTypes {
     | '/audio-groups/'
     | '/extensions/'
     | '/fonts/'
+    | '/functions/'
     | '/objects/'
     | '/paths/'
     | '/rooms/'
@@ -270,6 +280,7 @@ export interface FileRouteTypes {
     | '/audio-groups'
     | '/extensions'
     | '/fonts'
+    | '/functions'
     | '/objects'
     | '/paths'
     | '/rooms'
@@ -296,6 +307,7 @@ export interface FileRouteTypes {
     | '/_app/audio-groups/'
     | '/_app/extensions/'
     | '/_app/fonts/'
+    | '/_app/functions/'
     | '/_app/objects/'
     | '/_app/paths/'
     | '/_app/rooms/'
@@ -392,6 +404,13 @@ declare module '@tanstack/react-router' {
       path: '/fonts'
       fullPath: '/fonts/'
       preLoaderRoute: typeof AppFontsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/functions/': {
+      id: '/_app/functions/'
+      path: '/functions'
+      fullPath: '/functions/'
+      preLoaderRoute: typeof AppFunctionsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/objects/': {
@@ -530,6 +549,7 @@ interface AppRouteRouteChildren {
   AppAudioGroupsIndexRoute: typeof AppAudioGroupsIndexRoute
   AppExtensionsIndexRoute: typeof AppExtensionsIndexRoute
   AppFontsIndexRoute: typeof AppFontsIndexRoute
+  AppFunctionsIndexRoute: typeof AppFunctionsIndexRoute
   AppObjectsIndexRoute: typeof AppObjectsIndexRoute
   AppPathsIndexRoute: typeof AppPathsIndexRoute
   AppRoomsIndexRoute: typeof AppRoomsIndexRoute
@@ -552,6 +572,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppAudioGroupsIndexRoute: AppAudioGroupsIndexRoute,
   AppExtensionsIndexRoute: AppExtensionsIndexRoute,
   AppFontsIndexRoute: AppFontsIndexRoute,
+  AppFunctionsIndexRoute: AppFunctionsIndexRoute,
   AppObjectsIndexRoute: AppObjectsIndexRoute,
   AppPathsIndexRoute: AppPathsIndexRoute,
   AppRoomsIndexRoute: AppRoomsIndexRoute,

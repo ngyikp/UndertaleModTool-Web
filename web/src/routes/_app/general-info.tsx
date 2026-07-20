@@ -172,7 +172,9 @@ function GeneralInfo() {
 							<Link to="/variables">{info.ItemCounts.Variables} variables</Link>
 						</List.Item>
 
-						<List.Item>{info.ItemCounts.Functions} functions</List.Item>
+						<List.Item>
+							<Link to="/functions">{info.ItemCounts.Functions} functions</Link>
+						</List.Item>
 
 						{info.ItemCounts.CodeLocals > 0 ? (
 							<List.Item>{info.ItemCounts.CodeLocals} code locals</List.Item>

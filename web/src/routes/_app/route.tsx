@@ -162,6 +162,12 @@ function AppLayout() {
 					/>
 
 					<TabLinkWithCount
+						count={info.ItemCounts.Functions}
+						link="/functions"
+						text="Functions"
+					/>
+
+					<TabLinkWithCount
 						count={info.ItemCounts.EmbeddedTextures}
 						link="/embedded-textures"
 						text="Embedded textures"
