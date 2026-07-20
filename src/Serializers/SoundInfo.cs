@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using static UndertaleModLib.Models.UndertaleSound;
+using UndertaleModLib.Models;
 
 namespace Serializers
 {
@@ -12,7 +12,7 @@ namespace Serializers
         public byte[]? FileContents { get; set; }
 
         /// <seealso cref="UndertaleModLib.Models.UndertaleSound.Flags"/>
-        public AudioEntryFlags Flags { get; set; }
+        public UndertaleSound.AudioEntryFlags Flags { get; set; }
 
         /// <seealso cref="UndertaleModLib.Models.UndertaleSound.File"/>
         public required string ExternalFileName { get; set; }
@@ -25,5 +25,5 @@ namespace Serializers
     }
 
     [JsonSerializable(typeof(SoundInfo))]
-    internal partial class GetSoundInfoByNameContext : JsonSerializerContext { }
+    internal partial class SoundInfoContext : JsonSerializerContext { }
 }

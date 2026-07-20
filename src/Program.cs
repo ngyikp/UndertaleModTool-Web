@@ -115,14 +115,12 @@ public partial class UndertaleModToolWASM
         UndertaleData gameData;
         try
         {
-            using (FileStream fs = new FileStream(fileName, FileMode.Open))
-            {
-                gameData = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
-            }
+            using FileStream fs = new FileStream(fileName, FileMode.Open);
+            gameData = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
         }
         finally
         {
-            File.Delete(fileName); 
+            File.Delete(fileName);
         }
 
         DataHolder.SetData(gameData);
@@ -323,7 +321,7 @@ public partial class UndertaleModToolWASM
             // }            
         }
 
-        return JsonSerializer.Serialize(codeInfo, GetCodeInfoByNameContext.Default.CodeInfo);
+        return JsonSerializer.Serialize(codeInfo, CodeInfoContext.Default.CodeInfo);
     }
 
     [JSExport]
@@ -343,21 +341,27 @@ public partial class UndertaleModToolWASM
             AudioGroupName = sound.AudioGroup?.Name.Content ?? string.Empty,
         };
 
-        return JsonSerializer.Serialize(soundInfo, GetSoundInfoByNameContext.Default.SoundInfo);
+        return JsonSerializer.Serialize(soundInfo, SoundInfoContext.Default.SoundInfo);
     }
 
     [JSExport]
     [SupportedOSPlatform("browser")]
-    public static byte[] GetEmbeddedTextureImageById(int id)
+    public static string GetEmbeddedTextureInfoById(int id)
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
         UndertaleEmbeddedTexture texture = gameData.EmbeddedTextures[id];
 
-        MemoryStream stream = new();
-        BinaryWriter writer = new(stream);
+        using MemoryStream stream = new();
+        using BinaryWriter writer = new(stream);
         texture.TextureData.Image.WriteToBinaryWriter(writer, gameData.IsVersionAtLeast(2022, 5));
 
-        return stream.ToArray();
+        EmbeddedTextureInfo embeddedTextureInfo = new()
+        {
+            FileContents = stream.ToArray(),
+            Format = texture.TextureData.Image.Format,
+        };
+
+        return JsonSerializer.Serialize(embeddedTextureInfo, EmbeddedTextureInfoContext.Default.EmbeddedTextureInfo);
     }
 }

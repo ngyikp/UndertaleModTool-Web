@@ -3,9 +3,9 @@ import type {
 	GetCodeInfoByNameResult,
 } from '../messages/getCodeInfoByName';
 import type {
-	GetEmbeddedTextureImageByIdRequest,
-	GetEmbeddedTextureImageByIdResult,
-} from '../messages/getEmbeddedTextureImageById';
+	GetEmbeddedTextureInfoByIdRequest,
+	GetEmbeddedTextureInfoByIdResult,
+} from '../messages/getEmbeddedTextureInfoById';
 import type {
 	GetEntriesByModelTypeRequest,
 	GetEntriesByModelTypeResult,
@@ -25,7 +25,7 @@ export type WorkerRequest = {
 		| GetEntriesByModelTypeRequest
 		| GetCodeInfoByNameRequest
 		| GetSoundInfoByNameRequest
-		| GetEmbeddedTextureImageByIdRequest;
+		| GetEmbeddedTextureInfoByIdRequest;
 };
 
 export type AllResults =
@@ -33,7 +33,7 @@ export type AllResults =
 	| GetEntriesByModelTypeResult
 	| GetCodeInfoByNameResult
 	| GetSoundInfoByNameResult
-	| GetEmbeddedTextureImageByIdResult;
+	| GetEmbeddedTextureInfoByIdResult;
 
 export type SpecificWorkerResponses<FinishedResult extends AllResults> =
 	| {

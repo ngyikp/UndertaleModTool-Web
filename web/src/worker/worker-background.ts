@@ -1,4 +1,5 @@
 import {CodeInfoSchema} from '../messages/getCodeInfoByName';
+import {EmbeddedTextureInfoSchema} from '../messages/getEmbeddedTextureInfoById.js';
 import {EntriesListInfoSchema} from '../messages/getEntriesByModelType';
 import {SoundInfoSchema} from '../messages/getSoundInfoByName';
 import {GameInfoSchema} from '../types/GameInfoType';
@@ -116,15 +117,16 @@ async function onMessage(request: WorkerRequest) {
 				});
 				break;
 
-			case 'getEmbeddedTextureImageById':
+			case 'getEmbeddedTextureInfoById':
 				reply({
 					status: 'FINISHED',
-					result: {
-						imageData:
-							dotNet.exports.UndertaleModToolWASM.GetEmbeddedTextureImageById(
+					result: EmbeddedTextureInfoSchema.parse(
+						JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.GetEmbeddedTextureInfoById(
 								request.message.id,
 							),
-					},
+						),
+					),
 				});
 				break;
 

@@ -5,7 +5,7 @@ import {useEffect, useMemo, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
-import {getEmbeddedTextureImageById} from '../../messages/getEmbeddedTextureImageById';
+import {getEmbeddedTextureImageById} from '../../messages/getEmbeddedTextureInfoById';
 
 function getMimeType(buf: Uint8Array) {
 	if (buf[0] === 137 && buf[1] === 80 && buf[2] === 78 && buf[3] === 71) {
@@ -31,16 +31,20 @@ function RouteComponent() {
 	const {data} = useSuspenseQuery(
 		embeddedTexturesQueryOptions(parseInt(id, 10)),
 	);
-	const {imageData} = data;
+	const {FileContents: fileContents} = data;
 
 	const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
 	const mimeType = useMemo(() => {
-		return getMimeType(imageData);
-	}, [imageData]);
+		return getMimeType(fileContents);
+	}, [fileContents]);
 
 	useEffect(() => {
-		const blob = new Blob([imageData], {
+		if (fileContents.length <= 0) {
+			return;
+		}
+
+		const blob = new Blob([fileContents], {
 			type: mimeType ?? 'application/octet-stream',
 		});
 		const url = window.URL.createObjectURL(blob);
@@ -51,13 +55,15 @@ function RouteComponent() {
 			setBlobUrl(null);
 			window.URL.revokeObjectURL(url);
 		};
-	}, [imageData, mimeType]);
+	}, [fileContents, mimeType]);
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
 			<DocumentTitle text={['Texture ' + id, 'Embedded textures']} />
 
 			<Title order={2}>Texture {id}</Title>
+
+			<p>Format: {data.Format}</p>
 
 			{blobUrl ? (
 				<div>

@@ -15,5 +15,5 @@ namespace Serializers
     }
 
     [JsonSerializable(typeof(CodeInfo))]
-    internal partial class GetCodeInfoByNameContext : JsonSerializerContext { }
+    internal partial class CodeInfoContext : JsonSerializerContext { }
 }

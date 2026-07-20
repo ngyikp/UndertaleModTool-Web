@@ -7,7 +7,7 @@ export type AppExports = {
 		GetEntriesByModelType(modelType: ModelTypeKeys): string;
 		GetCodeInfoByName(name: string): string;
 		GetSoundInfoByName(name: string): string;
-		GetEmbeddedTextureImageById(id: number): Uint8Array<ArrayBuffer>;
+		GetEmbeddedTextureInfoById(id: number): string;
 	};
 };
 
