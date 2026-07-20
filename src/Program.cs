@@ -131,6 +131,13 @@ public partial class UndertaleModToolWASM
     // Same info as UndertaleModCli.Program.CliQuickInfo
     private static GameInfo GetGameInfo(UndertaleData Data)
     {
+        // Special check for audio groups
+        int audioGroupsCount = Data.AudioGroups.Count;
+        if (audioGroupsCount == 1 && Data.AudioGroups[0] is null)
+        {
+            audioGroupsCount = 0;
+        }
+
         // todo doesn't work for audiogroup*.dat
         return new()
         {
@@ -153,7 +160,7 @@ public partial class UndertaleModToolWASM
             {
                 Sprites = Data.Sprites.Count,
                 Sounds = Data.Sounds.Count,
-                AudioGroups = Data.AudioGroups.Count,
+                AudioGroups = audioGroupsCount,
                 Backgrounds = Data.Backgrounds.Count,
                 Paths = Data.Paths.Count,
                 Scripts = Data.Scripts.Count,
