@@ -1,5 +1,6 @@
 // Based on https://github.com/dotnet/blazor-samples/blob/main/10.0/DotNetOnWebWorkersReact/react/src/
 
+import {ManagedErrorFromDotNet} from './ManagedErrorFromDotNet';
 import type {
 	AllResults,
 	AllWorkerResponses,
@@ -84,7 +85,14 @@ export function sendMessageToWorkerAsPromise<FinishedResult extends AllResults>(
 					break;
 
 				case 'ERROR':
-					reject(new Error(response.errorDetails));
+					reject(
+						response.isManagedError
+							? new ManagedErrorFromDotNet(
+									response.errorDetails,
+									response.errorStack,
+								)
+							: new Error(response.errorDetails),
+					);
 					break;
 
 				default:

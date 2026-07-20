@@ -11,6 +11,7 @@ import BasicLoadingMessage from './common/BasicLoadingMessage';
 import PageNotFound from './PageNotFound';
 import RouterProviderWithContext from './RouterProviderWithContext';
 import {routeTree} from './routeTree.gen';
+import {ManagedErrorFromDotNet} from './worker/ManagedErrorFromDotNet';
 
 import './index.css';
 
@@ -41,6 +42,11 @@ const router = createRouter({
 	context: {
 		gameInfo: null,
 		queryClient,
+	},
+	defaultOnCatch(error) {
+		if (error instanceof ManagedErrorFromDotNet) {
+			console.error('Exception in .NET:\n\n' + error.stack);
+		}
 	},
 	defaultErrorComponent: ({error}) => <BasicErrorAlert error={error} />,
 	defaultNotFoundComponent: () => <PageNotFound />,

@@ -46,6 +46,8 @@ export type SpecificWorkerResponses<FinishedResult extends AllResults> =
 	| {
 			status: 'ERROR';
 			errorDetails: string;
+			errorStack: string;
+			isManagedError: boolean;
 	  };
 
 export type AllWorkerResponses = SpecificWorkerResponses<AllResults>;

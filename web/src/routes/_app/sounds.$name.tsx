@@ -6,6 +6,7 @@ import {useEffect, useState} from 'react';
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
 import {getSoundDataByName} from '../../messages/getSoundDataByName';
+import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
 
 function getMimeType(buf: Uint8Array) {
 	if (buf[0] === 82 && buf[1] === 73 && buf[2] === 70 && buf[3] === 70) {
@@ -78,12 +79,14 @@ export const Route = createFileRoute('/_app/sounds/$name')({
 	loader: ({context, params}) =>
 		context.queryClient.ensureQueryData(soundQueryOptions(params.name)),
 	errorComponent: ({error}) => {
-		if (error.message === 'NoMatch') {
-			return (
-				<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
-					<BasicErrorAlert title="This sound does not exist." />
-				</Stack>
-			);
+		if (error instanceof ManagedErrorFromDotNet) {
+			if (error.message === 'NoMatch') {
+				return (
+					<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+						<BasicErrorAlert title="This sound does not exist." />
+					</Stack>
+				);
+			}
 		}
 
 		throw error;
