@@ -17,6 +17,10 @@ const audioGroupsQueryOptions = queryOptions({
 function AudioGroups() {
 	const {data} = useSuspenseQuery(audioGroupsQueryOptions);
 
+	const listwithNumbers = data.list.map((entry, index) => {
+		return index.toString() + '. ' + entry;
+	});
+
 	return (
 		<Stack>
 			<DocumentTitle text="Audio groups" />
@@ -24,7 +28,7 @@ function AudioGroups() {
 			<SortableList
 				id="audio-groups"
 				emptyListMessage="This game has no audio groups."
-				list={data.list}
+				list={listwithNumbers}
 				onIndexPage={true}
 				render={(item) => {
 					return item;
