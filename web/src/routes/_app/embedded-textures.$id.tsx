@@ -40,7 +40,9 @@ function RouteComponent() {
 	}, [imageData]);
 
 	useEffect(() => {
-		const blob = new Blob([imageData], {type: mimeType ?? undefined});
+		const blob = new Blob([imageData], {
+			type: mimeType ?? 'application/octet-stream',
+		});
 		const url = window.URL.createObjectURL(blob);
 		// eslint-disable-next-line react-hooks/set-state-in-effect, @eslint-react/set-state-in-effect
 		setBlobUrl(url);
