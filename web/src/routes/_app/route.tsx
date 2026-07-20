@@ -72,6 +72,12 @@ function AppLayout() {
 					/>
 
 					<TabLinkWithCount
+						count={info.ItemCounts.AudioGroups}
+						link="/audio-groups"
+						text="Audio groups"
+					/>
+
+					<TabLinkWithCount
 						count={info.ItemCounts.Backgrounds}
 						link="/tile-sets"
 						text={getTileSetsLabel(info, true)}

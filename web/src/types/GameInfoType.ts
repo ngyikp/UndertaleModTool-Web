@@ -1,5 +1,6 @@
 import {z} from 'zod/mini';
 
+// General info of the game. Keep this in sync with `src/Serializers/GameInfo.cs`
 export const GameInfoSchema = z.object({
 	ProjectName: z.nullable(z.string()),
 	DisplayName: z.nullable(z.string()),
@@ -16,8 +17,9 @@ export const GameInfoSchema = z.object({
 	BytecodeVersion: z.int(),
 	ConfigurationName: z.nullable(z.string()),
 	ItemCounts: z.object({
-		Sounds: z.int(),
 		Sprites: z.int(),
+		Sounds: z.int(),
+		AudioGroups: z.int(),
 		Backgrounds: z.int(),
 		Paths: z.int(),
 		Scripts: z.int(),

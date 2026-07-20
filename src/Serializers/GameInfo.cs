@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace Serializers
 {
+    /// <summary>
+    /// General info of the game. Keep this in sync with <c>web/src/types/GameInfoType.ts</c>
+    /// </summary>
     public record GameInfo
     {
         /// <seealso cref="UndertaleModLib.Models.UndertaleGeneralInfo.Name"/>
@@ -48,11 +51,14 @@ namespace Serializers
 
     public record GameInfoItemCounts
     {
+        /// <seealso cref="UndertaleModLib.UndertaleData.Sprites"/>
+        public int Sprites { get; set; }
+
         /// <seealso cref="UndertaleModLib.UndertaleData.Sounds"/>
         public int Sounds { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Sprites"/>
-        public int Sprites { get; set; }
+        /// <seealso cref="UndertaleModLib.UndertaleData.AudioGroups"/>
+        public int AudioGroups { get; set; }
 
         /// <seealso cref="UndertaleModLib.UndertaleData.Backgrounds"/>
         public int Backgrounds { get; set; }

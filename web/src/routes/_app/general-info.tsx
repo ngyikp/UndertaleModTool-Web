@@ -95,6 +95,12 @@ function GeneralInfo() {
 				</List.Item>
 
 				<List.Item>
+					<Link to="/audio-groups">
+						{info.ItemCounts.AudioGroups} audio groups
+					</Link>
+				</List.Item>
+
+				<List.Item>
 					<Link to="/tile-sets">
 						{info.ItemCounts.Backgrounds} {getTileSetsLabel(info)}
 					</Link>

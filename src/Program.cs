@@ -142,8 +142,9 @@ public partial class UndertaleModToolWASM
             ConfigurationName = Data.GeneralInfo.Config.Content,
             ItemCounts = new()
             {
-                Sounds = Data.Sounds.Count,
                 Sprites = Data.Sprites.Count,
+                Sounds = Data.Sounds.Count,
+                AudioGroups = Data.AudioGroups.Count,
                 Backgrounds = Data.Backgrounds.Count,
                 Paths = Data.Paths.Count,
                 Scripts = Data.Scripts.Count,
@@ -187,6 +188,10 @@ public partial class UndertaleModToolWASM
 
             case ModelType.Sounds:
                 model = gameData.Sounds;
+                break;
+
+            case ModelType.AudioGroups:
+                model = gameData.AudioGroups;
                 break;
 
             case ModelType.Backgrounds:

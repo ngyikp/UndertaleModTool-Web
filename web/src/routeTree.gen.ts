@@ -15,6 +15,7 @@ import { Route as AppCodeRouteImport } from './routes/_app/code'
 import { Route as AppEmbeddedTexturesRouteImport } from './routes/_app/embedded-textures'
 import { Route as AppGeneralInfoRouteImport } from './routes/_app/general-info'
 import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
+import { Route as AppAudioGroupsIndexRouteImport } from './routes/_app/audio-groups.index'
 import { Route as AppCodeNameRouteImport } from './routes/_app/code.$name'
 import { Route as AppEmbeddedTexturesIdRouteImport } from './routes/_app/embedded-textures.$id'
 import { Route as AppExtensionsIndexRouteImport } from './routes/_app/extensions.index'
@@ -60,6 +61,11 @@ const AppGeneralInfoRoute = AppGeneralInfoRouteImport.update({
 const AppSoundsRoute = AppSoundsRouteImport.update({
   id: '/sounds',
   path: '/sounds',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppAudioGroupsIndexRoute = AppAudioGroupsIndexRouteImport.update({
+  id: '/audio-groups/',
+  path: '/audio-groups/',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppCodeNameRoute = AppCodeNameRouteImport.update({
@@ -157,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/code/$name': typeof AppCodeNameRoute
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/sounds/$name': typeof AppSoundsNameRoute
+  '/audio-groups/': typeof AppAudioGroupsIndexRoute
   '/extensions/': typeof AppExtensionsIndexRoute
   '/fonts/': typeof AppFontsIndexRoute
   '/objects/': typeof AppObjectsIndexRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/code/$name': typeof AppCodeNameRoute
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/sounds/$name': typeof AppSoundsNameRoute
+  '/audio-groups': typeof AppAudioGroupsIndexRoute
   '/extensions': typeof AppExtensionsIndexRoute
   '/fonts': typeof AppFontsIndexRoute
   '/objects': typeof AppObjectsIndexRoute
@@ -207,6 +215,7 @@ export interface FileRoutesById {
   '/_app/code/$name': typeof AppCodeNameRoute
   '/_app/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/_app/sounds/$name': typeof AppSoundsNameRoute
+  '/_app/audio-groups/': typeof AppAudioGroupsIndexRoute
   '/_app/extensions/': typeof AppExtensionsIndexRoute
   '/_app/fonts/': typeof AppFontsIndexRoute
   '/_app/objects/': typeof AppObjectsIndexRoute
@@ -233,6 +242,7 @@ export interface FileRouteTypes {
     | '/code/$name'
     | '/embedded-textures/$id'
     | '/sounds/$name'
+    | '/audio-groups/'
     | '/extensions/'
     | '/fonts/'
     | '/objects/'
@@ -257,6 +267,7 @@ export interface FileRouteTypes {
     | '/code/$name'
     | '/embedded-textures/$id'
     | '/sounds/$name'
+    | '/audio-groups'
     | '/extensions'
     | '/fonts'
     | '/objects'
@@ -282,6 +293,7 @@ export interface FileRouteTypes {
     | '/_app/code/$name'
     | '/_app/embedded-textures/$id'
     | '/_app/sounds/$name'
+    | '/_app/audio-groups/'
     | '/_app/extensions/'
     | '/_app/fonts/'
     | '/_app/objects/'
@@ -345,6 +357,13 @@ declare module '@tanstack/react-router' {
       path: '/sounds'
       fullPath: '/sounds'
       preLoaderRoute: typeof AppSoundsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/audio-groups/': {
+      id: '/_app/audio-groups/'
+      path: '/audio-groups'
+      fullPath: '/audio-groups/'
+      preLoaderRoute: typeof AppAudioGroupsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/code/$name': {
@@ -508,6 +527,7 @@ interface AppRouteRouteChildren {
   AppEmbeddedTexturesRoute: typeof AppEmbeddedTexturesRouteWithChildren
   AppGeneralInfoRoute: typeof AppGeneralInfoRoute
   AppSoundsRoute: typeof AppSoundsRouteWithChildren
+  AppAudioGroupsIndexRoute: typeof AppAudioGroupsIndexRoute
   AppExtensionsIndexRoute: typeof AppExtensionsIndexRoute
   AppFontsIndexRoute: typeof AppFontsIndexRoute
   AppObjectsIndexRoute: typeof AppObjectsIndexRoute
@@ -529,6 +549,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppEmbeddedTexturesRoute: AppEmbeddedTexturesRouteWithChildren,
   AppGeneralInfoRoute: AppGeneralInfoRoute,
   AppSoundsRoute: AppSoundsRouteWithChildren,
+  AppAudioGroupsIndexRoute: AppAudioGroupsIndexRoute,
   AppExtensionsIndexRoute: AppExtensionsIndexRoute,
   AppFontsIndexRoute: AppFontsIndexRoute,
   AppObjectsIndexRoute: AppObjectsIndexRoute,
