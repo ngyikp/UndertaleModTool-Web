@@ -166,7 +166,11 @@ function GeneralInfo() {
 					</Link>
 				</List.Item>
 
-				<List.Item>{info.ItemCounts.EmbeddedAudio} embedded audio</List.Item>
+				<List.Item>
+					<Link to="/embedded-audio">
+						{info.ItemCounts.EmbeddedAudio} embedded audio
+					</Link>
+				</List.Item>
 
 				{!info.IsYYC ? (
 					<>

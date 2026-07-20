@@ -276,6 +276,10 @@ public partial class UndertaleModToolWASM
                 model = gameData.EmbeddedImages;
                 break;
 
+            case ModelType.EmbeddedAudio:
+                model = gameData.EmbeddedAudio;
+                break;
+
             default:
                 throw new NotImplementedException($"Model type {modelType} is not implemented");
         }

@@ -184,6 +184,12 @@ function AppLayout() {
 						link="/embedded-images"
 						text="Embedded images"
 					/>
+
+					<TabLinkWithCount
+						count={info.ItemCounts.EmbeddedAudio}
+						link="/embedded-audio"
+						text="Embedded audio"
+					/>
 				</Tabs.List>
 			</Tabs>
 
