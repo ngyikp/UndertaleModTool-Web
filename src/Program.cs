@@ -318,35 +318,22 @@ public partial class UndertaleModToolWASM
 
     [JSExport]
     [SupportedOSPlatform("browser")]
-    public static byte[] GetSoundDataByName(string name)
+    public static string GetSoundInfoByName(string name)
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
         UndertaleSound sound = gameData.Sounds.First(sound => name == sound.Name.Content);
-        UndertaleEmbeddedAudio? target = null;
-        if (sound.AudioFile is not null)
-        {
-            target = sound.AudioFile;
-        }
 
-        // todo move this to JS side
-        if (target is null)
+        SoundInfo soundInfo = new()
         {
-            if (!sound.Flags.HasFlag(UndertaleSound.AudioEntryFlags.IsEmbedded))
-            {
-                throw new Exception($"This audio file is not embedded in the game data file, try looking for ‘{sound.File.Content}’ next to the data file.");
-            }
-            else if (sound.AudioGroup is not null)
-            {
-                throw new Exception($"This audio file is stored on another file: audiogroup{sound.GroupID}.dat");
-            }
-            else
-            {
-                throw new Exception("Cannot find audio file.");
-            }
-        }
+            FileContents = sound.AudioFile?.Data,
+            Flags = sound.Flags,
+            ExternalFileName = sound.File.Content,
+            AudioGroupID = sound.GroupID,
+            AudioGroupName = sound.AudioGroup?.Name.Content ?? string.Empty,
+        };
 
-        return target.Data;
+        return JsonSerializer.Serialize(soundInfo, GetSoundInfoByNameContext.Default.SoundInfo);
     }
 
     [JSExport]

@@ -48,6 +48,7 @@ function RouteComponent() {
 		setBlobUrl(url);
 
 		return () => {
+			setBlobUrl(null);
 			window.URL.revokeObjectURL(url);
 		};
 	}, [imageData, mimeType]);

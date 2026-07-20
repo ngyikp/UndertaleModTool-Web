@@ -1,4 +1,5 @@
 import {CodeInfoSchema} from '../messages/getCodeInfoByName';
+import {SoundInfoSchema} from '../messages/getSoundInfoByName';
 import {GameInfoSchema} from '../types/GameInfoType';
 
 import type {AppExports, DotNetType} from './DotNetType';
@@ -98,14 +99,16 @@ async function onMessage(request: WorkerRequest) {
 				});
 				break;
 
-			case 'getSoundDataByName':
+			case 'getSoundInfoByName':
 				reply({
 					status: 'FINISHED',
-					result: {
-						soundData: dotNet.exports.UndertaleModToolWASM.GetSoundDataByName(
-							request.message.name,
+					result: SoundInfoSchema.parse(
+						JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.GetSoundInfoByName(
+								request.message.name,
+							),
 						),
-					},
+					),
 				});
 				break;
 

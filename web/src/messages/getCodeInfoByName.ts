@@ -9,6 +9,7 @@ export type GetCodeInfoByNameRequest = {
 
 export type GetCodeInfoByNameResult = CodeInfoType;
 
+// Info about UndertaleCode. Keep this in sync with `src/Serializers/GetCodeInfoByName.cs`
 export const CodeInfoSchema = z.object({
 	DecompiledCode: z.nullable(z.string()),
 	ParentEntryName: z.nullable(z.string()),

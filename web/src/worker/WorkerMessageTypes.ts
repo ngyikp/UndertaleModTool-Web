@@ -11,9 +11,9 @@ import type {
 	GetEntriesByModelTypeResult,
 } from '../messages/getEntriesByModelType';
 import type {
-	GetSoundDataByNameRequest,
-	GetSoundDataByNameResult,
-} from '../messages/getSoundDataByName';
+	GetSoundInfoByNameRequest,
+	GetSoundInfoByNameResult,
+} from '../messages/getSoundInfoByName';
 import type {ReadFileRequest, ReadFileResult} from '../messages/readFile';
 
 export type WorkerStatuses = 'LOADING' | 'PROCESSING' | 'FINISHED' | 'ERROR';
@@ -24,7 +24,7 @@ export type WorkerRequest = {
 		| ReadFileRequest
 		| GetEntriesByModelTypeRequest
 		| GetCodeInfoByNameRequest
-		| GetSoundDataByNameRequest
+		| GetSoundInfoByNameRequest
 		| GetEmbeddedTextureImageByIdRequest;
 };
 
@@ -32,7 +32,7 @@ export type AllResults =
 	| ReadFileResult
 	| GetEntriesByModelTypeResult
 	| GetCodeInfoByNameResult
-	| GetSoundDataByNameResult
+	| GetSoundInfoByNameResult
 	| GetEmbeddedTextureImageByIdResult;
 
 export type SpecificWorkerResponses<FinishedResult extends AllResults> =

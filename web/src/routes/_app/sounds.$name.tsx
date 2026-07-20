@@ -1,11 +1,14 @@
-import {Button, Stack, Title} from '@mantine/core';
+import {Alert, Button, Stack, Title} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
-import {getSoundDataByName} from '../../messages/getSoundDataByName';
+import {
+	AudioEntryFlags,
+	getSoundInfoByName,
+} from '../../messages/getSoundInfoByName';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
 
 function getMimeType(buf: Uint8Array) {
@@ -24,7 +27,7 @@ const soundQueryOptions = (name: string) =>
 	queryOptions({
 		queryKey: ['sounds', name],
 		queryFn() {
-			return getSoundDataByName(name);
+			return getSoundInfoByName(name);
 		},
 	});
 
@@ -34,14 +37,24 @@ function RouteComponent() {
 	});
 
 	const {data} = useSuspenseQuery(soundQueryOptions(name));
-	const {soundData} = data;
+	const {
+		FileContents: fileContents,
+		Flags: flags,
+		ExternalFileName: externalFileName,
+		AudioGroupID: audioGroupID,
+		AudioGroupName: audioGroupName,
+	} = data;
 
 	const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
 	useEffect(() => {
-		const mimeType = getMimeType(soundData);
+		if (fileContents.length <= 0) {
+			return;
+		}
 
-		const blob = new Blob([soundData], {
+		const mimeType = getMimeType(fileContents);
+
+		const blob = new Blob([fileContents], {
 			type: mimeType ?? 'application/octet-stream',
 		});
 		const url = window.URL.createObjectURL(blob);
@@ -49,9 +62,10 @@ function RouteComponent() {
 		setBlobUrl(url);
 
 		return () => {
+			setBlobUrl(null);
 			window.URL.revokeObjectURL(url);
 		};
-	}, [soundData]);
+	}, [fileContents]);
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
@@ -69,6 +83,29 @@ function RouteComponent() {
 
 			{blobUrl ? (
 				<audio src={blobUrl} controls style={{width: '100%'}} />
+			) : null}
+
+			{fileContents.length <= 0 ? (
+				!(flags & AudioEntryFlags.IsEmbedded) ? (
+					<Alert
+						variant="light"
+						color="blue"
+						title="This audio file is stored externally."
+					>
+						Try looking for ‘{externalFileName}’ next to the data file.
+					</Alert>
+				) : audioGroupID !== 0 ? (
+					<Alert
+						variant="light"
+						color="blue"
+						title={`This audio file is stored on an external audio group${audioGroupName !== '' ? ` (${audioGroupName})` : ''}.`}
+					>
+						Try looking for ‘audiogroup{audioGroupID}
+						.dat’ next to the data file.
+					</Alert>
+				) : (
+					<BasicErrorAlert title="Cannot find audio file." />
+				)
 			) : null}
 		</Stack>
 	);

@@ -2,6 +2,10 @@ using System.Text.Json.Serialization;
 
 namespace Serializers
 {
+    /// <summary>
+    /// Info about <see cref="UndertaleModLib.Models.UndertaleCode"/>
+    /// Keep this in sync with <c>web/src/messages/getCodeInfoByName.ts</c>
+    /// </summary>
     public record CodeInfo
     {
         public string? DecompiledCode { get; set; }
