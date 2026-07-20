@@ -8,6 +8,7 @@ import {
 	TextInput,
 	Tooltip,
 } from '@mantine/core';
+import {MagnifyingGlassIcon} from '@phosphor-icons/react/dist/csr/MagnifyingGlass';
 
 import {useDataStore} from '../data-store';
 
@@ -112,7 +113,7 @@ export default function SortableList({
 								orderBy: value ?? 'DEFAULT',
 							});
 						}}
-						style={{width: '7rem'}}
+						style={{width: '6.4rem'}}
 					/>
 					<TextInput
 						value={settings.filter}
@@ -120,6 +121,8 @@ export default function SortableList({
 						onChange={(event) => {
 							setFilter(event.currentTarget.value);
 						}}
+						leftSectionPointerEvents="none"
+						leftSection={<MagnifyingGlassIcon size={16} />}
 						rightSection={
 							settings.filter !== '' ? (
 								<Tooltip label="Clear">
@@ -131,7 +134,6 @@ export default function SortableList({
 								</Tooltip>
 							) : undefined
 						}
-						rightSectionPointerEvents="auto"
 						flex={1}
 					/>
 				</Group>
