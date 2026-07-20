@@ -176,6 +176,7 @@ public partial class UndertaleModToolWASM
                 EmbeddedTextures = Data.EmbeddedTextures.Count,
                 EmbeddedImages = Data.EmbeddedImages.Count,
                 EmbeddedAudio = Data.EmbeddedAudio.Count,
+                ParticleSystems = Data.ParticleSystems.Count,
             }
         };
     }
@@ -278,6 +279,10 @@ public partial class UndertaleModToolWASM
 
             case ModelType.EmbeddedAudio:
                 model = gameData.EmbeddedAudio;
+                break;
+
+            case ModelType.ParticleSystems:
+                model = gameData.ParticleSystems;
                 break;
 
             default:

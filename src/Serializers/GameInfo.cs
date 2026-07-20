@@ -116,6 +116,9 @@ namespace Serializers
 
         /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedAudio"/>
         public int EmbeddedAudio { get; set; }
+
+        /// <seealso cref="UndertaleModLib.UndertaleData.ParticleSystems"/>
+        public int ParticleSystems { get; set; }
     }
 
     [JsonSerializable(typeof(GameInfo))]

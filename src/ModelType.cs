@@ -5,174 +5,105 @@
 /// </summary>
 public enum ModelType
 {
-    /// <summary>
-    /// General info of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.GeneralInfo"/>
     GeneralInfo = 0,
 
-    /// <summary>
-    /// General Options of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Options"/>
     Options = 1,
 
-    /// <summary>
-    /// Languages of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Language"/>
     Language = 2,
 
-    /// <summary>
-    /// The used extensions of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Extensions"/>
     Extensions = 3,
 
-    /// <summary>
-    /// The used sounds of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Sounds"/>
     Sounds = 4,
 
-    /// <summary>
-    /// The audio groups of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.AudioGroups"/>
     AudioGroups = 5,
 
-    /// <summary>
-    /// The sprites of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Sprites"/>
     Sprites = 6,
 
-    /// <summary>
-    /// The backgrounds (or Tilesets) of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Backgrounds"/>
     Backgrounds = 7,
 
-    /// <summary>
-    /// The paths of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Paths"/>
     Paths = 8,
 
-    /// <summary>
-    /// The scripts of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Scripts"/>
     Scripts = 9,
 
-    /// <summary>
-    /// The global initialization scripts of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.GlobalInitScripts"/>
     GlobalInitScripts = 10,
 
-    /// <summary>
-    /// The global end scripts of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.GameEndScripts"/>
     GameEndScripts = 12,
 
-    /// <summary>
-    /// The used shaders of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Shaders"/>
     Shaders = 13,
 
-    /// <summary>
-    /// The fonts of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Fonts"/>
     Fonts = 14,
 
-    /// <summary>
-    /// The Timelines of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Timelines"/>
     Timelines = 15,
 
-    /// <summary>
-    /// The game objects of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.GameObjects"/>
     GameObjects = 16,
 
-    /// <summary>
-    /// The rooms of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Rooms"/>
     Rooms = 17,
 
-    /// <summary>
-    /// The texture page items from the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.TexturePageItems"/>
     TexturePageItems = 18,
 
-    /// <summary>
-    /// The code entries of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Code"/>
     Code = 19,
 
-    /// <summary>
-    /// The used variables of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Variables"/>
     Variables = 20,
 
-    /// <summary>
-    /// The functions of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Functions"/>
     Functions = 21,
 
-    /// <summary>
-    /// The code locals of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.CodeLocals"/>
     CodeLocals = 22,
 
-    /// <summary>
-    /// The used strings of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Strings"/>
     Strings = 23,
 
-    /// <summary>
-    /// The embedded images of the data file. This is used to store built-in particle sprites,
-    /// every time you use <c>part_sprite</c> functions.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedImages"/>
     EmbeddedImages = 24,
 
-    /// <summary>
-    /// The embedded textures of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedTextures"/>
     EmbeddedTextures = 25,
 
-    /// <summary>
-    /// The texture group infos of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.TextureGroupInfo"/>
     TextureGroupInfo = 26,
 
-    /// <summary>
-    /// The embedded audio of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedAudio"/>
     EmbeddedAudio = 27,
 
-    /// <summary>
-    /// The used tags of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Tags"/>
     Tags = 28,
 
-    /// <summary>
-    /// The animation curves of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.AnimationCurves"/>
     AnimationCurves = 29,
 
-    /// <summary>
-    /// The sequences of the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.Sequences"/>
     Sequences = 30,
 
-    /// <summary>
-    /// The feature flags stored in the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.FeatureFlags"/>
     FeatureFlags = 31,
 
-    /// <summary>
-    /// The filter effects stored in the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.FilterEffects"/>
     FilterEffects = 32,
 
-    /// <summary>
-    /// The particle systems stored in the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.ParticleSystems"/>
     ParticleSystems = 33,
 
-    /// <summary>
-    /// The particle system emitters stored in the data file.
-    /// </summary>
+    /// <seealso cref="UndertaleModLib.UndertaleData.ParticleSystemEmitters"/>
     ParticleSystemEmitters = 34,
 }

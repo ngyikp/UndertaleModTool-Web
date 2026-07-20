@@ -41,6 +41,7 @@ export const GameInfoSchema = z.object({
 		EmbeddedTextures: z.int(),
 		EmbeddedImages: z.int(),
 		EmbeddedAudio: z.int(),
+		ParticleSystems: z.int(),
 	}),
 });
 

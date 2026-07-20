@@ -190,6 +190,12 @@ function AppLayout() {
 						link="/embedded-audio"
 						text="Embedded audio"
 					/>
+
+					<TabLinkWithCount
+						count={info.ItemCounts.ParticleSystems}
+						link="/particle-systems"
+						text="Particle systems"
+					/>
 				</Tabs.List>
 			</Tabs>
 

@@ -172,6 +172,12 @@ function GeneralInfo() {
 					</Link>
 				</List.Item>
 
+				<List.Item>
+					<Link to="/particle-systems">
+						{info.ItemCounts.ParticleSystems} particle systems
+					</Link>
+				</List.Item>
+
 				{!info.IsYYC ? (
 					<>
 						<List.Item>

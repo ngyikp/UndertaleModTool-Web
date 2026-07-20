@@ -25,6 +25,7 @@ import { Route as AppExtensionsIndexRouteImport } from './routes/_app/extensions
 import { Route as AppFontsIndexRouteImport } from './routes/_app/fonts.index'
 import { Route as AppFunctionsIndexRouteImport } from './routes/_app/functions.index'
 import { Route as AppObjectsIndexRouteImport } from './routes/_app/objects.index'
+import { Route as AppParticleSystemsIndexRouteImport } from './routes/_app/particle-systems.index'
 import { Route as AppPathsIndexRouteImport } from './routes/_app/paths.index'
 import { Route as AppRoomsIndexRouteImport } from './routes/_app/rooms.index'
 import { Route as AppScriptsIndexRouteImport } from './routes/_app/scripts.index'
@@ -117,6 +118,11 @@ const AppObjectsIndexRoute = AppObjectsIndexRouteImport.update({
   path: '/objects/',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppParticleSystemsIndexRoute = AppParticleSystemsIndexRouteImport.update({
+  id: '/particle-systems/',
+  path: '/particle-systems/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppPathsIndexRoute = AppPathsIndexRouteImport.update({
   id: '/paths/',
   path: '/paths/',
@@ -195,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/fonts/': typeof AppFontsIndexRoute
   '/functions/': typeof AppFunctionsIndexRoute
   '/objects/': typeof AppObjectsIndexRoute
+  '/particle-systems/': typeof AppParticleSystemsIndexRoute
   '/paths/': typeof AppPathsIndexRoute
   '/rooms/': typeof AppRoomsIndexRoute
   '/scripts/': typeof AppScriptsIndexRoute
@@ -224,6 +231,7 @@ export interface FileRoutesByTo {
   '/fonts': typeof AppFontsIndexRoute
   '/functions': typeof AppFunctionsIndexRoute
   '/objects': typeof AppObjectsIndexRoute
+  '/particle-systems': typeof AppParticleSystemsIndexRoute
   '/paths': typeof AppPathsIndexRoute
   '/rooms': typeof AppRoomsIndexRoute
   '/scripts': typeof AppScriptsIndexRoute
@@ -255,6 +263,7 @@ export interface FileRoutesById {
   '/_app/fonts/': typeof AppFontsIndexRoute
   '/_app/functions/': typeof AppFunctionsIndexRoute
   '/_app/objects/': typeof AppObjectsIndexRoute
+  '/_app/particle-systems/': typeof AppParticleSystemsIndexRoute
   '/_app/paths/': typeof AppPathsIndexRoute
   '/_app/rooms/': typeof AppRoomsIndexRoute
   '/_app/scripts/': typeof AppScriptsIndexRoute
@@ -286,6 +295,7 @@ export interface FileRouteTypes {
     | '/fonts/'
     | '/functions/'
     | '/objects/'
+    | '/particle-systems/'
     | '/paths/'
     | '/rooms/'
     | '/scripts/'
@@ -315,6 +325,7 @@ export interface FileRouteTypes {
     | '/fonts'
     | '/functions'
     | '/objects'
+    | '/particle-systems'
     | '/paths'
     | '/rooms'
     | '/scripts'
@@ -345,6 +356,7 @@ export interface FileRouteTypes {
     | '/_app/fonts/'
     | '/_app/functions/'
     | '/_app/objects/'
+    | '/_app/particle-systems/'
     | '/_app/paths/'
     | '/_app/rooms/'
     | '/_app/scripts/'
@@ -475,6 +487,13 @@ declare module '@tanstack/react-router' {
       path: '/objects'
       fullPath: '/objects/'
       preLoaderRoute: typeof AppObjectsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/particle-systems/': {
+      id: '/_app/particle-systems/'
+      path: '/particle-systems'
+      fullPath: '/particle-systems/'
+      preLoaderRoute: typeof AppParticleSystemsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/paths/': {
@@ -611,6 +630,7 @@ interface AppRouteRouteChildren {
   AppFontsIndexRoute: typeof AppFontsIndexRoute
   AppFunctionsIndexRoute: typeof AppFunctionsIndexRoute
   AppObjectsIndexRoute: typeof AppObjectsIndexRoute
+  AppParticleSystemsIndexRoute: typeof AppParticleSystemsIndexRoute
   AppPathsIndexRoute: typeof AppPathsIndexRoute
   AppRoomsIndexRoute: typeof AppRoomsIndexRoute
   AppScriptsIndexRoute: typeof AppScriptsIndexRoute
@@ -637,6 +657,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppFontsIndexRoute: AppFontsIndexRoute,
   AppFunctionsIndexRoute: AppFunctionsIndexRoute,
   AppObjectsIndexRoute: AppObjectsIndexRoute,
+  AppParticleSystemsIndexRoute: AppParticleSystemsIndexRoute,
   AppPathsIndexRoute: AppPathsIndexRoute,
   AppRoomsIndexRoute: AppRoomsIndexRoute,
   AppScriptsIndexRoute: AppScriptsIndexRoute,
