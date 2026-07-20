@@ -14,6 +14,7 @@ import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppCodeRouteImport } from './routes/_app/code'
 import { Route as AppEmbeddedTexturesRouteImport } from './routes/_app/embedded-textures'
 import { Route as AppGeneralInfoRouteImport } from './routes/_app/general-info'
+import { Route as AppGlobalInitRouteImport } from './routes/_app/global-init'
 import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
 import { Route as AppAudioGroupsIndexRouteImport } from './routes/_app/audio-groups.index'
 import { Route as AppCodeLocalsIndexRouteImport } from './routes/_app/code-locals.index'
@@ -62,6 +63,11 @@ const AppEmbeddedTexturesRoute = AppEmbeddedTexturesRouteImport.update({
 const AppGeneralInfoRoute = AppGeneralInfoRouteImport.update({
   id: '/general-info',
   path: '/general-info',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppGlobalInitRoute = AppGlobalInitRouteImport.update({
+  id: '/global-init',
+  path: '/global-init',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppSoundsRoute = AppSoundsRouteImport.update({
@@ -196,6 +202,7 @@ export interface FileRoutesByFullPath {
   '/code': typeof AppCodeRouteWithChildren
   '/embedded-textures': typeof AppEmbeddedTexturesRouteWithChildren
   '/general-info': typeof AppGeneralInfoRoute
+  '/global-init': typeof AppGlobalInitRoute
   '/sounds': typeof AppSoundsRouteWithChildren
   '/code/$name': typeof AppCodeNameRoute
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/code': typeof AppCodeRouteWithChildren
   '/embedded-textures': typeof AppEmbeddedTexturesRouteWithChildren
   '/general-info': typeof AppGeneralInfoRoute
+  '/global-init': typeof AppGlobalInitRoute
   '/sounds': typeof AppSoundsRouteWithChildren
   '/code/$name': typeof AppCodeNameRoute
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
@@ -260,6 +268,7 @@ export interface FileRoutesById {
   '/_app/code': typeof AppCodeRouteWithChildren
   '/_app/embedded-textures': typeof AppEmbeddedTexturesRouteWithChildren
   '/_app/general-info': typeof AppGeneralInfoRoute
+  '/_app/global-init': typeof AppGlobalInitRoute
   '/_app/sounds': typeof AppSoundsRouteWithChildren
   '/_app/code/$name': typeof AppCodeNameRoute
   '/_app/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
@@ -293,6 +302,7 @@ export interface FileRouteTypes {
     | '/code'
     | '/embedded-textures'
     | '/general-info'
+    | '/global-init'
     | '/sounds'
     | '/code/$name'
     | '/embedded-textures/$id'
@@ -324,6 +334,7 @@ export interface FileRouteTypes {
     | '/code'
     | '/embedded-textures'
     | '/general-info'
+    | '/global-init'
     | '/sounds'
     | '/code/$name'
     | '/embedded-textures/$id'
@@ -356,6 +367,7 @@ export interface FileRouteTypes {
     | '/_app/code'
     | '/_app/embedded-textures'
     | '/_app/general-info'
+    | '/_app/global-init'
     | '/_app/sounds'
     | '/_app/code/$name'
     | '/_app/embedded-textures/$id'
@@ -423,6 +435,13 @@ declare module '@tanstack/react-router' {
       path: '/general-info'
       fullPath: '/general-info'
       preLoaderRoute: typeof AppGeneralInfoRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/global-init': {
+      id: '/_app/global-init'
+      path: '/global-init'
+      fullPath: '/global-init'
+      preLoaderRoute: typeof AppGlobalInitRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/sounds': {
@@ -641,6 +660,7 @@ interface AppRouteRouteChildren {
   AppCodeRoute: typeof AppCodeRouteWithChildren
   AppEmbeddedTexturesRoute: typeof AppEmbeddedTexturesRouteWithChildren
   AppGeneralInfoRoute: typeof AppGeneralInfoRoute
+  AppGlobalInitRoute: typeof AppGlobalInitRoute
   AppSoundsRoute: typeof AppSoundsRouteWithChildren
   AppAudioGroupsIndexRoute: typeof AppAudioGroupsIndexRoute
   AppCodeLocalsIndexRoute: typeof AppCodeLocalsIndexRoute
@@ -669,6 +689,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppCodeRoute: AppCodeRouteWithChildren,
   AppEmbeddedTexturesRoute: AppEmbeddedTexturesRouteWithChildren,
   AppGeneralInfoRoute: AppGeneralInfoRoute,
+  AppGlobalInitRoute: AppGlobalInitRoute,
   AppSoundsRoute: AppSoundsRouteWithChildren,
   AppAudioGroupsIndexRoute: AppAudioGroupsIndexRoute,
   AppCodeLocalsIndexRoute: AppCodeLocalsIndexRoute,

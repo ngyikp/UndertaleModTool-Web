@@ -38,6 +38,7 @@ export const GameInfoSchema = z.object({
 		CodeLocals: z.int(),
 
 		Strings: z.int(),
+		GlobalInitScripts: z.int(),
 		EmbeddedTextures: z.int(),
 		EmbeddedImages: z.int(),
 		EmbeddedAudio: z.int(),

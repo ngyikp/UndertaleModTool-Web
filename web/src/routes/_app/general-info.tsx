@@ -155,6 +155,12 @@ function GeneralInfo() {
 				</List.Item>
 
 				<List.Item>
+					<Link to="/global-init">
+						{info.ItemCounts.GlobalInitScripts} global init scripts
+					</Link>
+				</List.Item>
+
+				<List.Item>
 					<Link to="/embedded-textures">
 						{info.ItemCounts.EmbeddedTextures} embedded textures
 					</Link>

@@ -108,6 +108,9 @@ namespace Serializers
         /// <seealso cref="UndertaleModLib.UndertaleData.Strings"/>
         public int Strings { get; set; }
 
+        /// <seealso cref="UndertaleModLib.UndertaleData.GlobalInitScripts"/>
+        public int GlobalInitScripts { get; set; }
+
         /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedTextures"/>
         public int EmbeddedTextures { get; set; }
 

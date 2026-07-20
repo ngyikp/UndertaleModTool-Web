@@ -173,6 +173,7 @@ public partial class UndertaleModToolWASM
                 CodeLocals = Data.CodeLocals?.Count ?? 0, // some old games don't have this
 
                 Strings = Data.Strings.Count,
+                GlobalInitScripts = Data.GlobalInitScripts.Count,
                 EmbeddedTextures = Data.EmbeddedTextures.Count,
                 EmbeddedImages = Data.EmbeddedImages.Count,
                 EmbeddedAudio = Data.EmbeddedAudio.Count,
@@ -191,7 +192,7 @@ public partial class UndertaleModToolWASM
 
         ModelType modelType = Enum.Parse<ModelType>(modelTypeInt.ToString());
 
-        IEnumerable<UndertaleResource> model;
+        IEnumerable<UndertaleObject> model;
         switch (modelType)
         {
             case ModelType.Sprites:
@@ -250,10 +251,6 @@ public partial class UndertaleModToolWASM
                 model = gameData.TextureGroupInfo;
                 break;
 
-            case ModelType.Strings:
-                model = gameData.Strings;
-                break;
-
             case ModelType.Code:
                 model = gameData.Code;
                 break;
@@ -268,6 +265,14 @@ public partial class UndertaleModToolWASM
 
             case ModelType.CodeLocals:
                 model = gameData.CodeLocals;
+                break;
+
+            case ModelType.Strings:
+                model = gameData.Strings;
+                break;
+
+            case ModelType.GlobalInitScripts:
+                model = gameData.GlobalInitScripts;
                 break;
 
             case ModelType.EmbeddedTextures:
@@ -309,6 +314,13 @@ public partial class UndertaleModToolWASM
                     {
                         // UndertaleString goes here
                         entries.Add(gmStringEntry.Content);
+                    }
+                    else if (entry is UndertaleGlobalInit globalInitEntry)
+                    {
+                        if (globalInitEntry.Code is not null)
+                        {
+                            entries.Add(globalInitEntry.Code.Name.Content);
+                        }
                     }
                     else
                     {

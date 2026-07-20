@@ -144,12 +144,6 @@ function AppLayout() {
 					/>
 
 					<TabLinkWithCount
-						count={info.ItemCounts.Strings}
-						link="/strings"
-						text="Strings"
-					/>
-
-					<TabLinkWithCount
 						count={info.ItemCounts.Code}
 						link="/code"
 						text="Code"
@@ -171,6 +165,18 @@ function AppLayout() {
 						count={info.ItemCounts.CodeLocals}
 						link="/code-locals"
 						text="Code locals"
+					/>
+
+					<TabLinkWithCount
+						count={info.ItemCounts.Strings}
+						link="/strings"
+						text="Strings"
+					/>
+
+					<TabLinkWithCount
+						count={info.ItemCounts.GlobalInitScripts}
+						link="/global-init"
+						text="Global init scripts"
 					/>
 
 					<TabLinkWithCount
