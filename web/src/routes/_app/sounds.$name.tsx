@@ -23,7 +23,7 @@ function getMimeType(buf: Uint8Array) {
 	return null;
 }
 
-const soundQueryOptions = (name: string) =>
+const soundByNameQueryOptions = (name: string) =>
 	queryOptions({
 		queryKey: ['sounds', name],
 		queryFn() {
@@ -36,7 +36,7 @@ function RouteComponent() {
 		from: '/_app/sounds/$name',
 	});
 
-	const {data} = useSuspenseQuery(soundQueryOptions(name));
+	const {data} = useSuspenseQuery(soundByNameQueryOptions(name));
 	const {
 		FileContents: fileContents,
 		Flags: flags,
@@ -114,7 +114,7 @@ function RouteComponent() {
 export const Route = createFileRoute('/_app/sounds/$name')({
 	component: RouteComponent,
 	loader: ({context, params}) =>
-		context.queryClient.ensureQueryData(soundQueryOptions(params.name)),
+		context.queryClient.ensureQueryData(soundByNameQueryOptions(params.name)),
 	errorComponent: ({error}) => {
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message === 'NoMatch') {

@@ -1,8 +1,10 @@
 import {Stack, Title} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
+import {useMemo} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import detectImageMimeType from '../../common/detectImageMimeType';
 import DocumentTitle from '../../common/DocumentTitle';
 import ImageViewer from '../../common/ImageViewer';
 import {getEmbeddedTextureImageById} from '../../messages/getEmbeddedTextureInfoById';
@@ -25,6 +27,18 @@ function RouteComponent() {
 	const {data} = useSuspenseQuery(
 		embeddedTexturesByIdQueryOptions(parseInt(id, 10)),
 	);
+	const {FileContents: fileContents} = data;
+
+	const mimeType = detectImageMimeType(fileContents);
+	const blob = useMemo(() => {
+		if (fileContents.length <= 0) {
+			return;
+		}
+
+		return new Blob([fileContents], {
+			type: mimeType ?? 'application/octet-stream',
+		});
+	}, [fileContents, mimeType]);
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
@@ -34,10 +48,13 @@ function RouteComponent() {
 
 			<p>Format: {data.Format}</p>
 
-			<ImageViewer
-				fileContents={data.FileContents}
-				fileName={'Texture ' + id}
-			/>
+			{blob ? (
+				<ImageViewer
+					blob={blob}
+					fileName={'Texture ' + id}
+					mimeType={mimeType}
+				/>
+			) : null}
 		</Stack>
 	);
 }

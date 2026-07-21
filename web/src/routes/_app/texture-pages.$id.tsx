@@ -30,8 +30,7 @@ function RouteComponent() {
 		embeddedTexturesByIdQueryOptions(texturePageData.EmbeddedTextureID),
 	);
 
-	const [finalImageContents, setFinalImageContents] =
-		useState<Uint8Array<ArrayBuffer> | null>(null);
+	const [finalBlob, setFinalBlob] = useState<Blob | null>(null);
 
 	useEffect(() => {
 		// todo add includePadding parameter
@@ -80,14 +79,14 @@ function RouteComponent() {
 					throw new Error('Failed to render canvas image');
 				}
 
-				void croppedImageBlob.bytes().then(setFinalImageContents);
+				setFinalBlob(croppedImageBlob);
 			});
 		}
 
 		void drawImage();
 
 		return () => {
-			setFinalImageContents(null);
+			setFinalBlob(null);
 		};
 	}, [
 		embeddedTextureData.FileContents,
@@ -134,10 +133,11 @@ function RouteComponent() {
 				</Link>
 			</p>
 
-			{finalImageContents ? (
+			{finalBlob ? (
 				<ImageViewer
-					fileContents={finalImageContents}
+					blob={finalBlob}
 					fileName={'Texture ' + id}
+					mimeType="image/png"
 				/>
 			) : null}
 		</Stack>

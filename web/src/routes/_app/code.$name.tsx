@@ -7,7 +7,7 @@ import DocumentTitle from '../../common/DocumentTitle';
 import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
 import {getCodeInfoByName} from '../../messages/getCodeInfoByName';
 
-const codeQueryOptions = (name: string) =>
+const codeByNameQueryOptions = (name: string) =>
 	queryOptions({
 		queryKey: ['code', name],
 		queryFn() {
@@ -20,7 +20,7 @@ function RouteComponent() {
 		from: '/_app/code/$name',
 	});
 
-	const {data} = useSuspenseQuery(codeQueryOptions(name));
+	const {data} = useSuspenseQuery(codeByNameQueryOptions(name));
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
@@ -71,7 +71,7 @@ function RouteComponent() {
 export const Route = createFileRoute('/_app/code/$name')({
 	component: RouteComponent,
 	loader: ({context, params}) =>
-		context.queryClient.ensureQueryData(codeQueryOptions(params.name)),
+		context.queryClient.ensureQueryData(codeByNameQueryOptions(params.name)),
 	errorComponent: ({error}) => {
 		if (error.message === 'NoMatch') {
 			return (
