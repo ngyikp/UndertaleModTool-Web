@@ -6,9 +6,8 @@ import {useEffect, useState} from 'react';
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
 import ImageViewer from '../../common/ImageViewer';
+import {embeddedTexturesByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {getTexturePageInfoById} from '../../messages/getTexturePageInfoById';
-
-import {embeddedTexturesByIdQueryOptions} from './embedded-textures.$id';
 
 const texturePageByIdQueryOptions = (id: number) =>
 	queryOptions({

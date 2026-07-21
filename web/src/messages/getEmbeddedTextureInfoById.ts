@@ -1,3 +1,4 @@
+import {queryOptions} from '@tanstack/react-query';
 import {z} from 'zod/mini';
 
 import {sendMessageToWorkerAsPromise} from '../worker/worker-handler';
@@ -56,9 +57,17 @@ export const EmbeddedTextureInfoSchema = z.object({
 
 export type EmbeddedTextureInfoType = z.infer<typeof EmbeddedTextureInfoSchema>;
 
-export function getEmbeddedTextureImageById(id: number) {
+function getEmbeddedTextureImageById(id: number) {
 	return sendMessageToWorkerAsPromise<GetEmbeddedTextureInfoByIdResult>({
 		type: 'getEmbeddedTextureInfoById',
 		id,
 	});
 }
+
+export const embeddedTexturesByIdQueryOptions = (id: number) =>
+	queryOptions({
+		queryKey: ['embedded-textures', id],
+		queryFn() {
+			return getEmbeddedTextureImageById(id);
+		},
+	});

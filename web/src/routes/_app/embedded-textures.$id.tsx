@@ -1,5 +1,5 @@
 import {Stack, Title} from '@mantine/core';
-import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
+import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useMemo} from 'react';
 
@@ -7,17 +7,7 @@ import BasicErrorAlert from '../../common/BasicErrorAlert';
 import detectImageMimeType from '../../common/detectImageMimeType';
 import DocumentTitle from '../../common/DocumentTitle';
 import ImageViewer from '../../common/ImageViewer';
-import {getEmbeddedTextureImageById} from '../../messages/getEmbeddedTextureInfoById';
-
-// todo fix this lint
-// eslint-disable-next-line react-refresh/only-export-components
-export const embeddedTexturesByIdQueryOptions = (id: number) =>
-	queryOptions({
-		queryKey: ['embedded-textures', id],
-		queryFn() {
-			return getEmbeddedTextureImageById(id);
-		},
-	});
+import {embeddedTexturesByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 
 function RouteComponent() {
 	const {id} = useParams({
