@@ -1,6 +1,7 @@
 import {Stack, Title} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
-import {createFileRoute, useParams} from '@tanstack/react-router';
+import {createFileRoute, Link, useParams} from '@tanstack/react-router';
+import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
@@ -29,6 +30,76 @@ function RouteComponent() {
 		embeddedTexturesByIdQueryOptions(texturePageData.EmbeddedTextureID),
 	);
 
+	const [finalImageContents, setFinalImageContents] =
+		useState<Uint8Array<ArrayBuffer> | null>(null);
+
+	useEffect(() => {
+		// todo add includePadding parameter
+		async function drawImage() {
+			if (embeddedTextureData.Format !== 'Png') {
+				return;
+			}
+
+			const canvas = document.createElement('canvas');
+			canvas.width = texturePageData.SourceWidth;
+			canvas.height = texturePageData.SourceHeight;
+
+			const ctx = canvas.getContext('2d', {alpha: true});
+			if (!ctx) {
+				throw new Error('Canvas rendering context is missing');
+			}
+
+			// Based on https://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModLib/Util/TextureWorker.cs#L63
+			// Create an image cropped from the item's part of the texture page
+			const imageBitmap = await createImageBitmap(
+				new Blob([embeddedTextureData.FileContents], {
+					type: 'image/png',
+				}),
+				texturePageData.SourceX,
+				texturePageData.SourceY,
+				texturePageData.SourceWidth,
+				texturePageData.SourceHeight,
+			);
+
+			ctx.drawImage(imageBitmap, 0, 0);
+
+			// Resize the image, if necessary
+			if (
+				texturePageData.SourceWidth !== texturePageData.TargetWidth ||
+				texturePageData.SourceHeight !== texturePageData.TargetHeight
+			) {
+				const resizeWidth = texturePageData.TargetWidth;
+				const resizeHeight = texturePageData.TargetHeight;
+				if (canvas.width !== resizeWidth || canvas.height !== resizeHeight) {
+					ctx.drawImage(imageBitmap, 0, 0, resizeWidth, resizeHeight);
+				}
+			}
+
+			canvas.toBlob((croppedImageBlob) => {
+				if (croppedImageBlob == null) {
+					throw new Error('Failed to render canvas image');
+				}
+
+				void croppedImageBlob.bytes().then(setFinalImageContents);
+			});
+		}
+
+		void drawImage();
+
+		return () => {
+			setFinalImageContents(null);
+		};
+	}, [
+		embeddedTextureData.FileContents,
+		embeddedTextureData.Format,
+		texturePageData.SourceHeight,
+		texturePageData.SourceWidth,
+		texturePageData.SourceX,
+		texturePageData.SourceY,
+		texturePageData.TargetHeight,
+		texturePageData.TargetWidth,
+	]);
+
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
 			<DocumentTitle text={['Texture ' + id, 'Texture pages']} />
@@ -54,10 +125,21 @@ function RouteComponent() {
 				{texturePageData.BoundingHeight}
 			</p>
 
-			<ImageViewer
-				fileContents={embeddedTextureData.FileContents}
-				fileName={'Texture ' + id}
-			/>
+			<p>
+				<Link
+					to="/embedded-textures/$id"
+					params={{id: texturePageData.EmbeddedTextureID.toString()}}
+				>
+					Go to embedded texture {texturePageData.EmbeddedTextureID}
+				</Link>
+			</p>
+
+			{finalImageContents ? (
+				<ImageViewer
+					fileContents={finalImageContents}
+					fileName={'Texture ' + id}
+				/>
+			) : null}
 		</Stack>
 	);
 }
