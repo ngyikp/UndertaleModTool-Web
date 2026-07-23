@@ -4,24 +4,13 @@ import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import detectMimeType from '../../common/detectMimeType';
 import DocumentTitle from '../../common/DocumentTitle';
 import {
 	AudioEntryFlags,
 	getSoundInfoByName,
 } from '../../messages/getSoundInfoByName';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
-
-function getMimeType(buf: Uint8Array) {
-	if (buf[0] === 82 && buf[1] === 73 && buf[2] === 70 && buf[3] === 70) {
-		return 'audio/wav';
-	}
-
-	if (buf[0] === 79 && buf[1] === 103 && buf[2] === 103 && buf[3] === 83) {
-		return 'audio/ogg';
-	}
-
-	return null;
-}
 
 const soundByNameQueryOptions = (name: string) =>
 	queryOptions({
@@ -52,7 +41,7 @@ function RouteComponent() {
 			return;
 		}
 
-		const mimeType = getMimeType(fileContents);
+		const mimeType = detectMimeType(fileContents);
 
 		const blob = new Blob([fileContents], {
 			type: mimeType ?? 'application/octet-stream',

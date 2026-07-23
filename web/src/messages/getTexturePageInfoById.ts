@@ -1,3 +1,4 @@
+import {queryOptions} from '@tanstack/react-query';
 import {z} from 'zod/mini';
 
 import {sendMessageToWorkerAsPromise} from '../worker/worker-handler';
@@ -29,9 +30,17 @@ export const TexturePageInfoSchema = z.object({
 
 export type TexturePageInfoType = z.infer<typeof TexturePageInfoSchema>;
 
-export function getTexturePageInfoById(id: number) {
+function getTexturePageInfoById(id: number) {
 	return sendMessageToWorkerAsPromise<GetTexturePageInfoByIdResult>({
 		type: 'getTexturePageInfoById',
 		id,
 	});
 }
+
+export const texturePageByIdQueryOptions = (id: number) =>
+	queryOptions({
+		queryKey: ['texture-pages', id],
+		queryFn() {
+			return getTexturePageInfoById(id);
+		},
+	});

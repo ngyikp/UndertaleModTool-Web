@@ -51,7 +51,7 @@ function TexturePages() {
 						render={(item) => {
 							// Name is set by UMT, the game data itself does not set names for texture pages
 							// hhttps://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModLib/UndertaleChunks.cs#L1667
-							const id = item.replace('PageItem ', '');
+							const id = parseInt(item.replace('PageItem ', ''), 10);
 
 							return (
 								<Link

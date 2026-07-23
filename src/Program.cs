@@ -6,6 +6,7 @@ using Serializers;
 using UndertaleModLib;
 using UndertaleModLib.Decompiler;
 using UndertaleModLib.Models;
+using UndertaleModLib.Util;
 
 return;
 
@@ -403,16 +404,38 @@ public partial class UndertaleModToolWASM
 
         UndertaleEmbeddedTexture texture = gameData.EmbeddedTextures[id];
 
-        using MemoryStream stream = new();
-        using BinaryWriter writer = new(stream);
-        texture.TextureData.Image.WriteToBinaryWriter(writer, gameData.IsVersionAtLeast(2022, 5));
+        // No need to convert PNGs since the browser can view them
+        // Skip DDS as ConvertToRawBgra() may call ImageMagick for some image formats
+        // https://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModLib/Util/GMImage.cs#L749
+        byte[]? downloadableFileContents = null;
+        byte[]? bgra = null;
+        switch (texture.TextureData.Image.Format)
+        {
+            case GMImage.ImageFormat.Png:
+            case GMImage.ImageFormat.Dds:
+                {
+                    using MemoryStream stream = new();
+                    using BinaryWriter writer = new(stream);
+                    texture.TextureData.Image.WriteToBinaryWriter(writer, gameData.IsVersionAtLeast(2022, 5));
+                    downloadableFileContents = stream.ToArray();
+                    break;
+                }
+
+            default:
+                bgra = texture.TextureData.Image.ConvertToRawBgra().GetRawImageData().ToArray();
+                break;
+        }
 
         EmbeddedTextureInfo embeddedTextureInfo = new()
         {
-            FileContents = stream.ToArray(),
+            DownloadableFileContents = downloadableFileContents,
+            Bgra = bgra,
             Format = texture.TextureData.Image.Format,
+            Width = texture.TextureData.Image.Width,
+            Height = texture.TextureData.Image.Height,
         };
 
+        // todo can go out of memory :(
         return JsonSerializer.Serialize(embeddedTextureInfo, EmbeddedTextureInfoContext.Default.EmbeddedTextureInfo);
     }
 

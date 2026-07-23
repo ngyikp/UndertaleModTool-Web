@@ -1,11 +1,11 @@
 import {Stack, Title} from '@mantine/core';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
-import {useMemo} from 'react';
+import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
-import detectImageMimeType from '../../common/detectImageMimeType';
 import DocumentTitle from '../../common/DocumentTitle';
+import drawImageToBlob from '../../common/drawImageToBlob';
 import ImageViewer from '../../common/ImageViewer';
 import {embeddedTexturesByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 
@@ -14,35 +14,50 @@ function RouteComponent() {
 		from: '/_app/embedded-textures/$id',
 	});
 
-	const {data} = useSuspenseQuery(
-		embeddedTexturesByIdQueryOptions(parseInt(id, 10)),
-	);
-	const {FileContents: fileContents} = data;
+	const {data} = useSuspenseQuery(embeddedTexturesByIdQueryOptions(id));
 
-	const mimeType = detectImageMimeType(fileContents);
-	const blob = useMemo(() => {
-		if (fileContents.length <= 0) {
-			return;
+	const [error, setError] = useState<Error | null>(null);
+	const [finalBlob, setFinalBlob] = useState<Blob | null>(null);
+
+	const {
+		DownloadableFileContents: fileContents,
+		Bgra: bgra,
+		Format: format,
+		Width: width,
+		Height: height,
+	} = data;
+
+	useEffect(() => {
+		async function draw() {
+			setError(null);
+			setFinalBlob(await drawImageToBlob(fileContents, bgra, width, height));
 		}
 
-		return new Blob([fileContents], {
-			type: mimeType ?? 'application/octet-stream',
-		});
-	}, [fileContents, mimeType]);
+		draw().catch(setError);
+
+		return () => {
+			setError(null);
+			setFinalBlob(null);
+		};
+	}, [bgra, fileContents, height, width]);
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
-			<DocumentTitle text={['Texture ' + id, 'Embedded textures']} />
+			<DocumentTitle text={['Texture ' + id.toString(), 'Embedded textures']} />
 
 			<Title order={2}>Texture {id}</Title>
 
-			<p>Format: {data.Format}</p>
+			{error != null ? <BasicErrorAlert error={error} /> : null}
 
-			{blob ? (
+			<p>Original format: {format}</p>
+
+			{finalBlob != null ? (
 				<ImageViewer
-					blob={blob}
-					fileName={'Texture ' + id}
-					mimeType={mimeType}
+					blob={finalBlob}
+					fileName={'Texture ' + id.toString()}
+					width={width}
+					height={height}
+					enableDownload={fileContents != null}
 				/>
 			) : null}
 		</Stack>
@@ -51,12 +66,19 @@ function RouteComponent() {
 
 export const Route = createFileRoute('/_app/embedded-textures/$id')({
 	component: RouteComponent,
+	params: {
+		parse: (params) => {
+			return {
+				id: parseInt(params.id, 10),
+			};
+		},
+	},
 	loader: ({context, params}) =>
 		context.queryClient.ensureQueryData(
-			embeddedTexturesByIdQueryOptions(parseInt(params.id, 10)),
+			embeddedTexturesByIdQueryOptions(params.id),
 		),
 	errorComponent: ({error}) => {
-		if (error.message === 'NoMatch') {
+		if (error.message.startsWith('ArgumentOutOfRange')) {
 			return (
 				<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
 					<BasicErrorAlert title="This embedded texture does not exist." />

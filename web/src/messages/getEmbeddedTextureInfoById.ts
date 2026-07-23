@@ -48,11 +48,21 @@ export type GetEmbeddedTextureInfoByIdResult = EmbeddedTextureInfoType;
 
 // Info about UndertaleEmbeddedTexture. Keep this in sync with `src/Serializers/EmbeddedTextureInfo.cs`
 export const EmbeddedTextureInfoSchema = z.object({
-	FileContents: z.codec(z.base64(), z.instanceof(Uint8Array), {
-		decode: (base64String) => z.util.base64ToUint8Array(base64String),
-		encode: (bytes) => z.util.uint8ArrayToBase64(bytes),
-	}),
+	DownloadableFileContents: z.nullable(
+		z.codec(z.base64(), z.instanceof(Uint8Array), {
+			decode: (base64String) => z.util.base64ToUint8Array(base64String),
+			encode: (bytes) => z.util.uint8ArrayToBase64(bytes),
+		}),
+	),
+	Bgra: z.nullable(
+		z.codec(z.base64(), z.instanceof(Uint8Array), {
+			decode: (base64String) => z.util.base64ToUint8Array(base64String),
+			encode: (bytes) => z.util.uint8ArrayToBase64(bytes),
+		}),
+	),
 	Format: z.enum(ImageFormatEnum),
+	Width: z.int(),
+	Height: z.int(),
 });
 
 export type EmbeddedTextureInfoType = z.infer<typeof EmbeddedTextureInfoSchema>;

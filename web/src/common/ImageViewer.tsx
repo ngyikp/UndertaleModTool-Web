@@ -6,10 +6,18 @@ import styles from './ImageViewer.module.css';
 type Props = Readonly<{
 	blob: Blob;
 	fileName: string;
-	mimeType: string | null;
+	width: number;
+	height: number;
+	enableDownload: boolean; // todo rethink this, maybe just rename the button text
 }>;
 
-export default function ImageViewer({blob, fileName, mimeType}: Props) {
+export default function ImageViewer({
+	blob,
+	fileName,
+	width,
+	height,
+	enableDownload,
+}: Props) {
 	const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
 	useEffect(() => {
@@ -25,7 +33,7 @@ export default function ImageViewer({blob, fileName, mimeType}: Props) {
 
 	return (
 		<>
-			{blobUrl ? (
+			{enableDownload && blobUrl ? (
 				<div>
 					<Button component="a" href={blobUrl} download={fileName}>
 						Export raw image
@@ -33,13 +41,15 @@ export default function ImageViewer({blob, fileName, mimeType}: Props) {
 				</div>
 			) : null}
 
-			{blobUrl && mimeType === 'image/png' ? (
+			{blobUrl ? (
 				<div style={{overflowX: 'auto'}}>
 					<img
 						src={blobUrl}
 						alt={fileName}
 						className={styles.checkerboard}
 						style={{display: 'block'}}
+						width={width}
+						height={height}
 					/>
 				</div>
 			) : null}

@@ -1,21 +1,14 @@
 import {Stack, Title} from '@mantine/core';
-import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
+import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
+import drawImageToBlob from '../../common/drawImageToBlob';
 import ImageViewer from '../../common/ImageViewer';
 import {embeddedTexturesByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
-import {getTexturePageInfoById} from '../../messages/getTexturePageInfoById';
-
-const texturePageByIdQueryOptions = (id: number) =>
-	queryOptions({
-		queryKey: ['texture-pages', id],
-		queryFn() {
-			return getTexturePageInfoById(id);
-		},
-	});
+import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
 
 function RouteComponent() {
 	const {id} = useParams({
@@ -23,21 +16,35 @@ function RouteComponent() {
 	});
 
 	const {data: texturePageData} = useSuspenseQuery(
-		texturePageByIdQueryOptions(parseInt(id, 10)),
+		texturePageByIdQueryOptions(id),
 	);
 	const {data: embeddedTextureData} = useSuspenseQuery(
 		embeddedTexturesByIdQueryOptions(texturePageData.EmbeddedTextureID),
 	);
 
+	const [error, setError] = useState<Error | null>(null);
 	const [finalBlob, setFinalBlob] = useState<Blob | null>(null);
 
 	useEffect(() => {
 		// todo add includePadding parameter
-		async function drawImage() {
-			if (embeddedTextureData.Format !== 'Png') {
+		async function draw() {
+			setError(null);
+
+			// DDS is not supported yet
+			if (embeddedTextureData.Format === 'Dds') {
 				return;
 			}
 
+			// First, convert unusable file format to canvas
+			// todo this should probably be cached
+			const embeddedTextureCanvas = await drawImageToBlob(
+				embeddedTextureData.DownloadableFileContents,
+				embeddedTextureData.Bgra,
+				embeddedTextureData.Width,
+				embeddedTextureData.Height,
+			);
+
+			// Cropped image canvas
 			const canvas = document.createElement('canvas');
 			canvas.width = texturePageData.SourceWidth;
 			canvas.height = texturePageData.SourceHeight;
@@ -50,9 +57,7 @@ function RouteComponent() {
 			// Based on https://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModLib/Util/TextureWorker.cs#L63
 			// Create an image cropped from the item's part of the texture page
 			const imageBitmap = await createImageBitmap(
-				new Blob([embeddedTextureData.FileContents], {
-					type: 'image/png',
-				}),
+				embeddedTextureCanvas,
 				texturePageData.SourceX,
 				texturePageData.SourceY,
 				texturePageData.SourceWidth,
@@ -75,21 +80,26 @@ function RouteComponent() {
 
 			canvas.toBlob((croppedImageBlob) => {
 				if (croppedImageBlob == null) {
-					throw new Error('Failed to render canvas image');
+					setError(new Error('Failed to render canvas image'));
+					return;
 				}
 
 				setFinalBlob(croppedImageBlob);
 			});
 		}
 
-		void drawImage();
+		draw().catch(setError);
 
 		return () => {
+			setError(null);
 			setFinalBlob(null);
 		};
 	}, [
-		embeddedTextureData.FileContents,
+		embeddedTextureData.DownloadableFileContents,
+		embeddedTextureData.Bgra,
 		embeddedTextureData.Format,
+		embeddedTextureData.Width,
+		embeddedTextureData.Height,
 		texturePageData.SourceHeight,
 		texturePageData.SourceWidth,
 		texturePageData.SourceX,
@@ -100,9 +110,11 @@ function RouteComponent() {
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
-			<DocumentTitle text={['Texture ' + id, 'Texture pages']} />
+			<DocumentTitle text={['Texture ' + id.toString(), 'Texture pages']} />
 
 			<Title order={2}>Texture {id}</Title>
+
+			{error != null ? <BasicErrorAlert error={error} /> : null}
 
 			<p>
 				Source position: {texturePageData.SourceX}x{texturePageData.SourceY}
@@ -126,7 +138,7 @@ function RouteComponent() {
 			<p>
 				<Link
 					to="/embedded-textures/$id"
-					params={{id: texturePageData.EmbeddedTextureID.toString()}}
+					params={{id: texturePageData.EmbeddedTextureID}}
 				>
 					Go to embedded texture {texturePageData.EmbeddedTextureID}
 				</Link>
@@ -135,8 +147,10 @@ function RouteComponent() {
 			{finalBlob ? (
 				<ImageViewer
 					blob={finalBlob}
-					fileName={'Texture ' + id}
-					mimeType="image/png"
+					fileName={'Texture ' + id.toString()}
+					width={texturePageData.TargetWidth}
+					height={texturePageData.TargetHeight}
+					enableDownload={embeddedTextureData.DownloadableFileContents != null}
 				/>
 			) : null}
 		</Stack>
@@ -145,9 +159,16 @@ function RouteComponent() {
 
 export const Route = createFileRoute('/_app/texture-pages/$id')({
 	component: RouteComponent,
+	params: {
+		parse: (params) => {
+			return {
+				id: parseInt(params.id, 10),
+			};
+		},
+	},
 	loader: async ({context, params}) => {
 		const texturePageData = await context.queryClient.ensureQueryData(
-			texturePageByIdQueryOptions(parseInt(params.id, 10)),
+			texturePageByIdQueryOptions(params.id),
 		);
 
 		await context.queryClient.ensureQueryData(
@@ -157,7 +178,7 @@ export const Route = createFileRoute('/_app/texture-pages/$id')({
 		return texturePageData;
 	},
 	errorComponent: ({error}) => {
-		if (error.message === 'NoMatch') {
+		if (error.message.startsWith('ArgumentOutOfRange')) {
 			return (
 				<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
 					<BasicErrorAlert title="This texture page does not exist." />
