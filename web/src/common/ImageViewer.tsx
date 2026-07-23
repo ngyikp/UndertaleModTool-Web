@@ -1,6 +1,8 @@
 import {Button} from '@mantine/core';
 import {useEffect, useState} from 'react';
 
+import styles from './ImageViewer.module.css';
+
 type Props = Readonly<{
 	blob: Blob;
 	fileName: string;
@@ -36,7 +38,7 @@ export default function ImageViewer({blob, fileName, mimeType}: Props) {
 					<img
 						src={blobUrl}
 						alt={fileName}
-						className="checkerboard"
+						className={styles.checkerboard}
 						style={{display: 'block'}}
 					/>
 				</div>
