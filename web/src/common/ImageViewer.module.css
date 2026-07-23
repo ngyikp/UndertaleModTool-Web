@@ -1,3 +1,23 @@
+.appearanceSelect {
+	width: 10rem;
+}
+
+.scrollable {
+	overflow-x: auto;
+}
+
+.image {
+	display: block;
+}
+
+.black {
+	background: #000;
+}
+
+.white {
+	background: #fff;
+}
+
 .checkerboard {
 	background-color: #fff;
 	background-image:
