@@ -45,6 +45,8 @@ export const GameInfoSchema = z.object({
 		ParticleSystems: z.int(),
 		ParticleSystemEmitters: z.int(),
 	}),
+
+	UMTLibVersion: z.string(),
 });
 
 export type GameInfoType = z.infer<typeof GameInfoSchema>;

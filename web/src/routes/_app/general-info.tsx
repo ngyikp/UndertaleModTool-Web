@@ -8,6 +8,7 @@ import {
 } from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
+import Footer from '../../common/Footer';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
 import YycWarningAlert from '../../common/YycWarningAlert';
 import {useDataStore} from '../../data-store';
@@ -216,6 +217,8 @@ function GeneralInfo() {
 					</Link>
 				</List.Item>
 			</List>
+
+			<Footer />
 		</Stack>
 	);
 }

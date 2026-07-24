@@ -8,6 +8,7 @@ import {
 import {useState} from 'react';
 
 import DataFileInput from '../../common/DataFileInput';
+import Footer from '../../common/Footer';
 import getGameDisplayName from '../../common/getGameDisplayName';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
 import {useDataStore} from '../../data-store';
@@ -239,6 +240,8 @@ function GameDataNotLoadedComponent({error}: {error: Error}) {
 				) : null}
 
 				<DataFileInput onStatusChanged={setStatus} />
+
+				<Footer />
 			</Stack>
 		);
 	}

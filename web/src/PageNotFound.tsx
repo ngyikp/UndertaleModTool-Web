@@ -3,6 +3,7 @@ import {Link} from '@tanstack/react-router';
 
 import BasicErrorAlert from './common/BasicErrorAlert';
 import DocumentTitle from './common/DocumentTitle';
+import Footer from './common/Footer';
 
 export default function PageNotFound() {
 	return (
@@ -18,6 +19,8 @@ export default function PageNotFound() {
 					Go to homepage
 				</Button>
 			</div>
+
+			<Footer />
 		</Stack>
 	);
 }

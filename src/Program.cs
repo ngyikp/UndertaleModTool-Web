@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
 using System.Text.Json;
@@ -187,7 +188,9 @@ public partial class UndertaleModToolWASM
                 EmbeddedAudio = Data.EmbeddedAudio.Count,
                 ParticleSystems = Data.ParticleSystems?.Count ?? 0,
                 ParticleSystemEmitters = Data.ParticleSystemEmitters?.Count ?? 0,
-            }
+            },
+
+            UMTLibVersion = Assembly.GetAssembly(typeof(UndertaleData))?.GetName().Version?.ToString() ?? "",
         };
     }
 
@@ -390,7 +393,7 @@ public partial class UndertaleModToolWASM
             Flags = sound.Flags,
             ExternalFileName = sound.File.Content,
             AudioGroupID = sound.GroupID,
-            AudioGroupName = sound.AudioGroup?.Name.Content ?? string.Empty,
+            AudioGroupName = sound.AudioGroup?.Name.Content ?? "",
         };
 
         return JsonSerializer.Serialize(soundInfo, SoundInfoContext.Default.SoundInfo);
