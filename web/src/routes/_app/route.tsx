@@ -197,11 +197,13 @@ function AppLayout() {
 						text="Strings"
 					/>
 
-					<TabLinkHideIfEmpty
-						count={info.ItemCounts.GlobalInitScripts}
-						link="/global-init"
-						text="Global init scripts"
-					/>
+					{!info.IsYYC ? (
+						<TabLinkHideIfEmpty
+							count={info.ItemCounts.GlobalInitScripts}
+							link="/global-init"
+							text="Global init scripts"
+						/>
+					) : null}
 
 					<TabLinkHideIfEmpty
 						count={info.ItemCounts.EmbeddedAudio}
