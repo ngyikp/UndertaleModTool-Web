@@ -95,9 +95,17 @@ function GeneralInfo() {
 				</List.Item>
 
 				<List.Item>
-					<Link to="/audio-groups">
-						{info.ItemCounts.AudioGroups} audio groups
-					</Link>
+					<Link to="/objects">{info.ItemCounts.GameObjects} objects</Link>
+				</List.Item>
+
+				{!info.IsYYC ? (
+					<List.Item>
+						<Link to="/code">{info.ItemCounts.Code} code entries</Link>
+					</List.Item>
+				) : null}
+
+				<List.Item>
+					<Link to="/rooms">{info.ItemCounts.Rooms} rooms</Link>
 				</List.Item>
 
 				<List.Item>
@@ -107,11 +115,7 @@ function GeneralInfo() {
 				</List.Item>
 
 				<List.Item>
-					<Link to="/paths">{info.ItemCounts.Paths} paths</Link>
-				</List.Item>
-
-				<List.Item>
-					<Link to="/scripts">{info.ItemCounts.Scripts} scripts</Link>
+					<Link to="/fonts">{info.ItemCounts.Fonts} fonts</Link>
 				</List.Item>
 
 				<List.Item>
@@ -119,7 +123,19 @@ function GeneralInfo() {
 				</List.Item>
 
 				<List.Item>
-					<Link to="/fonts">{info.ItemCounts.Fonts} fonts</Link>
+					<Link to="/paths">{info.ItemCounts.Paths} paths</Link>
+				</List.Item>
+
+				<List.Item>
+					<Link to="/particle-systems">
+						{info.ItemCounts.ParticleSystems} particle systems
+					</Link>
+				</List.Item>
+
+				<List.Item>
+					<Link to="/particle-system-emitters">
+						{info.ItemCounts.ParticleSystemEmitters} particle system emitters
+					</Link>
 				</List.Item>
 
 				<List.Item>
@@ -127,37 +143,13 @@ function GeneralInfo() {
 				</List.Item>
 
 				<List.Item>
-					<Link to="/objects">{info.ItemCounts.GameObjects} objects</Link>
-				</List.Item>
-
-				<List.Item>
-					<Link to="/rooms">{info.ItemCounts.Rooms} rooms</Link>
+					<Link to="/audio-groups">
+						{info.ItemCounts.AudioGroups} audio groups
+					</Link>
 				</List.Item>
 
 				<List.Item>
 					<Link to="/extensions">{info.ItemCounts.Extensions} extensions</Link>
-				</List.Item>
-
-				<List.Item>
-					<Link to="/texture-pages">
-						{info.ItemCounts.TexturePageItems} texture pages
-					</Link>
-				</List.Item>
-
-				<List.Item>
-					<Link to="/texture-groups">
-						{info.ItemCounts.TextureGroupInfo} texture groups
-					</Link>
-				</List.Item>
-
-				<List.Item>
-					<Link to="/strings">{info.ItemCounts.Strings} strings</Link>
-				</List.Item>
-
-				<List.Item>
-					<Link to="/global-init">
-						{info.ItemCounts.GlobalInitScripts} global init scripts
-					</Link>
 				</List.Item>
 
 				<List.Item>
@@ -173,29 +165,23 @@ function GeneralInfo() {
 				</List.Item>
 
 				<List.Item>
-					<Link to="/embedded-audio">
-						{info.ItemCounts.EmbeddedAudio} embedded audio
+					<Link to="/texture-groups">
+						{info.ItemCounts.TextureGroupInfo} texture groups
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/particle-systems">
-						{info.ItemCounts.ParticleSystems} particle systems
+					<Link to="/texture-pages">
+						{info.ItemCounts.TexturePageItems} texture pages
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/particle-system-emitters">
-						{info.ItemCounts.ParticleSystemEmitters} particle system emitters
-					</Link>
+					<Link to="/scripts">{info.ItemCounts.Scripts} scripts</Link>
 				</List.Item>
 
 				{!info.IsYYC ? (
 					<>
-						<List.Item>
-							<Link to="/code">{info.ItemCounts.Code} code entries</Link>
-						</List.Item>
-
 						<List.Item>
 							<Link to="/variables">{info.ItemCounts.Variables} variables</Link>
 						</List.Item>
@@ -213,6 +199,22 @@ function GeneralInfo() {
 						) : null}
 					</>
 				) : null}
+
+				<List.Item>
+					<Link to="/strings">{info.ItemCounts.Strings} strings</Link>
+				</List.Item>
+
+				<List.Item>
+					<Link to="/global-init">
+						{info.ItemCounts.GlobalInitScripts} global init scripts
+					</Link>
+				</List.Item>
+
+				<List.Item>
+					<Link to="/embedded-audio">
+						{info.ItemCounts.EmbeddedAudio} embedded audio
+					</Link>
+				</List.Item>
 			</List>
 		</Stack>
 	);

@@ -24,7 +24,7 @@ function TabLink({link, text}: {link: string; text: string}) {
 	);
 }
 
-function TabLinkWithCount({
+function TabLinkHideIfEmpty({
 	count,
 	link,
 	text,
@@ -37,7 +37,7 @@ function TabLinkWithCount({
 		return null;
 	}
 
-	return <TabLink link={link} text={`${text} (${count.toString()})`} />;
+	return <TabLink link={link} text={text} />;
 }
 
 function AppLayout() {
@@ -59,154 +59,154 @@ function AppLayout() {
 				<Tabs.List>
 					<TabLink link="/general-info" text="General info" />
 
-					<TabLinkWithCount
+					<TabLinkHideIfEmpty
 						count={info.ItemCounts.Sprites}
 						link="/sprites"
 						text="Sprites"
 					/>
 
-					<TabLinkWithCount
+					<TabLinkHideIfEmpty
 						count={info.ItemCounts.Sounds}
 						link="/sounds"
 						text="Sounds"
 					/>
 
-					<TabLinkWithCount
-						count={info.ItemCounts.AudioGroups}
-						link="/audio-groups"
-						text="Audio groups"
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.Backgrounds}
-						link="/tile-sets"
-						text={getTileSetsLabel(info, true)}
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.Paths}
-						link="/paths"
-						text="Paths"
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.Scripts}
-						link="/scripts"
-						text="Scripts"
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.Shaders}
-						link="/shaders"
-						text="Shaders"
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.Fonts}
-						link="/fonts"
-						text="Fonts"
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.Timelines}
-						link="/timelines"
-						text="Timelines"
-					/>
-
-					<TabLinkWithCount
+					<TabLinkHideIfEmpty
 						count={info.ItemCounts.GameObjects}
 						link="/objects"
 						text="Objects"
 					/>
 
-					<TabLinkWithCount
-						count={info.ItemCounts.Rooms}
-						link="/rooms"
-						text="Rooms"
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.Extensions}
-						link="/extensions"
-						text="Extensions"
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.TexturePageItems}
-						link="/texture-pages"
-						text="Texture pages"
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.TextureGroupInfo}
-						link="/texture-groups"
-						text="Texture groups"
-					/>
-
-					<TabLinkWithCount
+					<TabLinkHideIfEmpty
 						count={info.ItemCounts.Code}
 						link="/code"
 						text="Code"
 					/>
 
-					<TabLinkWithCount
-						count={info.ItemCounts.Variables}
-						link="/variables"
-						text="Variables"
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Rooms}
+						link="/rooms"
+						text="Rooms"
 					/>
 
-					<TabLinkWithCount
-						count={info.ItemCounts.Functions}
-						link="/functions"
-						text="Functions"
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Backgrounds}
+						link="/tile-sets"
+						text={getTileSetsLabel(info, true)}
 					/>
 
-					<TabLinkWithCount
-						count={info.ItemCounts.CodeLocals}
-						link="/code-locals"
-						text="Code locals"
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Fonts}
+						link="/fonts"
+						text="Fonts"
 					/>
 
-					<TabLinkWithCount
-						count={info.ItemCounts.Strings}
-						link="/strings"
-						text="Strings"
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Shaders}
+						link="/shaders"
+						text="Shaders"
 					/>
 
-					<TabLinkWithCount
-						count={info.ItemCounts.GlobalInitScripts}
-						link="/global-init"
-						text="Global init scripts"
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Paths}
+						link="/paths"
+						text="Paths"
 					/>
 
-					<TabLinkWithCount
-						count={info.ItemCounts.EmbeddedTextures}
-						link="/embedded-textures"
-						text="Embedded textures"
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.EmbeddedImages}
-						link="/embedded-images"
-						text="Embedded images"
-					/>
-
-					<TabLinkWithCount
-						count={info.ItemCounts.EmbeddedAudio}
-						link="/embedded-audio"
-						text="Embedded audio"
-					/>
-
-					<TabLinkWithCount
+					<TabLinkHideIfEmpty
 						count={info.ItemCounts.ParticleSystems}
 						link="/particle-systems"
 						text="Particle systems"
 					/>
 
-					<TabLinkWithCount
+					<TabLinkHideIfEmpty
 						count={info.ItemCounts.ParticleSystemEmitters}
 						link="/particle-system-emitters"
 						text="Particle system emitters"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.AudioGroups}
+						link="/audio-groups"
+						text="Audio groups"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Timelines}
+						link="/timelines"
+						text="Timelines"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Extensions}
+						link="/extensions"
+						text="Extensions"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.EmbeddedTextures}
+						link="/embedded-textures"
+						text="Embedded textures"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.EmbeddedImages}
+						link="/embedded-images"
+						text="Embedded images"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.TextureGroupInfo}
+						link="/texture-groups"
+						text="Texture groups"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.TexturePageItems}
+						link="/texture-pages"
+						text="Texture pages"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Scripts}
+						link="/scripts"
+						text="Scripts"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Variables}
+						link="/variables"
+						text="Variables"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Functions}
+						link="/functions"
+						text="Functions"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.CodeLocals}
+						link="/code-locals"
+						text="Code locals"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.Strings}
+						link="/strings"
+						text="Strings"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.GlobalInitScripts}
+						link="/global-init"
+						text="Global init scripts"
+					/>
+
+					<TabLinkHideIfEmpty
+						count={info.ItemCounts.EmbeddedAudio}
+						link="/embedded-audio"
+						text="Embedded audio"
 					/>
 				</Tabs.List>
 			</Tabs>
