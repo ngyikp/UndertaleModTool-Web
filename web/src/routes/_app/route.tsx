@@ -1,4 +1,4 @@
-import {Alert, Stack, Tabs, Title} from '@mantine/core';
+import {Alert, Stack, Tabs, Title, Tooltip} from '@mantine/core';
 import {
 	createFileRoute,
 	Link,
@@ -77,11 +77,19 @@ function AppLayout() {
 						text="Objects"
 					/>
 
-					<TabLinkHideIfEmpty
-						count={info.ItemCounts.Code}
-						link="/code"
-						text="Code"
-					/>
+					{!info.IsYYC ? (
+						<TabLinkHideIfEmpty
+							count={info.ItemCounts.Code}
+							link="/code"
+							text="Code"
+						/>
+					) : (
+						<Tooltip label="This game uses YYC which means viewing the source code is not possible">
+							<Tabs.Tab value="/code" disabled>
+								Code
+							</Tabs.Tab>
+						</Tooltip>
+					)}
 
 					<TabLinkHideIfEmpty
 						count={info.ItemCounts.Rooms}
