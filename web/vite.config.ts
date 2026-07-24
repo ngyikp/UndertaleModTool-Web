@@ -37,7 +37,9 @@ function getServerHeaders() {
 			// unsafe-inline: For Vite dev server
 			"script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
 
-			// unsafe-inline: For Vite dev
+			// unsafe-inline:
+			//   - For Monaco Editor https://github.com/Microsoft/monaco-editor/issues/271
+			//   - Vite dev
 			"style-src 'self' 'unsafe-inline'",
 
 			"img-src 'self' blob:",

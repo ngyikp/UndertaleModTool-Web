@@ -4,7 +4,8 @@ import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
-import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
+// import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
+import MonacoEditor from '../../common/MonacoEditor';
 import {getCodeInfoByName} from '../../messages/getCodeInfoByName';
 
 const codeByNameQueryOptions = (name: string) =>
@@ -61,7 +62,9 @@ function RouteComponent() {
 						</CopyButton>
 					</Group>
 
-					<GmlCodeHighlighter code={data.DecompiledCode} />
+					{/* <GmlCodeHighlighter code={data.DecompiledCode} /> */}
+
+					<MonacoEditor defaultValue={data.DecompiledCode} />
 				</>
 			) : null}
 		</Stack>
