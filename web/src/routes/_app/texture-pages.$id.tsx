@@ -11,8 +11,9 @@ import {embeddedTexturesByIdQueryOptions} from '../../messages/getEmbeddedTextur
 import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
 
 function RouteComponent() {
-	const {id} = useParams({
+	const id = useParams({
 		from: '/_app/texture-pages/$id',
+		select: (params) => params.id,
 	});
 
 	const {data: texturePageData} = useSuspenseQuery(

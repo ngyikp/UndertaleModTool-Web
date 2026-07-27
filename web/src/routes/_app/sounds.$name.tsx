@@ -21,8 +21,9 @@ const soundByNameQueryOptions = (name: string) =>
 	});
 
 function RouteComponent() {
-	const {name} = useParams({
+	const name = useParams({
 		from: '/_app/sounds/$name',
+		select: (params) => params.name,
 	});
 
 	const {data} = useSuspenseQuery(soundByNameQueryOptions(name));

@@ -10,8 +10,9 @@ import ImageViewer from '../../common/ImageViewer';
 import {embeddedTexturesByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 
 function RouteComponent() {
-	const {id} = useParams({
+	const id = useParams({
 		from: '/_app/embedded-textures/$id',
+		select: (params) => params.id,
 	});
 
 	const {data} = useSuspenseQuery(embeddedTexturesByIdQueryOptions(id));
