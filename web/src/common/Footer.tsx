@@ -9,31 +9,44 @@ export default function Footer() {
 		<Stack>
 			<Divider mt="xl" />
 
-			{info?.UMTLibVersion != null ? (
-				<Text c="dimmed">
-					Running UndertaleModLib{' '}
-					<a
-						href={
-							'https://github.com/UnderminersTeam/UndertaleModTool/releases/tag/' +
-							info.UMTLibVersion
-						}
-						target="_blank"
-						rel="noopener"
-					>
-						v{info.UMTLibVersion}
-					</a>
-				</Text>
-			) : null}
+			<Text c="dimmed">
+				Powered by the{' '}
+				<a
+					href="https://github.com/UnderminersTeam/UndertaleModTool"
+					target="_blank"
+					// eslint-disable-next-line @eslint-react/dom-no-unsafe-target-blank
+					rel="noopener"
+				>
+					UndertaleModTool
+				</a>{' '}
+				project
+				{info?.UMTLibVersion != null ? (
+					<>
+						{' (running '}
+						<a
+							href={
+								'https://github.com/UnderminersTeam/UndertaleModTool/releases/tag/' +
+								info.UMTLibVersion
+							}
+							target="_blank"
+							rel="noopener"
+						>
+							v{info.UMTLibVersion}
+						</a>
+						)
+					</>
+				) : null}
+				.
+			</Text>
 
 			<Text c="dimmed">
-				Powered by the UndertaleModTool project.{' '}
 				<a
 					href="https://github.com/ngyikp/UndertaleModTool-Web"
 					target="_blank"
 					// eslint-disable-next-line @eslint-react/dom-no-unsafe-target-blank
 					rel="noopener"
 				>
-					Contribute on GitHub.
+					Contribute/report a bug for this web version on GitHub.
 				</a>
 			</Text>
 		</Stack>
