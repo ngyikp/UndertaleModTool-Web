@@ -1,4 +1,4 @@
-import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
+import {useSuspenseQuery} from '@tanstack/react-query';
 import {
 	createFileRoute,
 	Link,
@@ -11,15 +11,7 @@ import SidebarAndContentView from '../../common/SidebarAndContentView';
 import SortableList from '../../common/SortableList';
 import YycWarningAlert from '../../common/YycWarningAlert';
 import {useDataStore} from '../../data-store';
-import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
-import {ModelType} from '../../types/ModelType';
-
-const codeQueryOptions = queryOptions({
-	queryKey: ['code'],
-	queryFn() {
-		return getEntriesByModelType(ModelType.Code);
-	},
-});
+import codeQueryOptions from '../../queries/codeQueryOptions';
 
 // Workaround React Compiler bug
 // https://github.com/TanStack/router/issues/4499

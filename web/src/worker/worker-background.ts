@@ -105,6 +105,16 @@ async function onMessage(request: WorkerRequest) {
 				});
 				break;
 
+			case 'editCodeTextByName':
+				reply({
+					status: 'FINISHED',
+					result: dotNet.exports.UndertaleModToolWASM.EditCodeTextByName(
+						request.message.name,
+						request.message.sourceCode,
+					),
+				});
+				break;
+
 			case 'getSoundInfoByName':
 				reply({
 					status: 'FINISHED',

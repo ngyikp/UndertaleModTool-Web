@@ -5,6 +5,7 @@ using System.Runtime.Versioning;
 using System.Text.Json;
 using Serializers;
 using UndertaleModLib;
+using UndertaleModLib.Compiler;
 using UndertaleModLib.Decompiler;
 using UndertaleModLib.Models;
 using UndertaleModLib.Util;
@@ -344,6 +345,7 @@ public partial class UndertaleModToolWASM
         return JsonSerializer.Serialize(entries, ItemListJsonContext.Default.ListString);
     }
 
+    #region Code
     [JSExport]
     [SupportedOSPlatform("browser")]
     public static string GetCodeInfoByName(string name)
@@ -378,6 +380,37 @@ public partial class UndertaleModToolWASM
 
         return JsonSerializer.Serialize(codeInfo, CodeInfoContext.Default.CodeInfo);
     }
+
+    [JSExport]
+    [SupportedOSPlatform("browser")]
+    public static bool EditCodeTextByName(string name, string sourceCode)
+    {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
+        if (gameData.Code is null)
+        {
+            throw new Exception("This game has no code entries.");
+        }
+
+        UndertaleCode code = gameData.Code.First(code => name == code.Name.Content);
+
+        if (code.ParentEntry is not null)
+        {
+            throw new Exception("Cannot edit code of a child code entry.");
+        }
+
+        CompileGroup group = new(gameData);
+        group.QueueCodeReplace(code, sourceCode);
+        CompileResult compileResult = group.Compile();
+
+        if (!compileResult.Successful)
+        {
+            throw new Exception("Compile error:\n\n" + compileResult.PrintAllErrors(false));
+        }
+
+        return true;
+    }
+    #endregion Code
 
     [JSExport]
     [SupportedOSPlatform("browser")]

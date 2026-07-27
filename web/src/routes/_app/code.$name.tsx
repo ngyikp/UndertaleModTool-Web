@@ -1,27 +1,44 @@
 import {Alert, Button, CopyButton, Group, Stack, Title} from '@mantine/core';
-import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
+import {useHotkeys} from '@mantine/hooks';
+import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
+import type * as monaco from 'monaco-editor/editor/editor.api';
+import {useRef, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
 // import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
 import MonacoEditor from '../../common/MonacoEditor';
-import {getCodeInfoByName} from '../../messages/getCodeInfoByName';
-
-const codeByNameQueryOptions = (name: string) =>
-	queryOptions({
-		queryKey: ['code', name],
-		queryFn() {
-			return getCodeInfoByName(name);
-		},
-	});
+import {useEditCodeTextByNameMutation} from '../../messages/editCodeTextByName';
+import {codeInfoByNameQueryOptions} from '../../messages/getCodeInfoByName';
 
 function RouteComponent() {
-	const {name} = useParams({
+	const name = useParams({
 		from: '/_app/code/$name',
+		select: (params) => params.name,
 	});
 
-	const {data} = useSuspenseQuery(codeByNameQueryOptions(name));
+	const {data} = useSuspenseQuery(codeInfoByNameQueryOptions(name));
+	const editCodeMutation = useEditCodeTextByNameMutation(name);
+
+	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+
+	const originalCode = data.DecompiledCode;
+	const [modifiedValue, setModifiedValue] = useState(originalCode ?? '');
+
+	const [prevOriginalCode, setPrevOriginalCode] = useState(originalCode);
+	if (originalCode !== prevOriginalCode) {
+		setModifiedValue(originalCode ?? '');
+		setPrevOriginalCode(originalCode);
+	}
+
+	useHotkeys([['mod + s', saveChanges]]);
+
+	function saveChanges() {
+		if (!editCodeMutation.isPending) {
+			editCodeMutation.mutate(modifiedValue);
+		}
+	}
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
@@ -39,32 +56,75 @@ function RouteComponent() {
 				</Alert>
 			) : null}
 
-			{data.DecompiledCode != null ? (
+			{originalCode != null ? (
 				<>
 					<Group gap="xs">
-						<Button
-							component="a"
-							href={
-								'data:text/plain;charset=utf-8,' +
-								encodeURIComponent(data.DecompiledCode)
-							}
-							download={name + '.gml'}
-						>
-							Export code
-						</Button>
+						<Button.Group>
+							<Button
+								// todo if the code formatting after saving is different, the button is not disabled
+								// disabled={modifiedValue === originalCode}
+								loading={editCodeMutation.isPending}
+								onClick={saveChanges}
+							>
+								Save changes
+							</Button>
 
-						<CopyButton value={data.DecompiledCode}>
-							{({copied, copy}) => (
-								<Button color={copied ? 'teal' : undefined} onClick={copy}>
-									{copied ? 'Copied' : 'Copy code'}
-								</Button>
-							)}
-						</CopyButton>
+							<Button
+								// disabled={modifiedValue === originalCode}
+								onClick={() => {
+									editorRef.current?.getModel()?.setValue(originalCode);
+								}}
+								variant="default"
+							>
+								Revert
+							</Button>
+						</Button.Group>
+
+						<Button.Group ml="auto">
+							<Button
+								component="a"
+								href={
+									'data:text/plain;charset=utf-8,' +
+									// todo performance?
+									encodeURIComponent(modifiedValue)
+								}
+								download={name + '.gml'}
+								variant="default"
+							>
+								Export code
+							</Button>
+
+							{/* todo performance? */}
+							<CopyButton value={modifiedValue}>
+								{({copied, copy}) => (
+									<Button
+										color={copied ? 'teal' : undefined}
+										variant={copied ? undefined : 'default'}
+										onClick={copy}
+									>
+										{copied ? 'Copied' : 'Copy code'}
+									</Button>
+								)}
+							</CopyButton>
+						</Button.Group>
 					</Group>
 
-					{/* <GmlCodeHighlighter code={data.DecompiledCode} /> */}
+					{editCodeMutation.isError ? (
+						<div style={{flexShrink: 0}}>
+							<BasicErrorAlert
+								title="Cannot save code"
+								error={editCodeMutation.error}
+							/>
+						</div>
+					) : null}
 
-					<MonacoEditor defaultValue={data.DecompiledCode} />
+					{/* <GmlCodeHighlighter code={originalCode} /> */}
+
+					<MonacoEditor
+						defaultValue={originalCode}
+						editorRef={editorRef}
+						onValueChange={setModifiedValue}
+					/>
 				</>
 			) : null}
 		</Stack>
@@ -74,7 +134,9 @@ function RouteComponent() {
 export const Route = createFileRoute('/_app/code/$name')({
 	component: RouteComponent,
 	loader: ({context, params}) =>
-		context.queryClient.ensureQueryData(codeByNameQueryOptions(params.name)),
+		context.queryClient.ensureQueryData(
+			codeInfoByNameQueryOptions(params.name),
+		),
 	errorComponent: ({error}) => {
 		if (error.message === 'NoMatch') {
 			return (

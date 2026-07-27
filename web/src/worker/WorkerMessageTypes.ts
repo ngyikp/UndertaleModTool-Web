@@ -1,4 +1,8 @@
 import type {
+	EditCodeTextByNameRequest,
+	EditCodeTextByNameResult,
+} from '../messages/editCodeTextByName';
+import type {
 	GetCodeInfoByNameRequest,
 	GetCodeInfoByNameResult,
 } from '../messages/getCodeInfoByName';
@@ -28,6 +32,7 @@ export type WorkerRequest = {
 		| ReadFileRequest
 		| GetEntriesByModelTypeRequest
 		| GetCodeInfoByNameRequest
+		| EditCodeTextByNameRequest
 		| GetSoundInfoByNameRequest
 		| GetEmbeddedTextureInfoByIdRequest
 		| GetTexturePageInfoByIdRequest;
@@ -37,6 +42,7 @@ export type AllResults =
 	| ReadFileResult
 	| GetEntriesByModelTypeResult
 	| GetCodeInfoByNameResult
+	| EditCodeTextByNameResult
 	| GetSoundInfoByNameResult
 	| GetEmbeddedTextureInfoByIdResult
 	| GetTexturePageInfoByIdResult;

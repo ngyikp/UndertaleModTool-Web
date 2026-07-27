@@ -12,11 +12,16 @@ import './setupMonaco';
 
 type Props = Readonly<{
 	defaultValue: string;
+	editorRef?: React.RefObject<monaco.editor.IStandaloneCodeEditor | null>;
+	onValueChange?: (value: string) => void;
 }>;
 
-export default function MonacoEditor({defaultValue}: Props) {
+export default function MonacoEditor({
+	defaultValue,
+	editorRef: parentEditorRef,
+	onValueChange,
+}: Props) {
 	const colorScheme = useColorScheme();
-	const previousValue = usePrevious(defaultValue);
 
 	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 	const divRef = useRef<HTMLDivElement | null>(null);
@@ -28,17 +33,19 @@ export default function MonacoEditor({defaultValue}: Props) {
 
 		if (!editorRef.current) {
 			editorRef.current = monaco.editor.create(divRef.current, {
-				value: defaultValue,
-				theme: colorScheme === 'dark' ? 'vs-dark' : 'vs',
 				language: 'gml',
 			});
+		}
+
+		if (parentEditorRef) {
+			parentEditorRef.current = editorRef.current;
 		}
 
 		return () => {
 			editorRef.current?.dispose();
 			editorRef.current = null;
 		};
-	}, [colorScheme, defaultValue]);
+	}, [parentEditorRef]);
 
 	useEffect(() => {
 		editorRef.current?.updateOptions({
@@ -46,16 +53,28 @@ export default function MonacoEditor({defaultValue}: Props) {
 		});
 	}, [colorScheme]);
 
+	const previousValue = usePrevious(defaultValue);
 	useEffect(() => {
 		if (previousValue !== defaultValue) {
 			editorRef.current?.getModel()?.setValue(defaultValue);
 		}
 	}, [defaultValue, previousValue]);
 
+	useEffect(() => {
+		const event = editorRef.current?.onDidChangeModelContent(() => {
+			if (editorRef.current) {
+				onValueChange?.(editorRef.current.getValue());
+			}
+		});
+
+		return () => {
+			event?.dispose();
+		};
+	}, [onValueChange]);
+
 	useWindowEvent(
 		'resize',
 		useThrottledCallback(() => {
-			console.log('run');
 			editorRef.current?.layout();
 		}, 100),
 	);

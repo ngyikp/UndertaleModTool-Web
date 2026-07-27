@@ -7,6 +7,8 @@ export type AppExports = {
 		GetEntriesByModelType(modelType: ModelTypeKeys): string;
 
 		GetCodeInfoByName(name: string): string;
+		EditCodeTextByName(name: string, sourceCode: string): true;
+
 		GetSoundInfoByName(name: string): string;
 		GetEmbeddedTextureInfoById(id: number): string;
 		GetTexturePageInfoById(id: number): string;

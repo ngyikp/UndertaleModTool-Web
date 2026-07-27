@@ -14,7 +14,7 @@ export default function BasicErrorAlert({
 			variant="light"
 			color="red"
 			title={title}
-			style={{alignSelf: 'start'}}
+			style={{alignSelf: 'start', whiteSpace: 'pre-wrap'}}
 		>
 			{typeof error === 'string' ? error : error?.message}
 		</Alert>

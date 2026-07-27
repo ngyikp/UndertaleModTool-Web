@@ -1,3 +1,4 @@
+import {queryOptions} from '@tanstack/react-query';
 import {z} from 'zod/mini';
 
 import {sendMessageToWorkerAsPromise} from '../worker/worker-handler';
@@ -16,6 +17,14 @@ export const CodeInfoSchema = z.object({
 });
 
 export type CodeInfoType = z.infer<typeof CodeInfoSchema>;
+
+export const codeInfoByNameQueryOptions = (name: string) =>
+	queryOptions({
+		queryKey: ['code', name],
+		queryFn() {
+			return getCodeInfoByName(name);
+		},
+	});
 
 export function getCodeInfoByName(name: string) {
 	return sendMessageToWorkerAsPromise<GetCodeInfoByNameResult>({
