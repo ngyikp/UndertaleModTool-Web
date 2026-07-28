@@ -1,4 +1,4 @@
-import {Alert, Button, CopyButton, Group, Stack, Title} from '@mantine/core';
+import {Alert, Button, Group, Stack, Title} from '@mantine/core';
 import {useHotkeys} from '@mantine/hooks';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
@@ -6,6 +6,7 @@ import type * as monaco from 'monaco-editor/editor/editor.api';
 import {useRef, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import CustomCopyButton from '../../common/CustomCopyButton';
 import DocumentTitle from '../../common/DocumentTitle';
 // import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
 import MonacoEditor from '../../common/MonacoEditor';
@@ -94,18 +95,7 @@ function RouteComponent() {
 								Export code
 							</Button>
 
-							{/* todo performance? */}
-							<CopyButton value={modifiedValue}>
-								{({copied, copy}) => (
-									<Button
-										color={copied ? 'teal' : undefined}
-										variant={copied ? undefined : 'default'}
-										onClick={copy}
-									>
-										{copied ? 'Copied' : 'Copy code'}
-									</Button>
-								)}
-							</CopyButton>
+							<CustomCopyButton label="Copy code" value={modifiedValue} />
 						</Button.Group>
 					</Group>
 

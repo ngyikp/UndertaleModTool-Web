@@ -2,6 +2,7 @@ import {Button, Group} from '@mantine/core';
 
 import {useDataStore} from '../data-store';
 
+import CustomCopyButton from './CustomCopyButton';
 import ImageAppearanceSelect from './image/ImageAppearanceSelect';
 import type {Appearance} from './image/ImageAppearanceType';
 import ImageWithPlaceholder from './image/ImageWithPlaceholder';
@@ -39,18 +40,21 @@ export default function ImageViewer({
 			<Group>
 				<ImageAppearanceSelect />
 
-				{enableDownload ? (
-					<Button
-						component="a"
-						href={blobUrl != null ? blobUrl : undefined}
-						download={fileName}
-						disabled={blobUrl == null}
-						variant="default"
-						ml="auto"
-					>
-						{downloadButtonText}
-					</Button>
-				) : null}
+				<Button.Group ml="auto">
+					{enableDownload ? (
+						<Button
+							component="a"
+							href={blobUrl != null ? blobUrl : undefined}
+							download={fileName}
+							disabled={blobUrl == null}
+							variant="default"
+						>
+							{downloadButtonText}
+						</Button>
+					) : null}
+
+					<CustomCopyButton label="Copy image" value={blob} />
+				</Button.Group>
 			</Group>
 
 			<ImageWithPlaceholder
