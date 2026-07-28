@@ -1,9 +1,10 @@
 import {Pagination, Stack, Title} from '@mantine/core';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
-import {useState} from 'react';
+import {Suspense, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import BasicLoadingMessage from '../../common/BasicLoadingMessage';
 import DocumentTitle from '../../common/DocumentTitle';
 import TexturePageImageViewer from '../../common/TexturePageImageViewer';
 import {spriteInfoByNameQueryOptions} from '../../messages/getSpriteInfoByName';
@@ -27,7 +28,12 @@ function RouteComponent() {
 			<Title order={2}>{name}</Title>
 
 			{texturePage ? (
-				<TexturePageImageViewer key={texturePage} texturePageId={texturePage} />
+				<Suspense fallback={<BasicLoadingMessage />}>
+					<TexturePageImageViewer
+						key={texturePage}
+						texturePageId={texturePage}
+					/>
+				</Suspense>
 			) : null}
 
 			{data.TexturePageIDs.length > 1 ? (
