@@ -1,12 +1,13 @@
 import {Pagination, Stack, Title} from '@mantine/core';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
-import {Suspense, useState} from 'react';
+import {Suspense} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import BasicLoadingMessage from '../../common/BasicLoadingMessage';
 import DocumentTitle from '../../common/DocumentTitle';
 import TexturePageImageViewer from '../../common/TexturePageImageViewer';
+import {useDataStore} from '../../data-store';
 import {spriteInfoByNameQueryOptions} from '../../messages/getSpriteInfoByName';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
 
@@ -16,10 +17,12 @@ function RouteComponent() {
 		select: (params) => params.name,
 	});
 
+	const page = useDataStore((state) => state.getSpriteTextureCurrentPage(name));
+	const setPage = useDataStore((state) => state.setSpriteTextureCurrentPage);
+
 	const {data} = useSuspenseQuery(spriteInfoByNameQueryOptions(name));
 
-	const [page, setPage] = useState(1);
-	const texturePage = data.TexturePageIDs[page - 1];
+	const texturePage = data.TexturePageIDs[page];
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
@@ -39,8 +42,10 @@ function RouteComponent() {
 			{data.TexturePageIDs.length > 1 ? (
 				<Pagination
 					total={data.TexturePageIDs.length}
-					value={page}
-					onChange={setPage}
+					value={page + 1}
+					onChange={(newPage) => {
+						setPage(name, newPage - 1);
+					}}
 					py="md"
 				/>
 			) : null}
