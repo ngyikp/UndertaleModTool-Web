@@ -1,8 +1,8 @@
 import {Button, Group, Select} from '@mantine/core';
-import {useEffect, useState} from 'react';
 
 import {useDataStore} from '../data-store';
 
+import {useBlobAsUrl} from './image/useBlobAsUrl';
 import styles from './ImageViewer.module.css';
 
 type Appearance = 'BLACK' | 'WHITE' | 'CHECKERBOARD';
@@ -29,23 +29,7 @@ export default function ImageViewer({
 	const settings = useDataStore((state) => state.imageViewerSettings);
 	const setSettings = useDataStore((state) => state.setImageViewerSettings);
 
-	const [blobUrl, setBlobUrl] = useState<string | null>(null);
-
-	useEffect(() => {
-		const url = blob != null ? window.URL.createObjectURL(blob) : null;
-		if (url) {
-			// eslint-disable-next-line react-hooks/set-state-in-effect, @eslint-react/set-state-in-effect
-			setBlobUrl(url);
-		}
-
-		return () => {
-			setBlobUrl(null);
-
-			if (url) {
-				window.URL.revokeObjectURL(url);
-			}
-		};
-	}, [blob]);
+	const blobUrl = useBlobAsUrl(blob);
 
 	const imageClassName = [
 		styles.image,
