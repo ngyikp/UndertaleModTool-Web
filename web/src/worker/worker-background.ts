@@ -69,7 +69,9 @@ async function onMessage(request: WorkerRequest) {
 					result: {
 						info: GameInfoSchema.parse(
 							JSON.parse(
-								dotNet.exports.UndertaleModToolWASM.ReadFile('data.win'),
+								dotNet.exports.UndertaleModToolWASM.Program.ReadFile(
+									'data.win',
+								),
 							),
 						),
 					},
@@ -83,7 +85,7 @@ async function onMessage(request: WorkerRequest) {
 					result: {
 						list: EntriesListInfoSchema.parse(
 							JSON.parse(
-								dotNet.exports.UndertaleModToolWASM.GetEntriesByModelType(
+								dotNet.exports.UndertaleModToolWASM.Program.GetEntriesByModelType(
 									request.message.modelType,
 								),
 							),
@@ -98,7 +100,7 @@ async function onMessage(request: WorkerRequest) {
 					status: 'FINISHED',
 					result: SpriteInfoSchema.parse(
 						JSON.parse(
-							dotNet.exports.UndertaleModToolWASM.GetSpriteInfoByName(
+							dotNet.exports.UndertaleModToolWASM.Program.GetSpriteInfoByName(
 								request.message.name,
 							),
 						),
@@ -111,7 +113,7 @@ async function onMessage(request: WorkerRequest) {
 					status: 'FINISHED',
 					result: CodeInfoSchema.parse(
 						JSON.parse(
-							dotNet.exports.UndertaleModToolWASM.GetCodeInfoByName(
+							dotNet.exports.UndertaleModToolWASM.Program.GetCodeInfoByName(
 								request.message.name,
 							),
 						),
@@ -122,10 +124,11 @@ async function onMessage(request: WorkerRequest) {
 			case 'editCodeTextByName':
 				reply({
 					status: 'FINISHED',
-					result: dotNet.exports.UndertaleModToolWASM.EditCodeTextByName(
-						request.message.name,
-						request.message.sourceCode,
-					),
+					result:
+						dotNet.exports.UndertaleModToolWASM.Program.EditCodeTextByName(
+							request.message.name,
+							request.message.sourceCode,
+						),
 				});
 				break;
 
@@ -134,7 +137,7 @@ async function onMessage(request: WorkerRequest) {
 					status: 'FINISHED',
 					result: SoundInfoSchema.parse(
 						JSON.parse(
-							dotNet.exports.UndertaleModToolWASM.GetSoundInfoByName(
+							dotNet.exports.UndertaleModToolWASM.Program.GetSoundInfoByName(
 								request.message.name,
 							),
 						),
@@ -147,7 +150,7 @@ async function onMessage(request: WorkerRequest) {
 					status: 'FINISHED',
 					result: EmbeddedTextureInfoSchema.parse(
 						JSON.parse(
-							dotNet.exports.UndertaleModToolWASM.GetEmbeddedTextureInfoById(
+							dotNet.exports.UndertaleModToolWASM.Program.GetEmbeddedTextureInfoById(
 								request.message.id,
 							),
 						),
@@ -160,7 +163,7 @@ async function onMessage(request: WorkerRequest) {
 					status: 'FINISHED',
 					result: TexturePageInfoSchema.parse(
 						JSON.parse(
-							dotNet.exports.UndertaleModToolWASM.GetTexturePageInfoById(
+							dotNet.exports.UndertaleModToolWASM.Program.GetTexturePageInfoById(
 								request.message.id,
 							),
 						),

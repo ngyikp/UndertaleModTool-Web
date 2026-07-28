@@ -13,6 +13,8 @@
 
     <PublishDir>$(MSBuildProjectDirectory)/../web/public/dotnet/</PublishDir>
 
+    <!-- Improves performance but higher file size -->
+    <!-- <RunAOTCompilation>true</RunAOTCompilation> -->
     <WasmStripILAfterAOT>true</WasmStripILAfterAOT>
     <InvariantGlobalization>true</InvariantGlobalization>
     <InvariantTimezone>true</InvariantTimezone>

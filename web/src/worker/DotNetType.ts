@@ -3,17 +3,19 @@ import type {ModelTypeKeys} from '../types/ModelType';
 
 export type AppExports = {
 	UndertaleModToolWASM: {
-		ReadFile(fileName: string): string;
-		GetEntriesByModelType(modelType: ModelTypeKeys): string;
+		Program: {
+			ReadFile(fileName: string): string;
+			GetEntriesByModelType(modelType: ModelTypeKeys): string;
 
-		GetSpriteInfoByName(name: string): string;
+			GetSpriteInfoByName(name: string): string;
 
-		GetCodeInfoByName(name: string): string;
-		EditCodeTextByName(name: string, sourceCode: string): true;
+			GetCodeInfoByName(name: string): string;
+			EditCodeTextByName(name: string, sourceCode: string): true;
 
-		GetSoundInfoByName(name: string): string;
-		GetEmbeddedTextureInfoById(id: number): string;
-		GetTexturePageInfoById(id: number): string;
+			GetSoundInfoByName(name: string): string;
+			GetEmbeddedTextureInfoById(id: number): string;
+			GetTexturePageInfoById(id: number): string;
+		};
 	};
 };
 

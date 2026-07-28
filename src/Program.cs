@@ -3,17 +3,21 @@ using System.Reflection;
 using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
 using System.Text.Json;
-using Serializers;
 using UndertaleModLib;
 using UndertaleModLib.Compiler;
 using UndertaleModLib.Decompiler;
 using UndertaleModLib.Models;
 using UndertaleModLib.Util;
+using UndertaleModToolWASM.Serializers;
 
-return;
+namespace UndertaleModToolWASM;
 
-public partial class UndertaleModToolWASM
+public partial class Program
 {
+    public static void Main()
+    {
+    }
+
     private static void WarningHandler(string warning, bool isImportant) => Console.WriteLine($"[WARNING]: {warning}");
     private static void MessageHandler(string message) => Console.WriteLine($"[MESSAGE]: {message}");
 

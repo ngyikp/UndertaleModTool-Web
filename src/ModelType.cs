@@ -1,5 +1,7 @@
 using UndertaleModLib;
 
+namespace UndertaleModToolWASM;
+
 /// <summary>
 /// UndertaleModTool refers to asset types as 'models' in
 /// the <c>UndertaleModLib.Models</c> namespace, see also

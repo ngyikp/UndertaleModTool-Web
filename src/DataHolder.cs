@@ -1,5 +1,7 @@
 using UndertaleModLib;
 
+namespace UndertaleModToolWASM;
+
 public partial class DataHolder
 {
     private static UndertaleData? Data;
