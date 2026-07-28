@@ -4,23 +4,23 @@ using UndertaleModLib.Models;
 namespace Serializers
 {
     /// <summary>
-    /// Info about <see cref="UndertaleModLib.Models.UndertaleSound"/>
+    /// Info about <see cref="UndertaleSound"/>
     /// Keep this in sync with <c>web/src/messages/getSoundInfoByName.ts</c>
     /// </summary>
     public record SoundInfo
     {
         public byte[]? FileContents { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleSound.Flags"/>
+        /// <seealso cref="UndertaleSound.Flags"/>
         public UndertaleSound.AudioEntryFlags Flags { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleSound.File"/>
+        /// <seealso cref="UndertaleSound.File"/>
         public required string ExternalFileName { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleSound.GroupID"/>
+        /// <seealso cref="UndertaleSound.GroupID"/>
         public int AudioGroupID { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleSound.AudioGroup"/>
+        /// <seealso cref="UndertaleSound.AudioGroup"/>
         public required string AudioGroupName { get; set; }
     }
 

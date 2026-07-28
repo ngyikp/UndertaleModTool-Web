@@ -1,16 +1,17 @@
 using System.Text.Json.Serialization;
+using UndertaleModLib.Models;
 
 namespace Serializers
 {
     /// <summary>
-    /// Info about <see cref="UndertaleModLib.Models.UndertaleCode"/>
+    /// Info about <see cref="UndertaleCode"/>
     /// Keep this in sync with <c>web/src/messages/getCodeInfoByName.ts</c>
     /// </summary>
     public record CodeInfo
     {
         public string? DecompiledCode { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleCode.ParentEntry"/>
+        /// <seealso cref="UndertaleCode.ParentEntry"/>
         public string? ParentEntryName { get; set; }
     }
 

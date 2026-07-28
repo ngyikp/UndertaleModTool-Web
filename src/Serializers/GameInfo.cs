@@ -1,5 +1,6 @@
-
 using System.Text.Json.Serialization;
+using UndertaleModLib;
+using UndertaleModLib.Models;
 
 namespace Serializers
 {
@@ -8,31 +9,31 @@ namespace Serializers
     /// </summary>
     public record GameInfo
     {
-        /// <seealso cref="UndertaleModLib.Models.UndertaleGeneralInfo.Name"/>
+        /// <seealso cref="UndertaleGeneralInfo.Name"/>
         public string? ProjectName { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleGeneralInfo.DisplayName"/>
+        /// <seealso cref="UndertaleGeneralInfo.DisplayName"/>
         public string? DisplayName { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.IsGameMaker2()"/>
+        /// <seealso cref="UndertaleData.IsGameMaker2()"/>
         public bool IsGameMaker2 { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.IsYYC()"/>
+        /// <seealso cref="UndertaleData.IsYYC()"/>
         public bool IsYYC { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleGeneralInfo.IsDebuggerDisabled"/>
+        /// <seealso cref="UndertaleGeneralInfo.IsDebuggerDisabled"/>
         public bool IsDebuggerDisabled { get; set; }
 
         public required GameInfoVersion Version { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleGeneralInfo.BytecodeVersion"/>
+        /// <seealso cref="UndertaleGeneralInfo.BytecodeVersion"/>
         public int BytecodeVersion { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleGeneralInfo.Config"/>
+        /// <seealso cref="UndertaleGeneralInfo.Config"/>
         public string? ConfigurationName { get; set; }
 
         public required GameInfoItemCounts ItemCounts { get; set; }
-        
+
         /// <summary>
         /// Version of UndertaleModLib, though technically, it's not game info
         /// </summary>
@@ -41,94 +42,94 @@ namespace Serializers
 
     public record GameInfoVersion
     {
-        /// <seealso cref="UndertaleModLib.Models.UndertaleGeneralInfo.Major"/>
+        /// <seealso cref="UndertaleGeneralInfo.Major"/>
         public uint Major { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleGeneralInfo.Minor"/>
+        /// <seealso cref="UndertaleGeneralInfo.Minor"/>
         public uint Minor { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleGeneralInfo.Release"/>
+        /// <seealso cref="UndertaleGeneralInfo.Release"/>
         public uint Release { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Models.UndertaleGeneralInfo.Build"/>
+        /// <seealso cref="UndertaleGeneralInfo.Build"/>
         public uint Build { get; set; }
     }
 
     public record GameInfoItemCounts
     {
-        /// <seealso cref="UndertaleModLib.UndertaleData.Sprites"/>
+        /// <seealso cref="UndertaleData.Sprites"/>
         public int Sprites { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Sounds"/>
+        /// <seealso cref="UndertaleData.Sounds"/>
         public int Sounds { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.AudioGroups"/>
+        /// <seealso cref="UndertaleData.AudioGroups"/>
         public int AudioGroups { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Backgrounds"/>
+        /// <seealso cref="UndertaleData.Backgrounds"/>
         public int Backgrounds { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Paths"/>
+        /// <seealso cref="UndertaleData.Paths"/>
         public int Paths { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Scripts"/>
+        /// <seealso cref="UndertaleData.Scripts"/>
         public int Scripts { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Shaders"/>
+        /// <seealso cref="UndertaleData.Shaders"/>
         public int Shaders { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Fonts"/>
+        /// <seealso cref="UndertaleData.Fonts"/>
         public int Fonts { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Timelines"/>
+        /// <seealso cref="UndertaleData.Timelines"/>
         public int Timelines { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.GameObjects"/>
+        /// <seealso cref="UndertaleData.GameObjects"/>
         public int GameObjects { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Rooms"/>
+        /// <seealso cref="UndertaleData.Rooms"/>
         public int Rooms { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Extensions"/>
+        /// <seealso cref="UndertaleData.Extensions"/>
         public int Extensions { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.TexturePageItems"/>
+        /// <seealso cref="UndertaleData.TexturePageItems"/>
         public int TexturePageItems { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.TextureGroupInfo"/>
+        /// <seealso cref="UndertaleData.TextureGroupInfo"/>
         public int TextureGroupInfo { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Code"/>
+        /// <seealso cref="UndertaleData.Code"/>
         public int Code { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Variables"/>
+        /// <seealso cref="UndertaleData.Variables"/>
         public int Variables { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Functions"/>
+        /// <seealso cref="UndertaleData.Functions"/>
         public int Functions { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.CodeLocals"/>
+        /// <seealso cref="UndertaleData.CodeLocals"/>
         public int CodeLocals { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.Strings"/>
+        /// <seealso cref="UndertaleData.Strings"/>
         public int Strings { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.GlobalInitScripts"/>
+        /// <seealso cref="UndertaleData.GlobalInitScripts"/>
         public int GlobalInitScripts { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedTextures"/>
+        /// <seealso cref="UndertaleData.EmbeddedTextures"/>
         public int EmbeddedTextures { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedImages"/>
+        /// <seealso cref="UndertaleData.EmbeddedImages"/>
         public int EmbeddedImages { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.EmbeddedAudio"/>
+        /// <seealso cref="UndertaleData.EmbeddedAudio"/>
         public int EmbeddedAudio { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.ParticleSystems"/>
+        /// <seealso cref="UndertaleData.ParticleSystems"/>
         public int ParticleSystems { get; set; }
 
-        /// <seealso cref="UndertaleModLib.UndertaleData.ParticleSystemEmitters"/>
+        /// <seealso cref="UndertaleData.ParticleSystemEmitters"/>
         public int ParticleSystemEmitters { get; set; }
     }
 

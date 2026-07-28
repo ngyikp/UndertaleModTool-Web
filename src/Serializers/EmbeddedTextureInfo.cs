@@ -1,16 +1,17 @@
 using System.Text.Json.Serialization;
+using UndertaleModLib.Models;
 using UndertaleModLib.Util;
 
 namespace Serializers
 {
     /// <summary>
-    /// Info about <see cref="UndertaleModLib.Models.UndertaleEmbeddedTexture"/>
+    /// Info about <see cref="UndertaleEmbeddedTexture"/>
     /// Keep this in sync with <c>web/src/messages/getEmbeddedTextureInfoById.ts</c>
     /// </summary>
     public record EmbeddedTextureInfo
     {
         /// <summary>
-        /// The <see cref="UndertaleModLib.Models.UndertaleEmbeddedTexture.TextureData"/>
+        /// The <see cref="UndertaleEmbeddedTexture.TextureData"/>
         /// if the <see cref="Format"/> is <see cref="GMImage.ImageFormat.Png"/> 
         /// or <see cref="GMImage.ImageFormat.Dds"/>.
         /// 
@@ -19,22 +20,22 @@ namespace Serializers
         /// formats for performance.
         /// </summary>
         public byte[]? DownloadableFileContents { get; set; }
-        
+
         /// <summary>
         /// The image as <see cref="GMImage.ImageFormat.RawBgra"/> for
         /// non-PNG and non-DDS.
         /// </summary>
-        /// <seealso cref="UndertaleModLib.Util.GMImage.ConvertToRawBgra"/>
+        /// <seealso cref="GMImage.ConvertToRawBgra"/>
         public byte[]? Bgra { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Util.GMImage.ImageFormat"/>
+        /// <seealso cref="GMImage.ImageFormat"/>
         [JsonConverter(typeof(JsonStringEnumConverter<GMImage.ImageFormat>))]
         public GMImage.ImageFormat Format { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Util.GMImage.Width"/>
+        /// <seealso cref="GMImage.Width"/>
         public required int Width { get; set; }
 
-        /// <seealso cref="UndertaleModLib.Util.GMImage.Height"/>
+        /// <seealso cref="GMImage.Height"/>
         public required int Height { get; set; }
     }
 
