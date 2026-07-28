@@ -3,7 +3,7 @@ import {
 	createFileRoute,
 	Link,
 	Outlet,
-	useMatchRoute,
+	useChildMatches,
 } from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
@@ -13,21 +13,12 @@ import YycWarningAlert from '../../common/YycWarningAlert';
 import {useDataStore} from '../../data-store';
 import codeQueryOptions from '../../queries/codeQueryOptions';
 
-// Workaround React Compiler bug
-// https://github.com/TanStack/router/issues/4499
-function useIsOnIndexPage() {
-	'use no memo';
-
-	const matchRoute = useMatchRoute();
-	return matchRoute({to: '/code'}) !== false;
-}
-
 function Code() {
 	const info = useDataStore((state) => state.gameInfo);
 
 	const {data} = useSuspenseQuery(codeQueryOptions);
 
-	const onIndexPage = useIsOnIndexPage();
+	const onIndexPage = useChildMatches().length === 0;
 
 	return (
 		<>

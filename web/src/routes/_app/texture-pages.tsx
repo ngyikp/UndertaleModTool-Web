@@ -4,7 +4,7 @@ import {
 	createFileRoute,
 	Link,
 	Outlet,
-	useMatchRoute,
+	useChildMatches,
 } from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
@@ -20,20 +20,11 @@ const texturePagesQueryOptions = queryOptions({
 	},
 });
 
-// Workaround React Compiler bug
-// https://github.com/TanStack/router/issues/4499
-function useIsOnIndexPage() {
-	'use no memo';
-
-	const matchRoute = useMatchRoute();
-	return matchRoute({to: '/texture-pages'}) !== false;
-}
-
 // https://manual.gamemaker.io/monthly/en/Settings/Texture_Information/Texture_Pages.htm
 function TexturePages() {
 	const {data} = useSuspenseQuery(texturePagesQueryOptions);
 
-	const onIndexPage = useIsOnIndexPage();
+	const onIndexPage = useChildMatches().length === 0;
 
 	return (
 		<Stack>

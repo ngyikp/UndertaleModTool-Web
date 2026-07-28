@@ -3,7 +3,7 @@ import {
 	createFileRoute,
 	Link,
 	Outlet,
-	useMatchRoute,
+	useChildMatches,
 } from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
@@ -19,19 +19,10 @@ const embeddedTexturesQueryOptions = queryOptions({
 	},
 });
 
-// Workaround React Compiler bug
-// https://github.com/TanStack/router/issues/4499
-function useIsOnIndexPage() {
-	'use no memo';
-
-	const matchRoute = useMatchRoute();
-	return matchRoute({to: '/embedded-textures'}) !== false;
-}
-
 function EmbeddedTextures() {
 	const {data} = useSuspenseQuery(embeddedTexturesQueryOptions);
 
-	const onIndexPage = useIsOnIndexPage();
+	const onIndexPage = useChildMatches().length === 0;
 
 	return (
 		<>
