@@ -1,5 +1,7 @@
 import {Alert} from '@mantine/core';
 
+import ExternalLinkInNewWindow from './ExternalLinkInNewWindow';
+
 export default function YycWarningAlert() {
 	return (
 		<Alert
@@ -8,13 +10,9 @@ export default function YycWarningAlert() {
 			title={
 				<>
 					This game uses{' '}
-					<a
-						href="https://manual.gamemaker.io/monthly/en/Settings/YoYo_Compiler.htm"
-						target="_blank"
-						rel="noreferrer"
-					>
+					<ExternalLinkInNewWindow href="https://manual.gamemaker.io/monthly/en/Settings/YoYo_Compiler.htm">
 						YYC (YoYo Compiler)
-					</a>{' '}
+					</ExternalLinkInNewWindow>{' '}
 					which means viewing the source code is not possible.
 				</>
 			}

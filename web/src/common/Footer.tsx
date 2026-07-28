@@ -2,6 +2,8 @@ import {Divider, Stack, Text} from '@mantine/core';
 
 import {useDataStore} from '../data-store';
 
+import ExternalLinkInNewWindow from './ExternalLinkInNewWindow';
+
 export default function Footer() {
 	const info = useDataStore((state) => state.gameInfo);
 
@@ -11,28 +13,21 @@ export default function Footer() {
 
 			<Text c="dimmed">
 				Powered by the{' '}
-				<a
-					href="https://github.com/UnderminersTeam/UndertaleModTool"
-					target="_blank"
-					// eslint-disable-next-line @eslint-react/dom-no-unsafe-target-blank
-					rel="noopener"
-				>
+				<ExternalLinkInNewWindow href="https://github.com/UnderminersTeam/UndertaleModTool">
 					UndertaleModTool
-				</a>{' '}
+				</ExternalLinkInNewWindow>{' '}
 				project
 				{info?.UMTLibVersion != null ? (
 					<>
 						{' (running '}
-						<a
+						<ExternalLinkInNewWindow
 							href={
 								'https://github.com/UnderminersTeam/UndertaleModTool/releases/tag/' +
 								info.UMTLibVersion
 							}
-							target="_blank"
-							rel="noopener"
 						>
 							v{info.UMTLibVersion}
-						</a>
+						</ExternalLinkInNewWindow>
 						)
 					</>
 				) : null}
@@ -40,14 +35,9 @@ export default function Footer() {
 			</Text>
 
 			<Text c="dimmed">
-				<a
-					href="https://github.com/ngyikp/UndertaleModTool-Web"
-					target="_blank"
-					// eslint-disable-next-line @eslint-react/dom-no-unsafe-target-blank
-					rel="noopener"
-				>
+				<ExternalLinkInNewWindow href="https://github.com/ngyikp/UndertaleModTool-Web">
 					Contribute/report a bug for this web version on GitHub.
-				</a>
+				</ExternalLinkInNewWindow>
 			</Text>
 		</Stack>
 	);

@@ -3,6 +3,7 @@ import {useQueryClient} from '@tanstack/react-query';
 import {createFileRoute, Link, useNavigate} from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
+import ExternalLinkInNewWindow from '../../common/ExternalLinkInNewWindow';
 import Footer from '../../common/Footer';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
 import YycWarningAlert from '../../common/YycWarningAlert';
@@ -54,24 +55,16 @@ function GeneralInfo() {
 
 			<p>Is GMS2: {info.IsGameMaker2 ? 'Yes' : 'No'}</p>
 			<p>
-				<a
-					href="https://manual.gamemaker.io/monthly/en/Settings/YoYo_Compiler.htm"
-					target="_blank"
-					rel="noreferrer"
-				>
+				<ExternalLinkInNewWindow href="https://manual.gamemaker.io/monthly/en/Settings/YoYo_Compiler.htm">
 					Is YYC:
-				</a>{' '}
+				</ExternalLinkInNewWindow>{' '}
 				{info.IsYYC ? 'Yes' : 'No'}
 			</p>
 			<p>Bytecode version: {info.BytecodeVersion}</p>
 			<p>
-				<a
-					href="https://manual.gamemaker.io/monthly/en/Settings/Configurations.htm"
-					target="_blank"
-					rel="noreferrer"
-				>
+				<ExternalLinkInNewWindow href="https://manual.gamemaker.io/monthly/en/Settings/Configurations.htm">
 					Configuration name:
-				</a>{' '}
+				</ExternalLinkInNewWindow>{' '}
 				{info.ConfigurationName}
 			</p>
 			<p>
