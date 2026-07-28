@@ -43,7 +43,9 @@ export default function TexturePageImageViewer({texturePageId}: Props) {
 			fileName={'Texture ' + texturePageId.toString()}
 			width={texturePageData.TargetWidth}
 			height={texturePageData.TargetHeight}
-			enableDownload={embeddedTextureData.DownloadableFileContents != null}
+			downloadButtonText={
+				embeddedTextureData.Format === 'Png' ? 'Export image' : 'Export as PNG'
+			}
 		/>
 	);
 }

@@ -16,6 +16,7 @@ export default function ImageWithPlaceholder({
 	src,
 	width,
 	height,
+
 	appearance,
 	alt,
 }: Props) {

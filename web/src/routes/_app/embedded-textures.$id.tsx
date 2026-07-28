@@ -58,7 +58,9 @@ function RouteComponent() {
 					fileName={'Texture ' + id.toString()}
 					width={width}
 					height={height}
-					enableDownload={fileContents != null}
+					downloadButtonText={
+						format === 'Png' ? 'Export image' : 'Export as PNG'
+					}
 				/>
 			) : null}
 		</Stack>

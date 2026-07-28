@@ -16,7 +16,9 @@ type Props = Readonly<{
 	fileName: string;
 	width: number;
 	height: number;
-	enableDownload: boolean; // todo rethink this, maybe just rename the button text
+
+	enableDownload?: boolean;
+	downloadButtonText?: string;
 }>;
 
 export default function ImageViewer({
@@ -24,7 +26,9 @@ export default function ImageViewer({
 	fileName,
 	width,
 	height,
-	enableDownload,
+
+	enableDownload = true,
+	downloadButtonText = 'Export image',
 }: Props) {
 	const settings = useDataStore((state) => state.imageViewerSettings);
 
@@ -41,9 +45,10 @@ export default function ImageViewer({
 						href={blobUrl != null ? blobUrl : undefined}
 						download={fileName}
 						disabled={blobUrl == null}
+						variant="default"
 						ml="auto"
 					>
-						Export raw image
+						{downloadButtonText}
 					</Button>
 				) : null}
 			</Group>
