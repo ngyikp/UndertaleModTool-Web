@@ -2,10 +2,10 @@ import {Button, Group, Select} from '@mantine/core';
 
 import {useDataStore} from '../data-store';
 
+import type {Appearance} from './image/ImageAppearanceType';
+import ImageWithPlaceholder from './image/ImageWithPlaceholder';
 import {useBlobAsUrl} from './image/useBlobAsUrl';
 import styles from './ImageViewer.module.css';
-
-type Appearance = 'BLACK' | 'WHITE' | 'CHECKERBOARD';
 
 export type ImageViewerSettings = {
 	appearance: Appearance;
@@ -30,15 +30,6 @@ export default function ImageViewer({
 	const setSettings = useDataStore((state) => state.setImageViewerSettings);
 
 	const blobUrl = useBlobAsUrl(blob);
-
-	const imageClassName = [
-		styles.image,
-		settings.appearance === 'BLACK'
-			? styles.black
-			: settings.appearance === 'WHITE'
-				? styles.white
-				: styles.checkerboard,
-	].join(' ');
 
 	return (
 		<>
@@ -72,19 +63,13 @@ export default function ImageViewer({
 				) : null}
 			</Group>
 
-			<div className={styles.scrollable}>
-				{blobUrl ? (
-					<img
-						src={blobUrl}
-						alt={fileName}
-						className={imageClassName}
-						width={width}
-						height={height}
-					/>
-				) : (
-					<div className={imageClassName} style={{width, height}} />
-				)}
-			</div>
+			<ImageWithPlaceholder
+				src={blobUrl}
+				width={width}
+				height={height}
+				appearance={settings.appearance}
+				alt={fileName}
+			/>
 		</>
 	);
 }
