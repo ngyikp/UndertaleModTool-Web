@@ -12,7 +12,7 @@ export type ImageViewerSettings = {
 };
 
 type Props = Readonly<{
-	blob: Blob;
+	blob: Blob | null;
 	fileName: string;
 	width: number;
 	height: number;
@@ -32,15 +32,29 @@ export default function ImageViewer({
 	const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
 	useEffect(() => {
-		const url = window.URL.createObjectURL(blob);
-		// eslint-disable-next-line react-hooks/set-state-in-effect, @eslint-react/set-state-in-effect
-		setBlobUrl(url);
+		const url = blob != null ? window.URL.createObjectURL(blob) : null;
+		if (url) {
+			// eslint-disable-next-line react-hooks/set-state-in-effect, @eslint-react/set-state-in-effect
+			setBlobUrl(url);
+		}
 
 		return () => {
 			setBlobUrl(null);
-			window.URL.revokeObjectURL(url);
+
+			if (url) {
+				window.URL.revokeObjectURL(url);
+			}
 		};
 	}, [blob]);
+
+	const imageClassName = [
+		styles.image,
+		settings.appearance === 'BLACK'
+			? styles.black
+			: settings.appearance === 'WHITE'
+				? styles.white
+				: styles.checkerboard,
+	].join(' ');
 
 	return (
 		<>
@@ -61,31 +75,32 @@ export default function ImageViewer({
 					}}
 					className={styles.appearanceSelect}
 				/>
-				{enableDownload && blobUrl ? (
-					<Button component="a" href={blobUrl} download={fileName} ml="auto">
+				{enableDownload ? (
+					<Button
+						component="a"
+						href={blobUrl != null ? blobUrl : undefined}
+						download={fileName}
+						disabled={blobUrl == null}
+						ml="auto"
+					>
 						Export raw image
 					</Button>
 				) : null}
 			</Group>
 
-			{blobUrl ? (
-				<div className={styles.scrollable}>
+			<div className={styles.scrollable}>
+				{blobUrl ? (
 					<img
 						src={blobUrl}
 						alt={fileName}
-						className={[
-							styles.image,
-							settings.appearance === 'BLACK'
-								? styles.black
-								: settings.appearance === 'WHITE'
-									? styles.white
-									: styles.checkerboard,
-						].join(' ')}
+						className={imageClassName}
 						width={width}
 						height={height}
 					/>
-				</div>
-			) : null}
+				) : (
+					<div className={imageClassName} style={{width, height}} />
+				)}
+			</div>
 		</>
 	);
 }

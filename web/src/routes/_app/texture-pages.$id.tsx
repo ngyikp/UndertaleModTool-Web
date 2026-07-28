@@ -52,7 +52,7 @@ function RouteComponent() {
 				</Link>
 			</p>
 
-			<TexturePageImageViewer key={id} texturePageId={id} />
+			<TexturePageImageViewer texturePageId={id} />
 		</Stack>
 	);
 }

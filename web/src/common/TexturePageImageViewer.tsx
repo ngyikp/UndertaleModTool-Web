@@ -109,7 +109,7 @@ export default function TexturePageImageViewer({texturePageId}: Props) {
 		throw error;
 	}
 
-	return finalBlob ? (
+	return (
 		<ImageViewer
 			blob={finalBlob}
 			fileName={'Texture ' + texturePageId.toString()}
@@ -117,5 +117,5 @@ export default function TexturePageImageViewer({texturePageId}: Props) {
 			height={texturePageData.TargetHeight}
 			enableDownload={embeddedTextureData.DownloadableFileContents != null}
 		/>
-	) : null;
+	);
 }
