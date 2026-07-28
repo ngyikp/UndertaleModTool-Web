@@ -91,7 +91,13 @@ export default function SortableList({
 		: filteredList;
 
 	return (
-		<div className={onIndexPage ? styles.wrapOnIndexPage : undefined}>
+		<div
+			className={
+				onIndexPage && allResultsList.length > 0
+					? styles.wrapOnIndexPage
+					: undefined
+			}
+		>
 			{allResultsList.length > 0 ? (
 				<Group gap="xs" py="md" className={styles.filters}>
 					Sort by:
