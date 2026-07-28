@@ -1,7 +1,7 @@
-import {Pagination, Stack, Title} from '@mantine/core';
+import {Checkbox, Pagination, Stack, Title} from '@mantine/core';
 import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
-import {Suspense} from 'react';
+import {Suspense, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import BasicLoadingMessage from '../../common/BasicLoadingMessage';
@@ -21,6 +21,7 @@ function RouteComponent() {
 
 	const page = useDataStore((state) => state.getSpriteTextureCurrentPage(name));
 	const setPage = useDataStore((state) => state.setSpriteTextureCurrentPage);
+	const [viewAll, setViewAll] = useState(false);
 
 	const queryClient = useQueryClient();
 	const {data} = useSuspenseQuery(spriteInfoByNameQueryOptions(name));
@@ -49,7 +50,19 @@ function RouteComponent() {
 
 			<Title order={2}>{name}</Title>
 
-			{texturePage ? (
+			<Checkbox
+				checked={viewAll}
+				onChange={(event) => {
+					setViewAll(event.currentTarget.checked);
+				}}
+				label="View all"
+			/>
+
+			{viewAll ? (
+				data.TexturePageIDs.map((page) => {
+					return <TexturePageImageViewer key={page} texturePageId={page} />;
+				})
+			) : texturePage ? (
 				<Suspense fallback={<BasicLoadingMessage />}>
 					<TexturePageImageViewer
 						key={texturePage}
