@@ -19,6 +19,10 @@ import type {
 	GetSoundInfoByNameResult,
 } from '../messages/getSoundInfoByName';
 import type {
+	GetSpriteInfoByNameRequest,
+	GetSpriteInfoByNameResult,
+} from '../messages/getSpriteInfoByName';
+import type {
 	GetTexturePageInfoByIdRequest,
 	GetTexturePageInfoByIdResult,
 } from '../messages/getTexturePageInfoById';
@@ -30,21 +34,23 @@ export type WorkerRequest = {
 	messageId: number;
 	message:
 		| ReadFileRequest
-		| GetEntriesByModelTypeRequest
-		| GetCodeInfoByNameRequest
 		| EditCodeTextByNameRequest
-		| GetSoundInfoByNameRequest
+		| GetCodeInfoByNameRequest
 		| GetEmbeddedTextureInfoByIdRequest
+		| GetEntriesByModelTypeRequest
+		| GetSoundInfoByNameRequest
+		| GetSpriteInfoByNameRequest
 		| GetTexturePageInfoByIdRequest;
 };
 
 export type AllResults =
 	| ReadFileResult
-	| GetEntriesByModelTypeResult
-	| GetCodeInfoByNameResult
 	| EditCodeTextByNameResult
-	| GetSoundInfoByNameResult
+	| GetCodeInfoByNameResult
 	| GetEmbeddedTextureInfoByIdResult
+	| GetEntriesByModelTypeResult
+	| GetSoundInfoByNameResult
+	| GetSpriteInfoByNameResult
 	| GetTexturePageInfoByIdResult;
 
 export type SpecificWorkerResponses<FinishedResult extends AllResults> =

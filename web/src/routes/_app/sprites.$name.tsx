@@ -1,17 +1,11 @@
 import {Stack, Title} from '@mantine/core';
+import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
+import {spriteInfoByNameQueryOptions} from '../../messages/getSpriteInfoByName';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
-
-// const spriteByNameQueryOptions = (name: string) =>
-// 	queryOptions({
-// 		queryKey: ['sprites', name],
-// 		queryFn() {
-// 			return getSpriteInfoByName(name);
-// 		},
-// 	});
 
 function RouteComponent() {
 	const name = useParams({
@@ -19,7 +13,8 @@ function RouteComponent() {
 		select: (params) => params.name,
 	});
 
-	// const {data} = useSuspenseQuery(spriteByNameQueryOptions(name));
+	const {data} = useSuspenseQuery(spriteInfoByNameQueryOptions(name));
+	console.log(data);
 
 	return (
 		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
@@ -32,8 +27,10 @@ function RouteComponent() {
 
 export const Route = createFileRoute('/_app/sprites/$name')({
 	component: RouteComponent,
-	// loader: ({context, params}) =>
-	// 	context.queryClient.ensureQueryData(spriteByNameQueryOptions(params.name)),
+	loader: ({context, params}) =>
+		context.queryClient.ensureQueryData(
+			spriteInfoByNameQueryOptions(params.name),
+		),
 	errorComponent: ({error}) => {
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message === 'NoMatch') {

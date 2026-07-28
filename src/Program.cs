@@ -308,7 +308,7 @@ public partial class UndertaleModToolWASM
                 break;
 
             default:
-                throw new NotImplementedException($"Model type {modelType} is not implemented");
+                throw new NotImplementedException($"Model type {modelType} is not implemented.");
         }
 
         List<string> entries = [];
@@ -336,13 +336,29 @@ public partial class UndertaleModToolWASM
                     }
                     else
                     {
-                        throw new NotImplementedException($"Model type {modelType} does not have a valid name implementation");
+                        throw new NotImplementedException($"Model type {modelType} does not have a valid name implementation.");
                     }
                 }
             }
         }
 
         return JsonSerializer.Serialize(entries, ItemListJsonContext.Default.ListString);
+    }
+
+    [JSExport]
+    [SupportedOSPlatform("browser")]
+    public static string GetSpriteInfoByName(string name)
+    {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
+        UndertaleSprite sprite = gameData.Sprites.First(sound => name == sound.Name.Content);
+
+        SpriteInfo spriteInfo = new()
+        {
+            TexturePageIDs = sprite.Textures.Select(entry => gameData.TexturePageItems.IndexOf(entry.Texture)).ToArray(),
+        };
+
+        return JsonSerializer.Serialize(spriteInfo, SpriteInfoContext.Default.SpriteInfo);
     }
 
     #region Code
@@ -361,7 +377,7 @@ public partial class UndertaleModToolWASM
 
         CodeInfo codeInfo = new();
 
-        if (code.ParentEntry != null)
+        if (code.ParentEntry is not null)
         {
             codeInfo.ParentEntryName = code.ParentEntry.Name.Content;
         }

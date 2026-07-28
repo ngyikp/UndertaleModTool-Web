@@ -6,6 +6,8 @@ export type AppExports = {
 		ReadFile(fileName: string): string;
 		GetEntriesByModelType(modelType: ModelTypeKeys): string;
 
+		GetSpriteInfoByName(name: string): string;
+
 		GetCodeInfoByName(name: string): string;
 		EditCodeTextByName(name: string, sourceCode: string): true;
 
