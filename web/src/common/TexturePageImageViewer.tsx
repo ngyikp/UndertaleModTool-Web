@@ -9,9 +9,13 @@ import ImageViewer from './ImageViewer';
 
 type Props = Readonly<{
 	texturePageId: number;
+	enableImageActions: boolean;
 }>;
 
-export default function TexturePageImageViewer({texturePageId}: Props) {
+export default function TexturePageImageViewer({
+	texturePageId,
+	enableImageActions,
+}: Props) {
 	const {data: texturePageData} = useSuspenseQuery(
 		texturePageByIdQueryOptions(texturePageId),
 	);
@@ -43,6 +47,7 @@ export default function TexturePageImageViewer({texturePageId}: Props) {
 			fileName={'Texture ' + texturePageId.toString()}
 			width={texturePageData.TargetWidth}
 			height={texturePageData.TargetHeight}
+			withActions={enableImageActions}
 			downloadButtonText={
 				embeddedTextureData.Format === 'Png' ? 'Export image' : 'Export as PNG'
 			}

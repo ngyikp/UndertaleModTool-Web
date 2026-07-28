@@ -6,6 +6,7 @@ import {Suspense, useState} from 'react';
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import BasicLoadingMessage from '../../common/BasicLoadingMessage';
 import DocumentTitle from '../../common/DocumentTitle';
+import ImageAppearanceSelect from '../../common/image/ImageAppearanceSelect';
 import TexturePageImageViewer from '../../common/TexturePageImageViewer';
 import {useDataStore} from '../../data-store';
 import {embeddedTexturesByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
@@ -59,19 +60,29 @@ function RouteComponent() {
 			/>
 
 			{viewAll ? (
-				data.TexturePageIDs.map((page) => {
-					return <TexturePageImageViewer key={page} texturePageId={page} />;
-				})
+				<>
+					<ImageAppearanceSelect />
+					{data.TexturePageIDs.map((page) => {
+						return (
+							<TexturePageImageViewer
+								key={page}
+								texturePageId={page}
+								enableImageActions={false}
+							/>
+						);
+					})}
+				</>
 			) : texturePage ? (
 				<Suspense fallback={<BasicLoadingMessage />}>
 					<TexturePageImageViewer
 						key={texturePage}
 						texturePageId={texturePage}
+						enableImageActions={true}
 					/>
 				</Suspense>
 			) : null}
 
-			{data.TexturePageIDs.length > 1 ? (
+			{!viewAll && data.TexturePageIDs.length > 1 ? (
 				<Pagination
 					total={data.TexturePageIDs.length}
 					value={page + 1}

@@ -18,7 +18,7 @@ type Props = Readonly<{
 	width: number;
 	height: number;
 
-	enableDownload?: boolean;
+	withActions?: boolean;
 	downloadButtonText?: string;
 }>;
 
@@ -28,7 +28,7 @@ export default function ImageViewer({
 	width,
 	height,
 
-	enableDownload = true,
+	withActions = false,
 	downloadButtonText = 'Export image',
 }: Props) {
 	const settings = useDataStore((state) => state.imageViewerSettings);
@@ -37,11 +37,11 @@ export default function ImageViewer({
 
 	return (
 		<>
-			<Group>
-				<ImageAppearanceSelect />
+			{withActions ? (
+				<Group>
+					<ImageAppearanceSelect />
 
-				<Button.Group ml="auto">
-					{enableDownload ? (
+					<Button.Group ml="auto">
 						<Button
 							component="a"
 							href={blobUrl != null ? blobUrl : undefined}
@@ -51,11 +51,11 @@ export default function ImageViewer({
 						>
 							{downloadButtonText}
 						</Button>
-					) : null}
 
-					<CustomCopyButton label="Copy image" value={blob} />
-				</Button.Group>
-			</Group>
+						<CustomCopyButton label="Copy image" value={blob} />
+					</Button.Group>
+				</Group>
+			) : null}
 
 			<ImageWithPlaceholder
 				src={blobUrl}
