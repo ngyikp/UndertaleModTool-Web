@@ -7,7 +7,7 @@ import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
 import drawImageToBlob from '../../common/drawImageToBlob';
 import ImageViewer from '../../common/ImageViewer';
-import {embeddedTexturesByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
+import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 
 function RouteComponent() {
 	const id = useParams({
@@ -15,7 +15,7 @@ function RouteComponent() {
 		select: (params) => params.id,
 	});
 
-	const {data} = useSuspenseQuery(embeddedTexturesByIdQueryOptions(id));
+	const {data} = useSuspenseQuery(embeddedTexturesInfoByIdQueryOptions(id));
 
 	const [error, setError] = useState<Error | null>(null);
 	const [finalBlob, setFinalBlob] = useState<Blob | null>(null);
@@ -79,7 +79,7 @@ export const Route = createFileRoute('/_app/embedded-textures/$id')({
 	},
 	loader: ({context, params}) =>
 		context.queryClient.ensureQueryData(
-			embeddedTexturesByIdQueryOptions(params.id),
+			embeddedTexturesInfoByIdQueryOptions(params.id),
 		),
 	errorComponent: ({error}) => {
 		if (error.message.startsWith('ArgumentOutOfRange')) {

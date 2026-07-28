@@ -9,7 +9,7 @@ export type GetSoundInfoByNameRequest = {
 
 export type GetSoundInfoByNameResult = SoundInfoType;
 
-// Info about UndertaleSound. Keep this in sync with `src/Serializers/GetSoundInfoByName.cs`
+// Info about UndertaleSound. Keep this in sync with `src/Serializers/SoundInfo.cs`
 export const SoundInfoSchema = z.object({
 	FileContents: z.codec(z.base64(), z.instanceof(Uint8Array), {
 		decode: (base64String) => z.util.base64ToUint8Array(base64String),
@@ -21,7 +21,7 @@ export const SoundInfoSchema = z.object({
 	AudioGroupName: z.string(),
 });
 
-export type SoundInfoType = z.infer<typeof SoundInfoSchema>;
+type SoundInfoType = z.infer<typeof SoundInfoSchema>;
 
 // Enum from `UndertaleModLib.Models.UndertaleSound.AudioEntryFlags`
 export const AudioEntryFlags = {

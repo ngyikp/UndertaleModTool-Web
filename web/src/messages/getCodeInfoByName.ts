@@ -10,13 +10,20 @@ export type GetCodeInfoByNameRequest = {
 
 export type GetCodeInfoByNameResult = CodeInfoType;
 
-// Info about UndertaleCode. Keep this in sync with `src/Serializers/GetCodeInfoByName.cs`
+// Info about UndertaleCode. Keep this in sync with `src/Serializers/CodeInfo.cs`
 export const CodeInfoSchema = z.object({
 	DecompiledCode: z.nullable(z.string()),
 	ParentEntryName: z.nullable(z.string()),
 });
 
-export type CodeInfoType = z.infer<typeof CodeInfoSchema>;
+type CodeInfoType = z.infer<typeof CodeInfoSchema>;
+
+function getCodeInfoByName(name: string) {
+	return sendMessageToWorkerAsPromise<GetCodeInfoByNameResult>({
+		type: 'getCodeInfoByName',
+		name,
+	});
+}
 
 export const codeInfoByNameQueryOptions = (name: string) =>
 	queryOptions({
@@ -25,10 +32,3 @@ export const codeInfoByNameQueryOptions = (name: string) =>
 			return getCodeInfoByName(name);
 		},
 	});
-
-export function getCodeInfoByName(name: string) {
-	return sendMessageToWorkerAsPromise<GetCodeInfoByNameResult>({
-		type: 'getCodeInfoByName',
-		name,
-	});
-}

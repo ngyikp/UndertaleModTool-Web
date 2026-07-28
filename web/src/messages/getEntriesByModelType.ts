@@ -14,7 +14,7 @@ export type GetEntriesByModelTypeResult = {
 
 export const EntriesListInfoSchema = z.array(z.string());
 
-export type EntriesListType = z.infer<typeof EntriesListInfoSchema>;
+type EntriesListType = z.infer<typeof EntriesListInfoSchema>;
 
 export function getEntriesByModelType(modelType: ModelTypeKeys) {
 	return sendMessageToWorkerAsPromise<GetEntriesByModelTypeResult>({

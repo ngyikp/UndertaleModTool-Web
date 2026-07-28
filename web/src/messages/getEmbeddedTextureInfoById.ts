@@ -67,17 +67,17 @@ export const EmbeddedTextureInfoSchema = z.object({
 
 export type EmbeddedTextureInfoType = z.infer<typeof EmbeddedTextureInfoSchema>;
 
-function getEmbeddedTextureImageById(id: number) {
+function getEmbeddedTextureInfoById(id: number) {
 	return sendMessageToWorkerAsPromise<GetEmbeddedTextureInfoByIdResult>({
 		type: 'getEmbeddedTextureInfoById',
 		id,
 	});
 }
 
-export const embeddedTexturesByIdQueryOptions = (id: number) =>
+export const embeddedTexturesInfoByIdQueryOptions = (id: number) =>
 	queryOptions({
 		queryKey: ['embedded-textures', id],
 		queryFn() {
-			return getEmbeddedTextureImageById(id);
+			return getEmbeddedTextureInfoById(id);
 		},
 	});

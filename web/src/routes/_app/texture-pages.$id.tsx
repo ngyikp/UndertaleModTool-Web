@@ -5,7 +5,7 @@ import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import DocumentTitle from '../../common/DocumentTitle';
 import TexturePageImageViewer from '../../common/TexturePageImageViewer';
-import {embeddedTexturesByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
+import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
 
 function RouteComponent() {
@@ -72,7 +72,7 @@ export const Route = createFileRoute('/_app/texture-pages/$id')({
 		);
 
 		await context.queryClient.ensureQueryData(
-			embeddedTexturesByIdQueryOptions(texturePageData.EmbeddedTextureID),
+			embeddedTexturesInfoByIdQueryOptions(texturePageData.EmbeddedTextureID),
 		);
 
 		return texturePageData;

@@ -9,7 +9,7 @@ import DocumentTitle from '../../common/DocumentTitle';
 import ImageAppearanceSelect from '../../common/image/ImageAppearanceSelect';
 import TexturePageImageViewer from '../../common/TexturePageImageViewer';
 import {useDataStore} from '../../data-store';
-import {embeddedTexturesByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
+import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {spriteInfoByNameQueryOptions} from '../../messages/getSpriteInfoByName';
 import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
@@ -123,7 +123,7 @@ export const Route = createFileRoute('/_app/sprites/$name')({
 			);
 
 			await context.queryClient.ensureQueryData(
-				embeddedTexturesByIdQueryOptions(texturePageData.EmbeddedTextureID),
+				embeddedTexturesInfoByIdQueryOptions(texturePageData.EmbeddedTextureID),
 			);
 		}
 

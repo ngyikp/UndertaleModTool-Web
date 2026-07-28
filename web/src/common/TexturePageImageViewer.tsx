@@ -1,7 +1,7 @@
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {useEffect, useState} from 'react';
 
-import {embeddedTexturesByIdQueryOptions} from '../messages/getEmbeddedTextureInfoById';
+import {embeddedTexturesInfoByIdQueryOptions} from '../messages/getEmbeddedTextureInfoById';
 import {texturePageByIdQueryOptions} from '../messages/getTexturePageInfoById';
 
 import drawTexturePageImage from './image/drawTexturePageImage';
@@ -20,7 +20,7 @@ export default function TexturePageImageViewer({
 		texturePageByIdQueryOptions(texturePageId),
 	);
 	const {data: embeddedTextureData} = useSuspenseQuery(
-		embeddedTexturesByIdQueryOptions(texturePageData.EmbeddedTextureID),
+		embeddedTexturesInfoByIdQueryOptions(texturePageData.EmbeddedTextureID),
 	);
 
 	const [blob, setBlob] = useState<Blob | null>(null);
