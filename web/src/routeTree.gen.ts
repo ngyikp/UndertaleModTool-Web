@@ -16,6 +16,7 @@ import { Route as AppEmbeddedTexturesRouteImport } from './routes/_app/embedded-
 import { Route as AppGeneralInfoRouteImport } from './routes/_app/general-info'
 import { Route as AppGlobalInitRouteImport } from './routes/_app/global-init'
 import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
+import { Route as AppSpritesRouteImport } from './routes/_app/sprites'
 import { Route as AppTexturePagesRouteImport } from './routes/_app/texture-pages'
 import { Route as AppAudioGroupsIndexRouteImport } from './routes/_app/audio-groups.index'
 import { Route as AppCodeLocalsIndexRouteImport } from './routes/_app/code-locals.index'
@@ -34,7 +35,7 @@ import { Route as AppRoomsIndexRouteImport } from './routes/_app/rooms.index'
 import { Route as AppScriptsIndexRouteImport } from './routes/_app/scripts.index'
 import { Route as AppShadersIndexRouteImport } from './routes/_app/shaders.index'
 import { Route as AppSoundsNameRouteImport } from './routes/_app/sounds.$name'
-import { Route as AppSpritesIndexRouteImport } from './routes/_app/sprites.index'
+import { Route as AppSpritesNameRouteImport } from './routes/_app/sprites.$name'
 import { Route as AppStringsIndexRouteImport } from './routes/_app/strings.index'
 import { Route as AppTextureGroupsIndexRouteImport } from './routes/_app/texture-groups.index'
 import { Route as AppTexturePagesIdRouteImport } from './routes/_app/texture-pages.$id'
@@ -74,6 +75,11 @@ const AppGlobalInitRoute = AppGlobalInitRouteImport.update({
 const AppSoundsRoute = AppSoundsRouteImport.update({
   id: '/sounds',
   path: '/sounds',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSpritesRoute = AppSpritesRouteImport.update({
+  id: '/sprites',
+  path: '/sprites',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppTexturePagesRoute = AppTexturePagesRouteImport.update({
@@ -167,10 +173,10 @@ const AppSoundsNameRoute = AppSoundsNameRouteImport.update({
   path: '/$name',
   getParentRoute: () => AppSoundsRoute,
 } as any)
-const AppSpritesIndexRoute = AppSpritesIndexRouteImport.update({
-  id: '/sprites/',
-  path: '/sprites/',
-  getParentRoute: () => AppRouteRoute,
+const AppSpritesNameRoute = AppSpritesNameRouteImport.update({
+  id: '/$name',
+  path: '/$name',
+  getParentRoute: () => AppSpritesRoute,
 } as any)
 const AppStringsIndexRoute = AppStringsIndexRouteImport.update({
   id: '/strings/',
@@ -210,10 +216,12 @@ export interface FileRoutesByFullPath {
   '/general-info': typeof AppGeneralInfoRoute
   '/global-init': typeof AppGlobalInitRoute
   '/sounds': typeof AppSoundsRouteWithChildren
+  '/sprites': typeof AppSpritesRouteWithChildren
   '/texture-pages': typeof AppTexturePagesRouteWithChildren
   '/code/$name': typeof AppCodeNameRoute
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/sounds/$name': typeof AppSoundsNameRoute
+  '/sprites/$name': typeof AppSpritesNameRoute
   '/texture-pages/$id': typeof AppTexturePagesIdRoute
   '/audio-groups/': typeof AppAudioGroupsIndexRoute
   '/code-locals/': typeof AppCodeLocalsIndexRoute
@@ -229,7 +237,6 @@ export interface FileRoutesByFullPath {
   '/rooms/': typeof AppRoomsIndexRoute
   '/scripts/': typeof AppScriptsIndexRoute
   '/shaders/': typeof AppShadersIndexRoute
-  '/sprites/': typeof AppSpritesIndexRoute
   '/strings/': typeof AppStringsIndexRoute
   '/texture-groups/': typeof AppTextureGroupsIndexRoute
   '/tile-sets/': typeof AppTileSetsIndexRoute
@@ -243,10 +250,12 @@ export interface FileRoutesByTo {
   '/general-info': typeof AppGeneralInfoRoute
   '/global-init': typeof AppGlobalInitRoute
   '/sounds': typeof AppSoundsRouteWithChildren
+  '/sprites': typeof AppSpritesRouteWithChildren
   '/texture-pages': typeof AppTexturePagesRouteWithChildren
   '/code/$name': typeof AppCodeNameRoute
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/sounds/$name': typeof AppSoundsNameRoute
+  '/sprites/$name': typeof AppSpritesNameRoute
   '/texture-pages/$id': typeof AppTexturePagesIdRoute
   '/audio-groups': typeof AppAudioGroupsIndexRoute
   '/code-locals': typeof AppCodeLocalsIndexRoute
@@ -262,7 +271,6 @@ export interface FileRoutesByTo {
   '/rooms': typeof AppRoomsIndexRoute
   '/scripts': typeof AppScriptsIndexRoute
   '/shaders': typeof AppShadersIndexRoute
-  '/sprites': typeof AppSpritesIndexRoute
   '/strings': typeof AppStringsIndexRoute
   '/texture-groups': typeof AppTextureGroupsIndexRoute
   '/tile-sets': typeof AppTileSetsIndexRoute
@@ -278,10 +286,12 @@ export interface FileRoutesById {
   '/_app/general-info': typeof AppGeneralInfoRoute
   '/_app/global-init': typeof AppGlobalInitRoute
   '/_app/sounds': typeof AppSoundsRouteWithChildren
+  '/_app/sprites': typeof AppSpritesRouteWithChildren
   '/_app/texture-pages': typeof AppTexturePagesRouteWithChildren
   '/_app/code/$name': typeof AppCodeNameRoute
   '/_app/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
   '/_app/sounds/$name': typeof AppSoundsNameRoute
+  '/_app/sprites/$name': typeof AppSpritesNameRoute
   '/_app/texture-pages/$id': typeof AppTexturePagesIdRoute
   '/_app/audio-groups/': typeof AppAudioGroupsIndexRoute
   '/_app/code-locals/': typeof AppCodeLocalsIndexRoute
@@ -297,7 +307,6 @@ export interface FileRoutesById {
   '/_app/rooms/': typeof AppRoomsIndexRoute
   '/_app/scripts/': typeof AppScriptsIndexRoute
   '/_app/shaders/': typeof AppShadersIndexRoute
-  '/_app/sprites/': typeof AppSpritesIndexRoute
   '/_app/strings/': typeof AppStringsIndexRoute
   '/_app/texture-groups/': typeof AppTextureGroupsIndexRoute
   '/_app/tile-sets/': typeof AppTileSetsIndexRoute
@@ -313,10 +322,12 @@ export interface FileRouteTypes {
     | '/general-info'
     | '/global-init'
     | '/sounds'
+    | '/sprites'
     | '/texture-pages'
     | '/code/$name'
     | '/embedded-textures/$id'
     | '/sounds/$name'
+    | '/sprites/$name'
     | '/texture-pages/$id'
     | '/audio-groups/'
     | '/code-locals/'
@@ -332,7 +343,6 @@ export interface FileRouteTypes {
     | '/rooms/'
     | '/scripts/'
     | '/shaders/'
-    | '/sprites/'
     | '/strings/'
     | '/texture-groups/'
     | '/tile-sets/'
@@ -346,10 +356,12 @@ export interface FileRouteTypes {
     | '/general-info'
     | '/global-init'
     | '/sounds'
+    | '/sprites'
     | '/texture-pages'
     | '/code/$name'
     | '/embedded-textures/$id'
     | '/sounds/$name'
+    | '/sprites/$name'
     | '/texture-pages/$id'
     | '/audio-groups'
     | '/code-locals'
@@ -365,7 +377,6 @@ export interface FileRouteTypes {
     | '/rooms'
     | '/scripts'
     | '/shaders'
-    | '/sprites'
     | '/strings'
     | '/texture-groups'
     | '/tile-sets'
@@ -380,10 +391,12 @@ export interface FileRouteTypes {
     | '/_app/general-info'
     | '/_app/global-init'
     | '/_app/sounds'
+    | '/_app/sprites'
     | '/_app/texture-pages'
     | '/_app/code/$name'
     | '/_app/embedded-textures/$id'
     | '/_app/sounds/$name'
+    | '/_app/sprites/$name'
     | '/_app/texture-pages/$id'
     | '/_app/audio-groups/'
     | '/_app/code-locals/'
@@ -399,7 +412,6 @@ export interface FileRouteTypes {
     | '/_app/rooms/'
     | '/_app/scripts/'
     | '/_app/shaders/'
-    | '/_app/sprites/'
     | '/_app/strings/'
     | '/_app/texture-groups/'
     | '/_app/tile-sets/'
@@ -461,6 +473,13 @@ declare module '@tanstack/react-router' {
       path: '/sounds'
       fullPath: '/sounds'
       preLoaderRoute: typeof AppSoundsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/sprites': {
+      id: '/_app/sprites'
+      path: '/sprites'
+      fullPath: '/sprites'
+      preLoaderRoute: typeof AppSpritesRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/texture-pages': {
@@ -589,12 +608,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSoundsNameRouteImport
       parentRoute: typeof AppSoundsRoute
     }
-    '/_app/sprites/': {
-      id: '/_app/sprites/'
-      path: '/sprites'
-      fullPath: '/sprites/'
-      preLoaderRoute: typeof AppSpritesIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+    '/_app/sprites/$name': {
+      id: '/_app/sprites/$name'
+      path: '/$name'
+      fullPath: '/sprites/$name'
+      preLoaderRoute: typeof AppSpritesNameRouteImport
+      parentRoute: typeof AppSpritesRoute
     }
     '/_app/strings/': {
       id: '/_app/strings/'
@@ -675,6 +694,18 @@ const AppSoundsRouteWithChildren = AppSoundsRoute._addFileChildren(
   AppSoundsRouteChildren,
 )
 
+interface AppSpritesRouteChildren {
+  AppSpritesNameRoute: typeof AppSpritesNameRoute
+}
+
+const AppSpritesRouteChildren: AppSpritesRouteChildren = {
+  AppSpritesNameRoute: AppSpritesNameRoute,
+}
+
+const AppSpritesRouteWithChildren = AppSpritesRoute._addFileChildren(
+  AppSpritesRouteChildren,
+)
+
 interface AppTexturePagesRouteChildren {
   AppTexturePagesIdRoute: typeof AppTexturePagesIdRoute
 }
@@ -693,6 +724,7 @@ interface AppRouteRouteChildren {
   AppGeneralInfoRoute: typeof AppGeneralInfoRoute
   AppGlobalInitRoute: typeof AppGlobalInitRoute
   AppSoundsRoute: typeof AppSoundsRouteWithChildren
+  AppSpritesRoute: typeof AppSpritesRouteWithChildren
   AppTexturePagesRoute: typeof AppTexturePagesRouteWithChildren
   AppAudioGroupsIndexRoute: typeof AppAudioGroupsIndexRoute
   AppCodeLocalsIndexRoute: typeof AppCodeLocalsIndexRoute
@@ -708,7 +740,6 @@ interface AppRouteRouteChildren {
   AppRoomsIndexRoute: typeof AppRoomsIndexRoute
   AppScriptsIndexRoute: typeof AppScriptsIndexRoute
   AppShadersIndexRoute: typeof AppShadersIndexRoute
-  AppSpritesIndexRoute: typeof AppSpritesIndexRoute
   AppStringsIndexRoute: typeof AppStringsIndexRoute
   AppTextureGroupsIndexRoute: typeof AppTextureGroupsIndexRoute
   AppTileSetsIndexRoute: typeof AppTileSetsIndexRoute
@@ -722,6 +753,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppGeneralInfoRoute: AppGeneralInfoRoute,
   AppGlobalInitRoute: AppGlobalInitRoute,
   AppSoundsRoute: AppSoundsRouteWithChildren,
+  AppSpritesRoute: AppSpritesRouteWithChildren,
   AppTexturePagesRoute: AppTexturePagesRouteWithChildren,
   AppAudioGroupsIndexRoute: AppAudioGroupsIndexRoute,
   AppCodeLocalsIndexRoute: AppCodeLocalsIndexRoute,
@@ -737,7 +769,6 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppRoomsIndexRoute: AppRoomsIndexRoute,
   AppScriptsIndexRoute: AppScriptsIndexRoute,
   AppShadersIndexRoute: AppShadersIndexRoute,
-  AppSpritesIndexRoute: AppSpritesIndexRoute,
   AppStringsIndexRoute: AppStringsIndexRoute,
   AppTextureGroupsIndexRoute: AppTextureGroupsIndexRoute,
   AppTileSetsIndexRoute: AppTileSetsIndexRoute,
