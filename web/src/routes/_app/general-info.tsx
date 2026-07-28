@@ -74,112 +74,138 @@ function GeneralInfo() {
 
 			<List>
 				<List.Item>
-					<Link to="/sprites">{info.ItemCounts.Sprites} sprites</Link>
+					<Link to="/sprites" preload="intent">
+						{info.ItemCounts.Sprites} sprites
+					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/sounds">{info.ItemCounts.Sounds} sounds</Link>
+					<Link to="/sounds" preload="intent">
+						{info.ItemCounts.Sounds} sounds
+					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/objects">{info.ItemCounts.GameObjects} objects</Link>
+					<Link to="/objects" preload="intent">
+						{info.ItemCounts.GameObjects} objects
+					</Link>
 				</List.Item>
 
 				{!info.IsYYC ? (
 					<List.Item>
-						<Link to="/code">{info.ItemCounts.Code} code entries</Link>
+						<Link to="/code" preload="intent">
+							{info.ItemCounts.Code} code entries
+						</Link>
 					</List.Item>
 				) : null}
 
 				<List.Item>
-					<Link to="/rooms">{info.ItemCounts.Rooms} rooms</Link>
+					<Link to="/rooms" preload="intent">
+						{info.ItemCounts.Rooms} rooms
+					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/tile-sets">
+					<Link to="/tile-sets" preload="intent">
 						{info.ItemCounts.Backgrounds} {getTileSetsLabel(info)}
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/fonts">{info.ItemCounts.Fonts} fonts</Link>
+					<Link to="/fonts" preload="intent">
+						{info.ItemCounts.Fonts} fonts
+					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/shaders">{info.ItemCounts.Shaders} shaders</Link>
+					<Link to="/shaders" preload="intent">
+						{info.ItemCounts.Shaders} shaders
+					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/paths">{info.ItemCounts.Paths} paths</Link>
+					<Link to="/paths" preload="intent">
+						{info.ItemCounts.Paths} paths
+					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/particle-systems">
+					<Link to="/particle-systems" preload="intent">
 						{info.ItemCounts.ParticleSystems} particle systems
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/particle-system-emitters">
+					<Link to="/particle-system-emitters" preload="intent">
 						{info.ItemCounts.ParticleSystemEmitters} particle system emitters
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/timelines">{info.ItemCounts.Timelines} timelines</Link>
+					<Link to="/timelines" preload="intent">
+						{info.ItemCounts.Timelines} timelines
+					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/audio-groups">
+					<Link to="/audio-groups" preload="intent">
 						{info.ItemCounts.AudioGroups} audio groups
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/extensions">{info.ItemCounts.Extensions} extensions</Link>
+					<Link to="/extensions" preload="intent">
+						{info.ItemCounts.Extensions} extensions
+					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/embedded-textures">
+					<Link to="/embedded-textures" preload="intent">
 						{info.ItemCounts.EmbeddedTextures} embedded textures
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/embedded-images">
+					<Link to="/embedded-images" preload="intent">
 						{info.ItemCounts.EmbeddedImages} embedded images
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/texture-groups">
+					<Link to="/texture-groups" preload="intent">
 						{info.ItemCounts.TextureGroupInfo} texture groups
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/texture-pages">
+					<Link to="/texture-pages" preload="intent">
 						{info.ItemCounts.TexturePageItems} texture pages
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/scripts">{info.ItemCounts.Scripts} scripts</Link>
+					<Link to="/scripts" preload="intent">
+						{info.ItemCounts.Scripts} scripts
+					</Link>
 				</List.Item>
 
 				{!info.IsYYC ? (
 					<>
 						<List.Item>
-							<Link to="/variables">{info.ItemCounts.Variables} variables</Link>
+							<Link to="/variables" preload="intent">
+								{info.ItemCounts.Variables} variables
+							</Link>
 						</List.Item>
 
 						<List.Item>
-							<Link to="/functions">{info.ItemCounts.Functions} functions</Link>
+							<Link to="/functions" preload="intent">
+								{info.ItemCounts.Functions} functions
+							</Link>
 						</List.Item>
 
 						{info.ItemCounts.CodeLocals > 0 ? (
 							<List.Item>
-								<Link to="/code-locals">
+								<Link to="/code-locals" preload="intent">
 									{info.ItemCounts.CodeLocals} code locals
 								</Link>
 							</List.Item>
@@ -188,17 +214,19 @@ function GeneralInfo() {
 				) : null}
 
 				<List.Item>
-					<Link to="/strings">{info.ItemCounts.Strings} strings</Link>
+					<Link to="/strings" preload="intent">
+						{info.ItemCounts.Strings} strings
+					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/global-init">
+					<Link to="/global-init" preload="intent">
 						{info.ItemCounts.GlobalInitScripts} global init scripts
 					</Link>
 				</List.Item>
 
 				<List.Item>
-					<Link to="/embedded-audio">
+					<Link to="/embedded-audio" preload="intent">
 						{info.ItemCounts.EmbeddedAudio} embedded audio
 					</Link>
 				</List.Item>
