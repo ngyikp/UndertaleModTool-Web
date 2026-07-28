@@ -24,10 +24,10 @@
     "tsc": "tsc"
   },
   "dependencies": {
-    "@mantine/code-highlight": "9.4.2",
-    "@mantine/core": "9.4.2",
-    "@mantine/dropzone": "9.4.2",
-    "@mantine/hooks": "9.4.2",
+    "@mantine/code-highlight": "9.5.0",
+    "@mantine/core": "9.5.0",
+    "@mantine/dropzone": "9.5.0",
+    "@mantine/hooks": "9.5.0",
     "@phosphor-icons/react": "2.1.10",
     "@tanstack/react-query": "5.101.4",
     "@tanstack/react-router": "1.170.18",
@@ -52,7 +52,7 @@
     "@typescript/native": "npm:typescript@^7.0.2",
     "@vitejs/plugin-react": "6.0.4",
     "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "10.7.0",
+    "eslint": "10.8.0",
     "eslint-import-resolver-typescript": "4.4.5",
     "eslint-plugin-import-x": "4.17.1",
     "eslint-plugin-react-hooks": "7.1.1",
