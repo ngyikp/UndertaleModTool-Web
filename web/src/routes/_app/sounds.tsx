@@ -54,6 +54,7 @@ function Sounds() {
 									preload="intent"
 									preloadDelay={250}
 									activeProps={{style: {fontWeight: 'bold'}}}
+									resetScroll={false}
 								>
 									{item}
 								</Link>
