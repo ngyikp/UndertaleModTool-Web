@@ -1,3 +1,7 @@
+.wrapOnIndexPage {
+	margin-top: calc(var(--mantine-spacing-md) * -1);
+}
+
 .list {
 	list-style: none;
 	overflow-wrap: break-word;
@@ -7,14 +11,12 @@
 	position: sticky;
 	top: 0;
 
-	background: var(--mantine-color-body);
-
-	padding-top: var(--mantine-spacing-md);
-	padding-bottom: var(--mantine-spacing-md);
-	margin-top: calc(var(--mantine-spacing-md) * -1);
-	margin-bottom: calc(var(--mantine-spacing-md) * -1);
+	background: color-mix(in srgb, var(--mantine-color-body) 80%, transparent);
 }
 
-.filtersNotOnIndexPage {
-	margin-bottom: 0;
+.pagination {
+	position: sticky;
+	bottom: 0;
+
+	background: color-mix(in srgb, var(--mantine-color-body) 80%, transparent);
 }

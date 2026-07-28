@@ -1,4 +1,4 @@
-import {Flex, Stack} from '@mantine/core';
+import {Flex} from '@mantine/core';
 
 import styles from './SidebarAndContentView.module.css';
 
@@ -19,21 +19,17 @@ export default function SidebarAndContentView({
 	sidebar,
 }: Props) {
 	return (
-		<Flex
-			gap="md"
-			mt={onIndexPage ? undefined : '-md'}
-			mb={onIndexPage ? undefined : '-md'}
-		>
-			<Stack
+		<Flex gap="md" mt={onIndexPage ? undefined : '-md'} mb="-lg">
+			<Flex
 				flex={onIndexPage ? 1 : undefined}
 				style={{width: onIndexPage ? undefined : sidebarWidth}}
 				className={[
 					styles.sidebar,
-					onIndexPage ? styles.sidebarOnIndexPage : undefined,
+					onIndexPage ? styles.sidebarOnIndexPage : styles.sticky,
 				].join(' ')}
 			>
-				<div className={onIndexPage ? undefined : styles.sticky}>{sidebar}</div>
-			</Stack>
+				{sidebar}
+			</Flex>
 
 			{content}
 		</Flex>

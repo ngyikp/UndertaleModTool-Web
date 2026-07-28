@@ -1,6 +1,5 @@
 .sticky {
 	padding-right: var(--mantine-spacing-md);
-	padding-bottom: var(--mantine-spacing-lg);
 }
 
 .sidebar {
@@ -12,6 +11,10 @@
 }
 
 @media only screen and (min-width: 768px) {
+	.sidebar {
+		display: block;
+	}
+
 	.sticky {
 		position: sticky;
 		top: 0;
@@ -19,9 +22,5 @@
 		height: 100vh;
 		overflow: auto;
 		overscroll-behavior: contain;
-	}
-
-	.sidebar {
-		display: block;
 	}
 }

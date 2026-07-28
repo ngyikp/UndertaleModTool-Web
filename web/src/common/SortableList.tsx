@@ -4,6 +4,7 @@ import {
 	Input,
 	Pagination,
 	Select,
+	Space,
 	Stack,
 	TextInput,
 	Tooltip,
@@ -90,15 +91,9 @@ export default function SortableList({
 		: filteredList;
 
 	return (
-		<Stack>
+		<div className={onIndexPage ? styles.wrapOnIndexPage : undefined}>
 			{allResultsList.length > 0 ? (
-				<Group
-					gap="xs"
-					className={[
-						styles.filters,
-						!onIndexPage ? styles.filtersNotOnIndexPage : '',
-					].join(' ')}
-				>
+				<Group gap="xs" py="md" className={styles.filters}>
 					Sort by:
 					<Select
 						data={[
@@ -151,6 +146,8 @@ export default function SortableList({
 						{filteredList.length} items
 					</p>
 
+					<Space h="xs" />
+
 					<ul className={styles.list}>
 						{onePageList.map((item, index) => {
 							return (
@@ -171,11 +168,13 @@ export default function SortableList({
 								});
 							}}
 							layout="responsive"
+							className={styles.pagination}
+							py="md"
 						/>
 					) : null}
 				</>
 			) : settings.filter ? (
-				<>
+				<Stack>
 					No results for "{settings.filter}".
 					<div>
 						<Button
@@ -186,10 +185,10 @@ export default function SortableList({
 							Show all results
 						</Button>
 					</div>
-				</>
+				</Stack>
 			) : (
 				emptyListMessage
 			)}
-		</Stack>
+		</div>
 	);
 }
