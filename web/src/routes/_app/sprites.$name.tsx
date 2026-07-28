@@ -51,13 +51,15 @@ function RouteComponent() {
 
 			<Title order={2}>{name}</Title>
 
-			<Checkbox
-				checked={viewAll}
-				onChange={(event) => {
-					setViewAll(event.currentTarget.checked);
-				}}
-				label="View all"
-			/>
+			{data.TexturePageIDs.length > 1 ? (
+				<Checkbox
+					checked={viewAll}
+					onChange={(event) => {
+						setViewAll(event.currentTarget.checked);
+					}}
+					label="View all"
+				/>
+			) : null}
 
 			{viewAll ? (
 				<>
