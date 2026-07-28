@@ -1,4 +1,4 @@
-import {MantineProvider} from '@mantine/core';
+import {createTheme, MantineProvider} from '@mantine/core';
 import '@mantine/core/styles.css';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
@@ -19,6 +19,10 @@ const root = document.getElementById('root');
 if (!root) {
 	throw new Error('Missing app root container');
 }
+
+const theme = createTheme({
+	cursorType: 'pointer',
+});
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -76,7 +80,7 @@ declare module '@tanstack/react-router' {
 
 createRoot(root).render(
 	<StrictMode>
-		<MantineProvider defaultColorScheme="auto">
+		<MantineProvider defaultColorScheme="auto" theme={theme}>
 			<QueryClientProvider client={queryClient}>
 				<RouterProviderWithContext router={router} />
 
