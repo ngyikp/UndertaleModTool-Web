@@ -9,11 +9,13 @@ import ImageViewer from './ImageViewer';
 
 type Props = Readonly<{
 	texturePageId: number;
+	fileName: string;
 	enableImageActions: boolean;
 }>;
 
 export default function TexturePageImageViewer({
 	texturePageId,
+	fileName,
 	enableImageActions,
 }: Props) {
 	const {data: texturePageData} = useSuspenseQuery(
@@ -44,7 +46,7 @@ export default function TexturePageImageViewer({
 	return (
 		<ImageViewer
 			blob={blob}
-			fileName={'Texture ' + texturePageId.toString()}
+			fileName={fileName}
 			width={texturePageData.TargetWidth}
 			height={texturePageData.TargetHeight}
 			withActions={enableImageActions}

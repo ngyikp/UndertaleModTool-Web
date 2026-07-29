@@ -55,7 +55,11 @@ function RouteComponent() {
 				</Link>
 			</p>
 
-			<TexturePageImageViewer texturePageId={id} enableImageActions={true} />
+			<TexturePageImageViewer
+				texturePageId={id}
+				fileName={'Texture ' + id.toString()}
+				enableImageActions={true}
+			/>
 		</ContentViewWithPadding>
 	);
 }

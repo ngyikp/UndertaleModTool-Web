@@ -72,11 +72,12 @@ function RouteComponent() {
 
 					<Suspense fallback={<BasicLoadingMessage />}>
 						<ol className={styles.list}>
-							{data.TexturePageIDs.map((pageId) => {
+							{data.TexturePageIDs.map((pageId, index) => {
 								return (
 									<li className={styles.listItem} key={pageId}>
 										<TexturePageImageViewer
 											texturePageId={pageId}
+											fileName={`${name} (page ${index.toString()})`}
 											enableImageActions={false}
 										/>
 									</li>
@@ -90,6 +91,9 @@ function RouteComponent() {
 					<TexturePageImageViewer
 						key={texturePageId}
 						texturePageId={texturePageId}
+						fileName={
+							totalPages > 1 ? `${name} (page ${(page + 1).toString()})` : name
+						}
 						enableImageActions={true}
 					/>
 				</Suspense>
