@@ -76,7 +76,7 @@ function RouteComponent() {
 						);
 					})}
 				</>
-			) : texturePage ? (
+			) : texturePage != null ? (
 				<Suspense fallback={<BasicLoadingMessage />}>
 					<TexturePageImageViewer
 						key={texturePage}
