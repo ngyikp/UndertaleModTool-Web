@@ -355,7 +355,7 @@ public partial class Program
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
-        UndertaleSprite sprite = gameData.Sprites.First(sound => name == sound.Name.Content);
+        UndertaleSprite sprite = gameData.Sprites.First(sprite => name == sprite?.Name.Content);
 
         SpriteInfo spriteInfo = new()
         {
