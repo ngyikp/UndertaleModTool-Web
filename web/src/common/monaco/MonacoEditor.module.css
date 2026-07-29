@@ -1,4 +1,13 @@
 .editor {
 	height: 100%;
 	width: 100%;
+
+	/* There's no sidebar on mobile screen, so `height: 100%` doesn't reach to bottom of screen */
+	min-height: 100vh;
+}
+
+@media only screen and (min-width: 768px) {
+	.editor {
+		min-height: auto;
+	}
 }
