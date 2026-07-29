@@ -85,7 +85,11 @@ function AppLayout() {
 							text="Code"
 						/>
 					) : (
-						<Tooltip label="This game uses YYC which means viewing the source code is not possible">
+						<Tooltip
+							label="This game uses YYC which means viewing the source code is not possible"
+							events={{hover: true, focus: true, touch: true}}
+							multiline
+						>
 							<Tabs.Tab value="/code" disabled>
 								Code
 							</Tabs.Tab>
