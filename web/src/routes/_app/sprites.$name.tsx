@@ -16,6 +16,8 @@ import {spriteInfoByNameQueryOptions} from '../../messages/getSpriteInfoByName';
 import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
 
+import styles from './sprites.$name.module.css';
+
 function RouteComponent() {
 	const name = useParams({
 		from: '/_app/sprites/$name',
@@ -24,12 +26,13 @@ function RouteComponent() {
 
 	const page = useDataStore((state) => state.getSpriteTextureCurrentPage(name));
 	const setPage = useDataStore((state) => state.setSpriteTextureCurrentPage);
-	const [viewAll, setViewAll] = useState(false);
+	const [viewAll, setViewAll] = useState(false); // todo store in data store?
 
 	const queryClient = useQueryClient();
 	const {data} = useSuspenseQuery(spriteInfoByNameQueryOptions(name));
 
-	const texturePage = data.TexturePageIDs[page];
+	const texturePageId = data.TexturePageIDs[page];
+	const totalPages = data.TexturePageIDs.length;
 
 	function prefetchListeners(num: number) {
 		const prefetchPage = () => {
@@ -53,45 +56,48 @@ function RouteComponent() {
 
 			<Title order={2}>{name}</Title>
 
-			{data.TexturePageIDs.length > 1 ? (
+			{totalPages > 1 ? (
 				<Checkbox
 					checked={viewAll}
 					onChange={(event) => {
 						setViewAll(event.currentTarget.checked);
 					}}
-					label={`View all ${data.TexturePageIDs.length.toString()} pages`}
+					label={`View all ${totalPages.toString()} pages`}
 				/>
 			) : null}
 
-			{viewAll ? (
+			{viewAll && totalPages > 1 ? (
 				<>
 					<ImageAppearanceSelect />
 
 					<Suspense fallback={<BasicLoadingMessage />}>
-						{data.TexturePageIDs.map((page) => {
-							return (
-								<TexturePageImageViewer
-									key={page}
-									texturePageId={page}
-									enableImageActions={false}
-								/>
-							);
-						})}
+						<ol className={styles.list}>
+							{data.TexturePageIDs.map((pageId) => {
+								return (
+									<li className={styles.listItem} key={pageId}>
+										<TexturePageImageViewer
+											texturePageId={pageId}
+											enableImageActions={false}
+										/>
+									</li>
+								);
+							})}
+						</ol>
 					</Suspense>
 				</>
-			) : texturePage != null ? (
+			) : texturePageId != null ? (
 				<Suspense fallback={<BasicLoadingMessage />}>
 					<TexturePageImageViewer
-						key={texturePage}
-						texturePageId={texturePage}
+						key={texturePageId}
+						texturePageId={texturePageId}
 						enableImageActions={true}
 					/>
 				</Suspense>
 			) : null}
 
-			{!viewAll && data.TexturePageIDs.length > 1 ? (
+			{!viewAll && totalPages > 1 ? (
 				<Pagination
-					total={data.TexturePageIDs.length}
+					total={totalPages}
 					value={page + 1}
 					onChange={(newPage) => {
 						setPage(name, newPage - 1);
