@@ -58,7 +58,7 @@ function RouteComponent() {
 					onChange={(event) => {
 						setViewAll(event.currentTarget.checked);
 					}}
-					label="View all"
+					label={`View all ${data.TexturePageIDs.length.toString()} pages`}
 				/>
 			) : null}
 
@@ -66,15 +66,17 @@ function RouteComponent() {
 				<>
 					<ImageAppearanceSelect />
 
-					{data.TexturePageIDs.map((page) => {
-						return (
-							<TexturePageImageViewer
-								key={page}
-								texturePageId={page}
-								enableImageActions={false}
-							/>
-						);
-					})}
+					<Suspense fallback={<BasicLoadingMessage />}>
+						{data.TexturePageIDs.map((page) => {
+							return (
+								<TexturePageImageViewer
+									key={page}
+									texturePageId={page}
+									enableImageActions={false}
+								/>
+							);
+						})}
+					</Suspense>
 				</>
 			) : texturePage != null ? (
 				<Suspense fallback={<BasicLoadingMessage />}>
@@ -119,6 +121,7 @@ export const Route = createFileRoute('/_app/sprites/$name')({
 			spriteInfoByNameQueryOptions(params.name),
 		);
 
+		// Prefetch the first page
 		if (spriteInfo.TexturePageIDs[0]) {
 			const texturePageData = await context.queryClient.ensureQueryData(
 				texturePageByIdQueryOptions(spriteInfo.TexturePageIDs[0]),
