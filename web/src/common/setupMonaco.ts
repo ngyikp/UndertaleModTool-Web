@@ -1,5 +1,14 @@
 import * as monaco from 'monaco-editor';
+import type {languages} from 'monaco-editor/editor/editor.api';
 import editorWorker from 'monaco-editor/editor/editor.worker?worker';
+// @ts-expect-error can't type-check for whatever reason
+import {language as typescriptLanguage} from 'monaco-editor/languages/definitions/typescript/typescript.js';
+
+// @ts-expect-error can't type-check for whatever reason
+declare module 'monaco-editor/languages/definitions/typescript/typescript.js' {
+	export const conf: languages.LanguageConfiguration;
+	export const language: languages.IMonarchLanguage;
+}
 
 self.MonacoEnvironment = {
 	getWorker() {
@@ -8,6 +17,56 @@ self.MonacoEnvironment = {
 };
 
 monaco.languages.register({id: 'gml'});
+
+monaco.languages.setMonarchTokensProvider('gml', {
+	...(typescriptLanguage as languages.IMonarchLanguage),
+
+	// From https://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModTool/Resources/GML.xshd#L47
+	keywords: [
+		'if',
+		'else',
+		'do',
+		'while',
+		'for',
+		'repeat',
+		'switch',
+		'case',
+		'default',
+		'break',
+		'continue',
+		'with',
+		'new',
+		'constructor',
+		'function',
+		'return',
+		'exit',
+		'var',
+		'until',
+		'and',
+		'or',
+		'xor',
+		'begin',
+		'end',
+		'then',
+		'mod',
+		'div',
+		'throw',
+		'static',
+		'try',
+		'catch',
+		'finally',
+		'enum',
+
+		'true',
+		'false',
+		'self',
+		'other',
+		'all',
+		'noone',
+		'global',
+		'undefined',
+	],
+});
 
 // GML language configuration is from the Stitch for VSCode extension
 //
