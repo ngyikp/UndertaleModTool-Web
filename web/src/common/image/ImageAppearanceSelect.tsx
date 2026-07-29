@@ -25,6 +25,7 @@ export default function ImageAppearanceSelect() {
 					});
 				}}
 				className={styles.select}
+				allowDeselect={false}
 			/>
 		</Group>
 	);

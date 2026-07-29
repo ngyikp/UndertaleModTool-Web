@@ -115,6 +115,7 @@ export default function SortableList({
 							});
 						}}
 						style={{width: '6.4rem'}}
+						allowDeselect={false}
 					/>
 					<TextInput
 						value={settings.filter}
