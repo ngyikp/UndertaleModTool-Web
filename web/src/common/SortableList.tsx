@@ -118,8 +118,10 @@ export default function SortableList({
 						allowDeselect={false}
 					/>
 					<TextInput
+						type="search"
 						value={settings.filter}
 						placeholder="Find"
+						spellCheck={false}
 						onChange={(event) => {
 							setFilter(event.currentTarget.value);
 						}}
