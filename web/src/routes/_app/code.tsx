@@ -24,38 +24,36 @@ function Code() {
 		<>
 			<DocumentTitle text="Code" />
 
-			<SidebarAndContentView
-				onIndexPage={onIndexPage}
-				content={<Outlet />}
-				sidebar={
-					<SortableList
-						id="code"
-						emptyListMessage={
-							info?.IsYYC ? (
-								<YycWarningAlert />
-							) : (
-								'This game has no code entries.'
-							)
-						}
-						list={data.list}
-						onIndexPage={onIndexPage}
-						render={(item) => {
-							return (
-								<Link
-									to="/code/$name"
-									params={{name: item}}
-									preload="intent"
-									preloadDelay={250}
-									activeProps={{style: {fontWeight: 'bold'}}}
-									resetScroll={false}
-								>
-									{item}
-								</Link>
-							);
-						}}
-					/>
-				}
-			/>
+			{info?.IsYYC && data.list.length === 0 ? (
+				<YycWarningAlert />
+			) : (
+				<SidebarAndContentView
+					onIndexPage={onIndexPage}
+					content={<Outlet />}
+					sidebar={
+						<SortableList
+							id="code"
+							emptyListMessage="This game has no code entries."
+							list={data.list}
+							onIndexPage={onIndexPage}
+							render={(item) => {
+								return (
+									<Link
+										to="/code/$name"
+										params={{name: item}}
+										preload="intent"
+										preloadDelay={250}
+										activeProps={{style: {fontWeight: 'bold'}}}
+										resetScroll={false}
+									>
+										{item}
+									</Link>
+								);
+							}}
+						/>
+					}
+				/>
+			)}
 		</>
 	);
 }
