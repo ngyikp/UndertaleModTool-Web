@@ -4,7 +4,7 @@ import {useDataStore} from '../data-store';
 
 import ExternalLinkInNewWindow from './ExternalLinkInNewWindow';
 
-declare const WORKERS_CI_COMMIT_SHA: string | undefined;
+declare const BUILD_COMMIT_SHA: string | undefined;
 
 export default function Footer() {
 	const info = useDataStore((state) => state.gameInfo);
@@ -40,9 +40,7 @@ export default function Footer() {
 				<ExternalLinkInNewWindow href="https://github.com/ngyikp/UndertaleModTool-Web">
 					Contribute/report a bug for this web version on GitHub
 				</ExternalLinkInNewWindow>{' '}
-				{WORKERS_CI_COMMIT_SHA != null
-					? '(commit ' + WORKERS_CI_COMMIT_SHA + ')'
-					: null}
+				{BUILD_COMMIT_SHA != null ? '(commit ' + BUILD_COMMIT_SHA + ')' : null}
 			</Text>
 		</Stack>
 	);
