@@ -1,4 +1,5 @@
-import detectMimeType from './detectMimeType';
+import detectMimeType from '../detectMimeType';
+
 import drawBgraToCanvas from './drawBgraToCanvas';
 
 // Handles PNG data sent into `fileContents`, or bgra

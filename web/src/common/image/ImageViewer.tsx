@@ -1,12 +1,12 @@
 import {Button, Group} from '@mantine/core';
 
-import {useDataStore} from '../data-store';
+import {useDataStore} from '../../data-store';
+import CustomCopyButton from '../CustomCopyButton';
 
-import CustomCopyButton from './CustomCopyButton';
-import ImageAppearanceSelect from './image/ImageAppearanceSelect';
-import type {Appearance} from './image/ImageAppearanceType';
-import ImageWithPlaceholder from './image/ImageWithPlaceholder';
-import {useBlobAsUrl} from './image/useBlobAsUrl';
+import ImageAppearanceSelect from './ImageAppearanceSelect';
+import type {Appearance} from './ImageAppearanceType';
+import ImageWithPlaceholder from './ImageWithPlaceholder';
+import {useBlobAsUrl} from './useBlobAsUrl';
 
 export type ImageViewerSettings = {
 	appearance: Appearance;

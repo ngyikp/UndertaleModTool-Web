@@ -1,10 +1,10 @@
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {useEffect, useState} from 'react';
 
-import {embeddedTexturesInfoByIdQueryOptions} from '../messages/getEmbeddedTextureInfoById';
-import {texturePageByIdQueryOptions} from '../messages/getTexturePageInfoById';
+import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
+import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
 
-import drawTexturePageImage from './image/drawTexturePageImage';
+import drawTexturePageImage from './drawTexturePageImage';
 import ImageViewer from './ImageViewer';
 
 type Props = Readonly<{

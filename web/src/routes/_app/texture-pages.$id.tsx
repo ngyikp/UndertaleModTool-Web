@@ -6,7 +6,7 @@ import ContentViewAlert from '../../common/ContentViewAlert';
 import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
-import TexturePageImageViewer from '../../common/TexturePageImageViewer';
+import TexturePageImageViewer from '../../common/image/TexturePageImageViewer';
 import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';

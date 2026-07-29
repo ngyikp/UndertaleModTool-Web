@@ -8,8 +8,8 @@ import ContentViewAlert from '../../common/ContentViewAlert';
 import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
-import drawImageToBlob from '../../common/drawImageToBlob';
-import ImageViewer from '../../common/ImageViewer';
+import drawImageToBlob from '../../common/image/drawImageToBlob';
+import ImageViewer from '../../common/image/ImageViewer';
 import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
 

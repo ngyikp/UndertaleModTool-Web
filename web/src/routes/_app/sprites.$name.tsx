@@ -9,7 +9,7 @@ import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import ImageAppearanceSelect from '../../common/image/ImageAppearanceSelect';
-import TexturePageImageViewer from '../../common/TexturePageImageViewer';
+import TexturePageImageViewer from '../../common/image/TexturePageImageViewer';
 import {useDataStore} from '../../data-store';
 import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {spriteInfoByNameQueryOptions} from '../../messages/getSpriteInfoByName';

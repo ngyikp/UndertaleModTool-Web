@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 
-import type {ImageViewerSettings} from './common/ImageViewer';
+import type {ImageViewerSettings} from './common/image/ImageViewer';
 import type {SortableListSettings} from './common/SortableList';
 import type {GameInfoType} from './types/GameInfoType';
 

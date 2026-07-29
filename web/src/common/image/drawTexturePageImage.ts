@@ -1,6 +1,7 @@
 import type {EmbeddedTextureInfoType} from '../../messages/getEmbeddedTextureInfoById';
 import type {TexturePageInfoType} from '../../messages/getTexturePageInfoById';
-import drawImageToBlob from '../drawImageToBlob';
+
+import drawImageToBlob from './drawImageToBlob';
 
 // todo add includePadding parameter
 export default async function drawTexturePageImage(
