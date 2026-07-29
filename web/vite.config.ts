@@ -7,6 +7,9 @@ import {defineConfig} from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
+	define: {
+		WORKERS_CI_COMMIT_SHA: JSON.stringify(process.env.WORKERS_CI_COMMIT_SHA),
+	},
 	plugins: [
 		tanstackRouter({
 			target: 'react',
