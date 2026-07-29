@@ -12,7 +12,7 @@ import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import CustomCopyButton from '../../common/CustomCopyButton';
 import DocumentTitle from '../../common/DocumentTitle';
 // import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
-import MonacoEditor from '../../common/MonacoEditor';
+import MonacoEditor from '../../common/monaco/MonacoEditor';
 import {useEditCodeTextByNameMutation} from '../../messages/editCodeTextByName';
 import {codeInfoByNameQueryOptions} from '../../messages/getCodeInfoByName';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
