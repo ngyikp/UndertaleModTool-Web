@@ -1,8 +1,9 @@
-import {Stack, Title} from '@mantine/core';
+import {Title} from '@mantine/core';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import TexturePageImageViewer from '../../common/TexturePageImageViewer';
 import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
@@ -19,7 +20,7 @@ function RouteComponent() {
 	);
 
 	return (
-		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+		<ContentViewWithPadding>
 			<DocumentTitle text={['Texture ' + id.toString(), 'Texture pages']} />
 
 			<Title order={2}>Texture {id}</Title>
@@ -53,7 +54,7 @@ function RouteComponent() {
 			</p>
 
 			<TexturePageImageViewer texturePageId={id} enableImageActions={true} />
-		</Stack>
+		</ContentViewWithPadding>
 	);
 }
 
@@ -80,9 +81,9 @@ export const Route = createFileRoute('/_app/texture-pages/$id')({
 	errorComponent: ({error}) => {
 		if (error.message.startsWith('ArgumentOutOfRange')) {
 			return (
-				<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+				<ContentViewWithPadding>
 					<BasicErrorAlert title="This texture page does not exist." />
-				</Stack>
+				</ContentViewWithPadding>
 			);
 		}
 

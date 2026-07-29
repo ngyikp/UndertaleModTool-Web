@@ -1,9 +1,10 @@
-import {Alert, Button, Stack, Title} from '@mantine/core';
+import {Alert, Button, Title} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import detectMimeType from '../../common/detectMimeType';
 import DocumentTitle from '../../common/DocumentTitle';
 import {
@@ -58,7 +59,7 @@ function RouteComponent() {
 	}, [fileContents]);
 
 	return (
-		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+		<ContentViewWithPadding>
 			<DocumentTitle text={[name, 'Sounds']} />
 
 			<Title order={2}>{name}</Title>
@@ -97,7 +98,7 @@ function RouteComponent() {
 					<BasicErrorAlert title="Cannot find audio file." />
 				)
 			) : null}
-		</Stack>
+		</ContentViewWithPadding>
 	);
 }
 
@@ -109,9 +110,9 @@ export const Route = createFileRoute('/_app/sounds/$name')({
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message === 'NoMatch') {
 				return (
-					<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+					<ContentViewWithPadding>
 						<BasicErrorAlert title="This sound does not exist." />
-					</Stack>
+					</ContentViewWithPadding>
 				);
 			}
 		}

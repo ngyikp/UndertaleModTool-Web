@@ -1,10 +1,11 @@
-import {Checkbox, Pagination, Stack, Title} from '@mantine/core';
+import {Checkbox, Pagination, Title} from '@mantine/core';
 import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {Suspense, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import BasicLoadingMessage from '../../common/BasicLoadingMessage';
+import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import ImageAppearanceSelect from '../../common/image/ImageAppearanceSelect';
 import TexturePageImageViewer from '../../common/TexturePageImageViewer';
@@ -46,7 +47,7 @@ function RouteComponent() {
 	}
 
 	return (
-		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+		<ContentViewWithPadding>
 			<DocumentTitle text={[name, 'Sprites']} />
 
 			<Title order={2}>{name}</Title>
@@ -64,6 +65,7 @@ function RouteComponent() {
 			{viewAll ? (
 				<>
 					<ImageAppearanceSelect />
+
 					{data.TexturePageIDs.map((page) => {
 						return (
 							<TexturePageImageViewer
@@ -106,7 +108,7 @@ function RouteComponent() {
 					}}
 				/>
 			) : null}
-		</Stack>
+		</ContentViewWithPadding>
 	);
 }
 
@@ -133,9 +135,9 @@ export const Route = createFileRoute('/_app/sprites/$name')({
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message === 'NoMatch') {
 				return (
-					<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+					<ContentViewWithPadding>
 						<BasicErrorAlert title="This sprite does not exist." />
-					</Stack>
+					</ContentViewWithPadding>
 				);
 			}
 		}

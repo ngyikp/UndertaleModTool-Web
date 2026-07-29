@@ -1,4 +1,4 @@
-import {Alert, Button, Group, Stack, Title} from '@mantine/core';
+import {Alert, Button, Group, Title} from '@mantine/core';
 import {useHotkeys} from '@mantine/hooks';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
@@ -6,6 +6,7 @@ import type * as monaco from 'monaco-editor/editor/editor.api';
 import {useRef, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import CustomCopyButton from '../../common/CustomCopyButton';
 import DocumentTitle from '../../common/DocumentTitle';
 // import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
@@ -42,7 +43,7 @@ function RouteComponent() {
 	}
 
 	return (
-		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+		<ContentViewWithPadding>
 			<DocumentTitle text={[name, 'Code']} />
 
 			<Title order={2}>{name}</Title>
@@ -117,7 +118,7 @@ function RouteComponent() {
 					/>
 				</>
 			) : null}
-		</Stack>
+		</ContentViewWithPadding>
 	);
 }
 
@@ -130,9 +131,9 @@ export const Route = createFileRoute('/_app/code/$name')({
 	errorComponent: ({error}) => {
 		if (error.message === 'NoMatch') {
 			return (
-				<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+				<ContentViewWithPadding>
 					<BasicErrorAlert title="This code name does not exist." />
-				</Stack>
+				</ContentViewWithPadding>
 			);
 		}
 

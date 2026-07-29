@@ -1,9 +1,10 @@
-import {Stack, Title} from '@mantine/core';
+import {Title} from '@mantine/core';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import drawImageToBlob from '../../common/drawImageToBlob';
 import ImageViewer from '../../common/ImageViewer';
@@ -43,7 +44,7 @@ function RouteComponent() {
 	}, [bgra, fileContents, height, width]);
 
 	return (
-		<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+		<ContentViewWithPadding>
 			<DocumentTitle text={['Texture ' + id.toString(), 'Embedded textures']} />
 
 			<Title order={2}>Texture {id}</Title>
@@ -64,7 +65,7 @@ function RouteComponent() {
 					}
 				/>
 			) : null}
-		</Stack>
+		</ContentViewWithPadding>
 	);
 }
 
@@ -84,9 +85,9 @@ export const Route = createFileRoute('/_app/embedded-textures/$id')({
 	errorComponent: ({error}) => {
 		if (error.message.startsWith('ArgumentOutOfRange')) {
 			return (
-				<Stack flex="1" mt="md" mb="lg" style={{minWidth: 0}}>
+				<ContentViewWithPadding>
 					<BasicErrorAlert title="This embedded texture does not exist." />
-				</Stack>
+				</ContentViewWithPadding>
 			);
 		}
 
