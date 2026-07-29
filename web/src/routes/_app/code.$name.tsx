@@ -50,7 +50,9 @@ function RouteComponent() {
 		<ContentViewWithPadding>
 			<DocumentTitle text={[name, 'Code']} />
 
-			<Title order={2}>{name}</Title>
+			<Title order={2} className="break-word">
+				{name}
+			</Title>
 
 			{data.ParentEntryName != null ? (
 				<Alert variant="light" color="blue">

@@ -54,7 +54,9 @@ function RouteComponent() {
 		<ContentViewWithPadding>
 			<DocumentTitle text={[name, 'Sprites']} />
 
-			<Title order={2}>{name}</Title>
+			<Title order={2} className="break-word">
+				{name}
+			</Title>
 
 			{totalPages > 1 ? (
 				<Checkbox

@@ -33,3 +33,7 @@ pre {
 	margin: 0 auto;
 	padding: var(--mantine-spacing-lg, 20px);
 }
+
+.break-word {
+	overflow-wrap: break-word;
+}

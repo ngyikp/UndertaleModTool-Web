@@ -64,7 +64,9 @@ function RouteComponent() {
 		<ContentViewWithPadding>
 			<DocumentTitle text={[name, 'Sounds']} />
 
-			<Title order={2}>{name}</Title>
+			<Title order={2} className="break-word">
+				{name}
+			</Title>
 
 			{blobUrl ? (
 				<div>

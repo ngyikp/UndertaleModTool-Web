@@ -54,7 +54,7 @@ function AppLayout() {
 
 	return (
 		<Stack>
-			<Title>{getGameDisplayName(info)}</Title>
+			<Title className="break-word">{getGameDisplayName(info)}</Title>
 
 			<Tabs value={'/' + (pathname.split('/')[1] ?? '')}>
 				<Tabs.List>
