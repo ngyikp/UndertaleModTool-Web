@@ -78,6 +78,7 @@ function RouteComponent() {
 								// disabled={modifiedValue === originalCode}
 								onClick={() => {
 									editorRef.current?.getModel()?.setValue(originalCode);
+									editCodeMutation.reset();
 								}}
 								variant="default"
 							>
