@@ -1,3 +1,5 @@
+/// <reference types="vitest/config" />
+
 import babel from '@rolldown/plugin-babel';
 import {tanstackRouter} from '@tanstack/router-plugin/vite';
 import react, {reactCompilerPreset} from '@vitejs/plugin-react';
@@ -15,6 +17,10 @@ export default defineConfig({
 	],
 	server: {
 		headers: getServerHeaders(),
+	},
+	test: {
+		environment: 'happy-dom',
+		setupFiles: ['tests/util/setup-tests.ts'],
 	},
 });
 

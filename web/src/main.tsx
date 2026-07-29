@@ -11,6 +11,7 @@ import BasicLoadingMessage from './common/BasicLoadingMessage';
 import PageNotFound from './PageNotFound';
 import RouterProviderWithContext from './RouterProviderWithContext';
 import {routeTree} from './routeTree.gen';
+import type {GameInfoType} from './types/GameInfoType';
 import {ManagedErrorFromDotNet} from './worker/ManagedErrorFromDotNet';
 
 import './index.css';
@@ -41,6 +42,11 @@ const queryClient = new QueryClient({
 		},
 	},
 });
+
+export type MyRouterContext = {
+	gameInfo: GameInfoType | null;
+	queryClient: QueryClient;
+};
 
 const router = createRouter({
 	context: {

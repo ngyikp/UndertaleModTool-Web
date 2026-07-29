@@ -52,6 +52,10 @@ Use [TypeScript](https://www.typescriptlang.org). Run `npm run tsc -- -b` to see
 
 Use [ESLint](https://eslint.org). Run `npm run lint` to see errors.
 
+### Tests
+
+Use [Vitest](https://vitest.dev). Run `npm test` to run the tests.
+
 ## AI policy
 
 Please refer to the main [UndertaleModTool's AI policy](https://github.com/UnderminersTeam/UndertaleModTool/blob/master/CONTRIBUTING.md#ai-policy) (tl;dr: no).

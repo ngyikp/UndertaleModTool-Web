@@ -1,9 +1,8 @@
-import type {QueryClient} from '@tanstack/react-query';
 import {createRootRouteWithContext, Outlet} from '@tanstack/react-router';
 import {TanStackRouterDevtools} from '@tanstack/react-router-devtools';
 
 import DocumentTitle from '../common/DocumentTitle';
-import type {GameInfoType} from '../types/GameInfoType';
+import type {MyRouterContext} from '../main';
 
 function RootLayout() {
 	return (
@@ -18,11 +17,6 @@ function RootLayout() {
 		</>
 	);
 }
-
-type MyRouterContext = {
-	gameInfo: GameInfoType | null;
-	queryClient: QueryClient;
-};
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	component: RootLayout,
