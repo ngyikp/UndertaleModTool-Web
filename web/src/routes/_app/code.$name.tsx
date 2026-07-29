@@ -1,4 +1,4 @@
-import {Alert, Button, Group, Title} from '@mantine/core';
+import {Alert, Button, Group, Title, Tooltip} from '@mantine/core';
 import {useHotkeys} from '@mantine/hooks';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
@@ -16,6 +16,7 @@ import MonacoEditor from '../../common/monaco/MonacoEditor';
 import {useEditCodeTextByNameMutation} from '../../messages/editCodeTextByName';
 import {codeInfoByNameQueryOptions} from '../../messages/getCodeInfoByName';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
+import isMac from '../../common/isMac';
 
 function RouteComponent() {
 	const name = useParams({
@@ -65,14 +66,16 @@ function RouteComponent() {
 				<>
 					<Group gap="xs">
 						<Button.Group>
-							<Button
-								// todo if the code formatting after saving is different, the button is not disabled
-								// disabled={modifiedValue === originalCode}
-								loading={editCodeMutation.isPending}
-								onClick={saveChanges}
-							>
-								Save changes
-							</Button>
+							<Tooltip label={isMac() ? 'Command-S' : 'Ctrl-S'}>
+								<Button
+									// todo if the code formatting after saving is different, the button is not disabled
+									// disabled={modifiedValue === originalCode}
+									loading={editCodeMutation.isPending}
+									onClick={saveChanges}
+								>
+									Save changes
+								</Button>
+							</Tooltip>
 
 							<Button
 								// disabled={modifiedValue === originalCode}
