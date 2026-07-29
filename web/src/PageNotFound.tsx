@@ -12,7 +12,7 @@ export default function PageNotFound() {
 
 			<Title>UndertaleModTool on the Web</Title>
 
-			<BasicErrorAlert error="Page not found." />
+			<BasicErrorAlert title="Page not found." />
 
 			<div>
 				<Button component={Link} to="/">

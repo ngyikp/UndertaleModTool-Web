@@ -58,7 +58,7 @@ const router = createRouter({
 			console.error('Exception in .NET:\n\n' + error.stack);
 		}
 	},
-	defaultErrorComponent: ({error}) => {
+	defaultErrorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message.endsWith('NativeMagickSettings')) {
 				return (

@@ -4,11 +4,13 @@ import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import ContentViewAlert from '../../common/ContentViewAlert';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import drawImageToBlob from '../../common/drawImageToBlob';
 import ImageViewer from '../../common/ImageViewer';
 import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
+import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
 
 function RouteComponent() {
 	const id = useParams({
@@ -72,7 +74,7 @@ function RouteComponent() {
 export const Route = createFileRoute('/_app/embedded-textures/$id')({
 	component: RouteComponent,
 	params: {
-		parse: (params) => {
+		parse(params) {
 			return {
 				id: parseInt(params.id, 10),
 			};
@@ -82,15 +84,15 @@ export const Route = createFileRoute('/_app/embedded-textures/$id')({
 		context.queryClient.ensureQueryData(
 			embeddedTexturesInfoByIdQueryOptions(params.id),
 		),
-	errorComponent: ({error}) => {
-		if (error.message.startsWith('ArgumentOutOfRange')) {
-			return (
-				<ContentViewWithPadding>
-					<BasicErrorAlert title="This embedded texture does not exist." />
-				</ContentViewWithPadding>
-			);
+	errorComponent({error}) {
+		if (error instanceof ManagedErrorFromDotNet) {
+			if (error.message.startsWith('ArgumentOutOfRange')) {
+				return (
+					<ContentViewAlert title="This embedded texture does not exist." />
+				);
+			}
 		}
 
-		throw error;
+		return <ContentViewAlert error={error} />;
 	},
 });

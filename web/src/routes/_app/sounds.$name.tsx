@@ -4,6 +4,7 @@ import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import ContentViewAlert from '../../common/ContentViewAlert';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import detectMimeType from '../../common/detectMimeType';
 import DocumentTitle from '../../common/DocumentTitle';
@@ -106,17 +107,13 @@ export const Route = createFileRoute('/_app/sounds/$name')({
 	component: RouteComponent,
 	loader: ({context, params}) =>
 		context.queryClient.ensureQueryData(soundByNameQueryOptions(params.name)),
-	errorComponent: ({error}) => {
+	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message === 'NoMatch') {
-				return (
-					<ContentViewWithPadding>
-						<BasicErrorAlert title="This sound does not exist." />
-					</ContentViewWithPadding>
-				);
+				return <ContentViewAlert title="This sound does not exist." />;
 			}
 		}
 
-		throw error;
+		return <ContentViewAlert error={error} />;
 	},
 });

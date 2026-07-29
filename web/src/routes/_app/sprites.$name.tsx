@@ -3,8 +3,8 @@ import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {Suspense, useState} from 'react';
 
-import BasicErrorAlert from '../../common/BasicErrorAlert';
 import BasicLoadingMessage from '../../common/BasicLoadingMessage';
+import ContentViewAlert from '../../common/ContentViewAlert';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import ImageAppearanceSelect from '../../common/image/ImageAppearanceSelect';
@@ -131,17 +131,13 @@ export const Route = createFileRoute('/_app/sprites/$name')({
 
 		return spriteInfo;
 	},
-	errorComponent: ({error}) => {
+	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message === 'NoMatch') {
-				return (
-					<ContentViewWithPadding>
-						<BasicErrorAlert title="This sprite does not exist." />
-					</ContentViewWithPadding>
-				);
+				return <ContentViewAlert title="This sprite does not exist." />;
 			}
 		}
 
-		throw error;
+		return <ContentViewAlert error={error} />;
 	},
 });

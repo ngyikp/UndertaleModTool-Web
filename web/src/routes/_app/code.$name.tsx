@@ -6,6 +6,7 @@ import type * as monaco from 'monaco-editor/editor/editor.api';
 import {useRef, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import ContentViewAlert from '../../common/ContentViewAlert';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import CustomCopyButton from '../../common/CustomCopyButton';
 import DocumentTitle from '../../common/DocumentTitle';
@@ -13,6 +14,7 @@ import DocumentTitle from '../../common/DocumentTitle';
 import MonacoEditor from '../../common/MonacoEditor';
 import {useEditCodeTextByNameMutation} from '../../messages/editCodeTextByName';
 import {codeInfoByNameQueryOptions} from '../../messages/getCodeInfoByName';
+import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
 
 function RouteComponent() {
 	const name = useParams({
@@ -128,15 +130,13 @@ export const Route = createFileRoute('/_app/code/$name')({
 		context.queryClient.ensureQueryData(
 			codeInfoByNameQueryOptions(params.name),
 		),
-	errorComponent: ({error}) => {
-		if (error.message === 'NoMatch') {
-			return (
-				<ContentViewWithPadding>
-					<BasicErrorAlert title="This code name does not exist." />
-				</ContentViewWithPadding>
-			);
+	errorComponent({error}) {
+		if (error instanceof ManagedErrorFromDotNet) {
+			if (error.message === 'NoMatch') {
+				return <ContentViewAlert title="This code name does not exist." />;
+			}
 		}
 
-		throw error;
+		return <ContentViewAlert error={error} />;
 	},
 });
