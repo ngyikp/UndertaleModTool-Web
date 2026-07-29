@@ -40,7 +40,9 @@ export default function Footer() {
 				<ExternalLinkInNewWindow href="https://github.com/ngyikp/UndertaleModTool-Web">
 					Contribute/report a bug for this web version on GitHub
 				</ExternalLinkInNewWindow>{' '}
-				{BUILD_COMMIT_SHA != null ? '(commit ' + BUILD_COMMIT_SHA + ')' : null}
+				{BUILD_COMMIT_SHA != null
+					? '(commit ' + BUILD_COMMIT_SHA.substring(0, 7) + ')'
+					: null}
 			</Text>
 		</Stack>
 	);
