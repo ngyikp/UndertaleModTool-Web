@@ -1,7 +1,7 @@
 import {Alert} from '@mantine/core';
 
 type Props = Readonly<{
-	title?: string;
+	title?: React.ReactNode;
 	error?: string | Error | null;
 }>;
 

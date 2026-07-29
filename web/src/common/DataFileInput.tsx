@@ -11,6 +11,7 @@ import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
 import BasicErrorAlert from './BasicErrorAlert';
 import BasicLoadingMessage from './BasicLoadingMessage';
+import ExternalLinkInNewWindow from './ExternalLinkInNewWindow';
 
 const noop = () => {};
 
@@ -83,7 +84,21 @@ export default function DataFileInput({
 				/>
 			) : status === 'ERROR' ? (
 				<BasicErrorAlert
-					title="Oops, there was a problem loading this file. Make sure it is a valid GameMaker data file."
+					title={
+						<>
+							Oops, there was a problem loading{' '}
+							{fileName !== '' ? '‘' + fileName + '’' : 'this file'}.<br />
+							<br />
+							Make sure it is a valid GameMaker data file.
+							<br />
+							Try opening this file on the main Windows version of
+							UndertaleModTool, if it succeeds there, then{' '}
+							<ExternalLinkInNewWindow href="https://github.com/ngyikp/UndertaleModTool-Web/issues/new">
+								report about this web tool incompatibility
+							</ExternalLinkInNewWindow>
+							.
+						</>
+					}
 					error={error}
 				/>
 			) : null}
