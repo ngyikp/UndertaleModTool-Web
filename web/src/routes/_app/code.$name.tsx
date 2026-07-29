@@ -65,7 +65,7 @@ function RouteComponent() {
 			{originalCode != null ? (
 				<>
 					<Group gap="xs">
-						<Button.Group>
+						<Button.Group mr="auto">
 							<Tooltip label={isMac() ? 'Command-S' : 'Ctrl-S'}>
 								<Button
 									// todo if the code formatting after saving is different, the button is not disabled
@@ -89,7 +89,7 @@ function RouteComponent() {
 							</Button>
 						</Button.Group>
 
-						<Button.Group ml="auto">
+						<Button.Group>
 							<Button
 								component="a"
 								href={

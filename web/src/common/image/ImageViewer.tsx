@@ -1,4 +1,4 @@
-import {Button, Group} from '@mantine/core';
+import {Button, Flex, Group} from '@mantine/core';
 
 import {useDataStore} from '../../data-store';
 import CustomCopyButton from '../CustomCopyButton';
@@ -39,9 +39,11 @@ export default function ImageViewer({
 		<>
 			{withActions ? (
 				<Group>
-					<ImageAppearanceSelect />
+					<Flex mr="auto">
+						<ImageAppearanceSelect />
+					</Flex>
 
-					<Button.Group ml="auto">
+					<Button.Group>
 						<Button
 							component="a"
 							href={blobUrl != null ? blobUrl : undefined}
