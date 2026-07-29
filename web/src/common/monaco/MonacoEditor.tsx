@@ -34,6 +34,9 @@ export default function MonacoEditor({
 		if (!editorRef.current) {
 			editorRef.current = monaco.editor.create(divRef.current, {
 				language: 'gml',
+				stickyScroll: {
+					enabled: false,
+				},
 			});
 		}
 
