@@ -5,6 +5,7 @@ import {Suspense, useState} from 'react';
 
 import BasicLoadingMessage from '../../common/BasicLoadingMessage';
 import ContentViewAlert from '../../common/ContentViewAlert';
+import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import ImageAppearanceSelect from '../../common/image/ImageAppearanceSelect';
@@ -143,4 +144,5 @@ export const Route = createFileRoute('/_app/sprites/$name')({
 
 		return <ContentViewAlert error={error} />;
 	},
+	pendingComponent: () => <ContentViewLoading text="Loading sprite..." />,
 });

@@ -7,6 +7,7 @@ import {useRef, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import ContentViewAlert from '../../common/ContentViewAlert';
+import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import CustomCopyButton from '../../common/CustomCopyButton';
 import DocumentTitle from '../../common/DocumentTitle';
@@ -139,4 +140,5 @@ export const Route = createFileRoute('/_app/code/$name')({
 
 		return <ContentViewAlert error={error} />;
 	},
+	pendingComponent: () => <ContentViewLoading text="Loading code..." />,
 });

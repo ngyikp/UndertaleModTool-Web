@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import ContentViewAlert from '../../common/ContentViewAlert';
+import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import drawImageToBlob from '../../common/drawImageToBlob';
@@ -95,4 +96,7 @@ export const Route = createFileRoute('/_app/embedded-textures/$id')({
 
 		return <ContentViewAlert error={error} />;
 	},
+	pendingComponent: () => (
+		<ContentViewLoading text="Loading embedded texture..." />
+	),
 });

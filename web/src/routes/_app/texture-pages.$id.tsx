@@ -3,6 +3,7 @@ import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 
 import ContentViewAlert from '../../common/ContentViewAlert';
+import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import TexturePageImageViewer from '../../common/TexturePageImageViewer';
@@ -88,4 +89,5 @@ export const Route = createFileRoute('/_app/texture-pages/$id')({
 
 		return <ContentViewAlert error={error} />;
 	},
+	pendingComponent: () => <ContentViewLoading text="Loading texture page..." />,
 });
