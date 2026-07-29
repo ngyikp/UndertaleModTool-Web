@@ -12,11 +12,11 @@ import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import CustomCopyButton from '../../common/CustomCopyButton';
 import DocumentTitle from '../../common/DocumentTitle';
 // import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
+import isMac from '../../common/isMac';
 import MonacoEditor from '../../common/monaco/MonacoEditor';
 import {useEditCodeTextByNameMutation} from '../../messages/editCodeTextByName';
 import {codeInfoByNameQueryOptions} from '../../messages/getCodeInfoByName';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
-import isMac from '../../common/isMac';
 
 function RouteComponent() {
 	const name = useParams({
