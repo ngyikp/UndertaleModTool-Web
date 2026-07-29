@@ -2,7 +2,11 @@
 
 This is a port of [UndertaleModTool](https://github.com/UnderminersTeam/UndertaleModTool) (the popular modding, decompiling and unpacking tool for Undertale/GameMaker) running in a web browser through the power of [WebAssembly](https://webassembly.org)!
 
-The GUI is rebuilt from scratch using web technologies, many features are not available yet.
+The GUI is rebuilt from scratch using web technologies, however many features are not implemented yet.
+
+## Browser compatibility
+
+The web tool supports the latest versions of Chrome, Firefox and Safari on desktop. Mobile versions of Chrome on Android and Safari on iOS are also supported.
 
 ## Contributing
 
