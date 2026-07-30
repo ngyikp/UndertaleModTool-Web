@@ -114,7 +114,7 @@ public partial class Program
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSprite.TextureEntry))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSprite.NineSlice))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleTexturePageItem))]
-    public static string ReadFile(string fileName)
+    public static bool ReadFile(string fileName)
     {
         bool hadImportantWarnings = false;
         List<string> warnings = [];
@@ -145,72 +145,78 @@ public partial class Program
 
         DataHolder.SetData(gameData);
 
-        return JsonSerializer.Serialize(GetGameInfo(gameData), GameInfoContext.Default.GameInfo);
+        // todo better load info, such as warnings
+        return true;
     }
 
-    // Same info as UndertaleModCli.Program.CliQuickInfo
-    private static GameInfo GetGameInfo(UndertaleData Data)
+    [JSExport]
+    [SupportedOSPlatform("browser")]
+    public static string GetGameInfo()
     {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
         // Special check for audio groups
-        int audioGroupsCount = Data.AudioGroups.Count;
-        if (audioGroupsCount == 1 && Data.AudioGroups[0] is null)
+        int audioGroupsCount = gameData.AudioGroups.Count;
+        if (audioGroupsCount == 1 && gameData.AudioGroups[0] is null)
         {
             audioGroupsCount = 0;
         }
 
         // todo doesn't work for audiogroup*.dat
-        return new()
+        GameInfo gameInfo = new()
         {
-            ProjectName = Data.GeneralInfo.Name.Content,
-            DisplayName = Data.GeneralInfo.DisplayName.Content,
-            IsGameMaker2 = Data.IsGameMaker2(),
-            IsYYC = Data.IsYYC(),
-            IsDebuggerDisabled = Data.GeneralInfo.IsDebuggerDisabled,
-            IsUnsupportedBytecodeVersion = Data.UnsupportedBytecodeVersion,
+            ProjectName = gameData.GeneralInfo.Name.Content,
+            DisplayName = gameData.GeneralInfo.DisplayName.Content,
+            IsGameMaker2 = gameData.IsGameMaker2(),
+            IsYYC = gameData.IsYYC(),
+            IsDebuggerDisabled = gameData.GeneralInfo.IsDebuggerDisabled,
+            IsUnsupportedBytecodeVersion = gameData.UnsupportedBytecodeVersion,
             Version = new()
             {
-                Major = Data.GeneralInfo.Major,
-                Minor = Data.GeneralInfo.Minor,
-                Release = Data.GeneralInfo.Release,
-                Build = Data.GeneralInfo.Build,
+                Major = gameData.GeneralInfo.Major,
+                Minor = gameData.GeneralInfo.Minor,
+                Release = gameData.GeneralInfo.Release,
+                Build = gameData.GeneralInfo.Build,
             },
 
-            BytecodeVersion = Data.GeneralInfo.BytecodeVersion,
-            ConfigurationName = Data.GeneralInfo.Config.Content,
+            BytecodeVersion = gameData.GeneralInfo.BytecodeVersion,
+            ConfigurationName = gameData.GeneralInfo.Config.Content,
             ItemCounts = new()
             {
-                Sprites = Data.Sprites.Count,
-                Sounds = Data.Sounds.Count,
+                Sprites = gameData.Sprites.Count,
+                Sounds = gameData.Sounds.Count,
                 AudioGroups = audioGroupsCount,
-                Backgrounds = Data.Backgrounds.Count,
-                Paths = Data.Paths.Count,
-                Scripts = Data.Scripts.Count,
-                Shaders = Data.Shaders.Count,
-                Fonts = Data.Fonts.Count,
-                Timelines = Data.Timelines.Count,
-                GameObjects = Data.GameObjects.Count,
-                Rooms = Data.Rooms.Count,
-                Extensions = Data.Extensions.Count,
-                TexturePageItems = Data.TexturePageItems.Count,
-                TextureGroupInfo = Data.TextureGroupInfo?.Count ?? 0,
+                Backgrounds = gameData.Backgrounds.Count,
+                Paths = gameData.Paths.Count,
+                Scripts = gameData.Scripts.Count,
+                Shaders = gameData.Shaders.Count,
+                Fonts = gameData.Fonts.Count,
+                Timelines = gameData.Timelines.Count,
+                GameObjects = gameData.GameObjects.Count,
+                Rooms = gameData.Rooms.Count,
+                Extensions = gameData.Extensions.Count,
+                TexturePageItems = gameData.TexturePageItems.Count,
+                TextureGroupInfo = gameData.TextureGroupInfo?.Count ?? 0,
 
                 // could be null if YYC
-                Code = Data.Code?.Count ?? 0,
-                Variables = Data.Variables?.Count ?? 0,
-                Functions = Data.Functions?.Count ?? 0,
-                CodeLocals = Data.CodeLocals?.Count ?? 0,
+                Code = gameData.Code?.Count ?? 0,
+                Variables = gameData.Variables?.Count ?? 0,
+                Functions = gameData.Functions?.Count ?? 0,
+                CodeLocals = gameData.CodeLocals?.Count ?? 0,
 
-                Strings = Data.Strings.Count,
-                GlobalInitScripts = Data.GlobalInitScripts?.Count ?? 0,
-                EmbeddedTextures = Data.EmbeddedTextures.Count,
-                EmbeddedImages = Data.EmbeddedImages?.Count ?? 0,
-                EmbeddedAudio = Data.EmbeddedAudio.Count,
-                ParticleSystems = Data.ParticleSystems?.Count ?? 0,
-                ParticleSystemEmitters = Data.ParticleSystemEmitters?.Count ?? 0,
+                Strings = gameData.Strings.Count,
+                GlobalInitScripts = gameData.GlobalInitScripts?.Count ?? 0,
+                EmbeddedTextures = gameData.EmbeddedTextures.Count,
+                EmbeddedImages = gameData.EmbeddedImages?.Count ?? 0,
+                EmbeddedAudio = gameData.EmbeddedAudio.Count,
+                ParticleSystems = gameData.ParticleSystems?.Count ?? 0,
+                ParticleSystemEmitters = gameData.ParticleSystemEmitters?.Count ?? 0,
             },
 
             UMTLibVersion = Assembly.GetAssembly(typeof(UndertaleData))?.GetName().Version?.ToString() ?? "",
         };
+
+        return JsonSerializer.Serialize(gameInfo, GameInfoContext.Default.GameInfo);
     }
 
     /// <param name="modelTypeInt">Value in <see cref="ModelType" />, needs to be int due to SYSLIB1072</param>

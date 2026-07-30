@@ -6,6 +6,7 @@ import {useRouter} from '@tanstack/react-router';
 import {useState} from 'react';
 
 import {useDataStore} from '../data-store';
+import {getGameInfoQueryOptions} from '../messages/getGameInfo';
 import {readFile} from '../messages/readFile';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
@@ -59,15 +60,16 @@ export default function DataFileInput({
 					break;
 
 				case 'FINISHED':
-					setInfo(response.result.info);
-
-					// Execution order is important, or else gameInfo context in router doesn't update
 					void queryClient
-						.invalidateQueries()
-						.then(() => {
-							return router.invalidate();
-						})
-						.then(onFileLoaded);
+						.fetchQuery(getGameInfoQueryOptions())
+						.then((data) => {
+							setInfo(data);
+
+							// hack: router context is lagging a bit
+							requestAnimationFrame(() => {
+								void router.invalidate().then(onFileLoaded);
+							});
+						});
 					break;
 
 				case 'ERROR':

@@ -8,6 +8,7 @@ type Props = Readonly<{
 
 export default function RouterProviderWithContext({router}: Props) {
 	const gameInfo = useDataStore((state) => state.gameInfo);
+	// const {data: gameInfo} = useQuery(getGameInfoQueryOptions());
 
 	return <RouterProvider router={router} context={{gameInfo}} />;
 }

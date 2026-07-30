@@ -15,6 +15,10 @@ import type {
 	GetEntriesByModelTypeResult,
 } from '../messages/getEntriesByModelType';
 import type {
+	GetGameInfoRequest,
+	GetGameInfoResult,
+} from '../messages/getGameInfo';
+import type {
 	GetSoundInfoByNameRequest,
 	GetSoundInfoByNameResult,
 } from '../messages/getSoundInfoByName';
@@ -38,6 +42,7 @@ export type WorkerRequest = {
 		| GetCodeInfoByNameRequest
 		| GetEmbeddedTextureInfoByIdRequest
 		| GetEntriesByModelTypeRequest
+		| GetGameInfoRequest
 		| GetSoundInfoByNameRequest
 		| GetSpriteInfoByNameRequest
 		| GetTexturePageInfoByIdRequest;
@@ -45,10 +50,12 @@ export type WorkerRequest = {
 
 export type AllResults =
 	| ReadFileResult
+	// eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents
 	| EditCodeTextByNameResult
 	| GetCodeInfoByNameResult
 	| GetEmbeddedTextureInfoByIdResult
 	| GetEntriesByModelTypeResult
+	| GetGameInfoResult
 	| GetSoundInfoByNameResult
 	| GetSpriteInfoByNameResult
 	| GetTexturePageInfoByIdResult;

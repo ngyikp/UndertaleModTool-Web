@@ -5,6 +5,7 @@ import type {SortableListSettings} from './common/SortableList';
 import type {GameInfoType} from './types/GameInfoType';
 
 type DataStore = {
+	// todo reconsider this as it's being handled by tanstack query now
 	gameInfo: GameInfoType | null;
 
 	sortableListSettings: Map<string, SortableListSettings>;

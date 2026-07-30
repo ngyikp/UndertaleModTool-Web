@@ -66,15 +66,20 @@ async function onMessage(request: WorkerRequest) {
 
 				reply({
 					status: 'FINISHED',
-					result: {
-						info: GameInfoSchema.parse(
-							JSON.parse(
-								dotNet.exports.UndertaleModToolWASM.Program.ReadFile(
-									'data.win',
-								),
-							),
+					result:
+						dotNet.exports.UndertaleModToolWASM.Program.ReadFile('data.win'),
+				});
+				break;
+			}
+
+			case 'getGameInfo': {
+				reply({
+					status: 'FINISHED',
+					result: GameInfoSchema.parse(
+						JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.Program.GetGameInfo(),
 						),
-					},
+					),
 				});
 				break;
 			}
