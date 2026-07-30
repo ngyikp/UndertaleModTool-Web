@@ -14,16 +14,14 @@ import BasicErrorAlert from './BasicErrorAlert';
 import BasicLoadingMessage from './BasicLoadingMessage';
 import ExternalLinkInNewWindow from './ExternalLinkInNewWindow';
 
-const noop = () => {};
-
 type Props = Readonly<{
+	initialStatusMessage?: React.ReactNode;
 	onFileLoaded?: () => void;
-	onStatusChanged?: (newStatus: WorkerStatuses) => void;
 }>;
 
 export default function DataFileInput({
+	initialStatusMessage,
 	onFileLoaded,
-	onStatusChanged = noop,
 }: Props) {
 	const setInfo = useDataStore((state) => state.setGameInfo);
 
@@ -44,7 +42,6 @@ export default function DataFileInput({
 		}
 
 		setStatus('LOADING');
-		onStatusChanged('LOADING');
 		setFileName(file.name);
 		setError(null);
 		setShowAudioGroupError(false);
@@ -52,7 +49,6 @@ export default function DataFileInput({
 		const bytes = await file.bytes();
 		readFile(bytes, (response) => {
 			setStatus(response.status);
-			onStatusChanged(response.status);
 
 			switch (response.status) {
 				case 'LOADING':
@@ -118,6 +114,8 @@ export default function DataFileInput({
 				<Stack>
 					{showAudioGroupError ? (
 						<Alert title="Audio group data files are not supported yet." />
+					) : status !== 'ERROR' ? (
+						initialStatusMessage
 					) : null}
 
 					<Dropzone
