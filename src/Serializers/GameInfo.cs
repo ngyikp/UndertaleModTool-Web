@@ -36,11 +36,6 @@ public record GameInfo
     public string? ConfigurationName { get; set; }
 
     public required GameInfoItemCounts ItemCounts { get; set; }
-
-    /// <summary>
-    /// Version of UndertaleModLib, though technically, it's not game info
-    /// </summary>
-    public required string UMTLibVersion { get; set; }
 }
 
 public record GameInfoVersion

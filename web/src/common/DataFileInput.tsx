@@ -23,7 +23,10 @@ export default function DataFileInput({
 	initialStatusMessage,
 	onFileLoaded,
 }: Props) {
-	const setInfo = useDataStore((state) => state.setGameInfo);
+	const setGameInfo = useDataStore((state) => state.setGameInfo);
+	const setDataFileLoadInfo = useDataStore(
+		(state) => state.setDataFileLoadInfo,
+	);
 
 	const router = useRouter();
 	const queryClient = useQueryClient();
@@ -56,10 +59,12 @@ export default function DataFileInput({
 					break;
 
 				case 'FINISHED':
+					setDataFileLoadInfo(response.result);
+
 					void queryClient
 						.fetchQuery(getGameInfoQueryOptions())
 						.then((data) => {
-							setInfo(data);
+							setGameInfo(data);
 
 							// hack: router context is lagging a bit
 							requestAnimationFrame(() => {

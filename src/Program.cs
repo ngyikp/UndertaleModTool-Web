@@ -114,7 +114,7 @@ public partial class Program
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSprite.TextureEntry))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSprite.NineSlice))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleTexturePageItem))]
-    public static bool ReadFile(string fileName)
+    public static string ReadFile(string fileName)
     {
         bool hadImportantWarnings = false;
         List<string> warnings = [];
@@ -145,8 +145,15 @@ public partial class Program
 
         DataHolder.SetData(gameData);
 
-        // todo better load info, such as warnings
-        return true;
+        DataFileLoadInfo info = new()
+        {
+            Successful = true,
+            HadImportantWarnings = hadImportantWarnings,
+            Warnings = warnings,
+            UMTLibVersion = Assembly.GetAssembly(typeof(UndertaleData))?.GetName().Version?.ToString() ?? "",
+        };
+
+        return JsonSerializer.Serialize(info, DataFileLoadInfoContext.Default.DataFileLoadInfo);
     }
 
     [JSExport]
@@ -212,8 +219,6 @@ public partial class Program
                 ParticleSystems = gameData.ParticleSystems?.Count ?? 0,
                 ParticleSystemEmitters = gameData.ParticleSystemEmitters?.Count ?? 0,
             },
-
-            UMTLibVersion = Assembly.GetAssembly(typeof(UndertaleData))?.GetName().Version?.ToString() ?? "",
         };
 
         return JsonSerializer.Serialize(gameInfo, GameInfoContext.Default.GameInfo);

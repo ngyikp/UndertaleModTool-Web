@@ -4,7 +4,7 @@ import type {ModelTypeKeys} from '../types/ModelType';
 export type AppExports = {
 	UndertaleModToolWASM: {
 		Program: {
-			ReadFile(fileName: string): true;
+			ReadFile(fileName: string): string;
 			GetGameInfo(): string;
 
 			GetEntriesByModelType(modelType: ModelTypeKeys): string;

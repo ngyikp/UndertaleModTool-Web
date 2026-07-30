@@ -50,7 +50,6 @@ export type WorkerRequest = {
 
 export type AllResults =
 	| ReadFileResult
-	// eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents
 	| EditCodeTextByNameResult
 	| GetCodeInfoByNameResult
 	| GetEmbeddedTextureInfoByIdResult

@@ -4,6 +4,7 @@ import {EntriesListInfoSchema} from '../messages/getEntriesByModelType';
 import {SoundInfoSchema} from '../messages/getSoundInfoByName';
 import {SpriteInfoSchema} from '../messages/getSpriteInfoByName.js';
 import {TexturePageInfoSchema} from '../messages/getTexturePageInfoById.js';
+import {DataFileLoadInfoSchema} from '../messages/readFile.js';
 import {GameInfoSchema} from '../types/GameInfoType';
 
 import type {AppExports, DotNetType} from './DotNetType';
@@ -66,8 +67,11 @@ async function onMessage(request: WorkerRequest) {
 
 				reply({
 					status: 'FINISHED',
-					result:
-						dotNet.exports.UndertaleModToolWASM.Program.ReadFile('data.win'),
+					result: DataFileLoadInfoSchema.parse(
+						JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.Program.ReadFile('data.win'),
+						),
+					),
 				});
 				break;
 			}
