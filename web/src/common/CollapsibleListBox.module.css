@@ -1,0 +1,8 @@
+.list {
+	margin-left: var(--mantine-spacing-xl);
+}
+
+.listItem {
+	margin-bottom: var(--mantine-spacing-xs);
+	white-space: pre-wrap;
+}

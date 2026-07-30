@@ -60,6 +60,7 @@ export default function CustomCopyButton({label, value}: Props) {
 	}, []);
 
 	if (!('clipboard' in navigator)) {
+		// Clipboard API only available in secure contexts
 		return null;
 	}
 

@@ -2,6 +2,7 @@ import {Alert, Button, Group, List, Stack} from '@mantine/core';
 import {useQueryClient} from '@tanstack/react-query';
 import {createFileRoute, Link, useNavigate} from '@tanstack/react-router';
 
+import CollapsibleListBox from '../../common/CollapsibleListBox';
 import DocumentTitle from '../../common/DocumentTitle';
 import ExternalLinkInNewWindow from '../../common/ExternalLinkInNewWindow';
 import Footer from '../../common/Footer';
@@ -12,6 +13,7 @@ import {stopWorker} from '../../worker/worker-handler';
 
 function GeneralInfo() {
 	const info = useDataStore((state) => state.gameInfo);
+	const dataFileLoadInfo = useDataStore((state) => state.dataFileLoadInfo);
 	const resetDataStore = useDataStore((state) => state.reset);
 
 	const navigate = useNavigate({from: '/general-info'});
@@ -46,6 +48,16 @@ function GeneralInfo() {
 					color="yellow"
 					title={`Only bytecode versions 13 to 17 are properly supported, this game data is bytecode version ${info.BytecodeVersion.toString()}.`}
 				/>
+			) : null}
+
+			{dataFileLoadInfo?.HadImportantWarnings ? (
+				<Alert
+					variant="light"
+					color="yellow"
+					title={`There were ${dataFileLoadInfo.Warnings.length.toString()} warnings occurred during loading.`}
+				>
+					<CollapsibleListBox items={dataFileLoadInfo.Warnings} />
+				</Alert>
 			) : null}
 
 			{info.IsYYC ? <YycWarningAlert /> : null}
