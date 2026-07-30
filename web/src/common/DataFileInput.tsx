@@ -27,6 +27,7 @@ export default function DataFileInput({
 	const setDataFileLoadInfo = useDataStore(
 		(state) => state.setDataFileLoadInfo,
 	);
+	const resetDataStore = useDataStore((state) => state.reset);
 
 	const router = useRouter();
 	const queryClient = useQueryClient();
@@ -48,6 +49,10 @@ export default function DataFileInput({
 		setFileName(file.name);
 		setError(null);
 		setShowAudioGroupError(false);
+
+		// If the user goes back to main page without clicking 'unload game'
+		resetDataStore();
+		queryClient.removeQueries();
 
 		const bytes = await file.bytes();
 		readFile(bytes, (response) => {
