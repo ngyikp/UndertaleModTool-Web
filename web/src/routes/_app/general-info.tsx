@@ -40,6 +40,14 @@ function GeneralInfo() {
 				</Button>
 			</Group>
 
+			{info.IsUnsupportedBytecodeVersion ? (
+				<Alert
+					variant="light"
+					color="yellow"
+					title={`Only bytecode versions 13 to 17 are properly supported, this game data is bytecode version ${info.BytecodeVersion.toString()}.`}
+				/>
+			) : null}
+
 			{info.IsYYC ? <YycWarningAlert /> : null}
 
 			{!info.IsDebuggerDisabled ? (

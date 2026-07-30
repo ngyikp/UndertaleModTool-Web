@@ -24,6 +24,9 @@ public record GameInfo
     /// <seealso cref="UndertaleGeneralInfo.IsDebuggerDisabled"/>
     public bool IsDebuggerDisabled { get; set; }
 
+    /// <seealso cref="UndertaleData.UnsupportedBytecodeVersion"/>
+    public bool IsUnsupportedBytecodeVersion { get; set; }
+
     public required GameInfoVersion Version { get; set; }
 
     /// <seealso cref="UndertaleGeneralInfo.BytecodeVersion"/>

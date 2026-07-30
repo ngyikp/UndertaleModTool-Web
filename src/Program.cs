@@ -153,6 +153,7 @@ public partial class Program
             IsGameMaker2 = Data.IsGameMaker2(),
             IsYYC = Data.IsYYC(),
             IsDebuggerDisabled = Data.GeneralInfo.IsDebuggerDisabled,
+            IsUnsupportedBytecodeVersion = Data.UnsupportedBytecodeVersion,
             Version = new()
             {
                 Major = Data.GeneralInfo.Major,
