@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.IO.Compression;
 using System.Reflection;
 using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
@@ -489,7 +490,7 @@ public partial class Program
         // Skip DDS as ConvertToRawBgra() may call ImageMagick for some image formats
         // https://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModLib/Util/GMImage.cs#L749
         byte[]? downloadableFileContents = null;
-        byte[]? bgra = null;
+        byte[]? bgraCompressed = null;
         switch (texture.TextureData.Image.Format)
         {
             case GMImage.ImageFormat.Png:
@@ -503,20 +504,29 @@ public partial class Program
                 }
 
             default:
-                bgra = texture.TextureData.Image.ConvertToRawBgra().GetRawImageData().ToArray();
-                break;
+                {
+                    byte[] bgra = texture.TextureData.Image.ConvertToRawBgra().GetRawImageData().ToArray();
+
+                    using MemoryStream memoryStream = new();
+                    using (ZLibStream deflateStream = new(memoryStream, CompressionMode.Compress))
+                    {
+                        // Make sure dispose is run https://stackoverflow.com/a/77639217
+                        deflateStream.Write(bgra, 0, bgra.Length);
+                    }
+                    bgraCompressed = memoryStream.ToArray();
+                    break;
+                }
         }
 
         EmbeddedTextureInfo embeddedTextureInfo = new()
         {
             DownloadableFileContents = downloadableFileContents,
-            Bgra = bgra,
+            BgraCompressed = bgraCompressed,
             Format = texture.TextureData.Image.Format,
             Width = texture.TextureData.Image.Width,
             Height = texture.TextureData.Image.Height,
         };
 
-        // todo can go out of memory :(
         return JsonSerializer.Serialize(embeddedTextureInfo, EmbeddedTextureInfoContext.Default.EmbeddedTextureInfo);
     }
 

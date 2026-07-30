@@ -23,10 +23,12 @@ public record EmbeddedTextureInfo
 
     /// <summary>
     /// The image as <see cref="GMImage.ImageFormat.RawBgra"/> for
-    /// non-PNG and non-DDS.
+    /// non-PNG and non-DDS, compressed with zlib to avoid
+    /// out-of-memory problems caused
+    /// by <see cref="System.Text.Json.JsonSerializer.Serialize"/>.
     /// </summary>
     /// <seealso cref="GMImage.ConvertToRawBgra"/>
-    public byte[]? Bgra { get; set; }
+    public byte[]? BgraCompressed { get; set; }
 
     /// <seealso cref="GMImage.ImageFormat"/>
     [JsonConverter(typeof(JsonStringEnumConverter<GMImage.ImageFormat>))]
