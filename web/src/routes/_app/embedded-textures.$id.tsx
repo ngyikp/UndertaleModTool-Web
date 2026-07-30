@@ -56,6 +56,10 @@ function RouteComponent() {
 
 			<p>Original format: {format}</p>
 
+			<p>
+				Size: {width}x{height}
+			</p>
+
 			{finalBlob != null ? (
 				<ImageViewer
 					blob={finalBlob}
