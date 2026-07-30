@@ -1,8 +1,8 @@
 import {Alert} from '@mantine/core';
 
 export default function OldBrowserAlert() {
-	// https://developer.mozilla.org/en-US/docs/Web/API/Response/bytes
-	if ('bytes' in Response.prototype) {
+	// https://developer.mozilla.org/en-US/docs/Web/API/Blob/bytes
+	if ('bytes' in Blob.prototype) {
 		return;
 	}
 
