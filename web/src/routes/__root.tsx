@@ -2,6 +2,7 @@ import {createRootRouteWithContext, Outlet} from '@tanstack/react-router';
 import {TanStackRouterDevtools} from '@tanstack/react-router-devtools';
 
 import DocumentTitle from '../common/DocumentTitle';
+import OldBrowserAlert from '../common/OldBrowserAlert';
 import type {MyRouterContext} from '../main';
 
 function RootLayout() {
@@ -10,6 +11,8 @@ function RootLayout() {
 			<DocumentTitle text="" />
 
 			<main id="main">
+				<OldBrowserAlert />
+
 				<Outlet />
 			</main>
 
