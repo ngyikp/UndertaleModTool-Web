@@ -18,9 +18,6 @@ public partial class Program
     {
     }
 
-    private static void WarningHandler(string warning, bool isImportant) => Console.WriteLine($"[WARNING]: {warning}");
-    private static void MessageHandler(string message) => Console.WriteLine($"[MESSAGE]: {message}");
-
     [JSExport]
     [SupportedOSPlatform("browser")]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Underanalyzer.Decompiler.GameSpecific.GameSpecificRegistry))]
@@ -119,11 +116,27 @@ public partial class Program
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleTexturePageItem))]
     public static string ReadFile(string fileName)
     {
+        bool hadImportantWarnings = false;
+        List<string> warnings = [];
+
         UndertaleData gameData;
         try
         {
             using FileStream fs = new FileStream(fileName, FileMode.Open);
-            gameData = UndertaleIO.Read(fs, WarningHandler, MessageHandler);
+            gameData = UndertaleIO.Read(fs, (string warning, bool isImportant) =>
+            {
+                // todo Loading warning
+                Console.WriteLine($"[WARNING]: {warning}");
+                warnings.Add(warning);
+
+                if (isImportant)
+                {
+                    hadImportantWarnings = true;
+                }
+            }, (string message) =>
+            {
+                Console.WriteLine($"[MESSAGE]: {message}");
+            });
         }
         finally
         {
