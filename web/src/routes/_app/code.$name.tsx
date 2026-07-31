@@ -57,7 +57,11 @@ function RouteComponent() {
 			{data.ParentEntryName != null ? (
 				<Alert variant="light" color="blue">
 					This code entry is a reference to an anonymous function within{' '}
-					<Link to="/code/$name" params={{name: data.ParentEntryName}}>
+					<Link
+						to="/code/$name"
+						params={{name: data.ParentEntryName}}
+						resetScroll={false}
+					>
 						{data.ParentEntryName}
 					</Link>
 					.
