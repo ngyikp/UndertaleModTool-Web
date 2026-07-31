@@ -4,6 +4,7 @@ import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
+import BasicLoadingMessage from '../../common/BasicLoadingMessage';
 import ContentViewAlert from '../../common/ContentViewAlert';
 import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
@@ -71,6 +72,8 @@ function RouteComponent() {
 						format === 'Png' ? 'Export image' : 'Export as PNG'
 					}
 				/>
+			) : error == null ? (
+				<BasicLoadingMessage />
 			) : null}
 		</ContentViewWithPadding>
 	);
