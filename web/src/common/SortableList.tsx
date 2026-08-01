@@ -154,7 +154,7 @@ export default function SortableList({
 								(startIndex + onePageList.length).toString() +
 								' of '
 							: ''}
-						{filteredList.length} items
+						{filteredList.length} {filteredList.length === 1 ? 'item' : 'items'}
 					</p>
 
 					<Space h="xs" />
@@ -188,7 +188,7 @@ export default function SortableList({
 				</>
 			) : settings.filter ? (
 				<Stack>
-					No results for "{settings.filter}".
+					No results for “{settings.filter}”.
 					<div>
 						<Button
 							onClick={() => {
