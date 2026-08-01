@@ -1,4 +1,4 @@
-import {Alert, Button, Group, Title, Tooltip} from '@mantine/core';
+import {Alert, Button, Checkbox, Group, Title, Tooltip} from '@mantine/core';
 import {useHotkeys} from '@mantine/hooks';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
@@ -14,6 +14,7 @@ import DocumentTitle from '../../common/DocumentTitle';
 // import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
 import isMac from '../../common/isMac';
 import MonacoEditor from '../../common/monaco/MonacoEditor';
+import {useDataStore} from '../../data-store';
 import {useEditCodeTextByNameMutation} from '../../messages/editCodeTextByName';
 import {codeInfoByNameQueryOptions} from '../../messages/getCodeInfoByName';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
@@ -23,6 +24,9 @@ function RouteComponent() {
 		from: '/_app/code/$name',
 		select: (params) => params.name,
 	});
+
+	const wordWrap = useDataStore((state) => state.codeEditorWordWrap);
+	const setWordWrap = useDataStore((state) => state.setCodeEditorWordWrap);
 
 	const {data} = useSuspenseQuery(codeInfoByNameQueryOptions(name));
 	const editCodeMutation = useEditCodeTextByNameMutation(name);
@@ -70,6 +74,14 @@ function RouteComponent() {
 
 			{originalCode != null ? (
 				<>
+					<Checkbox
+						checked={wordWrap}
+						onChange={(event) => {
+							setWordWrap(event.currentTarget.checked);
+						}}
+						label="Word wrap"
+					/>
+
 					<Group gap="xs">
 						<Button.Group mr="auto">
 							<Tooltip label={isMac() ? 'Command-S' : 'Ctrl-S'}>
@@ -128,6 +140,7 @@ function RouteComponent() {
 						defaultValue={originalCode}
 						editorRef={editorRef}
 						onValueChange={setModifiedValue}
+						wordWrap={wordWrap}
 					/>
 				</>
 			) : null}

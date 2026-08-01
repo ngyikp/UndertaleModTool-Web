@@ -14,12 +14,14 @@ type Props = Readonly<{
 	defaultValue: string;
 	editorRef?: React.RefObject<monaco.editor.IStandaloneCodeEditor | null>;
 	onValueChange?: (value: string) => void;
+	wordWrap: boolean;
 }>;
 
 export default function MonacoEditor({
 	defaultValue,
 	editorRef: parentEditorRef,
 	onValueChange,
+	wordWrap,
 }: Props) {
 	const colorScheme = useColorScheme();
 
@@ -54,8 +56,9 @@ export default function MonacoEditor({
 	useEffect(() => {
 		editorRef.current?.updateOptions({
 			theme: colorScheme === 'dark' ? 'vs-dark' : 'vs',
+			wordWrap: wordWrap ? 'on' : 'off',
 		});
-	}, [colorScheme]);
+	}, [colorScheme, wordWrap]);
 
 	const previousValue = usePrevious(defaultValue);
 	useEffect(() => {

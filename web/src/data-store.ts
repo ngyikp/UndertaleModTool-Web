@@ -14,13 +14,16 @@ type DataStore = {
 	setDataFileLoadInfo: (newInfo: DataFileLoadInfoType | null) => void;
 
 	sortableListSettings: Map<string, SortableListSettings>;
-	imageViewerSettings: ImageViewerSettings;
-
 	setSortableListSettings: (
 		id: string,
 		newSettings: SortableListSettings,
 	) => void;
+
+	imageViewerSettings: ImageViewerSettings;
 	setImageViewerSettings: (newSettings: ImageViewerSettings) => void;
+
+	codeEditorWordWrap: boolean;
+	setCodeEditorWordWrap: (codeEditorWordWrap: boolean) => void;
 
 	reset: () => void;
 };
@@ -45,10 +48,6 @@ export const useDataStore = create<DataStore>((set, _get, store) => ({
 	},
 
 	sortableListSettings: new Map(),
-	imageViewerSettings: {
-		appearance: 'CHECKERBOARD',
-	},
-
 	setSortableListSettings(id, newSettings) {
 		set((state) => {
 			return {
@@ -59,10 +58,23 @@ export const useDataStore = create<DataStore>((set, _get, store) => ({
 			};
 		});
 	},
+
+	imageViewerSettings: {
+		appearance: 'CHECKERBOARD',
+	},
 	setImageViewerSettings(newSettings) {
 		set(() => {
 			return {
 				imageViewerSettings: newSettings,
+			};
+		});
+	},
+
+	codeEditorWordWrap: false,
+	setCodeEditorWordWrap(codeEditorWordWrap) {
+		set(() => {
+			return {
+				codeEditorWordWrap,
 			};
 		});
 	},
