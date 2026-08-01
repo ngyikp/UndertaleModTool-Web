@@ -30,9 +30,6 @@ function AudioGroups() {
 				emptyListMessage="This game has no audio groups."
 				list={listwithNumbers}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

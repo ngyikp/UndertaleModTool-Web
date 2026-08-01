@@ -29,9 +29,6 @@ function Objects() {
 				emptyListMessage="This game has no objects."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

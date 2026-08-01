@@ -26,9 +26,6 @@ function Timelines() {
 				emptyListMessage="This game has no timelines."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
+import renderSearchHighlight from '../../common/renderSearchHighlight';
 import SidebarAndContentView from '../../common/SidebarAndContentView';
 import SortableList from '../../common/SortableList';
 import YycWarningAlert from '../../common/YycWarningAlert';
@@ -36,7 +37,7 @@ function Code() {
 							emptyListMessage="This game has no code entries."
 							list={data.list}
 							onIndexPage={onIndexPage}
-							render={(item) => {
+							render={(item, searchHighlight) => {
 								return (
 									<Link
 										to="/code/$name"
@@ -46,7 +47,7 @@ function Code() {
 										activeProps={{style: {fontWeight: 'bold'}}}
 										resetScroll={false}
 									>
-										{item}
+										{renderSearchHighlight(item, searchHighlight)}
 									</Link>
 								);
 							}}

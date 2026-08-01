@@ -26,9 +26,6 @@ function Paths() {
 				emptyListMessage="This game has no paths."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

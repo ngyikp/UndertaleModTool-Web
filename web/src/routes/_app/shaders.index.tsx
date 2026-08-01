@@ -26,9 +26,6 @@ function Shaders() {
 				emptyListMessage="This game has no shaders."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

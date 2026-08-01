@@ -13,6 +13,7 @@ import {MagnifyingGlassIcon} from '@phosphor-icons/react/dist/csr/MagnifyingGlas
 
 import {useDataStore} from '../data-store';
 
+import renderSearchHighlight from './renderSearchHighlight';
 import styles from './SortableList.module.css';
 
 export type SortableListSettings = {
@@ -33,7 +34,7 @@ type Props = Readonly<{
 	itemsAreNonUnique?: boolean;
 	list: string[];
 	onIndexPage: boolean;
-	render: (item: string) => React.ReactNode;
+	render?: (item: string, searchHighlight: string | null) => React.ReactNode;
 }>;
 
 export default function SortableList({
@@ -42,7 +43,7 @@ export default function SortableList({
 	itemsAreNonUnique = false,
 	list: allResultsList,
 	onIndexPage,
-	render,
+	render = renderSearchHighlight,
 }: Props) {
 	const settings = useDataStore((state) =>
 		state.sortableListSettings.get(id),
@@ -61,6 +62,7 @@ export default function SortableList({
 		});
 	}
 
+	const searchHighlight = settings.filter.length >= 2 ? settings.filter : null;
 	let filteredList = allResultsList;
 	if (settings.filter) {
 		const filterCompare = settings.filter
@@ -161,7 +163,9 @@ export default function SortableList({
 						{onePageList.map((item, index) => {
 							return (
 								// eslint-disable-next-line @eslint-react/no-array-index-key
-								<li key={!itemsAreNonUnique ? item : index}>{render(item)}</li>
+								<li key={!itemsAreNonUnique ? item : index}>
+									{render(item, searchHighlight)}
+								</li>
 							);
 						})}
 					</ul>

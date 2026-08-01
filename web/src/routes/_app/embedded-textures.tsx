@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
+import renderSearchHighlight from '../../common/renderSearchHighlight';
 import SidebarAndContentView from '../../common/SidebarAndContentView';
 import SortableList from '../../common/SortableList';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
@@ -37,7 +38,7 @@ function EmbeddedTextures() {
 						emptyListMessage="This game has no embedded textures."
 						list={data.list}
 						onIndexPage={onIndexPage}
-						render={(item) => {
+						render={(item, searchHighlight) => {
 							// Name is set by UMT, the game data itself does not set names for embedded textures
 							// https://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModLib/UndertaleChunks.cs#L2189
 							const id = parseInt(item.replace('Texture ', ''), 10);
@@ -51,7 +52,7 @@ function EmbeddedTextures() {
 									activeProps={{style: {fontWeight: 'bold'}}}
 									resetScroll={false}
 								>
-									{item}
+									{renderSearchHighlight(item, searchHighlight)}
 								</Link>
 							);
 						}}

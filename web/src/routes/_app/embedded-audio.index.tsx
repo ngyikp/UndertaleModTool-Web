@@ -26,9 +26,6 @@ function EmbeddedAudio() {
 				emptyListMessage="This game has no embedded audio."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

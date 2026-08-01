@@ -26,9 +26,6 @@ function ParticleSystems() {
 				emptyListMessage="This game has no particle systems."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

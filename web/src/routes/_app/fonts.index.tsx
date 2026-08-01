@@ -26,9 +26,6 @@ function Fonts() {
 				emptyListMessage="This game has no fonts."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

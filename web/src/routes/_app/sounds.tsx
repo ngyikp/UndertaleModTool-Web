@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
+import renderSearchHighlight from '../../common/renderSearchHighlight';
 import SidebarAndContentView from '../../common/SidebarAndContentView';
 import SortableList from '../../common/SortableList';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
@@ -37,7 +38,7 @@ function Sounds() {
 						emptyListMessage="This game has no sounds."
 						list={data.list}
 						onIndexPage={onIndexPage}
-						render={(item) => {
+						render={(item, searchHighlight) => {
 							return (
 								<Link
 									to="/sounds/$name"
@@ -47,7 +48,7 @@ function Sounds() {
 									activeProps={{style: {fontWeight: 'bold'}}}
 									resetScroll={false}
 								>
-									{item}
+									{renderSearchHighlight(item, searchHighlight)}
 								</Link>
 							);
 						}}

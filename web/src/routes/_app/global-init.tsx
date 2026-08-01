@@ -3,6 +3,7 @@ import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link} from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
+import renderSearchHighlight from '../../common/renderSearchHighlight';
 import SortableList from '../../common/SortableList';
 import YycWarningAlert from '../../common/YycWarningAlert';
 import {useDataStore} from '../../data-store';
@@ -36,7 +37,7 @@ function GlobalInitScripts() {
 				}
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
+				render={(item, searchHighlight) => {
 					return (
 						<Link
 							to="/code/$name"
@@ -44,7 +45,7 @@ function GlobalInitScripts() {
 							preload="intent"
 							preloadDelay={250}
 						>
-							{item}
+							{renderSearchHighlight(item, searchHighlight)}
 						</Link>
 					);
 				}}

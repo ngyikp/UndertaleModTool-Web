@@ -27,9 +27,6 @@ function TextureGroups() {
 				emptyListMessage="This game has no texture groups."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

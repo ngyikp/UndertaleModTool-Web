@@ -26,9 +26,6 @@ function EmbeddedImages() {
 				emptyListMessage="This game has no embedded images."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

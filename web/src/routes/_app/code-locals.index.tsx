@@ -32,9 +32,6 @@ function CodeLocals() {
 				}
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

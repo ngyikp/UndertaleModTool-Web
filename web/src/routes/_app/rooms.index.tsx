@@ -26,9 +26,6 @@ function Rooms() {
 				emptyListMessage="This game has no rooms."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

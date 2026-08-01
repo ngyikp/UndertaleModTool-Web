@@ -26,9 +26,6 @@ function Scripts() {
 				emptyListMessage="This game has no scripts."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

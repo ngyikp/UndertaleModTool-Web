@@ -3,6 +3,7 @@ import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute} from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
+import renderSearchHighlight from '../../common/renderSearchHighlight';
 import SortableList from '../../common/SortableList';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
 import {ModelType} from '../../types/ModelType';
@@ -28,8 +29,12 @@ function Strings() {
 				emptyListMessage="This game has no strings."
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return <span className={styles.item}>{item}</span>;
+				render={(item, searchHighlight) => {
+					return (
+						<span className={styles.item}>
+							{renderSearchHighlight(item, searchHighlight)}
+						</span>
+					);
 				}}
 			/>
 		</Stack>

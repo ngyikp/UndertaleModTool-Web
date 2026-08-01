@@ -32,9 +32,6 @@ function Functions() {
 				}
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

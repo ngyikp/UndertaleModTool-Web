@@ -31,9 +31,6 @@ function Tilesets() {
 				emptyListMessage={`This game has no ${getTileSetsLabel(info)}.`}
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);

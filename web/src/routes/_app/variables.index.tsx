@@ -33,9 +33,6 @@ function Variables() {
 				itemsAreNonUnique={true}
 				list={data.list}
 				onIndexPage={true}
-				render={(item) => {
-					return item;
-				}}
 			/>
 		</Stack>
 	);
