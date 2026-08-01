@@ -1,7 +1,7 @@
 import {Checkbox, Pagination, Title} from '@mantine/core';
 import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
-import {Suspense, useState} from 'react';
+import {Suspense} from 'react';
 
 import BasicLoadingMessage from '../../common/BasicLoadingMessage';
 import ContentViewAlert from '../../common/ContentViewAlert';
@@ -26,7 +26,8 @@ function RouteComponent() {
 
 	const page = useSpritesDataStore((state) => state.getCurrentPage(name));
 	const setPage = useSpritesDataStore((state) => state.setCurrentPage);
-	const [viewAll, setViewAll] = useState(false); // todo store in data store?
+	const viewAll = useSpritesDataStore((state) => state.viewAll);
+	const setViewAll = useSpritesDataStore((state) => state.setViewAll);
 
 	const queryClient = useQueryClient();
 	const {data} = useSuspenseQuery(spriteInfoByNameQueryOptions(name));

@@ -5,6 +5,9 @@ type SpritesDataStore = {
 	getCurrentPage: (name: string) => number;
 	setCurrentPage: (name: string, page: number) => void;
 
+	viewAll: boolean;
+	setViewAll: (viewAll: boolean) => void;
+
 	reset: () => void;
 };
 
@@ -18,6 +21,15 @@ export const useSpritesDataStore = create<SpritesDataStore>(
 			set((state) => {
 				return {
 					currentPage: new Map(state.currentPage).set(name, page),
+				};
+			});
+		},
+
+		viewAll: false,
+		setViewAll(viewAll) {
+			set(() => {
+				return {
+					viewAll,
 				};
 			});
 		},
