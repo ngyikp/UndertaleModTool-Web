@@ -22,10 +22,6 @@ type DataStore = {
 	) => void;
 	setImageViewerSettings: (newSettings: ImageViewerSettings) => void;
 
-	spriteTextureCurrentPage: Map<string, number>;
-	getSpriteTextureCurrentPage: (name: string) => number;
-	setSpriteTextureCurrentPage: (name: string, page: number) => void;
-
 	reset: () => void;
 };
 
@@ -67,21 +63,6 @@ export const useDataStore = create<DataStore>((set, _get, store) => ({
 		set(() => {
 			return {
 				imageViewerSettings: newSettings,
-			};
-		});
-	},
-
-	spriteTextureCurrentPage: new Map(),
-	getSpriteTextureCurrentPage(name) {
-		return store.getState().spriteTextureCurrentPage.get(name) ?? 0;
-	},
-	setSpriteTextureCurrentPage(name, page) {
-		set((state) => {
-			return {
-				spriteTextureCurrentPage: new Map(state.spriteTextureCurrentPage).set(
-					name,
-					page,
-				),
 			};
 		});
 	},

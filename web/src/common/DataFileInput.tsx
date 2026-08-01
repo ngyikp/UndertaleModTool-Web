@@ -13,6 +13,7 @@ import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 import BasicErrorAlert from './BasicErrorAlert';
 import BasicLoadingMessage from './BasicLoadingMessage';
 import ExternalLinkInNewWindow from './ExternalLinkInNewWindow';
+import useUnloadGame from './useUnloadGame';
 
 type Props = Readonly<{
 	initialStatusMessage?: React.ReactNode;
@@ -27,7 +28,7 @@ export default function DataFileInput({
 	const setDataFileLoadInfo = useDataStore(
 		(state) => state.setDataFileLoadInfo,
 	);
-	const resetDataStore = useDataStore((state) => state.reset);
+	const unloadGame = useUnloadGame();
 
 	const router = useRouter();
 	const queryClient = useQueryClient();
@@ -51,8 +52,7 @@ export default function DataFileInput({
 		setShowAudioGroupError(false);
 
 		// If the user goes back to main page without clicking 'unload game'
-		resetDataStore();
-		queryClient.removeQueries();
+		unloadGame();
 
 		const bytes = await file.bytes();
 		readFile(bytes, (response) => {

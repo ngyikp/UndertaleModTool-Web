@@ -1,5 +1,4 @@
 import {Alert, Button, Group, List, Stack} from '@mantine/core';
-import {useQueryClient} from '@tanstack/react-query';
 import {createFileRoute, Link, useNavigate} from '@tanstack/react-router';
 
 import CollapsibleListBox from '../../common/CollapsibleListBox';
@@ -7,6 +6,7 @@ import DocumentTitle from '../../common/DocumentTitle';
 import ExternalLinkInNewWindow from '../../common/ExternalLinkInNewWindow';
 import Footer from '../../common/Footer';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
+import useUnloadGame from '../../common/useUnloadGame';
 import YycWarningAlert from '../../common/YycWarningAlert';
 import {useDataStore} from '../../data-store';
 import {stopWorker} from '../../worker/worker-handler';
@@ -14,19 +14,9 @@ import {stopWorker} from '../../worker/worker-handler';
 function GeneralInfo() {
 	const info = useDataStore((state) => state.gameInfo);
 	const dataFileLoadInfo = useDataStore((state) => state.dataFileLoadInfo);
-	const resetDataStore = useDataStore((state) => state.reset);
+	const unloadGame = useUnloadGame();
 
 	const navigate = useNavigate({from: '/general-info'});
-	const queryClient = useQueryClient();
-
-	function unloadGame() {
-		stopWorker();
-
-		resetDataStore();
-		queryClient.removeQueries();
-
-		void navigate({to: '/'});
-	}
 
 	if (info == null) {
 		return null;
@@ -37,7 +27,15 @@ function GeneralInfo() {
 			<DocumentTitle text="General info" />
 
 			<Group>
-				<Button variant="default" onClick={unloadGame}>
+				<Button
+					variant="default"
+					onClick={() => {
+						stopWorker();
+						unloadGame();
+
+						void navigate({to: '/'});
+					}}
+				>
 					Unload game
 				</Button>
 			</Group>

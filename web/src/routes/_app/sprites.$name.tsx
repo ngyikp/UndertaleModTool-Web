@@ -10,10 +10,10 @@ import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import ImageAppearanceSelect from '../../common/image/ImageAppearanceSelect';
 import TexturePageImageViewer from '../../common/image/TexturePageImageViewer';
-import {useDataStore} from '../../data-store';
 import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {spriteInfoByNameQueryOptions} from '../../messages/getSpriteInfoByName';
 import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
+import {useSpritesDataStore} from '../../stores/sprites-data-store';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
 
 import styles from './sprites.$name.module.css';
@@ -24,8 +24,8 @@ function RouteComponent() {
 		select: (params) => params.name,
 	});
 
-	const page = useDataStore((state) => state.getSpriteTextureCurrentPage(name));
-	const setPage = useDataStore((state) => state.setSpriteTextureCurrentPage);
+	const page = useSpritesDataStore((state) => state.getCurrentPage(name));
+	const setPage = useSpritesDataStore((state) => state.setCurrentPage);
 	const [viewAll, setViewAll] = useState(false); // todo store in data store?
 
 	const queryClient = useQueryClient();
