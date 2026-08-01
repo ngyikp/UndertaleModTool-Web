@@ -1,9 +1,4 @@
-import {
-	useColorScheme,
-	usePrevious,
-	useThrottledCallback,
-	useWindowEvent,
-} from '@mantine/hooks';
+import {useColorScheme, usePrevious} from '@mantine/hooks';
 import * as monaco from 'monaco-editor/editor/editor.api';
 import {useEffect, useRef} from 'react';
 
@@ -36,6 +31,10 @@ export default function MonacoEditor({
 		if (!editorRef.current) {
 			editorRef.current = monaco.editor.create(divRef.current, {
 				language: 'gml',
+				automaticLayout: true,
+				// scrollbar: {
+				// 	alwaysConsumeMouseWheel: false,
+				// },
 				scrollBeyondLastLine: false,
 				stickyScroll: {
 					enabled: false,
@@ -78,13 +77,6 @@ export default function MonacoEditor({
 			event?.dispose();
 		};
 	}, [onValueChange]);
-
-	useWindowEvent(
-		'resize',
-		useThrottledCallback(() => {
-			editorRef.current?.layout();
-		}, 100),
-	);
 
 	return <div className={styles.editor} ref={divRef} />;
 }
