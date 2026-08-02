@@ -8,7 +8,12 @@ export default function renderSearchHighlight(
 	return searchHighlight === null ? (
 		text
 	) : (
-		<Highlight highlight={searchHighlight} accentInsensitive={false} span>
+		<Highlight
+			highlight={searchHighlight}
+			accentInsensitive={false}
+			span
+			inherit
+		>
 			{text}
 		</Highlight>
 	);
