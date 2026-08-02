@@ -1,7 +1,7 @@
 import {Alert, Button, Title} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
-import {useEffect, useState} from 'react';
+import {useMemo} from 'react';
 
 import BasicErrorAlert from '../../common/BasicErrorAlert';
 import ContentViewAlert from '../../common/ContentViewAlert';
@@ -9,6 +9,7 @@ import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import detectMimeType from '../../common/detectMimeType';
 import DocumentTitle from '../../common/DocumentTitle';
+import {useBlobAsUrl} from '../../common/image/useBlobAsUrl';
 import {
 	AudioEntryFlags,
 	getSoundInfoByName,
@@ -38,27 +39,18 @@ function RouteComponent() {
 		AudioGroupName: audioGroupName,
 	} = data;
 
-	const [blobUrl, setBlobUrl] = useState<string | null>(null);
-
-	useEffect(() => {
+	const blob = useMemo(() => {
 		if (fileContents.length <= 0) {
-			return;
+			return null;
 		}
 
 		const mimeType = detectMimeType(fileContents);
 
-		const blob = new Blob([fileContents], {
+		return new Blob([fileContents], {
 			type: mimeType ?? 'application/octet-stream',
 		});
-		const url = window.URL.createObjectURL(blob);
-		// eslint-disable-next-line react-hooks/set-state-in-effect, @eslint-react/set-state-in-effect
-		setBlobUrl(url);
-
-		return () => {
-			setBlobUrl(null);
-			window.URL.revokeObjectURL(url);
-		};
 	}, [fileContents]);
+	const blobUrl = useBlobAsUrl(blob);
 
 	return (
 		<ContentViewWithPadding>

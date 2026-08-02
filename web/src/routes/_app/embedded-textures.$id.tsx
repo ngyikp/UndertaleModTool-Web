@@ -32,6 +32,7 @@ function RouteComponent() {
 		Width: width,
 		Height: height,
 	} = data;
+	const title = 'Texture ' + id.toString();
 
 	useEffect(() => {
 		async function draw() {
@@ -49,9 +50,9 @@ function RouteComponent() {
 
 	return (
 		<ContentViewWithPadding>
-			<DocumentTitle text={['Texture ' + id.toString(), 'Embedded textures']} />
+			<DocumentTitle text={[title, 'Embedded textures']} />
 
-			<Title order={2}>Texture {id}</Title>
+			<Title order={2}>{title}</Title>
 
 			{error != null ? <BasicErrorAlert error={error} /> : null}
 
@@ -64,7 +65,7 @@ function RouteComponent() {
 			{finalBlob != null ? (
 				<ImageViewer
 					blob={finalBlob}
-					fileName={'Texture ' + id.toString()}
+					fileName={title}
 					width={width}
 					height={height}
 					withActions={true}
