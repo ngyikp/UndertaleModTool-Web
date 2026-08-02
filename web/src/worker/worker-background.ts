@@ -1,4 +1,5 @@
 import {CodeInfoSchema} from '../messages/getCodeInfoByName';
+import {EmbeddedAudioInfoSchema} from '../messages/getEmbeddedAudioInfoById.js';
 import {EmbeddedTextureInfoSchema} from '../messages/getEmbeddedTextureInfoById.js';
 import {EntriesListInfoSchema} from '../messages/getEntriesByModelType';
 import {SoundInfoSchema} from '../messages/getSoundInfoByName';
@@ -173,6 +174,19 @@ async function onMessage(request: WorkerRequest) {
 					result: TexturePageInfoSchema.parse(
 						JSON.parse(
 							dotNet.exports.UndertaleModToolWASM.Program.GetTexturePageInfoById(
+								request.message.id,
+							),
+						),
+					),
+				});
+				break;
+
+			case 'getEmbeddedAudioInfoById':
+				reply({
+					status: 'FINISHED',
+					result: EmbeddedAudioInfoSchema.parse(
+						JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.Program.GetEmbeddedAudioInfoById(
 								request.message.id,
 							),
 						),

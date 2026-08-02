@@ -7,6 +7,10 @@ import type {
 	GetCodeInfoByNameResult,
 } from '../messages/getCodeInfoByName';
 import type {
+	GetEmbeddedAudioInfoByIdRequest,
+	GetEmbeddedAudioInfoByIdResult,
+} from '../messages/getEmbeddedAudioInfoById';
+import type {
 	GetEmbeddedTextureInfoByIdRequest,
 	GetEmbeddedTextureInfoByIdResult,
 } from '../messages/getEmbeddedTextureInfoById';
@@ -40,6 +44,7 @@ export type WorkerRequest = {
 		| ReadFileRequest
 		| EditCodeTextByNameRequest
 		| GetCodeInfoByNameRequest
+		| GetEmbeddedAudioInfoByIdRequest
 		| GetEmbeddedTextureInfoByIdRequest
 		| GetEntriesByModelTypeRequest
 		| GetGameInfoRequest
@@ -52,6 +57,7 @@ export type AllResults =
 	| ReadFileResult
 	| EditCodeTextByNameResult
 	| GetCodeInfoByNameResult
+	| GetEmbeddedAudioInfoByIdResult
 	| GetEmbeddedTextureInfoByIdResult
 	| GetEntriesByModelTypeResult
 	| GetGameInfoResult

@@ -558,4 +558,20 @@ public partial class Program
 
         return JsonSerializer.Serialize(texturePageInfo, TexturePageInfoContext.Default.TexturePageInfo);
     }
+
+    [JSExport]
+    [SupportedOSPlatform("browser")]
+    public static string GetEmbeddedAudioInfoById(int id)
+    {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
+        UndertaleEmbeddedAudio audio = gameData.EmbeddedAudio[id];
+
+        EmbeddedAudioInfo audioInfo = new()
+        {
+            FileContents = audio.Data,
+        };
+
+        return JsonSerializer.Serialize(audioInfo, EmbeddedAudioInfoContext.Default.EmbeddedAudioInfo);
+    }
 }

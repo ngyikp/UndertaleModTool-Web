@@ -9,6 +9,7 @@ namespace UndertaleModToolWASM.Serializers;
 /// </summary>
 public record SoundInfo
 {
+    /// <seealso cref="UndertaleSound.AudioFile"/>
     public byte[]? FileContents { get; set; }
 
     /// <seealso cref="UndertaleSound.Flags"/>

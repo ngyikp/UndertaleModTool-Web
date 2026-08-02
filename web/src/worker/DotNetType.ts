@@ -17,6 +17,7 @@ export type AppExports = {
 			GetSoundInfoByName(name: string): string;
 			GetEmbeddedTextureInfoById(id: number): string;
 			GetTexturePageInfoById(id: number): string;
+			GetEmbeddedAudioInfoById(id: number): string;
 		};
 	};
 };
