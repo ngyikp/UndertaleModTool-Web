@@ -18,6 +18,8 @@ import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
 
 import styles from './sprites.$name.module.css';
 
+const INVALID_TEXTURE_PAGE_ID = -1;
+
 function RouteComponent() {
 	const name = useParams({
 		from: '/_app/sprites/$name',
@@ -36,11 +38,13 @@ function RouteComponent() {
 	const totalPages = data.TexturePageIDs.length;
 
 	function prefetchListeners(num: number) {
+		const newPage = data.TexturePageIDs[num - 1];
+		if (newPage == null || newPage === INVALID_TEXTURE_PAGE_ID) {
+			return {};
+		}
+
 		const prefetchPage = () => {
-			const newPage = data.TexturePageIDs[num - 1];
-			if (newPage) {
-				void queryClient.prefetchQuery(texturePageByIdQueryOptions(newPage));
-			}
+			void queryClient.prefetchQuery(texturePageByIdQueryOptions(newPage));
 		};
 
 		// todo these event listeners don't always fire, such as the user using keyboard
@@ -77,12 +81,23 @@ function RouteComponent() {
 						<ol className={styles.list}>
 							{data.TexturePageIDs.map((pageId, index) => {
 								return (
-									<li className={styles.listItem} key={pageId}>
-										<TexturePageImageViewer
-											texturePageId={pageId}
-											fileName={`${name} (page ${index.toString()})`}
-											enableImageActions={false}
-										/>
+									<li
+										className={styles.listItem}
+										key={
+											texturePageId !== INVALID_TEXTURE_PAGE_ID
+												? pageId
+												: '!empty' + index.toString()
+										}
+									>
+										{texturePageId !== INVALID_TEXTURE_PAGE_ID ? (
+											<TexturePageImageViewer
+												texturePageId={pageId}
+												fileName={`${name} (page ${index.toString()})`}
+												enableImageActions={false}
+											/>
+										) : (
+											'(empty)'
+										)}
 									</li>
 								);
 							})}
@@ -91,14 +106,20 @@ function RouteComponent() {
 				</>
 			) : texturePageId != null ? (
 				<Suspense fallback={<BasicLoadingMessage />}>
-					<TexturePageImageViewer
-						key={texturePageId}
-						texturePageId={texturePageId}
-						fileName={
-							totalPages > 1 ? `${name} (page ${(page + 1).toString()})` : name
-						}
-						enableImageActions={true}
-					/>
+					{texturePageId !== INVALID_TEXTURE_PAGE_ID ? (
+						<TexturePageImageViewer
+							key={texturePageId}
+							texturePageId={texturePageId}
+							fileName={
+								totalPages > 1
+									? `${name} (page ${(page + 1).toString()})`
+									: name
+							}
+							enableImageActions={true}
+						/>
+					) : (
+						'(empty)'
+					)}
 				</Suspense>
 			) : null}
 
@@ -136,7 +157,10 @@ export const Route = createFileRoute('/_app/sprites/$name')({
 		);
 
 		// Prefetch the first page
-		if (spriteInfo.TexturePageIDs[0]) {
+		if (
+			spriteInfo.TexturePageIDs[0] &&
+			spriteInfo.TexturePageIDs[0] !== INVALID_TEXTURE_PAGE_ID
+		) {
 			const texturePageData = await context.queryClient.ensureQueryData(
 				texturePageByIdQueryOptions(spriteInfo.TexturePageIDs[0]),
 			);
