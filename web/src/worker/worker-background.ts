@@ -195,7 +195,12 @@ async function onMessage(request: WorkerRequest) {
 				break;
 
 			default:
-				throw new Error('Unknown message type');
+				throw new Error(
+					'Unknown worker message type' +
+						(import.meta.env.DEV
+							? '\n\n(DEV: Ensure the message is being handled at worker/worker-background.ts)'
+							: ''),
+				);
 		}
 	} catch (error) {
 		let errorDetails = 'Unknown error';
@@ -206,10 +211,19 @@ async function onMessage(request: WorkerRequest) {
 			errorDetails = error.message;
 			errorStack = error.stack ?? '';
 
-			// https://github.com/dotnet/runtime/blob/ea3f7f141e0596cab37785d305910e64d031ab29/src/mono/browser/runtime/marshal.ts#L397
-			// not the best assumption if it gets minified ¯\_(ツ)_/¯
 			if (error.constructor.name === 'ManagedError') {
+				// https://github.com/dotnet/runtime/blob/ea3f7f141e0596cab37785d305910e64d031ab29/src/mono/browser/runtime/marshal.ts#L397
+				// not the best assumption if it gets minified ¯\_(ツ)_/¯
 				isManagedError = true;
+			} else if (import.meta.env.DEV) {
+				// Dev-only errors that can be helpful during development
+				if (
+					error.message.startsWith('dotNet.exports.UndertaleModToolWASM.') &&
+					error.message.endsWith(' is not a function')
+				) {
+					errorDetails +=
+						'\n\n(DEV: Try recompiling the .NET project and reload)';
+				}
 			}
 		}
 

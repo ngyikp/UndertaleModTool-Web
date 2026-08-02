@@ -14,8 +14,7 @@ export default function DocumentTitle({text}: Props) {
 		segments.push(getGameDisplayName(info));
 	}
 	segments.push(
-		(import.meta.env.MODE === 'development' ? '(DEV) ' : '') +
-			'UndertaleModTool on the Web',
+		(import.meta.env.DEV ? '(DEV) ' : '') + 'UndertaleModTool on the Web',
 	);
 
 	return <title>{segments.filter(Boolean).join(' - ')}</title>;
