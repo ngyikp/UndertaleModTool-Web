@@ -9,7 +9,7 @@ import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import detectMimeType from '../../common/detectMimeType';
 import DocumentTitle from '../../common/DocumentTitle';
-import {useBlobAsUrl} from '../../common/image/useBlobAsUrl';
+import useBlobAsUrl from '../../common/image/useBlobAsUrl';
 import {
 	AudioEntryFlags,
 	getSoundInfoByName,

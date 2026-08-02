@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 
-export function useBlobAsUrl(blob: Blob | null): string | null {
+export default function useBlobAsUrl(blob: Blob | null): string | null {
 	const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
 	useEffect(() => {

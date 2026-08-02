@@ -6,7 +6,7 @@ import CustomCopyButton from '../CustomCopyButton';
 import ImageAppearanceSelect from './ImageAppearanceSelect';
 import type {Appearance} from './ImageAppearanceType';
 import ImageWithPlaceholder from './ImageWithPlaceholder';
-import {useBlobAsUrl} from './useBlobAsUrl';
+import useBlobAsUrl from './useBlobAsUrl';
 
 export type ImageViewerSettings = {
 	appearance: Appearance;
