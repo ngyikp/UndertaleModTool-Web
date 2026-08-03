@@ -2,6 +2,7 @@ import type {EmbeddedTextureInfoType} from '../../messages/getEmbeddedTextureInf
 import type {TexturePageInfoType} from '../../messages/getTexturePageInfoById';
 
 import drawImageToBlob from './drawImageToBlob';
+import EmbeddedTextureBlobCache from './EmbeddedTextureBlobCache';
 
 // todo add includePadding parameter
 export default async function drawTexturePageImage(
@@ -13,13 +14,18 @@ export default async function drawTexturePageImage(
 	}
 
 	// First, convert unusable file format to canvas
-	// todo this should probably be cached
-	const embeddedTextureCanvas = await drawImageToBlob(
-		embeddedTextureData.DownloadableFileContents,
-		embeddedTextureData.Bgra,
-		embeddedTextureData.Width,
-		embeddedTextureData.Height,
-	);
+	const embeddedTextureCanvas =
+		await EmbeddedTextureBlobCache.getOrInsertComputed(
+			texturePageData.EmbeddedTextureID,
+			() => {
+				return drawImageToBlob(
+					embeddedTextureData.DownloadableFileContents,
+					embeddedTextureData.Bgra,
+					embeddedTextureData.Width,
+					embeddedTextureData.Height,
+				);
+			},
+		);
 
 	// Cropped image canvas
 	const canvas = document.createElement('canvas');
