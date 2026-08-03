@@ -5,6 +5,9 @@ type SpritesDataStore = {
 	getCurrentPage: (name: string) => number;
 	setCurrentPage: (name: string, page: number) => void;
 
+	includePadding: boolean;
+	setIncludePadding: (viewAll: boolean) => void;
+
 	viewAll: boolean;
 	setViewAll: (viewAll: boolean) => void;
 
@@ -30,6 +33,15 @@ export const useSpritesDataStore = create<SpritesDataStore>(
 			set(() => {
 				return {
 					viewAll,
+				};
+			});
+		},
+
+		includePadding: true,
+		setIncludePadding(includePadding) {
+			set(() => {
+				return {
+					includePadding,
 				};
 			});
 		},

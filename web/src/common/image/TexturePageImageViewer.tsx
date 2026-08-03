@@ -9,12 +9,14 @@ import ImageViewer from './ImageViewer';
 
 type Props = Readonly<{
 	texturePageId: number;
+	includePadding: boolean;
 	fileName: string;
 	enableImageActions: boolean;
 }>;
 
 export default function TexturePageImageViewer({
 	texturePageId,
+	includePadding,
 	fileName,
 	enableImageActions,
 }: Props) {
@@ -29,7 +31,7 @@ export default function TexturePageImageViewer({
 	const [error, setError] = useState<Error | null>(null);
 
 	useEffect(() => {
-		drawTexturePageImage(texturePageData, embeddedTextureData)
+		drawTexturePageImage(texturePageData, embeddedTextureData, includePadding)
 			.then(setBlob)
 			.catch(setError);
 
@@ -37,7 +39,7 @@ export default function TexturePageImageViewer({
 			setBlob(null);
 			setError(null);
 		};
-	}, [embeddedTextureData, texturePageData]);
+	}, [embeddedTextureData, includePadding, texturePageData]);
 
 	if (error) {
 		throw error;
@@ -47,8 +49,16 @@ export default function TexturePageImageViewer({
 		<ImageViewer
 			blob={blob}
 			fileName={fileName}
-			width={texturePageData.TargetWidth}
-			height={texturePageData.TargetHeight}
+			width={
+				includePadding
+					? texturePageData.BoundingWidth
+					: texturePageData.TargetWidth
+			}
+			height={
+				includePadding
+					? texturePageData.BoundingHeight
+					: texturePageData.TargetHeight
+			}
 			withActions={enableImageActions}
 			downloadButtonText={
 				embeddedTextureData.Format === 'Png' ? 'Export image' : 'Export as PNG'

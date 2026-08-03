@@ -30,6 +30,10 @@ function RouteComponent() {
 	const setPage = useSpritesDataStore((state) => state.setCurrentPage);
 	const viewAll = useSpritesDataStore((state) => state.viewAll);
 	const setViewAll = useSpritesDataStore((state) => state.setViewAll);
+	const includePadding = useSpritesDataStore((state) => state.includePadding);
+	const setIncludePadding = useSpritesDataStore(
+		(state) => state.setIncludePadding,
+	);
 
 	const queryClient = useQueryClient();
 	const {data} = useSuspenseQuery(spriteInfoByNameQueryOptions(name));
@@ -63,6 +67,14 @@ function RouteComponent() {
 				{name}
 			</Title>
 
+			<Checkbox
+				checked={includePadding}
+				onChange={(event) => {
+					setIncludePadding(event.currentTarget.checked);
+				}}
+				label="Include padding"
+			/>
+
 			{totalPages > 1 ? (
 				<Checkbox
 					checked={viewAll}
@@ -92,6 +104,7 @@ function RouteComponent() {
 										{texturePageId !== INVALID_TEXTURE_PAGE_ID ? (
 											<TexturePageImageViewer
 												texturePageId={pageId}
+												includePadding={includePadding}
 												fileName={`${name} (page ${index.toString()})`}
 												enableImageActions={false}
 											/>
@@ -110,6 +123,7 @@ function RouteComponent() {
 						<TexturePageImageViewer
 							key={texturePageId}
 							texturePageId={texturePageId}
+							includePadding={includePadding}
 							fileName={
 								totalPages > 1
 									? `${name} (page ${(page + 1).toString()})`

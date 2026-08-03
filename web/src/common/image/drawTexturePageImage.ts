@@ -4,10 +4,10 @@ import type {TexturePageInfoType} from '../../messages/getTexturePageInfoById';
 import drawImageToBlob from './drawImageToBlob';
 import EmbeddedTextureBlobCache from './EmbeddedTextureBlobCache';
 
-// todo add includePadding parameter
 export default async function drawTexturePageImage(
 	texturePageData: TexturePageInfoType,
 	embeddedTextureData: EmbeddedTextureInfoType,
+	includePadding: boolean,
 ): Promise<Blob> {
 	if (embeddedTextureData.Format === 'Dds') {
 		throw new Error('DDS format is not supported yet');
@@ -27,17 +27,28 @@ export default async function drawTexturePageImage(
 			},
 		);
 
-	// Cropped image canvas
-	const canvas = document.createElement('canvas');
-	canvas.width = texturePageData.SourceWidth;
-	canvas.height = texturePageData.SourceHeight;
+	// Based on https://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModLib/Util/TextureWorker.cs#L63
+	// Ensure texture is no larger than its bounding box
+	const exportWidth = texturePageData.BoundingWidth; // sprite.Width
+	const exportHeight = texturePageData.BoundingHeight; // sprite.Height
+	if (
+		includePadding &&
+		(texturePageData.TargetWidth > exportWidth ||
+			texturePageData.TargetHeight > exportHeight)
+	) {
+		throw new Error('Texture is larger than its bounding box');
+	}
+
+	const canvas = new OffscreenCanvas(
+		includePadding ? exportWidth : texturePageData.SourceWidth,
+		includePadding ? exportHeight : texturePageData.SourceHeight,
+	);
 
 	const ctx = canvas.getContext('2d', {alpha: true});
 	if (!ctx) {
 		throw new Error('Canvas rendering context is missing');
 	}
 
-	// Based on https://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModLib/Util/TextureWorker.cs#L63
 	// Create an image cropped from the item's part of the texture page
 	const imageBitmap = await createImageBitmap(
 		embeddedTextureCanvas,
@@ -47,28 +58,29 @@ export default async function drawTexturePageImage(
 		texturePageData.SourceHeight,
 	);
 
-	ctx.drawImage(imageBitmap, 0, 0);
-
 	// Resize the image, if necessary
+	let resizeWidth = imageBitmap.width;
+	let resizeHeight = imageBitmap.height;
 	if (
 		texturePageData.SourceWidth !== texturePageData.TargetWidth ||
 		texturePageData.SourceHeight !== texturePageData.TargetHeight
 	) {
-		const resizeWidth = texturePageData.TargetWidth;
-		const resizeHeight = texturePageData.TargetHeight;
-		if (canvas.width !== resizeWidth || canvas.height !== resizeHeight) {
-			ctx.drawImage(imageBitmap, 0, 0, resizeWidth, resizeHeight);
+		if (
+			canvas.width !== texturePageData.TargetWidth ||
+			canvas.height !== texturePageData.TargetHeight
+		) {
+			resizeWidth = texturePageData.TargetWidth;
+			resizeHeight = texturePageData.TargetHeight;
 		}
 	}
 
-	return new Promise((resolve, reject) => {
-		canvas.toBlob((croppedImageBlob) => {
-			if (croppedImageBlob == null) {
-				reject(new Error('Failed to render canvas image'));
-				return;
-			}
+	ctx.drawImage(
+		imageBitmap,
+		includePadding ? texturePageData.TargetX : 0,
+		includePadding ? texturePageData.TargetY : 0,
+		resizeWidth,
+		resizeHeight,
+	);
 
-			resolve(croppedImageBlob);
-		});
-	});
+	return canvas.convertToBlob();
 }

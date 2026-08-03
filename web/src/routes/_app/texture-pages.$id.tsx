@@ -1,4 +1,4 @@
-import {Title} from '@mantine/core';
+import {Checkbox, Title} from '@mantine/core';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 
@@ -9,6 +9,7 @@ import DocumentTitle from '../../common/DocumentTitle';
 import TexturePageImageViewer from '../../common/image/TexturePageImageViewer';
 import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
+import {useSpritesDataStore} from '../../stores/sprites-data-store';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
 
 function RouteComponent() {
@@ -16,6 +17,11 @@ function RouteComponent() {
 		from: '/_app/texture-pages/$id',
 		select: (params) => params.id,
 	});
+
+	const includePadding = useSpritesDataStore((state) => state.includePadding);
+	const setIncludePadding = useSpritesDataStore(
+		(state) => state.setIncludePadding,
+	);
 
 	const {data: texturePageData} = useSuspenseQuery(
 		texturePageByIdQueryOptions(id),
@@ -55,8 +61,17 @@ function RouteComponent() {
 				</Link>
 			</p>
 
+			<Checkbox
+				checked={includePadding}
+				onChange={(event) => {
+					setIncludePadding(event.currentTarget.checked);
+				}}
+				label="Include padding"
+			/>
+
 			<TexturePageImageViewer
 				texturePageId={id}
+				includePadding={includePadding}
 				fileName={'Texture ' + id.toString()}
 				enableImageActions={true}
 			/>
