@@ -2,10 +2,8 @@ export default function drawBgraToCanvas(
 	bgra: Uint8Array<ArrayBuffer>,
 	width: number,
 	height: number,
-): HTMLCanvasElement {
-	const canvas = document.createElement('canvas');
-	canvas.width = width;
-	canvas.height = height;
+): OffscreenCanvas {
+	const canvas = new OffscreenCanvas(width, height);
 
 	const ctx = canvas.getContext('2d', {alpha: true});
 	if (!ctx) {

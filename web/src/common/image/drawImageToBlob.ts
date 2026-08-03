@@ -16,18 +16,7 @@ export default async function drawImageToBlob(
 	}
 
 	if (bgra != null) {
-		const canvas = drawBgraToCanvas(bgra, width, height);
-
-		return new Promise((resolve, reject) => {
-			canvas.toBlob((croppedImageBlob) => {
-				if (croppedImageBlob == null) {
-					reject(new Error('Failed to render canvas image'));
-					return;
-				}
-
-				resolve(croppedImageBlob);
-			});
-		});
+		return drawBgraToCanvas(bgra, width, height).convertToBlob();
 	}
 
 	throw new Error('Either file contents or bgra should be provided.');
