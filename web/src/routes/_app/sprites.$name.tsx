@@ -118,7 +118,14 @@ function RouteComponent() {
 					</Suspense>
 				</>
 			) : texturePageId != null ? (
-				<Suspense fallback={<BasicLoadingMessage />}>
+				<Suspense
+					fallback={
+						<>
+							<ImageAppearanceSelect />
+							<BasicLoadingMessage />
+						</>
+					}
+				>
 					{texturePageId !== INVALID_TEXTURE_PAGE_ID ? (
 						<TexturePageImageViewer
 							key={texturePageId}
