@@ -1,10 +1,7 @@
-import {Button, Flex, Group} from '@mantine/core';
-
 import {useDataStore} from '../../data-store';
-import CustomCopyButton from '../CustomCopyButton';
 
-import ImageAppearanceSelect from './ImageAppearanceSelect';
 import type {Appearance} from './ImageAppearanceType';
+import ImageViewerActions from './ImageViewerActions';
 import ImageWithPlaceholder from './ImageWithPlaceholder';
 import useBlobAsUrl from './useBlobAsUrl';
 
@@ -29,7 +26,7 @@ export default function ImageViewer({
 	height,
 
 	withActions = false,
-	downloadButtonText = 'Export image',
+	downloadButtonText,
 }: Props) {
 	const settings = useDataStore((state) => state.imageViewerSettings);
 
@@ -38,25 +35,12 @@ export default function ImageViewer({
 	return (
 		<>
 			{withActions ? (
-				<Group>
-					<Flex mr="auto">
-						<ImageAppearanceSelect />
-					</Flex>
-
-					<Button.Group>
-						<Button
-							component="a"
-							href={blobUrl != null ? blobUrl : undefined}
-							download={fileName}
-							disabled={blobUrl == null}
-							variant="default"
-						>
-							{downloadButtonText}
-						</Button>
-
-						<CustomCopyButton label="Copy image" value={blob} />
-					</Button.Group>
-				</Group>
+				<ImageViewerActions
+					blob={blob}
+					blobUrl={blobUrl}
+					fileName={fileName}
+					downloadButtonText={downloadButtonText}
+				/>
 			) : null}
 
 			<ImageWithPlaceholder
