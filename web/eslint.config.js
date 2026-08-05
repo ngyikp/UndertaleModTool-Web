@@ -3,6 +3,7 @@ import eslintReact from '@eslint-react/eslint-plugin';
 import tanstackQuery from '@tanstack/eslint-plugin-query';
 import {defineConfig} from 'eslint/config';
 import {importX} from 'eslint-plugin-import-x';
+import jsxA11yX from 'eslint-plugin-jsx-a11y-x';
 import reactHooks from 'eslint-plugin-react-hooks';
 import {reactRefresh} from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
@@ -14,6 +15,7 @@ export default defineConfig(
 	importX.flatConfigs.typescript,
 	eslintReact.configs['strict-type-checked'],
 	reactHooks.configs.flat.recommended,
+	jsxA11yX.configs.strict,
 	tanstackQuery.configs['flat/recommended-strict'],
 
 	// https://github.com/ArnaudBarre/eslint-plugin-react-refresh/issues/102#issuecomment-3881982814
@@ -53,6 +55,9 @@ export default defineConfig(
 					named: true,
 				},
 			],
+
+			// Audio comes from game data files and doesn't contain captions
+			'jsx-a11y-x/media-has-caption': 'off',
 		},
 		languageOptions: {
 			parserOptions: {

@@ -1,4 +1,4 @@
-import {Collapse} from '@mantine/core';
+import {Button, Collapse} from '@mantine/core';
 import {useState} from 'react';
 
 import styles from './CollapsibleListBox.module.css';
@@ -46,15 +46,14 @@ export default function CollapsibleListBox({
 			) : null}
 
 			{!viewAll && hasMoreItems ? (
-				<a
-					href="#"
+				<Button
 					onClick={(ev) => {
 						ev.preventDefault();
 						setViewAll(true);
 					}}
 				>
 					Show all
-				</a>
+				</Button>
 			) : null}
 		</>
 	);
