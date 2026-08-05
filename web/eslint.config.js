@@ -35,13 +35,6 @@ export default defineConfig(
 
 			'@eslint-react/immutability': 'error',
 
-			'@typescript-eslint/no-empty-object-type': [
-				'error',
-				{
-					allowObjectTypes: 'always',
-				},
-			],
-
 			// `importX.flatConfigs.recommended` without slow rules
 			// https://typescript-eslint.io/troubleshooting/typed-linting/performance/#eslint-plugin-import
 			'import-x/export': 'error',
@@ -64,6 +57,7 @@ export default defineConfig(
 		languageOptions: {
 			parserOptions: {
 				projectService: true,
+				tsconfigRootDir: import.meta.dirname,
 			},
 		},
 	},
