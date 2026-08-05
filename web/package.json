@@ -1,12 +1,18 @@
 {
   "name": "undertalemodtool-wasm",
+  "homepage": "https://github.com/ngyikp/undertalemodtool-web",
   "bugs": {
+    "url": "https://github.com/ngyikp/undertalemodtool-web/issues",
     "email": "ngyikp@gmail.com"
   },
   "author": {
     "name": "Ng Yik Phang (ngyikp)",
     "email": "ngyikp@gmail.com",
     "url": "https://ngyikp.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngyikp/undertalemodtool-web.git"
   },
   "private": true,
   "license": "GPL-3.0-only",
