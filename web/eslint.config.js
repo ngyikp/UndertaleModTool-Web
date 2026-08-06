@@ -1,11 +1,14 @@
 import js from '@eslint/js';
 import eslintReact from '@eslint-react/eslint-plugin';
 import tanstackQuery from '@tanstack/eslint-plugin-query';
+import tanstackRouter from '@tanstack/eslint-plugin-router';
+import vitest from '@vitest/eslint-plugin';
 import {defineConfig} from 'eslint/config';
 import {importX} from 'eslint-plugin-import-x';
 import jsxA11yX from 'eslint-plugin-jsx-a11y-x';
 import reactHooks from 'eslint-plugin-react-hooks';
 import {reactRefresh} from 'eslint-plugin-react-refresh';
+import testingLibrary from 'eslint-plugin-testing-library';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig(
@@ -15,9 +18,6 @@ export default defineConfig(
 	importX.flatConfigs.typescript,
 	eslintReact.configs['strict-type-checked'],
 	reactHooks.configs.flat.recommended,
-	jsxA11yX.configs.strict,
-	tanstackQuery.configs['flat/recommended-strict'],
-
 	// https://github.com/ArnaudBarre/eslint-plugin-react-refresh/issues/102#issuecomment-3881982814
 	reactRefresh.configs.vite({
 		extraHOCs: [
@@ -30,6 +30,9 @@ export default defineConfig(
 			'createLazyRoute',
 		],
 	}),
+	jsxA11yX.configs.strict,
+	tanstackQuery.configs['flat/recommended-strict'],
+	tanstackRouter.configs['flat/recommended'],
 	{
 		rules: {
 			'no-var': 'error',
@@ -68,6 +71,10 @@ export default defineConfig(
 	},
 	{
 		files: ['**/*.{js,ts,tsx}'],
+	},
+	{
+		files: ['tests/**'],
+		extends: [testingLibrary.configs['flat/react'], vitest.configs.recommended],
 	},
 	{
 		ignores: ['dist', 'public/dotnet/'],
