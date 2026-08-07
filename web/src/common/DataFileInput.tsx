@@ -112,6 +112,20 @@ export default function DataFileInput({
 								report about this web tool incompatibility
 							</ExternalLinkInNewWindow>
 							.
+							{import.meta.env.DEV &&
+							error?.message.startsWith(
+								'Failed to fetch dynamically imported module: ',
+							) &&
+							error.message.endsWith('/dotnet.js') ? (
+								<>
+									<br />
+									<br />
+									(DEV: Try recompiling the .NET project and reload, restarting
+									the Vite dev server may also help)
+								</>
+							) : (
+								''
+							)}
 						</>
 					}
 					error={error}
