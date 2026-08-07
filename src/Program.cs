@@ -159,6 +159,23 @@ public partial class Program
 
     [JSExport]
     [SupportedOSPlatform("browser")]
+    public static bool SaveDataFile(string fileName)
+    {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
+        using FileStream fs = new(fileName, FileMode.Create, FileAccess.Write);
+        UndertaleIO.Write(fs, gameData, (string message) =>
+        {
+            Console.WriteLine($"[MESSAGE]: {message}");
+        });
+
+        // todo cleanup the file!!
+
+        return true;
+    }
+
+    [JSExport]
+    [SupportedOSPlatform("browser")]
     public static string GetGameInfo()
     {
         UndertaleData gameData = DataHolder.GetNonNullData();

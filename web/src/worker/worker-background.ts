@@ -77,6 +77,15 @@ async function onMessage(request: WorkerRequest) {
 				break;
 			}
 
+			case 'saveDataFile':
+				dotNet.exports.UndertaleModToolWASM.Program.SaveDataFile('saved.win');
+
+				reply({
+					status: 'FINISHED',
+					result: dotNet.Module.FS.readFile('saved.win'),
+				});
+				break;
+
 			case 'getGameInfo': {
 				reply({
 					status: 'FINISHED',

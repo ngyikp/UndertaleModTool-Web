@@ -35,6 +35,10 @@ import type {
 	GetTexturePageInfoByIdResult,
 } from '../messages/getTexturePageInfoById';
 import type {ReadFileRequest, ReadFileResult} from '../messages/readFile';
+import type {
+	SaveDataFileRequest,
+	SaveDataFileResult,
+} from '../messages/saveDataFile';
 
 export type WorkerStatuses = 'LOADING' | 'PROCESSING' | 'FINISHED' | 'ERROR';
 
@@ -42,6 +46,7 @@ export type WorkerRequest = {
 	messageId: number;
 	message:
 		| ReadFileRequest
+		| SaveDataFileRequest
 		| EditCodeTextByNameRequest
 		| GetCodeInfoByNameRequest
 		| GetEmbeddedAudioInfoByIdRequest
@@ -55,6 +60,7 @@ export type WorkerRequest = {
 
 export type AllResults =
 	| ReadFileResult
+	| SaveDataFileResult
 	| EditCodeTextByNameResult
 	| GetCodeInfoByNameResult
 	| GetEmbeddedAudioInfoByIdResult

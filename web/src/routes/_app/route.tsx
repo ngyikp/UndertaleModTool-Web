@@ -1,4 +1,4 @@
-import {Alert, Stack, Tabs, Title, Tooltip} from '@mantine/core';
+import {Alert, Group, Stack, Tabs, Title, Tooltip} from '@mantine/core';
 import {
 	createFileRoute,
 	Link,
@@ -10,6 +10,7 @@ import DataFileInput from '../../common/DataFileInput';
 import Footer from '../../common/Footer';
 import getGameDisplayName from '../../common/getGameDisplayName';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
+import SaveDataFile from '../../components/SaveDataFile';
 import {useDataStore} from '../../data-store';
 
 function TabLink({link, text}: {link: string; text: string}) {
@@ -52,7 +53,13 @@ function AppLayout() {
 
 	return (
 		<Stack>
-			<Title className="break-word">{getGameDisplayName(info)}</Title>
+			<Group>
+				<Title className="break-word" mr="auto">
+					{getGameDisplayName(info)}
+				</Title>
+
+				<SaveDataFile />
+			</Group>
 
 			<Tabs value={'/' + (pathname.split('/')[1] ?? '')}>
 				<Tabs.List>
