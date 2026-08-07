@@ -485,7 +485,13 @@ public partial class Program
 
         SoundInfo soundInfo = new()
         {
-            FileContents = sound.AudioFile?.Data,
+            // Some sounds don't have IsEmbedded flag, but AudioFile points to the previous sound -_-
+            //
+            // UMT's behavior is to check for the IsEmbedded flag first before considering AudioFile
+            // https://github.com/UnderminersTeam/UndertaleModTool/blob/cf68ac34d243757aaccb028b87bcf9703b2a28ca/UndertaleModTool/Editors/UndertaleSoundEditor.xaml.cs#L101C17-L101C119
+            FileContents = sound.Flags.HasFlag(UndertaleSound.AudioEntryFlags.IsEmbedded)
+                ? sound.AudioFile?.Data
+                : null,
             Flags = sound.Flags,
             ExternalFileName = sound.File.Content,
             AudioGroupID = sound.GroupID,
