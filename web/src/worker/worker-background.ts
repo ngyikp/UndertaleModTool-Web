@@ -78,11 +78,22 @@ async function onMessage(request: WorkerRequest) {
 			}
 
 			case 'saveDataFile':
-				dotNet.exports.UndertaleModToolWASM.Program.SaveDataFile('saved.win');
+				dotNet.exports.UndertaleModToolWASM.Program.SaveDataFile(
+					request.message.fileName,
+				);
 
 				reply({
 					status: 'FINISHED',
-					result: dotNet.Module.FS.readFile('saved.win'),
+					result: dotNet.Module.FS.readFile(request.message.fileName),
+				});
+				break;
+
+			case 'deleteDataFile':
+				dotNet.Module.FS.unlink(request.message.fileName);
+
+				reply({
+					status: 'FINISHED',
+					result: true,
 				});
 				break;
 

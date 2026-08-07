@@ -1,4 +1,8 @@
 import type {
+	DeleteDataFileRequest,
+	DeleteDataFileResult,
+} from '../messages/deleteDataFile';
+import type {
 	EditCodeTextByNameRequest,
 	EditCodeTextByNameResult,
 } from '../messages/editCodeTextByName';
@@ -47,6 +51,7 @@ export type WorkerRequest = {
 	message:
 		| ReadFileRequest
 		| SaveDataFileRequest
+		| DeleteDataFileRequest
 		| EditCodeTextByNameRequest
 		| GetCodeInfoByNameRequest
 		| GetEmbeddedAudioInfoByIdRequest
@@ -58,9 +63,11 @@ export type WorkerRequest = {
 		| GetTexturePageInfoByIdRequest;
 };
 
+/* eslint-disable @typescript-eslint/no-duplicate-type-constituents */
 export type AllResults =
 	| ReadFileResult
 	| SaveDataFileResult
+	| DeleteDataFileResult
 	| EditCodeTextByNameResult
 	| GetCodeInfoByNameResult
 	| GetEmbeddedAudioInfoByIdResult
@@ -70,6 +77,7 @@ export type AllResults =
 	| GetSoundInfoByNameResult
 	| GetSpriteInfoByNameResult
 	| GetTexturePageInfoByIdResult;
+/* eslint-enable */
 
 export type SpecificWorkerResponses<FinishedResult extends AllResults> =
 	| {

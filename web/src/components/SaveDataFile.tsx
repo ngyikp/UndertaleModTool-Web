@@ -1,6 +1,7 @@
 import {Button} from '@mantine/core';
 import {useState} from 'react';
 
+import {deleteDataFile} from '../messages/deleteDataFile';
 import {saveDataFile} from '../messages/saveDataFile';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
@@ -14,7 +15,8 @@ export default function SaveDataFile() {
 		setStatus('LOADING');
 		// setError(null);
 
-		saveDataFile((response) => {
+		const tempFileName = 'edited.win';
+		saveDataFile(tempFileName, (response) => {
 			setStatus(response.status);
 
 			switch (response.status) {
@@ -24,6 +26,7 @@ export default function SaveDataFile() {
 
 				case 'FINISHED':
 					{
+						// todo consider using StreamSaver.js to stream contents
 						const blobUrl = window.URL.createObjectURL(
 							new Blob([response.result]),
 						);
@@ -31,10 +34,14 @@ export default function SaveDataFile() {
 						const link = document.createElement('a');
 						link.setAttribute('href', blobUrl);
 						// todo reuse file name used on initial load
-						link.setAttribute('download', 'edited.win');
+						link.setAttribute('download', tempFileName);
 						link.click();
 						link.remove();
 						window.URL.revokeObjectURL(blobUrl);
+
+						deleteDataFile(tempFileName).catch((error: unknown) => {
+							console.error(error);
+						});
 					}
 					break;
 

@@ -80,6 +80,16 @@ declare module '../../public/dotnet/wwwroot/_framework/dotnet' {
 					flags?: string;
 				},
 			): void;
+
+			/**
+			 * Unlinks the node at `path`.
+			 *
+			 * This removes a name from the file system. If that name was the last link to a file (and no processes have the file open) the file is deleted.
+			 *
+			 * @see https://emscripten.org/docs/api_reference/Filesystem-API.html#FS.unlink
+			 * @param path Path of the target node.
+			 */
+			unlink(path: string): void;
 		};
 	}
 }

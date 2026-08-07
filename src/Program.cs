@@ -169,8 +169,6 @@ public partial class Program
             Console.WriteLine($"[MESSAGE]: {message}");
         });
 
-        // todo cleanup the file!!
-
         return true;
     }
 
