@@ -17,11 +17,13 @@ export default function SaveDataFile() {
 
 		const tempFileName = 'edited.win';
 		saveDataFile(tempFileName, (response) => {
-			setStatus(response.status);
+			if (response.status !== 'MESSAGE_FROM_DOTNET') {
+				setStatus(response.status);
+			}
 
 			switch (response.status) {
-				case 'LOADING':
-				case 'PROCESSING':
+				case 'MESSAGE_FROM_DOTNET':
+					console.log(response.result);
 					break;
 
 				case 'FINISHED':
@@ -34,7 +36,7 @@ export default function SaveDataFile() {
 						const link = document.createElement('a');
 						link.setAttribute('href', blobUrl);
 						// todo reuse file name used on initial load
-						link.setAttribute('download', tempFileName);
+						link.setAttribute('download', 'data.win');
 						link.click();
 						link.remove();
 						window.URL.revokeObjectURL(blobUrl);

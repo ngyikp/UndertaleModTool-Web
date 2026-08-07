@@ -44,7 +44,8 @@ import type {
 	SaveDataFileResult,
 } from '../messages/saveDataFile';
 
-export type WorkerStatuses = 'LOADING' | 'PROCESSING' | 'FINISHED' | 'ERROR';
+export type WorkerStatuses =
+	'LOADING' | 'PROCESSING' | 'MESSAGE_FROM_DOTNET' | 'FINISHED' | 'ERROR';
 
 export type WorkerRequest = {
 	messageId: number;
@@ -81,7 +82,14 @@ export type AllResults =
 
 export type SpecificWorkerResponses<FinishedResult extends AllResults> =
 	| {
-			status: Exclude<WorkerStatuses, 'FINISHED' | 'ERROR'>;
+			status: Exclude<
+				WorkerStatuses,
+				'MESSAGE_FROM_DOTNET' | 'FINISHED' | 'ERROR'
+			>;
+	  }
+	| {
+			status: 'MESSAGE_FROM_DOTNET';
+			result: string;
 	  }
 	| {
 			status: 'FINISHED';

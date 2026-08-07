@@ -1,4 +1,4 @@
-import {Alert, Button, Stack} from '@mantine/core';
+import {Alert, Button, Stack, Text} from '@mantine/core';
 import '@mantine/dropzone/styles.css';
 import {Dropzone} from '@mantine/dropzone';
 import {useQueryClient} from '@tanstack/react-query';
@@ -35,6 +35,7 @@ export default function DataFileInput({
 
 	const [fileName, setFileName] = useState('');
 	const [status, setStatus] = useState<WorkerStatuses | null>(null);
+	const [loadingDetail, setLoadingDetail] = useState('');
 	const [error, setError] = useState<Error | null>(null);
 	const [showAudioGroupError, setShowAudioGroupError] = useState(false);
 
@@ -46,8 +47,9 @@ export default function DataFileInput({
 			return;
 		}
 
-		setStatus('LOADING');
 		setFileName(file.name);
+		setStatus('LOADING');
+		setLoadingDetail('');
 		setError(null);
 		setShowAudioGroupError(false);
 
@@ -56,11 +58,14 @@ export default function DataFileInput({
 
 		const bytes = await file.bytes();
 		readFile(bytes, (response) => {
-			setStatus(response.status);
+			if (response.status !== 'MESSAGE_FROM_DOTNET') {
+				setStatus(response.status);
+			}
 
 			switch (response.status) {
-				case 'LOADING':
-				case 'PROCESSING':
+				case 'MESSAGE_FROM_DOTNET':
+					setLoadingDetail(response.result);
+					console.log(response.result);
 					break;
 
 				case 'FINISHED':
@@ -92,11 +97,23 @@ export default function DataFileInput({
 	return (
 		<>
 			{status === 'LOADING' ? (
-				<BasicLoadingMessage text="Loading UndertaleModTool..." />
+				<>
+					<BasicLoadingMessage text="Loading UndertaleModTool..." />
+
+					{/* avoid layout shift looking jank */}
+					<Text c="dimmed">&nbsp;</Text>
+				</>
 			) : status === 'PROCESSING' ? (
-				<BasicLoadingMessage
-					text={'Loading ' + (fileName !== '' ? fileName : 'game data') + '...'}
-				/>
+				<>
+					<BasicLoadingMessage
+						text={
+							'Loading ' + (fileName !== '' ? fileName : 'game data') + '...'
+						}
+					/>
+					<Text c="dimmed">
+						{loadingDetail !== '' ? loadingDetail : <>&nbsp;</>}
+					</Text>
+				</>
 			) : status === 'ERROR' ? (
 				<BasicErrorAlert
 					title={

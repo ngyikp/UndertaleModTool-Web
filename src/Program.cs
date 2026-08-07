@@ -19,6 +19,9 @@ public partial class Program
     {
     }
 
+    [JSImport("globalThis.receiveMessageFromDotNet")]
+    public static partial void SendMessageToWorker(int messageId, string text);
+
     [JSExport]
     [SupportedOSPlatform("browser")]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Underanalyzer.Decompiler.GameSpecific.GameSpecificRegistry))]
@@ -115,7 +118,7 @@ public partial class Program
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSprite.TextureEntry))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSprite.NineSlice))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleTexturePageItem))]
-    public static string ReadFile(string fileName)
+    public static string ReadFile(int messageId, string fileName)
     {
         bool hadImportantWarnings = false;
         List<string> warnings = [];
@@ -126,7 +129,6 @@ public partial class Program
             using FileStream fs = new FileStream(fileName, FileMode.Open);
             gameData = UndertaleIO.Read(fs, (string warning, bool isImportant) =>
             {
-                // todo Loading warning
                 Console.WriteLine($"[WARNING]: {warning}");
                 warnings.Add(warning);
 
@@ -136,7 +138,7 @@ public partial class Program
                 }
             }, (string message) =>
             {
-                Console.WriteLine($"[MESSAGE]: {message}");
+                SendMessageToWorker(messageId, message);
             });
         }
         finally
@@ -159,14 +161,14 @@ public partial class Program
 
     [JSExport]
     [SupportedOSPlatform("browser")]
-    public static bool SaveDataFile(string fileName)
+    public static bool SaveDataFile(int messageId, string fileName)
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
         using FileStream fs = new(fileName, FileMode.Create, FileAccess.Write);
         UndertaleIO.Write(fs, gameData, (string message) =>
         {
-            Console.WriteLine($"[MESSAGE]: {message}");
+            SendMessageToWorker(messageId, message);
         });
 
         return true;

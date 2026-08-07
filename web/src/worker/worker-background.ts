@@ -70,7 +70,10 @@ async function onMessage(request: WorkerRequest) {
 					status: 'FINISHED',
 					result: DataFileLoadInfoSchema.parse(
 						JSON.parse(
-							dotNet.exports.UndertaleModToolWASM.Program.ReadFile('data.win'),
+							dotNet.exports.UndertaleModToolWASM.Program.ReadFile(
+								request.messageId,
+								'data.win',
+							),
 						),
 					),
 				});
@@ -79,6 +82,7 @@ async function onMessage(request: WorkerRequest) {
 
 			case 'saveDataFile':
 				dotNet.exports.UndertaleModToolWASM.Program.SaveDataFile(
+					request.messageId,
 					request.message.fileName,
 				);
 
@@ -263,3 +267,17 @@ self.addEventListener(
 	},
 	false,
 );
+
+globalThis.receiveMessageFromDotNet = (messageId: number, text: string) => {
+	self.postMessage({
+		messageId,
+		response: {
+			status: 'MESSAGE_FROM_DOTNET',
+			result: text,
+		},
+	});
+};
+
+declare global {
+	function receiveMessageFromDotNet(messageId: number, text: string): void;
+}
