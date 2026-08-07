@@ -6,7 +6,7 @@ type Props = Readonly<{
 
 export default function BasicLoadingMessage({text = 'Loading...'}: Props) {
 	return (
-		<Group align="start">
+		<Group align="center">
 			<strong>{text}</strong>
 			<Loader size="sm" />
 		</Group>
