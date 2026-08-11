@@ -56,7 +56,11 @@ export default function DataFileInput({
 		// If the user goes back to main page without clicking 'unload game'
 		unloadGame();
 
-		const bytes = await file.bytes();
+		const bytes =
+			'bytes' in Blob.prototype
+				? await file.bytes()
+				: new Uint8Array(await file.arrayBuffer());
+
 		readFile(bytes, (response) => {
 			if (response.status !== 'MESSAGE_FROM_DOTNET') {
 				setStatus(response.status);
