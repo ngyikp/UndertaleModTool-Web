@@ -52,7 +52,9 @@ npm run preview # go to http://localhost:4173
 
 This project is a [React](https://react.dev) app, using [TanStack Router](https://tanstack.com/router/latest) for routing and [TanStack Query](https://tanstack.com/query/latest) for data querying between the client-side web app and the WebAssembly 'backend'.
 
-For UI styling, this projects uses [Mantine](https://mantine.dev) and [Phosphor Icons](https://phosphoricons.com).
+For UI styling, this project uses [Mantine](https://mantine.dev) and [Phosphor Icons](https://phosphoricons.com).
+
+It's recommended to install the [React Developer Tools](https://react.dev/learn/react-developer-tools) on your browser for easier debugging.
 
 ### Code style
 
