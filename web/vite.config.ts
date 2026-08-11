@@ -6,28 +6,30 @@ import react, {reactCompilerPreset} from '@vitejs/plugin-react';
 import {defineConfig} from 'vite';
 
 // https://vite.dev/config/
-export default defineConfig({
-	define: {
-		BUILD_COMMIT_SHA: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA),
-	},
-	plugins: [
-		tanstackRouter({
-			target: 'react',
-			autoCodeSplitting: true,
-		}),
-		react(),
-		babel({presets: [reactCompilerPreset()]}),
-	],
-	server: {
-		headers: getServerHeaders(),
-	},
-	test: {
-		environment: 'happy-dom',
-		setupFiles: ['tests/util/setup-tests.ts'],
-	},
+export default defineConfig(({mode}) => {
+	return {
+		define: {
+			BUILD_COMMIT_SHA: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA),
+		},
+		plugins: [
+			tanstackRouter({
+				target: 'react',
+				autoCodeSplitting: true,
+			}),
+			react(),
+			babel({presets: [reactCompilerPreset()]}),
+		],
+		server: {
+			headers: getServerHeaders(mode),
+		},
+		test: {
+			environment: 'happy-dom',
+			setupFiles: ['tests/util/setup-tests.ts'],
+		},
+	};
 });
 
-function getServerHeaders() {
+function getServerHeaders(mode: string) {
 	// Keep this in sync with /public/_headers
 	return {
 		'X-Content-Type-Options': 'nosniff',
@@ -44,11 +46,16 @@ function getServerHeaders() {
 			"default-src 'self'",
 
 			// unsafe-inline: For Vite dev server
-			"script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
+			[
+				'script-src',
+				"'self'",
+				mode !== 'production' ? "'unsafe-inline'" : '',
+				"'wasm-unsafe-eval'",
+			].join(' '),
 
 			// unsafe-inline:
+			//   - For Vite dev server
 			//   - For Monaco Editor https://github.com/Microsoft/monaco-editor/issues/271
-			//   - Vite dev
 			"style-src 'self' 'unsafe-inline'",
 
 			"img-src 'self' blob:",
