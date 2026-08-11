@@ -120,13 +120,8 @@ export default function SortableList({
 						allowDeselect={false}
 					/>
 					<TextInput
-						type="search"
-						value={settings.filter}
-						placeholder="Find"
-						spellCheck={false}
-						onChange={(event) => {
-							setFilter(event.currentTarget.value);
-						}}
+						aria-label="Search"
+						flex={1}
 						leftSectionPointerEvents="none"
 						leftSection={<MagnifyingGlassIcon size={16} />}
 						rightSection={
@@ -140,7 +135,13 @@ export default function SortableList({
 								</Tooltip>
 							) : undefined
 						}
-						flex={1}
+						onChange={(event) => {
+							setFilter(event.currentTarget.value);
+						}}
+						placeholder="Search"
+						spellCheck={false}
+						value={settings.filter}
+						type="search"
 					/>
 				</Group>
 			) : null}
