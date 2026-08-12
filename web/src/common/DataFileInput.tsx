@@ -189,7 +189,10 @@ export default function DataFileInput({
 						onDrop={(files) => {
 							const file = files[0];
 							if (file) {
-								void processFile(file);
+								processFile(file).catch((error: unknown) => {
+									setStatus('ERROR');
+									setError(error instanceof Error ? error : null);
+								});
 							}
 						}}
 					>
