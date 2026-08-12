@@ -15,6 +15,55 @@ import BasicLoadingMessage from './BasicLoadingMessage';
 import ExternalLinkInNewWindow from './ExternalLinkInNewWindow';
 import useUnloadGame from './useUnloadGame';
 
+function DataLoadError({
+	fileName: originalFileName,
+	error,
+}: {
+	fileName: string;
+	error: Error | null;
+}) {
+	const fileName =
+		originalFileName !== '' ? `‘${originalFileName}’` : 'this file';
+	if (error?.message.startsWith('Out of memory')) {
+		return (
+			<>
+				Oops, there was an out of memory problem loading {fileName}.<br />
+				<br />
+				This file might be too big to process on this browser/system.
+			</>
+		);
+	}
+
+	return (
+		<>
+			Oops, there was a problem loading {fileName}.<br />
+			<br />
+			Make sure it is a valid GameMaker data file.
+			<br />
+			Try opening this file on the main Windows version of UndertaleModTool, if
+			it succeeds there, then{' '}
+			<ExternalLinkInNewWindow href="https://github.com/ngyikp/UndertaleModTool-Web/issues/new">
+				report about this web tool incompatibility
+			</ExternalLinkInNewWindow>
+			.
+			{import.meta.env.DEV &&
+			error?.message.startsWith(
+				'Failed to fetch dynamically imported module: ',
+			) &&
+			error.message.endsWith('/dotnet.js') ? (
+				<>
+					<br />
+					<br />
+					(DEV: Try recompiling the .NET project and reload, restarting the Vite
+					dev server may also help)
+				</>
+			) : (
+				''
+			)}
+		</>
+	);
+}
+
 type Props = Readonly<{
 	initialStatusMessage?: React.ReactNode;
 	onFileLoaded?: () => void;
@@ -120,35 +169,7 @@ export default function DataFileInput({
 				</>
 			) : status === 'ERROR' ? (
 				<BasicErrorAlert
-					title={
-						<>
-							Oops, there was a problem loading{' '}
-							{fileName !== '' ? '‘' + fileName + '’' : 'this file'}.<br />
-							<br />
-							Make sure it is a valid GameMaker data file.
-							<br />
-							Try opening this file on the main Windows version of
-							UndertaleModTool, if it succeeds there, then{' '}
-							<ExternalLinkInNewWindow href="https://github.com/ngyikp/UndertaleModTool-Web/issues/new">
-								report about this web tool incompatibility
-							</ExternalLinkInNewWindow>
-							.
-							{import.meta.env.DEV &&
-							error?.message.startsWith(
-								'Failed to fetch dynamically imported module: ',
-							) &&
-							error.message.endsWith('/dotnet.js') ? (
-								<>
-									<br />
-									<br />
-									(DEV: Try recompiling the .NET project and reload, restarting
-									the Vite dev server may also help)
-								</>
-							) : (
-								''
-							)}
-						</>
-					}
+					title={<DataLoadError fileName={fileName} error={error} />}
 					error={error}
 				/>
 			) : null}

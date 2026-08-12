@@ -38,7 +38,7 @@ export default function Footer() {
 
 			<Text c="dimmed">
 				<ExternalLinkInNewWindow href="https://github.com/ngyikp/UndertaleModTool-Web">
-					Contribute/report a bug for this web version on GitHub
+					Contribute/report a bug for this web tool on GitHub
 				</ExternalLinkInNewWindow>{' '}
 				{BUILD_COMMIT_SHA != null
 					? '(commit ' + BUILD_COMMIT_SHA.substring(0, 7) + ')'
