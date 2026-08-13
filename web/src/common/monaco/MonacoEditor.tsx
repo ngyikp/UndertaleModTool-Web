@@ -61,8 +61,13 @@ export default function MonacoEditor({
 
 	const previousValue = usePrevious(defaultValue);
 	useEffect(() => {
-		if (previousValue !== defaultValue) {
-			editorRef.current?.getModel()?.setValue(defaultValue);
+		if (previousValue === defaultValue) {
+			return;
+		}
+
+		const editorModel = editorRef.current?.getModel();
+		if (editorModel && editorModel.getValue() !== defaultValue) {
+			editorModel.setValue(defaultValue);
 		}
 	}, [defaultValue, previousValue]);
 

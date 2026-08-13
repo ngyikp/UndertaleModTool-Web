@@ -1,6 +1,14 @@
-import {Alert, Button, Checkbox, Group, Title, Tooltip} from '@mantine/core';
+import {
+	Alert,
+	Button,
+	Checkbox,
+	Group,
+	Popover,
+	Title,
+	Tooltip,
+} from '@mantine/core';
 import {useHotkeys} from '@mantine/hooks';
-import {useSuspenseQuery} from '@tanstack/react-query';
+import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 import type * as monaco from 'monaco-editor/editor/editor.api';
 import {useRef, useState} from 'react';
@@ -28,6 +36,7 @@ function RouteComponent() {
 	const wordWrap = useDataStore((state) => state.codeEditorWordWrap);
 	const setWordWrap = useDataStore((state) => state.setCodeEditorWordWrap);
 
+	const queryClient = useQueryClient();
 	const {data} = useSuspenseQuery(codeInfoByNameQueryOptions(name));
 	const editCodeMutation = useEditCodeTextByNameMutation(name);
 
@@ -45,9 +54,32 @@ function RouteComponent() {
 	useHotkeys([['mod + s', saveChanges]]);
 
 	function saveChanges() {
-		if (!editCodeMutation.isPending) {
-			editCodeMutation.mutate(modifiedValue);
+		if (modifiedValue === originalCode) {
+			return;
 		}
+
+		async function doSaveChanges() {
+			if (!editCodeMutation.isPending) {
+				await editCodeMutation.mutateAsync(modifiedValue);
+
+				// Normally, this isn't needed as the code query becomes
+				// invalidated and the query client will refetch
+				//
+				// However, there is edge case of saving modifiedValue
+				// which compiles to the same as originalCode (due to
+				// decompiler reformatting and removing comments),
+				// so we need to set the editor value here
+				const {DecompiledCode: newCode} = await queryClient.fetchQuery(
+					codeInfoByNameQueryOptions(name),
+				);
+				if (newCode != null && newCode !== modifiedValue) {
+					editorRef.current?.getModel()?.setValue(newCode);
+				}
+			}
+		}
+
+		// editCodeMutation has `isError`
+		void doSaveChanges();
 	}
 
 	return (
@@ -86,8 +118,7 @@ function RouteComponent() {
 						<Button.Group mr="auto">
 							<Tooltip label={isMac() ? 'Command-S' : 'Ctrl-S'}>
 								<Button
-									// todo if the code formatting after saving is different, the button is not disabled
-									// disabled={modifiedValue === originalCode}
+									disabled={modifiedValue === originalCode}
 									loading={editCodeMutation.isPending}
 									onClick={saveChanges}
 								>
@@ -96,7 +127,7 @@ function RouteComponent() {
 							</Tooltip>
 
 							<Button
-								// disabled={modifiedValue === originalCode}
+								disabled={modifiedValue === originalCode}
 								onClick={() => {
 									editorRef.current?.getModel()?.setValue(originalCode);
 									editCodeMutation.reset();
