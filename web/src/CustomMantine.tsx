@@ -6,6 +6,25 @@ type Props = Readonly<{
 }>;
 
 const theme = createTheme({
+	components: {
+		Combobox: {
+			defaultProps: {
+				transitionProps: {transition: 'pop-top-left'},
+			},
+		},
+		Popover: {
+			defaultProps: {
+				shadow: 'md',
+				// no default transition as there can be many types of popovers
+				// e.g. Menu/Combobox are also technically popovers
+			},
+		},
+		Select: {
+			defaultProps: {
+				withAlignedLabels: true,
+			},
+		},
+	},
 	cursorType: 'pointer',
 });
 
