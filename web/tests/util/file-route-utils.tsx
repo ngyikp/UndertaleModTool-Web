@@ -44,16 +44,3 @@ export function renderWithFileRoutes(initialLocation: string) {
 		</CustomMantine>,
 	);
 }
-
-// Helper to test specific file routes
-export function createMockFileRoute(
-	path: string,
-	component: React.ComponentType,
-) {
-	// This is useful for isolated testing when you don't want to use the full route tree
-	return {
-		path,
-		component,
-		// Add other common route properties as needed
-	};
-}

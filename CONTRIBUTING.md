@@ -72,6 +72,18 @@ Use [ESLint](https://eslint.org). Run `npm run lint` to see errors.
 
 Use [Vitest](https://vitest.dev). Run `npm test` to run the tests.
 
+### Code coverage
+
+Code coverage can be obtained by running `npm test -- --coverage`
+
+### Running all tests
+
+The test suites are run on every push, it's best to run them on your system to avoid CI failures afterwards:
+
+```bash
+npm run tsc -- -b && npm run lint && npm test -- --run && npm run prettier -- -c
+```
+
 ## AI policy
 
 Please refer to the main [UndertaleModTool's AI policy](https://github.com/UnderminersTeam/UndertaleModTool/blob/master/CONTRIBUTING.md#ai-policy) (tl;dr: no).
