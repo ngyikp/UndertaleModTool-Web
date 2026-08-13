@@ -4,7 +4,9 @@ import {
 	cleanup as cleanupTestingLibrary,
 	configure as configureTestingLibrary,
 } from '@testing-library/react';
-import {afterEach} from 'vitest';
+import {afterEach, vi} from 'vitest';
+
+vi.mock(import('../../src/CustomMantine'));
 
 configureTestingLibrary({reactStrictMode: true});
 

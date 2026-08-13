@@ -1,10 +1,10 @@
 // Based on https://tanstack.com/router/latest/docs/how-to/test-file-based-routing#3-create-route-testing-utilities
 
-import {HeadlessMantineProvider} from '@mantine/core';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {createMemoryHistory, createRouter} from '@tanstack/react-router';
 import {render} from '@testing-library/react';
 
+import CustomMantine from '../../src/CustomMantine';
 import RouterProviderWithContext from '../../src/RouterProviderWithContext';
 import {routeTree} from '../../src/routeTree.gen';
 
@@ -37,13 +37,11 @@ export function renderWithFileRoutes(initialLocation: string) {
 	const router = createTestRouterFromFiles(initialLocation);
 
 	render(
-		<HeadlessMantineProvider
-			env={import.meta.env.MODE === 'test' ? 'test' : undefined}
-		>
+		<CustomMantine>
 			<QueryClientProvider client={queryClient}>
 				<RouterProviderWithContext router={router} />
 			</QueryClientProvider>
-		</HeadlessMantineProvider>,
+		</CustomMantine>,
 	);
 }
 
