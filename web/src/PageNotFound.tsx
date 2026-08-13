@@ -1,26 +1,24 @@
-import {Button, Stack, Title} from '@mantine/core';
+import {Button} from '@mantine/core';
 import {Link} from '@tanstack/react-router';
 
 import BasicErrorAlert from './common/BasicErrorAlert';
 import DocumentTitle from './common/DocumentTitle';
-import Footer from './common/Footer';
+import GenericHeaderAndFooter from './common/GenericHeaderAndFooter';
 
 export default function PageNotFound() {
 	return (
-		<Stack>
+		<>
 			<DocumentTitle text="Page not found" />
 
-			<Title>UndertaleModTool on the Web</Title>
+			<GenericHeaderAndFooter>
+				<BasicErrorAlert title="Page not found." />
 
-			<BasicErrorAlert title="Page not found." />
-
-			<div>
-				<Button component={Link} to="/">
-					Go to homepage
-				</Button>
-			</div>
-
-			<Footer />
-		</Stack>
+				<div>
+					<Button component={Link} to="/">
+						Go to homepage
+					</Button>
+				</div>
+			</GenericHeaderAndFooter>
+		</>
 	);
 }

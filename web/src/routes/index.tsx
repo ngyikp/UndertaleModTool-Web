@@ -1,24 +1,19 @@
-import {Stack, Title} from '@mantine/core';
 import {createFileRoute, useNavigate} from '@tanstack/react-router';
 
 import DataFileInput from '../common/DataFileInput';
-import Footer from '../common/Footer';
+import GenericHeaderAndFooter from '../common/GenericHeaderAndFooter';
 
 function Index() {
 	const navigate = useNavigate({from: '/'});
 
 	return (
-		<Stack>
-			<Title>UndertaleModTool on the Web</Title>
-
+		<GenericHeaderAndFooter>
 			<DataFileInput
 				onFileLoaded={() => {
 					void navigate({to: '/general-info'});
 				}}
 			/>
-
-			<Footer />
-		</Stack>
+		</GenericHeaderAndFooter>
 	);
 }
 

@@ -6,8 +6,9 @@ import {
 	useLocation,
 } from '@tanstack/react-router';
 
+import BasicLoadingMessage from '../../common/BasicLoadingMessage';
 import DataFileInput from '../../common/DataFileInput';
-import Footer from '../../common/Footer';
+import GenericHeaderAndFooter from '../../common/GenericHeaderAndFooter';
 import getGameDisplayName from '../../common/getGameDisplayName';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
 import SaveDataFile from '../../components/SaveDataFile';
@@ -239,9 +240,7 @@ function AppLayout() {
 function GameDataNotLoadedComponent({error}: {error: Error}) {
 	if (error instanceof GameDataNotLoadedError) {
 		return (
-			<Stack>
-				<Title>UndertaleModTool on the Web</Title>
-
+			<GenericHeaderAndFooter>
 				<DataFileInput
 					initialStatusMessage={
 						<Alert
@@ -251,9 +250,7 @@ function GameDataNotLoadedComponent({error}: {error: Error}) {
 						/>
 					}
 				/>
-
-				<Footer />
-			</Stack>
+			</GenericHeaderAndFooter>
 		);
 	}
 
@@ -270,4 +267,9 @@ export const Route = createFileRoute('/_app')({
 		}
 	},
 	errorComponent: GameDataNotLoadedComponent,
+	pendingComponent: () => (
+		<GenericHeaderAndFooter>
+			<BasicLoadingMessage />
+		</GenericHeaderAndFooter>
+	),
 });
