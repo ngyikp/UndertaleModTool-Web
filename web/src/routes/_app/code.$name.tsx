@@ -7,7 +7,7 @@ import {
 	Title,
 	Tooltip,
 } from '@mantine/core';
-import {useHotkeys} from '@mantine/hooks';
+import {useDisclosure, useHotkeys} from '@mantine/hooks';
 import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 import type * as monaco from 'monaco-editor/editor/editor.api';
@@ -35,6 +35,10 @@ function RouteComponent() {
 
 	const wordWrap = useDataStore((state) => state.codeEditorWordWrap);
 	const setWordWrap = useDataStore((state) => state.setCodeEditorWordWrap);
+	const [
+		discardPopoverOpened,
+		{close: closeDiscardPopover, toggle: toggleDiscardPopover},
+	] = useDisclosure(false);
 
 	const queryClient = useQueryClient();
 	const {data} = useSuspenseQuery(codeInfoByNameQueryOptions(name));
@@ -60,6 +64,8 @@ function RouteComponent() {
 
 		async function doSaveChanges() {
 			if (!editCodeMutation.isPending) {
+				closeDiscardPopover();
+
 				await editCodeMutation.mutateAsync(modifiedValue);
 
 				// Normally, this isn't needed as the code query becomes
@@ -126,16 +132,38 @@ function RouteComponent() {
 								</Button>
 							</Tooltip>
 
-							<Button
-								disabled={modifiedValue === originalCode}
-								onClick={() => {
-									editorRef.current?.getModel()?.setValue(originalCode);
-									editCodeMutation.reset();
-								}}
-								variant="default"
+							<Popover
+								opened={discardPopoverOpened}
+								onDismiss={closeDiscardPopover}
+								transitionProps={{transition: 'fade-down'}}
+								trapFocus
+								withArrow
 							>
-								Revert
-							</Button>
+								<Popover.Target>
+									<Button
+										disabled={modifiedValue === originalCode}
+										onClick={toggleDiscardPopover}
+										variant="default"
+									>
+										Discard
+									</Button>
+								</Popover.Target>
+
+								<Popover.Dropdown>
+									<div>Discard all changes?</div>
+									<Button
+										onClick={() => {
+											editorRef.current?.getModel()?.setValue(originalCode);
+											editCodeMutation.reset();
+											closeDiscardPopover();
+										}}
+										color="red"
+										mt="sm"
+									>
+										Discard
+									</Button>
+								</Popover.Dropdown>
+							</Popover>
 						</Button.Group>
 
 						<Button.Group>
