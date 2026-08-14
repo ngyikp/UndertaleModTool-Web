@@ -1,0 +1,30 @@
+// These data files will be used for snapshot regression testing
+// of game data files, see `web/tests/load-data-file.test.ts`.
+//
+// You can reference this JSON structure and copy-and-paste
+// this template to `data-file-tests.jsonc` to enable the test,
+// plus even add your own games in your library.
+//
+// Due to file size and legal reasons, these data files aren't
+// included in this repo, but these games are freeware and
+// you can download them by yourself
+[
+	{
+		// https://ut10-battle.undertale.com/game.unx
+		"name": "UNDERTALE 10th Anniversary", // Will be used as snapshot filename, stored at `web/tests/__snapshots__/load-data-file/`
+		"path": "/path/to/UNDERTALE 10th Anniversary.unx",
+		"md5": "983302700fde08ece4f3fd6baa89a876" // Test will be skipped if MD5 checksum doesn't match
+	},
+	{
+		// https://tobyfox.itch.io/deltarune
+		"name": "Deltarune Chapter 1 v1.19",
+		"path": "/path/to/Deltarune Chapter 1 v1.19.win",
+		"md5": "49476485d79690b237ebac7275dbc65a"
+	},
+	{
+		// https://gamejolt.com/games/UndertaleYellow/136925
+		"name": "Undertale Yellow v1.3.1",
+		"path": "/path/to/Undertale Yellow v1.3.1.win",
+		"md5": "f6503e9719bfca58a5f93f61859e3dd9"
+	}
+]

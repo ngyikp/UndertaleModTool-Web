@@ -72,6 +72,12 @@ Use [ESLint](https://eslint.org). Run `npm run lint` to see errors.
 
 Use [Vitest](https://vitest.dev). Run `npm test` to run the tests.
 
+#### Snapshot testing of game data files
+
+`tests/load-data-file.test.ts` can be used to perform snapshot regression testing of the .NET to JavaScript portion, however this list needs to be manually set up. You can find an example list at `data-file-tests.example.jsonc` at the root directory of the repo.
+
+There may be an error stating "Error: An error occurred while trying to read the map file at dotnet.runtime.js.map", this can be ignored.
+
 ### Code coverage
 
 Code coverage can be obtained by running `npm test -- --coverage`

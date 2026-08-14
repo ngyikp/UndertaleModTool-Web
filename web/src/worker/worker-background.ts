@@ -8,42 +8,16 @@ import {TexturePageInfoSchema} from '../messages/getTexturePageInfoById.js';
 import {DataFileLoadInfoSchema} from '../messages/readFile.js';
 import {GameInfoSchema} from '../types/GameInfoType';
 
-import type {AppExports, DotNetType} from './DotNetType';
+import type {DotNetType} from './DotNetType';
+import loadAssembly from './loadAssembly';
 import type {AllWorkerResponses, WorkerRequest} from './WorkerMessageTypes';
-
-let dotNet: DotNetType | null = null;
 
 const LOADER_URL = new URL(
 	'/dotnet/wwwroot/_framework/dotnet.js',
 	import.meta.url,
 ).href;
 
-async function loadAssembly() {
-	const module = (await import(
-		/* @vite-ignore */ LOADER_URL
-	)) as typeof import('../../public/dotnet/wwwroot/_framework/dotnet.js');
-
-	const {
-		// eslint-disable-next-line @typescript-eslint/unbound-method
-		getAssemblyExports,
-		getConfig,
-		Module,
-	} = await module.dotnet.withDiagnosticTracing(import.meta.env.DEV).create();
-
-	const {mainAssemblyName} = getConfig();
-	if (!mainAssemblyName) {
-		throw new Error('Missing main assembly name');
-	}
-
-	const exports = (await getAssemblyExports(
-		mainAssemblyName,
-	)) as AppExports | null;
-	if (!exports) {
-		throw new Error('Missing assembly exports');
-	}
-
-	return {exports, Module};
-}
+let dotNet: DotNetType | null = null;
 
 async function onMessage(request: WorkerRequest) {
 	const reply = (response: AllWorkerResponses) => {
@@ -57,7 +31,7 @@ async function onMessage(request: WorkerRequest) {
 		if (!dotNet) {
 			reply({status: 'LOADING'});
 
-			dotNet = await loadAssembly();
+			dotNet = await loadAssembly(LOADER_URL, import.meta.env.DEV);
 		}
 
 		reply({status: 'PROCESSING'});
