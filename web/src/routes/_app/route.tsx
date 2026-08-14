@@ -1,4 +1,4 @@
-import {Alert, Group, Stack, Tabs, Title, Tooltip} from '@mantine/core';
+import {Alert, Group, Stack, Tabs, Text, Title, Tooltip} from '@mantine/core';
 import {
 	createFileRoute,
 	Link,
@@ -270,6 +270,8 @@ export const Route = createFileRoute('/_app')({
 	pendingComponent: () => (
 		<GenericHeaderAndFooter>
 			<BasicLoadingMessage />
+
+			<Text>&nbsp;</Text>
 		</GenericHeaderAndFooter>
 	),
 });
