@@ -21,7 +21,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "node prebuild.ts && vite build",
     "dev": "vite",
     "lint": "eslint .",
     "prettier": "prettier .",
