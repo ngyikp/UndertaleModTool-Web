@@ -19,6 +19,7 @@ First, [install .NET 10.0 SDK](https://dotnet.microsoft.com/en-us/download) and 
 Install the .NET workload:
 
 ```sh
+dotnet workload update
 dotnet workload install wasm-tools
 ```
 
