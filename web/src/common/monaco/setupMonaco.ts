@@ -1,6 +1,7 @@
-import * as monaco from 'monaco-editor';
+import * as monaco from 'monaco-editor/editor/editor.api';
 import type {languages} from 'monaco-editor/editor/editor.api';
 import editorWorker from 'monaco-editor/editor/editor.worker?worker';
+import 'monaco-editor/features/register.all';
 // @ts-expect-error can't type-check for whatever reason
 import {language as typescriptLanguage} from 'monaco-editor/languages/definitions/typescript/typescript.js';
 
