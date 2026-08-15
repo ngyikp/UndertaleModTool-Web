@@ -13,7 +13,7 @@ import loadAssembly from './loadAssembly';
 import type {AllWorkerResponses, WorkerRequest} from './WorkerMessageTypes';
 
 const LOADER_URL = new URL(
-	'/dotnet/wwwroot/_framework/dotnet.js',
+	'/dotnet/wwwroot/_framework/' + (DOTNET_JS_PATH ?? 'dotnet.js'),
 	import.meta.url,
 ).href;
 

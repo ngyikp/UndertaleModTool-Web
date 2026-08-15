@@ -18,6 +18,9 @@
     <WasmStripILAfterAOT>true</WasmStripILAfterAOT>
     <InvariantGlobalization>true</InvariantGlobalization>
     <InvariantTimezone>true</InvariantTimezone>
+
+    <!-- Not supported by Vite -->
+    <!-- <WasmBundlerFriendlyBootConfig>true</WasmBundlerFriendlyBootConfig> -->
   </PropertyGroup>
 
   <!-- https://github.com/dotnet/runtime/issues/77174#issuecomment-2746107558 -->

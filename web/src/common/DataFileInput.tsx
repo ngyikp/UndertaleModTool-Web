@@ -50,6 +50,7 @@ function DataLoadError({
 			error?.message.startsWith(
 				'Failed to fetch dynamically imported module: ',
 			) &&
+			// error.message.match(/\/dotnet-[0-9a-f]{8}.js$/)
 			error.message.endsWith('/dotnet.js') ? (
 				<>
 					<br />

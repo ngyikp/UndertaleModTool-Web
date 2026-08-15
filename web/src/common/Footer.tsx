@@ -4,8 +4,6 @@ import {useDataStore} from '../data-store';
 
 import ExternalLinkInNewWindow from './ExternalLinkInNewWindow';
 
-declare const BUILD_COMMIT_SHA: string | undefined;
-
 export default function Footer() {
 	const info = useDataStore((state) => state.dataFileLoadInfo);
 
