@@ -4,7 +4,12 @@
 
 .list {
 	list-style: none;
-	overflow-wrap: break-word;
+	/* overflow-wrap: break-word; */
+}
+
+.listItem {
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .filters {

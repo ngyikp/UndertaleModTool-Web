@@ -163,8 +163,11 @@ export default function SortableList({
 					<ul className={styles.list}>
 						{onePageList.map((item, index) => {
 							return (
-								// eslint-disable-next-line @eslint-react/no-array-index-key
-								<li key={!itemsAreNonUnique ? item : index}>
+								<li
+									className={styles.listItem}
+									// eslint-disable-next-line @eslint-react/no-array-index-key
+									key={!itemsAreNonUnique ? item : index}
+								>
 									{render(item, searchHighlight)}
 								</li>
 							);
