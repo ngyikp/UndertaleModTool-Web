@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
-import renderSearchHighlight from '../../common/renderSearchHighlight';
+import getSortableListItemLinkProps from '../../common/getSortableListItemLinkProps';
 import SidebarAndContentView from '../../common/SidebarAndContentView';
 import SortableList from '../../common/SortableList';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
@@ -49,13 +49,8 @@ function TexturePages() {
 								<Link
 									to="/texture-pages/$id"
 									params={{id}}
-									preload="intent"
-									preloadDelay={250}
-									activeProps={{style: {fontWeight: 'bold'}}}
-									resetScroll={false}
-								>
-									{renderSearchHighlight(item, searchHighlight)}
-								</Link>
+									{...getSortableListItemLinkProps(item, searchHighlight)}
+								/>
 							);
 						}}
 					/>

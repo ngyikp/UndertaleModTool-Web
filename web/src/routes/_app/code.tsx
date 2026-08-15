@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
-import renderSearchHighlight from '../../common/renderSearchHighlight';
+import getSortableListItemLinkProps from '../../common/getSortableListItemLinkProps';
 import SidebarAndContentView from '../../common/SidebarAndContentView';
 import SortableList from '../../common/SortableList';
 import YycWarningAlert from '../../common/YycWarningAlert';
@@ -42,13 +42,8 @@ function Code() {
 									<Link
 										to="/code/$name"
 										params={{name: item}}
-										preload="intent"
-										preloadDelay={250}
-										activeProps={{style: {fontWeight: 'bold'}}}
-										resetScroll={false}
-									>
-										{renderSearchHighlight(item, searchHighlight)}
-									</Link>
+										{...getSortableListItemLinkProps(item, searchHighlight)}
+									/>
 								);
 							}}
 						/>
