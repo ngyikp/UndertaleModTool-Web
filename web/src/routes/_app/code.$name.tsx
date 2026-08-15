@@ -19,7 +19,6 @@ import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import CustomCopyButton from '../../common/CustomCopyButton';
 import DocumentTitle from '../../common/DocumentTitle';
-// import GmlCodeHighlighter from '../../common/GmlCodeHighlighter';
 import isMac from '../../common/isMac';
 import MonacoEditor from '../../common/monaco/MonacoEditor';
 import {useDataStore} from '../../data-store';
