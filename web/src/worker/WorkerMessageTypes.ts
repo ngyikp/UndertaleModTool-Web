@@ -45,7 +45,11 @@ import type {
 } from '../messages/saveDataFile';
 
 export type WorkerStatuses =
-	'LOADING' | 'PROCESSING' | 'MESSAGE_FROM_DOTNET' | 'FINISHED' | 'ERROR';
+	| 'LOADING'
+	| 'PROCESSING'
+	| 'MESSAGE_FROM_DOTNET'
+	| 'FINISHED'
+	| 'ERROR';
 
 export type WorkerRequest = {
 	messageId: number;

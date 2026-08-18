@@ -67,5 +67,5 @@ jobs:
         working-directory: ./web
 
       - name: Check JavaScript code style
-        run: npm run prettier -- --check
+        run: npm run format -- --check
         working-directory: ./web

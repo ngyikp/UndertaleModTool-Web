@@ -1,7 +1,0 @@
-public/dotnet/
-dist/
-
-package.json
-package-lock.json
-
-src/routeTree.gen.ts

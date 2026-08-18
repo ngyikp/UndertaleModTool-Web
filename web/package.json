@@ -1,10 +1,12 @@
 {
   "name": "undertalemodtool-wasm",
+  "private": true,
   "homepage": "https://github.com/ngyikp/undertalemodtool-web",
   "bugs": {
     "url": "https://github.com/ngyikp/undertalemodtool-web/issues",
     "email": "ngyikp@gmail.com"
   },
+  "license": "GPL-3.0-only",
   "author": {
     "name": "Ng Yik Phang (ngyikp)",
     "email": "ngyikp@gmail.com",
@@ -14,17 +16,12 @@
     "type": "git",
     "url": "git+https://github.com/ngyikp/undertalemodtool-web.git"
   },
-  "private": true,
-  "license": "GPL-3.0-only",
-  "engines": {
-    "node": ">=24"
-  },
   "type": "module",
   "scripts": {
     "build": "node prebuild.ts && vite build",
     "dev": "vite",
+    "format": "oxfmt",
     "lint": "eslint .",
-    "prettier": "prettier .",
     "preview": "vite preview",
     "start": "vite",
     "test": "vitest",
@@ -72,10 +69,13 @@
     "eslint-plugin-testing-library": "7.16.2",
     "happy-dom": "20.11.2",
     "jsonc-parser": "3.3.1",
-    "prettier": "3.9.6",
+    "oxfmt": "0.63.0",
     "typescript": "npm:@typescript/typescript6@6.0.3",
     "typescript-eslint": "8.67.0",
     "vite": "8.2.1",
     "vitest": "4.1.10"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }

@@ -77,6 +77,6 @@ export default defineConfig(
 		extends: [testingLibrary.configs['flat/react'], vitest.configs.recommended],
 	},
 	{
-		ignores: ['dist', 'public/dotnet/'],
+		ignores: ['dist/', 'public/dotnet/', 'coverage/'],
 	},
 );
