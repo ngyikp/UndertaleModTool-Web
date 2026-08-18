@@ -17,11 +17,7 @@
 	},
 	"[jsonc]": {
 		"editor.defaultFormatter": "oxc.oxc-vscode",
-		"editor.formatOnSave": true,
-
-		// data-file-tests.jsonc is stored outside the usual .prettierrc
-		"prettier.useTabs": true,
-		"prettier.trailingComma": "none"
+		"editor.formatOnSave": true
 	},
 	"[json]": {
 		"editor.defaultFormatter": "oxc.oxc-vscode",

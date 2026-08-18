@@ -7,14 +7,7 @@
 	"sortPackageJson": {
 		"sortScripts": true
 	},
-	"ignorePatterns": [
-		"dist/",
-		"public/dotnet/",
-
-		"coverage/",
-
-		"src/routeTree.gen.ts"
-	],
+	"ignorePatterns": ["src/routeTree.gen.ts"],
 	"overrides": [
 		{
 			"files": ["package.json"],
