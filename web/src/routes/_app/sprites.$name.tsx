@@ -10,13 +10,12 @@ import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import ImageAppearanceSelect from '../../common/image/ImageAppearanceSelect';
 import TexturePageImageViewer from '../../common/image/TexturePageImageViewer';
+import {NumberedList, NumberedListItem} from '../../common/NumberedList';
 import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {spriteInfoByNameQueryOptions} from '../../messages/getSpriteInfoByName';
 import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
 import {useSpritesDataStore} from '../../stores/sprites-data-store';
 import {ManagedErrorFromDotNet} from '../../worker/ManagedErrorFromDotNet';
-
-import styles from './sprites.$name.module.css';
 
 const INVALID_TEXTURE_PAGE_ID = -1;
 
@@ -90,31 +89,31 @@ function RouteComponent() {
 					<ImageAppearanceSelect />
 
 					<Suspense fallback={<BasicLoadingMessage />}>
-						<ol className={styles.list}>
+						<NumberedList>
 							{data.TexturePageIDs.map((pageId, index) => {
 								return (
-									<li
-										className={styles.listItem}
+									<NumberedListItem
 										key={
 											texturePageId !== INVALID_TEXTURE_PAGE_ID
 												? pageId
 												: '!empty' + index.toString()
 										}
+										index={index}
 									>
 										{texturePageId !== INVALID_TEXTURE_PAGE_ID ? (
 											<TexturePageImageViewer
 												texturePageId={pageId}
 												includePadding={includePadding}
-												fileName={`${name} (page ${index.toString()})`}
+												fileName={`${name} (page ${(index + 1).toString()})`}
 												enableImageActions={false}
 											/>
 										) : (
 											'(empty)'
 										)}
-									</li>
+									</NumberedListItem>
 								);
 							})}
-						</ol>
+						</NumberedList>
 					</Suspense>
 				</>
 			) : texturePageId != null ? (

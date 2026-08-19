@@ -1,0 +1,27 @@
+.list {
+	margin-left: var(--mantine-spacing-xl);
+	display: flex;
+	flex-direction: column;
+	gap: var(--mantine-spacing-xs);
+}
+
+.listItem {
+	padding-left: var(--mantine-spacing-xs);
+}
+
+/* Safari workaround */
+.fakeNumberedList {
+	list-style: none;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: var(--mantine-spacing-xs);
+}
+
+.fakeNumberedListItem {
+	display: contents;
+}
+
+.fakeNumber {
+	min-width: var(--mantine-spacing-xl);
+	text-align: right;
+}

@@ -1,8 +1,0 @@
-.list {
-	margin-left: var(--mantine-spacing-xl);
-}
-
-.listItem {
-	padding-left: var(--mantine-spacing-xs);
-	margin-bottom: var(--mantine-spacing-xs);
-}
