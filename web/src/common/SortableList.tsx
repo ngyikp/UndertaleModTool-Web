@@ -4,12 +4,13 @@ import {
 	Input,
 	Pagination,
 	Select,
-	Space,
 	Stack,
+	Text,
 	TextInput,
 	Tooltip,
 } from '@mantine/core';
 import {MagnifyingGlassIcon} from '@phosphor-icons/react/dist/csr/MagnifyingGlass';
+import {useRef} from 'react';
 
 import {useDataStore} from '../data-store';
 
@@ -54,12 +55,27 @@ export default function SortableList({
 	};
 	const setSettings = useDataStore((state) => state.setSortableListSettings);
 
+	const wrapRef = useRef<HTMLDivElement>(null);
+	const listRef = useRef<HTMLUListElement>(null);
+
 	function setFilter(filter: string) {
 		setSettings(id, {
 			...settings,
 			filter,
 			page: 1,
 		});
+	}
+
+	function scrollListToTop() {
+		if (onIndexPage) {
+			if (wrapRef.current) {
+				wrapRef.current.scrollIntoView();
+			} else {
+				window.scrollTo(0, 0);
+			}
+		} else {
+			listRef.current?.scrollTo(0, 0);
+		}
 	}
 
 	const searchHighlight = settings.filter.length >= 2 ? settings.filter : null;
@@ -97,8 +113,9 @@ export default function SortableList({
 			className={
 				onIndexPage && allResultsList.length > 0
 					? styles.wrapOnIndexPage
-					: undefined
+					: styles.wrapOnSide
 			}
+			ref={wrapRef}
 		>
 			{allResultsList.length > 0 ? (
 				<Group gap="xs" py="md" className={styles.filters}>
@@ -148,7 +165,7 @@ export default function SortableList({
 
 			{onePageList.length > 0 ? (
 				<>
-					<p>
+					<Text mb="xs" className={styles.itemCounts}>
 						{hasPages
 							? (startIndex + 1).toString() +
 								'-' +
@@ -156,15 +173,13 @@ export default function SortableList({
 								' of '
 							: ''}
 						{filteredList.length} {filteredList.length === 1 ? 'item' : 'items'}
-					</p>
+					</Text>
 
-					<Space h="xs" />
-
-					<ul className={styles.list}>
+					<ul className={styles.list} ref={listRef}>
 						{onePageList.map((item, index) => {
 							return (
 								<li
-									className={styles.listItem}
+									// className={styles.listItem}
 									// eslint-disable-next-line @eslint-react/no-array-index-key
 									key={!itemsAreNonUnique ? item : index}
 								>
@@ -183,6 +198,8 @@ export default function SortableList({
 									...settings,
 									page: newPage,
 								});
+
+								scrollListToTop();
 							}}
 							layout="responsive"
 							className={styles.pagination}
