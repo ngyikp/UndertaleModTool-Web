@@ -68,7 +68,7 @@ function RouteComponent() {
 						download={name}
 						variant="default"
 					>
-						Export raw sound
+						Export sound
 					</Button>
 				</div>
 			) : null}
