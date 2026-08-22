@@ -84,7 +84,7 @@ export default function SaveDataFile() {
 		<>
 			<Button
 				onClick={process}
-				disabled={status === 'LOADING' || status === 'PROCESSING'}
+				loading={status === 'LOADING' || status === 'PROCESSING'}
 			>
 				Save game
 			</Button>
