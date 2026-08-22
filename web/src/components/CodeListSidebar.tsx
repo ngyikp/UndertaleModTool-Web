@@ -8,12 +8,12 @@ import {useDataStore} from '../data-store';
 import {listCodeEntriesQueryOptions} from '../messages/listCodeEntries';
 
 export default function CodeListSidebar() {
-	const showCodeEntries = useDataStore((state) => state.codeShowChildEntries);
-	// const setShowCodeEntries = useDataStore(
+	const showChildEntries = useDataStore((state) => state.codeShowChildEntries);
+	// const setShowChildEntries = useDataStore(
 	// 	(state) => state.setCodeShowChildEntries,
 	// );
 
-	const {data} = useSuspenseQuery(listCodeEntriesQueryOptions(showCodeEntries));
+	const {data} = useSuspenseQuery(listCodeEntriesQueryOptions());
 
 	const onIndexPage = useChildMatches().length === 0;
 
@@ -24,7 +24,13 @@ export default function CodeListSidebar() {
 			getNameFromList={(item) => {
 				return item.Name;
 			}}
-			list={data.list}
+			list={data.list.filter((item) => {
+				if (!showChildEntries && item.HasParentEntry) {
+					return false;
+				}
+
+				return true;
+			})}
 			onIndexPage={onIndexPage}
 			render={({item, text, searchHighlight}) => {
 				return (

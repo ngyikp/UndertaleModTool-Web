@@ -12,7 +12,7 @@ export type AppExports = {
 
 			GetSpriteInfoByName(name: string): string;
 
-			ListCodeEntries(showChildEntries: boolean): string;
+			ListCodeEntries(): string;
 			GetCodeInfoByName(name: string): string;
 			EditCodeTextByName(name: string, sourceCode: string): true;
 

@@ -410,7 +410,7 @@ public partial class Program
 
     #region Code
     [JSExport]
-    public static string ListCodeEntries(bool showChildEntries)
+    public static string ListCodeEntries()
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
@@ -424,11 +424,6 @@ public partial class Program
         {
             if (entry is not null)
             {
-                if (!showChildEntries && entry.ParentEntry is not null)
-                {
-                    continue;
-                }
-
                 entries.Add(new()
                 {
                     Name = entry.Name.Content,

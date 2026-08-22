@@ -12,8 +12,8 @@ import {listCodeEntriesQueryOptions} from '../../messages/listCodeEntries';
 
 function Code() {
 	const info = useDataStore((state) => state.gameInfo);
-	const showCodeEntries = useDataStore((state) => state.codeShowChildEntries);
-	const setShowCodeEntries = useDataStore(
+	const showChildEntries = useDataStore((state) => state.codeShowChildEntries);
+	const setShowChildEntries = useDataStore(
 		(state) => state.setCodeShowChildEntries,
 	);
 
@@ -24,9 +24,9 @@ function Code() {
 			<DocumentTitle text="Code" />
 
 			<Checkbox
-				checked={showCodeEntries}
+				checked={showChildEntries}
 				onChange={(event) => {
-					setShowCodeEntries(event.currentTarget.checked);
+					setShowChildEntries(event.currentTarget.checked);
 				}}
 				label="Show reference/anonymous functions"
 			/>
@@ -50,11 +50,6 @@ function Code() {
 
 export const Route = createFileRoute('/_app/code')({
 	component: Code,
-	loader: async ({context}) => {
-		const showCodeEntries = useDataStore.getState().codeShowChildEntries;
-
-		await context.queryClient.ensureQueryData(
-			listCodeEntriesQueryOptions(showCodeEntries),
-		);
-	},
+	loader: ({context}) =>
+		context.queryClient.ensureQueryData(listCodeEntriesQueryOptions()),
 });

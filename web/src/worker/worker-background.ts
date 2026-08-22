@@ -123,9 +123,7 @@ async function onMessage(request: WorkerRequest) {
 					result: {
 						list: CodeEntryListInfoSchema.parse(
 							JSON.parse(
-								dotNet.exports.UndertaleModToolWASM.Program.ListCodeEntries(
-									request.message.showChildEntries,
-								),
+								dotNet.exports.UndertaleModToolWASM.Program.ListCodeEntries(),
 							),
 						),
 					},

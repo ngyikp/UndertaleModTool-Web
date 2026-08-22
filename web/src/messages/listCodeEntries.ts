@@ -5,7 +5,6 @@ import {sendMessageToWorkerAsPromise} from '../worker/worker-handler';
 
 export type ListCodeEntriesRequest = {
 	type: 'listCodeEntries';
-	showChildEntries: boolean;
 };
 
 export type ListCodeEntriesResult = {
@@ -22,18 +21,17 @@ export const CodeEntryListInfoSchema = z.array(
 
 type CodeEntryListType = z.infer<typeof CodeEntryListInfoSchema>;
 
-function listCodeEntries(showChildEntries: boolean) {
+function listCodeEntries() {
 	return sendMessageToWorkerAsPromise<ListCodeEntriesResult>({
 		type: 'listCodeEntries',
-		showChildEntries,
 	});
 }
 
-export const listCodeEntriesQueryOptions = (showChildEntries: boolean) => {
+export const listCodeEntriesQueryOptions = () => {
 	return queryOptions({
-		queryKey: ['code', 'list', showChildEntries],
+		queryKey: ['code', 'list'],
 		queryFn() {
-			return listCodeEntries(showChildEntries);
+			return listCodeEntries();
 		},
 	});
 };
