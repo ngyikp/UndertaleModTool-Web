@@ -22,6 +22,9 @@ type DataStore = {
 	imageViewerSettings: ImageViewerSettings;
 	setImageViewerSettings: (newSettings: ImageViewerSettings) => void;
 
+	codeShowChildEntries: boolean;
+	setCodeShowChildEntries: (showChildEntries: boolean) => void;
+
 	codeEditorWordWrap: boolean;
 	setCodeEditorWordWrap: (codeEditorWordWrap: boolean) => void;
 
@@ -66,6 +69,15 @@ export const useDataStore = create<DataStore>((set, _get, store) => ({
 		set(() => {
 			return {
 				imageViewerSettings: newSettings,
+			};
+		});
+	},
+
+	codeShowChildEntries: true,
+	setCodeShowChildEntries(codeShowChildEntries) {
+		set(() => {
+			return {
+				codeShowChildEntries,
 			};
 		});
 	},
