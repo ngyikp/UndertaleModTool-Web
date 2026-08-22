@@ -73,7 +73,7 @@ export const useDataStore = create<DataStore>((set, _get, store) => ({
 		});
 	},
 
-	codeShowChildEntries: true,
+	codeShowChildEntries: false,
 	setCodeShowChildEntries(codeShowChildEntries) {
 		set(() => {
 			return {
