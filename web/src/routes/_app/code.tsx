@@ -1,13 +1,12 @@
 import {Checkbox} from '@mantine/core';
-import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Outlet, useChildMatches} from '@tanstack/react-router';
+import {Suspense} from 'react';
 
+import BasicLoadingMessage from '../../common/BasicLoadingMessage';
 import DocumentTitle from '../../common/DocumentTitle';
-import getSortableListItemLinkProps from '../../common/getSortableListItemLinkProps';
-import MantineAnchorWithRouter from '../../common/MantineAnchorWithRouter';
 import SidebarAndContentView from '../../common/SidebarAndContentView';
-import SortableList from '../../common/SortableList';
 import YycWarningAlert from '../../common/YycWarningAlert';
+import CodeListSidebar from '../../components/CodeListSidebar';
 import {useDataStore} from '../../data-store';
 import {listCodeEntriesQueryOptions} from '../../messages/listCodeEntries';
 
@@ -17,8 +16,6 @@ function Code() {
 	const setShowCodeEntries = useDataStore(
 		(state) => state.setCodeShowChildEntries,
 	);
-
-	const {data} = useSuspenseQuery(listCodeEntriesQueryOptions(showCodeEntries));
 
 	const onIndexPage = useChildMatches().length === 0;
 
@@ -34,32 +31,16 @@ function Code() {
 				label="Show reference/anonymous functions"
 			/>
 
-			{info?.IsYYC && data.list.length === 0 ? (
+			{info?.IsYYC && info.ItemCounts.Code === 0 ? (
 				<YycWarningAlert />
 			) : (
 				<SidebarAndContentView
 					onIndexPage={onIndexPage}
 					content={<Outlet />}
 					sidebar={
-						<SortableList
-							id="code"
-							emptyListMessage="This game has no code entries."
-							getNameFromList={(item) => {
-								return item.Name;
-							}}
-							list={data.list}
-							onIndexPage={onIndexPage}
-							render={({item, text, searchHighlight}) => {
-								return (
-									<MantineAnchorWithRouter
-										to="/code/$name"
-										params={{name: text}}
-										c={item.HasParentEntry ? 'dimmed' : undefined}
-										{...getSortableListItemLinkProps(text, searchHighlight)}
-									/>
-								);
-							}}
-						/>
+						<Suspense fallback={<BasicLoadingMessage />}>
+							<CodeListSidebar />
+						</Suspense>
 					}
 				/>
 			)}
@@ -69,7 +50,11 @@ function Code() {
 
 export const Route = createFileRoute('/_app/code')({
 	component: Code,
-	loader: ({context}) =>
-		// todo can this true not be hardcoded?
-		context.queryClient.ensureQueryData(listCodeEntriesQueryOptions(true)),
+	loader: async ({context}) => {
+		const showCodeEntries = useDataStore.getState().codeShowChildEntries;
+
+		await context.queryClient.ensureQueryData(
+			listCodeEntriesQueryOptions(showCodeEntries),
+		);
+	},
 });
