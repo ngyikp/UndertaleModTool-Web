@@ -1,14 +1,10 @@
 import {Checkbox} from '@mantine/core';
 import {useSuspenseQuery} from '@tanstack/react-query';
-import {
-	createFileRoute,
-	Link,
-	Outlet,
-	useChildMatches,
-} from '@tanstack/react-router';
+import {createFileRoute, Outlet, useChildMatches} from '@tanstack/react-router';
 
 import DocumentTitle from '../../common/DocumentTitle';
 import getSortableListItemLinkProps from '../../common/getSortableListItemLinkProps';
+import MantineAnchorWithRouter from '../../common/MantineAnchorWithRouter';
 import SidebarAndContentView from '../../common/SidebarAndContentView';
 import SortableList from '../../common/SortableList';
 import YycWarningAlert from '../../common/YycWarningAlert';
@@ -48,16 +44,18 @@ function Code() {
 						<SortableList
 							id="code"
 							emptyListMessage="This game has no code entries."
-							list={data.list.map((entry) => {
-								return entry.Name;
-							})}
+							getNameFromList={(item) => {
+								return item.Name;
+							}}
+							list={data.list}
 							onIndexPage={onIndexPage}
-							render={(item, searchHighlight) => {
+							render={({item, text, searchHighlight}) => {
 								return (
-									<Link
+									<MantineAnchorWithRouter
 										to="/code/$name"
-										params={{name: item}}
-										{...getSortableListItemLinkProps(item, searchHighlight)}
+										params={{name: text}}
+										c={item.HasParentEntry ? 'dimmed' : undefined}
+										{...getSortableListItemLinkProps(text, searchHighlight)}
 									/>
 								);
 							}}

@@ -38,12 +38,12 @@ function Sprites() {
 						emptyListMessage="This game has no sprites."
 						list={data.list}
 						onIndexPage={onIndexPage}
-						render={(item, searchHighlight) => {
+						render={({text, searchHighlight}) => {
 							return (
 								<Link
 									to="/sprites/$name"
-									params={{name: item}}
-									{...getSortableListItemLinkProps(item, searchHighlight)}
+									params={{name: text}}
+									{...getSortableListItemLinkProps(text, searchHighlight)}
 								/>
 							);
 						}}

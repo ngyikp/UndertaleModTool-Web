@@ -29,10 +29,10 @@ function Strings() {
 				emptyListMessage="This game has no strings."
 				list={data.list}
 				onIndexPage={true}
-				render={(item, searchHighlight) => {
+				render={({text, searchHighlight}) => {
 					return (
 						<span className={styles.item}>
-							{renderSearchHighlight(item, searchHighlight)}
+							{renderSearchHighlight({text, searchHighlight})}
 						</span>
 					);
 				}}

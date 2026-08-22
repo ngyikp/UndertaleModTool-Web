@@ -39,16 +39,16 @@ function EmbeddedAudio() {
 						emptyListMessage="This game has no embedded audio."
 						list={data.list}
 						onIndexPage={onIndexPage}
-						render={(item, searchHighlight) => {
+						render={({text, searchHighlight}) => {
 							// Name is set by UMT, the game data itself does not set names for embedded audio
 							// https://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModLib/UndertaleChunks.cs#L2227
-							const id = parseInt(item.replace('EmbeddedSound ', ''), 10);
+							const id = parseInt(text.replace('EmbeddedSound ', ''), 10);
 
 							return (
 								<Link
 									to="/embedded-audio/$id"
 									params={{id}}
-									{...getSortableListItemLinkProps(item, searchHighlight)}
+									{...getSortableListItemLinkProps(text, searchHighlight)}
 								/>
 							);
 						}}

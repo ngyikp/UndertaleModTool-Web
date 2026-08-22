@@ -40,16 +40,16 @@ function TexturePages() {
 						emptyListMessage="This game has no texture pages."
 						list={data.list}
 						onIndexPage={onIndexPage}
-						render={(item, searchHighlight) => {
+						render={({text, searchHighlight}) => {
 							// Name is set by UMT, the game data itself does not set names for texture pages
 							// hhttps://github.com/UnderminersTeam/UndertaleModTool/blob/2b6fe69722cec25219f1ae21f8111907c2a15629/UndertaleModLib/UndertaleChunks.cs#L1667
-							const id = parseInt(item.replace('PageItem ', ''), 10);
+							const id = parseInt(text.replace('PageItem ', ''), 10);
 
 							return (
 								<Link
 									to="/texture-pages/$id"
 									params={{id}}
-									{...getSortableListItemLinkProps(item, searchHighlight)}
+									{...getSortableListItemLinkProps(text, searchHighlight)}
 								/>
 							);
 						}}

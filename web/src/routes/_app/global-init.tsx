@@ -37,15 +37,15 @@ function GlobalInitScripts() {
 				}
 				list={data.list}
 				onIndexPage={true}
-				render={(item, searchHighlight) => {
+				render={({text, searchHighlight}) => {
 					return (
 						<Link
 							to="/code/$name"
-							params={{name: item}}
+							params={{name: text}}
 							preload="intent"
 							preloadDelay={250}
 						>
-							{renderSearchHighlight(item, searchHighlight)}
+							{renderSearchHighlight({text, searchHighlight})}
 						</Link>
 					);
 				}}

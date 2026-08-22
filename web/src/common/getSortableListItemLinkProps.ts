@@ -3,7 +3,7 @@ import type {LinkProps} from '@tanstack/react-router';
 import renderSearchHighlight from './renderSearchHighlight';
 
 export default function getSortableListItemLinkProps(
-	item: string,
+	text: string,
 	searchHighlight: string | null,
 ): LinkProps & React.AnchorHTMLAttributes<HTMLAnchorElement> {
 	return {
@@ -11,8 +11,8 @@ export default function getSortableListItemLinkProps(
 		preloadDelay: 250,
 		activeProps: {style: {fontWeight: 'bold'}},
 		resetScroll: false,
-		title: item,
+		title: text,
 
-		children: renderSearchHighlight(item, searchHighlight),
+		children: renderSearchHighlight({text, searchHighlight}),
 	};
 }

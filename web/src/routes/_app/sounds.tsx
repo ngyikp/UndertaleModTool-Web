@@ -38,12 +38,12 @@ function Sounds() {
 						emptyListMessage="This game has no sounds."
 						list={data.list}
 						onIndexPage={onIndexPage}
-						render={(item, searchHighlight) => {
+						render={({text, searchHighlight}) => {
 							return (
 								<Link
 									to="/sounds/$name"
-									params={{name: item}}
-									{...getSortableListItemLinkProps(item, searchHighlight)}
+									params={{name: text}}
+									{...getSortableListItemLinkProps(text, searchHighlight)}
 								/>
 							);
 						}}

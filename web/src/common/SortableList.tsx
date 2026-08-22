@@ -25,27 +25,46 @@ export type SortableListSettings = {
 
 const PAGE_SIZE = 2000;
 const DEFAULT_EMPTY_LIST_MESSAGE = <p>This list is empty.</p>;
+const DEFAULT_GET_NAME_FROM_LIST = (item: unknown) => {
+	if (typeof item === 'string') {
+		return item;
+	}
 
-type Props = Readonly<{
+	throw new Error(
+		'Unexpected item type for SortableList, ensure getNameFromList() is implemented',
+	);
+};
+
+type GetNameFromListProp<T> = Readonly<{
+	getNameFromList: (item: T) => string;
+}>;
+
+type Props<T> = Readonly<{
 	// Used to uniquely identify lists on different pages to restore state
 	id: string;
 	emptyListMessage?: React.ReactNode;
 	// Some lists (e.g. variables) have non-unique items, we can't use them for unique keys
 	// so fall back to array index (very inefficient)
 	itemsAreNonUnique?: boolean;
-	list: string[];
+	list: T[];
 	onIndexPage: boolean;
-	render?: (item: string, searchHighlight: string | null) => React.ReactNode;
-}>;
+	render?: (options: {
+		text: string;
+		item: T;
+		searchHighlight: string | null;
+	}) => React.ReactNode;
+}> &
+	(T extends string ? Partial<GetNameFromListProp<T>> : GetNameFromListProp<T>);
 
-export default function SortableList({
+export default function SortableList<T>({
 	id,
 	emptyListMessage = DEFAULT_EMPTY_LIST_MESSAGE,
+	getNameFromList = DEFAULT_GET_NAME_FROM_LIST,
 	itemsAreNonUnique = false,
 	list: allResultsList,
 	onIndexPage,
 	render = renderSearchHighlight,
-}: Props) {
+}: Props<T>) {
 	const settings = useDataStore((state) =>
 		state.sortableListSettings.get(id),
 	) ?? {
@@ -87,7 +106,7 @@ export default function SortableList({
 			.toLowerCase();
 
 		filteredList = filteredList.filter((item) => {
-			return item.toLowerCase().includes(filterCompare);
+			return getNameFromList(item).toLowerCase().includes(filterCompare);
 		});
 	}
 	if (settings.orderBy !== 'DEFAULT') {
@@ -181,9 +200,13 @@ export default function SortableList({
 								<li
 									// className={styles.listItem}
 									// eslint-disable-next-line @eslint-react/no-array-index-key
-									key={!itemsAreNonUnique ? item : index}
+									key={!itemsAreNonUnique ? getNameFromList(item) : index}
 								>
-									{render(item, searchHighlight)}
+									{render({
+										text: getNameFromList(item),
+										item,
+										searchHighlight,
+									})}
 								</li>
 							);
 						})}
