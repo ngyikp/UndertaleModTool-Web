@@ -1,4 +1,3 @@
-import {Checkbox} from '@mantine/core';
 import {createFileRoute, Outlet, useChildMatches} from '@tanstack/react-router';
 import {Suspense} from 'react';
 
@@ -12,24 +11,12 @@ import {listCodeEntriesQueryOptions} from '../../messages/listCodeEntries';
 
 function Code() {
 	const info = useDataStore((state) => state.gameInfo);
-	const showChildEntries = useDataStore((state) => state.codeShowChildEntries);
-	const setShowChildEntries = useDataStore(
-		(state) => state.setCodeShowChildEntries,
-	);
 
 	const onIndexPage = useChildMatches().length === 0;
 
 	return (
 		<>
 			<DocumentTitle text="Code" />
-
-			<Checkbox
-				checked={showChildEntries}
-				onChange={(event) => {
-					setShowChildEntries(event.currentTarget.checked);
-				}}
-				label="Show reference/anonymous functions"
-			/>
 
 			{info?.IsYYC && info.ItemCounts.Code === 0 ? (
 				<YycWarningAlert />

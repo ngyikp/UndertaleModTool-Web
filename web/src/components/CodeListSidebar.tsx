@@ -1,3 +1,4 @@
+import {Checkbox} from '@mantine/core';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {useChildMatches} from '@tanstack/react-router';
 
@@ -9,9 +10,9 @@ import {listCodeEntriesQueryOptions} from '../messages/listCodeEntries';
 
 export default function CodeListSidebar() {
 	const showChildEntries = useDataStore((state) => state.codeShowChildEntries);
-	// const setShowChildEntries = useDataStore(
-	// 	(state) => state.setCodeShowChildEntries,
-	// );
+	const setShowChildEntries = useDataStore(
+		(state) => state.setCodeShowChildEntries,
+	);
 
 	const {data} = useSuspenseQuery(listCodeEntriesQueryOptions());
 
@@ -21,6 +22,17 @@ export default function CodeListSidebar() {
 		<SortableList
 			id="code"
 			emptyListMessage="This game has no code entries."
+			extraBelowItemCounts={
+				<Checkbox
+					checked={showChildEntries}
+					onChange={(event) => {
+						setShowChildEntries(event.currentTarget.checked);
+					}}
+					label="Show reference/anonymous functions"
+					mb="xs"
+					size="md"
+				/>
+			}
 			getNameFromList={(item) => {
 				return item.Name;
 			}}

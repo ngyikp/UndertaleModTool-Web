@@ -5,16 +5,20 @@
 .wrapOnSide {
 	height: 100vh;
 	display: grid;
-	grid-template-rows: auto auto 1fr auto;
-	grid-template-areas: 'filters' 'itemCounts' 'content' 'pagination';
+	grid-template-rows: auto auto auto 1fr auto;
+	grid-template-areas: 'filters' 'itemCounts' 'extraBelowItemCounts' 'list' 'pagination';
 }
 
 .itemCounts {
 	grid-area: itemCounts;
 }
 
+.extraBelowItemCounts {
+	grid-area: extraBelowItemCounts;
+}
+
 .list {
-	grid-area: content;
+	grid-area: list;
 	list-style: none;
 }
 

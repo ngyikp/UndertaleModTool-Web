@@ -43,6 +43,7 @@ type Props<T> = Readonly<{
 	// Used to uniquely identify lists on different pages to restore state
 	id: string;
 	emptyListMessage?: React.ReactNode;
+	extraBelowItemCounts?: React.ReactNode;
 	// Some lists (e.g. variables) have non-unique items, we can't use them for unique keys
 	// so fall back to array index (very inefficient)
 	itemsAreNonUnique?: boolean;
@@ -59,6 +60,7 @@ type Props<T> = Readonly<{
 export default function SortableList<T>({
 	id,
 	emptyListMessage = DEFAULT_EMPTY_LIST_MESSAGE,
+	extraBelowItemCounts,
 	getNameFromList = DEFAULT_GET_NAME_FROM_LIST,
 	itemsAreNonUnique = false,
 	list: allResultsList,
@@ -193,6 +195,12 @@ export default function SortableList<T>({
 							: ''}
 						{filteredList.length} {filteredList.length === 1 ? 'item' : 'items'}
 					</Text>
+
+					{extraBelowItemCounts != null ? (
+						<div className={styles.extraBelowItemCounts}>
+							{extraBelowItemCounts}
+						</div>
+					) : null}
 
 					<ul className={styles.list} ref={listRef}>
 						{onePageList.map((item, index) => {
