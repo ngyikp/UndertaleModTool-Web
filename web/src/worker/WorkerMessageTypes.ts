@@ -38,6 +38,10 @@ import type {
 	GetTexturePageInfoByIdRequest,
 	GetTexturePageInfoByIdResult,
 } from '../messages/getTexturePageInfoById';
+import type {
+	ListCodeEntriesRequest,
+	ListCodeEntriesResult,
+} from '../messages/listCodeEntries';
 import type {ReadFileRequest, ReadFileResult} from '../messages/readFile';
 import type {
 	SaveDataFileRequest,
@@ -57,6 +61,7 @@ export type WorkerRequest = {
 		| ReadFileRequest
 		| SaveDataFileRequest
 		| DeleteDataFileRequest
+		| ListCodeEntriesRequest
 		| EditCodeTextByNameRequest
 		| GetCodeInfoByNameRequest
 		| GetEmbeddedAudioInfoByIdRequest
@@ -73,6 +78,7 @@ export type AllResults =
 	| ReadFileResult
 	| SaveDataFileResult
 	| DeleteDataFileResult
+	| ListCodeEntriesResult
 	| EditCodeTextByNameResult
 	| GetCodeInfoByNameResult
 	| GetEmbeddedAudioInfoByIdResult

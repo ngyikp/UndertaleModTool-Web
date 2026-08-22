@@ -5,6 +5,7 @@ import {EntriesListInfoSchema} from '../messages/getEntriesByModelType';
 import {SoundInfoSchema} from '../messages/getSoundInfoByName';
 import {SpriteInfoSchema} from '../messages/getSpriteInfoByName.js';
 import {TexturePageInfoSchema} from '../messages/getTexturePageInfoById.js';
+import {CodeEntryListInfoSchema} from '../messages/listCodeEntries.js';
 import {DataFileLoadInfoSchema} from '../messages/readFile.js';
 import {GameInfoSchema} from '../types/GameInfoType';
 
@@ -93,7 +94,7 @@ async function onMessage(request: WorkerRequest) {
 					result: {
 						list: EntriesListInfoSchema.parse(
 							JSON.parse(
-								dotNet.exports.UndertaleModToolWASM.Program.GetEntriesByModelType(
+								dotNet.exports.UndertaleModToolWASM.Program.ListEntriesByModelType(
 									request.message.modelType,
 								),
 							),
@@ -115,6 +116,22 @@ async function onMessage(request: WorkerRequest) {
 					),
 				});
 				break;
+
+			case 'listCodeEntries': {
+				reply({
+					status: 'FINISHED',
+					result: {
+						list: CodeEntryListInfoSchema.parse(
+							JSON.parse(
+								dotNet.exports.UndertaleModToolWASM.Program.ListCodeEntries(
+									request.message.showChildEntries,
+								),
+							),
+						),
+					},
+				});
+				break;
+			}
 
 			case 'getCodeInfoByName':
 				reply({

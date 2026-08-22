@@ -1,6 +1,5 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
-import codeQueryOptions from '../queries/codeQueryOptions';
 import {sendMessageToWorkerAsPromise} from '../worker/worker-handler';
 
 export type EditCodeTextByNameRequest = {
@@ -26,7 +25,8 @@ export const useEditCodeTextByNameMutation = (name: string) => {
 		},
 		onSuccess() {
 			// need to invalidate every `code` queryKey since you could rename functions
-			void queryClient.invalidateQueries(codeQueryOptions);
+			// eslint-disable-next-line @tanstack/query/prefer-query-options
+			void queryClient.invalidateQueries({queryKey: ['code']});
 		},
 		gcTime: 1000,
 	});

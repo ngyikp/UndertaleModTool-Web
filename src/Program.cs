@@ -244,8 +244,7 @@ public partial class Program
 
     /// <param name="modelTypeInt">Value in <see cref="ModelType" />, needs to be int due to SYSLIB1072</param>
     [JSExport]
-    [SupportedOSPlatform("browser")]
-    public static string GetEntriesByModelType(int modelTypeInt)
+    public static string ListEntriesByModelType(int modelTypeInt)
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
@@ -311,6 +310,7 @@ public partial class Program
                 break;
 
             case ModelType.Code:
+                // Also see ListCodeEntries()
                 model = gameData.Code;
                 break;
 
@@ -410,7 +410,37 @@ public partial class Program
 
     #region Code
     [JSExport]
-    [SupportedOSPlatform("browser")]
+    public static string ListCodeEntries(bool showChildEntries)
+    {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
+        if (gameData.Code is null)
+        {
+            throw new Exception("This game has no code entries.");
+        }
+
+        List<CodeEntry> entries = [];
+        foreach (UndertaleCode entry in gameData.Code)
+        {
+            if (entry is not null)
+            {
+                if (!showChildEntries && entry.ParentEntry is not null)
+                {
+                    continue;
+                }
+
+                entries.Add(new()
+                {
+                    Name = entry.Name.Content,
+                    HasParentEntry = entry.ParentEntry is not null,
+                });
+            }
+        }
+
+        return JsonSerializer.Serialize(entries, CodeEntryListContext.Default.ListCodeEntry);
+    }
+
+    [JSExport]
     public static string GetCodeInfoByName(string name)
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
@@ -445,7 +475,6 @@ public partial class Program
     }
 
     [JSExport]
-    [SupportedOSPlatform("browser")]
     public static bool EditCodeTextByName(string name, string sourceCode)
     {
         UndertaleData gameData = DataHolder.GetNonNullData();

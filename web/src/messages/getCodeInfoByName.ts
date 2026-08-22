@@ -27,7 +27,7 @@ function getCodeInfoByName(name: string) {
 
 export const codeInfoByNameQueryOptions = (name: string) =>
 	queryOptions({
-		queryKey: ['code', name],
+		queryKey: ['code', 'info', name],
 		queryFn() {
 			return getCodeInfoByName(name);
 		},

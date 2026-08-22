@@ -8,10 +8,11 @@ export type AppExports = {
 			SaveDataFile(messageId: number, fileName: string): true;
 			GetGameInfo(): string;
 
-			GetEntriesByModelType(modelType: ModelTypeKeys): string;
+			ListEntriesByModelType(modelType: ModelTypeKeys): string;
 
 			GetSpriteInfoByName(name: string): string;
 
+			ListCodeEntries(showChildEntries: boolean): string;
 			GetCodeInfoByName(name: string): string;
 			EditCodeTextByName(name: string, sourceCode: string): true;
 

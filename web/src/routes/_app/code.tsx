@@ -12,12 +12,12 @@ import SidebarAndContentView from '../../common/SidebarAndContentView';
 import SortableList from '../../common/SortableList';
 import YycWarningAlert from '../../common/YycWarningAlert';
 import {useDataStore} from '../../data-store';
-import codeQueryOptions from '../../queries/codeQueryOptions';
+import {listCodeEntriesQueryOptions} from '../../messages/listCodeEntries';
 
 function Code() {
 	const info = useDataStore((state) => state.gameInfo);
 
-	const {data} = useSuspenseQuery(codeQueryOptions);
+	const {data} = useSuspenseQuery(listCodeEntriesQueryOptions(true));
 
 	const onIndexPage = useChildMatches().length === 0;
 
@@ -35,7 +35,9 @@ function Code() {
 						<SortableList
 							id="code"
 							emptyListMessage="This game has no code entries."
-							list={data.list}
+							list={data.list.map((entry) => {
+								return entry.Name;
+							})}
 							onIndexPage={onIndexPage}
 							render={(item, searchHighlight) => {
 								return (
@@ -56,5 +58,6 @@ function Code() {
 
 export const Route = createFileRoute('/_app/code')({
 	component: Code,
-	loader: ({context}) => context.queryClient.ensureQueryData(codeQueryOptions),
+	loader: ({context}) =>
+		context.queryClient.ensureQueryData(listCodeEntriesQueryOptions(true)),
 });
