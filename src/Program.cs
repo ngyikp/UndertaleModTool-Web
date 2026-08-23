@@ -28,7 +28,6 @@ public partial class Program
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(GameSpecificResolver.GameSpecificDefinition))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Underanalyzer.Decompiler.GameSpecific.EnumMacroType))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Underanalyzer.Decompiler.GameSpecific.ConstantsMacroType))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(UndertaleData))]
     // UnserializeChildObjectCount
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleObject))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSimpleListString))]
