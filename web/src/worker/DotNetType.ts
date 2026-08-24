@@ -12,6 +12,8 @@ export type AppExports = {
 
 			GetSpriteInfoByName(name: string): string;
 
+			GetGameObjectInfoByName(name: string): string;
+
 			ListCodeEntries(): string;
 			GetCodeInfoByName(name: string): string;
 			EditCodeTextByName(name: string, sourceCode: string): true;

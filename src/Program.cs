@@ -407,6 +407,35 @@ public partial class Program
         return JsonSerializer.Serialize(spriteInfo, SpriteInfoContext.Default.SpriteInfo);
     }
 
+    [JSExport]
+    public static string GetGameObjectInfoByName(string name)
+    {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
+        UndertaleGameObject gameObject = gameData.GameObjects.First(gameObject => name == gameObject.Name.Content);
+
+        Dictionary<int, List<GameObjectEvent>> events = new();
+        for (int i = 0; i < gameObject.Events.Count; i += 1)
+        {
+            events[i] = gameObject.Events[i].Select<UndertaleGameObject.Event, GameObjectEvent>(ev => new()
+            {
+                ActionsCodeNames = ev.Actions.Select(action => action.CodeId?.Name.Content).ToList(),
+                EventSubtype = ev.EventSubtype,
+            }).ToList();
+        }
+
+        GameObjectInfo gameObjectInfo = new()
+        {
+            SpriteName = gameObject.Sprite?.Name.Content,
+            Visible = gameObject.Visible,
+            Persistent = gameObject.Persistent,
+            ParentGameObjectName = gameObject.ParentId?.Name.Content,
+            Events = events,
+        };
+
+        return JsonSerializer.Serialize(gameObjectInfo, GameObjectInfoContext.Default.GameObjectInfo);
+    }
+
     #region Code
     [JSExport]
     public static string ListCodeEntries()

@@ -27,6 +27,10 @@ import type {
 	GetGameInfoResult,
 } from '../messages/getGameInfo';
 import type {
+	GetGameObjectInfoByNameRequest,
+	GetGameObjectInfoByNameResult,
+} from '../messages/getGameObjectInfoByName';
+import type {
 	GetSoundInfoByNameRequest,
 	GetSoundInfoByNameResult,
 } from '../messages/getSoundInfoByName';
@@ -68,6 +72,7 @@ export type WorkerRequest = {
 		| GetEmbeddedTextureInfoByIdRequest
 		| GetEntriesByModelTypeRequest
 		| GetGameInfoRequest
+		| GetGameObjectInfoByNameRequest
 		| GetSoundInfoByNameRequest
 		| GetSpriteInfoByNameRequest
 		| GetTexturePageInfoByIdRequest;
@@ -85,6 +90,7 @@ export type AllResults =
 	| GetEmbeddedTextureInfoByIdResult
 	| GetEntriesByModelTypeResult
 	| GetGameInfoResult
+	| GetGameObjectInfoByNameResult
 	| GetSoundInfoByNameResult
 	| GetSpriteInfoByNameResult
 	| GetTexturePageInfoByIdResult;

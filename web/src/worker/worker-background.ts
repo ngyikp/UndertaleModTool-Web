@@ -2,6 +2,7 @@ import {CodeInfoSchema} from '../messages/getCodeInfoByName';
 import {EmbeddedAudioInfoSchema} from '../messages/getEmbeddedAudioInfoById.js';
 import {EmbeddedTextureInfoSchema} from '../messages/getEmbeddedTextureInfoById.js';
 import {EntriesListInfoSchema} from '../messages/getEntriesByModelType';
+import {GameObjectInfoSchema} from '../messages/getGameObjectInfoByName.js';
 import {SoundInfoSchema} from '../messages/getSoundInfoByName';
 import {SpriteInfoSchema} from '../messages/getSpriteInfoByName.js';
 import {TexturePageInfoSchema} from '../messages/getTexturePageInfoById.js';
@@ -110,6 +111,19 @@ async function onMessage(request: WorkerRequest) {
 					result: SpriteInfoSchema.parse(
 						JSON.parse(
 							dotNet.exports.UndertaleModToolWASM.Program.GetSpriteInfoByName(
+								request.message.name,
+							),
+						),
+					),
+				});
+				break;
+
+			case 'getGameObjectInfoByName':
+				reply({
+					status: 'FINISHED',
+					result: GameObjectInfoSchema.parse(
+						JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.Program.GetGameObjectInfoByName(
 								request.message.name,
 							),
 						),

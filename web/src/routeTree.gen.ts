@@ -16,6 +16,7 @@ import { Route as AppEmbeddedAudioRouteImport } from './routes/_app/embedded-aud
 import { Route as AppEmbeddedTexturesRouteImport } from './routes/_app/embedded-textures'
 import { Route as AppGeneralInfoRouteImport } from './routes/_app/general-info'
 import { Route as AppGlobalInitRouteImport } from './routes/_app/global-init'
+import { Route as AppObjectsRouteImport } from './routes/_app/objects'
 import { Route as AppSoundsRouteImport } from './routes/_app/sounds'
 import { Route as AppSpritesRouteImport } from './routes/_app/sprites'
 import { Route as AppTexturePagesRouteImport } from './routes/_app/texture-pages'
@@ -28,7 +29,7 @@ import { Route as AppEmbeddedTexturesIdRouteImport } from './routes/_app/embedde
 import { Route as AppExtensionsIndexRouteImport } from './routes/_app/extensions.index'
 import { Route as AppFontsIndexRouteImport } from './routes/_app/fonts.index'
 import { Route as AppFunctionsIndexRouteImport } from './routes/_app/functions.index'
-import { Route as AppObjectsIndexRouteImport } from './routes/_app/objects.index'
+import { Route as AppObjectsNameRouteImport } from './routes/_app/objects.$name'
 import { Route as AppParticleSystemEmittersIndexRouteImport } from './routes/_app/particle-system-emitters.index'
 import { Route as AppParticleSystemsIndexRouteImport } from './routes/_app/particle-systems.index'
 import { Route as AppPathsIndexRouteImport } from './routes/_app/paths.index'
@@ -76,6 +77,11 @@ const AppGeneralInfoRoute = AppGeneralInfoRouteImport.update({
 const AppGlobalInitRoute = AppGlobalInitRouteImport.update({
   id: '/global-init',
   path: '/global-init',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppObjectsRoute = AppObjectsRouteImport.update({
+  id: '/objects',
+  path: '/objects',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppSoundsRoute = AppSoundsRouteImport.update({
@@ -138,10 +144,10 @@ const AppFunctionsIndexRoute = AppFunctionsIndexRouteImport.update({
   path: '/functions/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppObjectsIndexRoute = AppObjectsIndexRouteImport.update({
-  id: '/objects/',
-  path: '/objects/',
-  getParentRoute: () => AppRouteRoute,
+const AppObjectsNameRoute = AppObjectsNameRouteImport.update({
+  id: '/$name',
+  path: '/$name',
+  getParentRoute: () => AppObjectsRoute,
 } as any)
 const AppParticleSystemEmittersIndexRoute =
   AppParticleSystemEmittersIndexRouteImport.update({
@@ -222,12 +228,14 @@ export interface FileRoutesByFullPath {
   '/embedded-textures': typeof AppEmbeddedTexturesRouteWithChildren
   '/general-info': typeof AppGeneralInfoRoute
   '/global-init': typeof AppGlobalInitRoute
+  '/objects': typeof AppObjectsRouteWithChildren
   '/sounds': typeof AppSoundsRouteWithChildren
   '/sprites': typeof AppSpritesRouteWithChildren
   '/texture-pages': typeof AppTexturePagesRouteWithChildren
   '/code/$name': typeof AppCodeNameRoute
   '/embedded-audio/$id': typeof AppEmbeddedAudioIdRoute
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
+  '/objects/$name': typeof AppObjectsNameRoute
   '/sounds/$name': typeof AppSoundsNameRoute
   '/sprites/$name': typeof AppSpritesNameRoute
   '/texture-pages/$id': typeof AppTexturePagesIdRoute
@@ -237,7 +245,6 @@ export interface FileRoutesByFullPath {
   '/extensions/': typeof AppExtensionsIndexRoute
   '/fonts/': typeof AppFontsIndexRoute
   '/functions/': typeof AppFunctionsIndexRoute
-  '/objects/': typeof AppObjectsIndexRoute
   '/particle-system-emitters/': typeof AppParticleSystemEmittersIndexRoute
   '/particle-systems/': typeof AppParticleSystemsIndexRoute
   '/paths/': typeof AppPathsIndexRoute
@@ -257,12 +264,14 @@ export interface FileRoutesByTo {
   '/embedded-textures': typeof AppEmbeddedTexturesRouteWithChildren
   '/general-info': typeof AppGeneralInfoRoute
   '/global-init': typeof AppGlobalInitRoute
+  '/objects': typeof AppObjectsRouteWithChildren
   '/sounds': typeof AppSoundsRouteWithChildren
   '/sprites': typeof AppSpritesRouteWithChildren
   '/texture-pages': typeof AppTexturePagesRouteWithChildren
   '/code/$name': typeof AppCodeNameRoute
   '/embedded-audio/$id': typeof AppEmbeddedAudioIdRoute
   '/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
+  '/objects/$name': typeof AppObjectsNameRoute
   '/sounds/$name': typeof AppSoundsNameRoute
   '/sprites/$name': typeof AppSpritesNameRoute
   '/texture-pages/$id': typeof AppTexturePagesIdRoute
@@ -272,7 +281,6 @@ export interface FileRoutesByTo {
   '/extensions': typeof AppExtensionsIndexRoute
   '/fonts': typeof AppFontsIndexRoute
   '/functions': typeof AppFunctionsIndexRoute
-  '/objects': typeof AppObjectsIndexRoute
   '/particle-system-emitters': typeof AppParticleSystemEmittersIndexRoute
   '/particle-systems': typeof AppParticleSystemsIndexRoute
   '/paths': typeof AppPathsIndexRoute
@@ -294,12 +302,14 @@ export interface FileRoutesById {
   '/_app/embedded-textures': typeof AppEmbeddedTexturesRouteWithChildren
   '/_app/general-info': typeof AppGeneralInfoRoute
   '/_app/global-init': typeof AppGlobalInitRoute
+  '/_app/objects': typeof AppObjectsRouteWithChildren
   '/_app/sounds': typeof AppSoundsRouteWithChildren
   '/_app/sprites': typeof AppSpritesRouteWithChildren
   '/_app/texture-pages': typeof AppTexturePagesRouteWithChildren
   '/_app/code/$name': typeof AppCodeNameRoute
   '/_app/embedded-audio/$id': typeof AppEmbeddedAudioIdRoute
   '/_app/embedded-textures/$id': typeof AppEmbeddedTexturesIdRoute
+  '/_app/objects/$name': typeof AppObjectsNameRoute
   '/_app/sounds/$name': typeof AppSoundsNameRoute
   '/_app/sprites/$name': typeof AppSpritesNameRoute
   '/_app/texture-pages/$id': typeof AppTexturePagesIdRoute
@@ -309,7 +319,6 @@ export interface FileRoutesById {
   '/_app/extensions/': typeof AppExtensionsIndexRoute
   '/_app/fonts/': typeof AppFontsIndexRoute
   '/_app/functions/': typeof AppFunctionsIndexRoute
-  '/_app/objects/': typeof AppObjectsIndexRoute
   '/_app/particle-system-emitters/': typeof AppParticleSystemEmittersIndexRoute
   '/_app/particle-systems/': typeof AppParticleSystemsIndexRoute
   '/_app/paths/': typeof AppPathsIndexRoute
@@ -331,12 +340,14 @@ export interface FileRouteTypes {
     | '/embedded-textures'
     | '/general-info'
     | '/global-init'
+    | '/objects'
     | '/sounds'
     | '/sprites'
     | '/texture-pages'
     | '/code/$name'
     | '/embedded-audio/$id'
     | '/embedded-textures/$id'
+    | '/objects/$name'
     | '/sounds/$name'
     | '/sprites/$name'
     | '/texture-pages/$id'
@@ -346,7 +357,6 @@ export interface FileRouteTypes {
     | '/extensions/'
     | '/fonts/'
     | '/functions/'
-    | '/objects/'
     | '/particle-system-emitters/'
     | '/particle-systems/'
     | '/paths/'
@@ -366,12 +376,14 @@ export interface FileRouteTypes {
     | '/embedded-textures'
     | '/general-info'
     | '/global-init'
+    | '/objects'
     | '/sounds'
     | '/sprites'
     | '/texture-pages'
     | '/code/$name'
     | '/embedded-audio/$id'
     | '/embedded-textures/$id'
+    | '/objects/$name'
     | '/sounds/$name'
     | '/sprites/$name'
     | '/texture-pages/$id'
@@ -381,7 +393,6 @@ export interface FileRouteTypes {
     | '/extensions'
     | '/fonts'
     | '/functions'
-    | '/objects'
     | '/particle-system-emitters'
     | '/particle-systems'
     | '/paths'
@@ -402,12 +413,14 @@ export interface FileRouteTypes {
     | '/_app/embedded-textures'
     | '/_app/general-info'
     | '/_app/global-init'
+    | '/_app/objects'
     | '/_app/sounds'
     | '/_app/sprites'
     | '/_app/texture-pages'
     | '/_app/code/$name'
     | '/_app/embedded-audio/$id'
     | '/_app/embedded-textures/$id'
+    | '/_app/objects/$name'
     | '/_app/sounds/$name'
     | '/_app/sprites/$name'
     | '/_app/texture-pages/$id'
@@ -417,7 +430,6 @@ export interface FileRouteTypes {
     | '/_app/extensions/'
     | '/_app/fonts/'
     | '/_app/functions/'
-    | '/_app/objects/'
     | '/_app/particle-system-emitters/'
     | '/_app/particle-systems/'
     | '/_app/paths/'
@@ -485,6 +497,13 @@ declare module '@tanstack/react-router' {
       path: '/global-init'
       fullPath: '/global-init'
       preLoaderRoute: typeof AppGlobalInitRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/objects': {
+      id: '/_app/objects'
+      path: '/objects'
+      fullPath: '/objects'
+      preLoaderRoute: typeof AppObjectsRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/sounds': {
@@ -571,12 +590,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFunctionsIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/objects/': {
-      id: '/_app/objects/'
-      path: '/objects'
-      fullPath: '/objects/'
-      preLoaderRoute: typeof AppObjectsIndexRouteImport
-      parentRoute: typeof AppRouteRoute
+    '/_app/objects/$name': {
+      id: '/_app/objects/$name'
+      path: '/$name'
+      fullPath: '/objects/$name'
+      preLoaderRoute: typeof AppObjectsNameRouteImport
+      parentRoute: typeof AppObjectsRoute
     }
     '/_app/particle-system-emitters/': {
       id: '/_app/particle-system-emitters/'
@@ -712,6 +731,18 @@ const AppEmbeddedTexturesRouteChildren: AppEmbeddedTexturesRouteChildren = {
 const AppEmbeddedTexturesRouteWithChildren =
   AppEmbeddedTexturesRoute._addFileChildren(AppEmbeddedTexturesRouteChildren)
 
+interface AppObjectsRouteChildren {
+  AppObjectsNameRoute: typeof AppObjectsNameRoute
+}
+
+const AppObjectsRouteChildren: AppObjectsRouteChildren = {
+  AppObjectsNameRoute: AppObjectsNameRoute,
+}
+
+const AppObjectsRouteWithChildren = AppObjectsRoute._addFileChildren(
+  AppObjectsRouteChildren,
+)
+
 interface AppSoundsRouteChildren {
   AppSoundsNameRoute: typeof AppSoundsNameRoute
 }
@@ -754,6 +785,7 @@ interface AppRouteRouteChildren {
   AppEmbeddedTexturesRoute: typeof AppEmbeddedTexturesRouteWithChildren
   AppGeneralInfoRoute: typeof AppGeneralInfoRoute
   AppGlobalInitRoute: typeof AppGlobalInitRoute
+  AppObjectsRoute: typeof AppObjectsRouteWithChildren
   AppSoundsRoute: typeof AppSoundsRouteWithChildren
   AppSpritesRoute: typeof AppSpritesRouteWithChildren
   AppTexturePagesRoute: typeof AppTexturePagesRouteWithChildren
@@ -763,7 +795,6 @@ interface AppRouteRouteChildren {
   AppExtensionsIndexRoute: typeof AppExtensionsIndexRoute
   AppFontsIndexRoute: typeof AppFontsIndexRoute
   AppFunctionsIndexRoute: typeof AppFunctionsIndexRoute
-  AppObjectsIndexRoute: typeof AppObjectsIndexRoute
   AppParticleSystemEmittersIndexRoute: typeof AppParticleSystemEmittersIndexRoute
   AppParticleSystemsIndexRoute: typeof AppParticleSystemsIndexRoute
   AppPathsIndexRoute: typeof AppPathsIndexRoute
@@ -783,6 +814,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppEmbeddedTexturesRoute: AppEmbeddedTexturesRouteWithChildren,
   AppGeneralInfoRoute: AppGeneralInfoRoute,
   AppGlobalInitRoute: AppGlobalInitRoute,
+  AppObjectsRoute: AppObjectsRouteWithChildren,
   AppSoundsRoute: AppSoundsRouteWithChildren,
   AppSpritesRoute: AppSpritesRouteWithChildren,
   AppTexturePagesRoute: AppTexturePagesRouteWithChildren,
@@ -792,7 +824,6 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppExtensionsIndexRoute: AppExtensionsIndexRoute,
   AppFontsIndexRoute: AppFontsIndexRoute,
   AppFunctionsIndexRoute: AppFunctionsIndexRoute,
-  AppObjectsIndexRoute: AppObjectsIndexRoute,
   AppParticleSystemEmittersIndexRoute: AppParticleSystemEmittersIndexRoute,
   AppParticleSystemsIndexRoute: AppParticleSystemsIndexRoute,
   AppPathsIndexRoute: AppPathsIndexRoute,
