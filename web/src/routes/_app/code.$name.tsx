@@ -21,6 +21,7 @@ import CustomCopyButton from '../../common/CustomCopyButton';
 import DocumentTitle from '../../common/DocumentTitle';
 import isMac from '../../common/isMac';
 import MonacoEditor from '../../common/monaco/MonacoEditor';
+import CodePrefixSelect from '../../components/CodePrefixSelect';
 import {useDataStore} from '../../data-store';
 import {useEditCodeTextByNameMutation} from '../../messages/editCodeTextByName';
 import {codeInfoByNameQueryOptions} from '../../messages/getCodeInfoByName';
@@ -94,6 +95,8 @@ function RouteComponent() {
 			<Title order={2} className="break-word">
 				{name}
 			</Title>
+
+			<CodePrefixSelect name={name} />
 
 			{data.ParentEntryName != null ? (
 				<Alert variant="light" color="blue">
@@ -191,8 +194,6 @@ function RouteComponent() {
 							/>
 						</div>
 					) : null}
-
-					{/* <GmlCodeHighlighter code={originalCode} /> */}
 
 					<MonacoEditor
 						defaultValue={originalCode}
