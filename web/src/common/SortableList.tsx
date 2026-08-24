@@ -113,9 +113,12 @@ export default function SortableList<T>({
 	}
 	if (settings.orderBy !== 'DEFAULT') {
 		filteredList = filteredList.concat().sort((a, b) => {
-			if (a < b) {
+			const aText = getNameFromList(a);
+			const bText = getNameFromList(b);
+
+			if (aText < bText) {
 				return settings.orderBy === 'A_TO_Z' ? -1 : 1;
-			} else if (a > b) {
+			} else if (aText > bText) {
 				return settings.orderBy === 'A_TO_Z' ? 1 : -1;
 			}
 
