@@ -18,6 +18,10 @@ pre {
 	cursor: auto;
 }
 
+label[for] {
+	cursor: pointer;
+}
+
 #noscript-error {
 	font-size: 2em;
 	padding: 2em;

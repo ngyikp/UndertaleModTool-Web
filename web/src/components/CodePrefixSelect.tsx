@@ -1,9 +1,29 @@
-import {Button, Group, Select} from '@mantine/core';
+import {Button, Cascader, type CascaderOption, Group} from '@mantine/core';
 import {useId} from '@mantine/hooks';
 import {useQuery} from '@tanstack/react-query';
 import {Link, useNavigate} from '@tanstack/react-router';
+import {useMemo} from 'react';
 
 import {listCodeEntriesQueryOptions} from '../messages/listCodeEntries';
+import {
+	EventType,
+	getLabelForEventSubtype,
+	isEventHasNoSubtypes,
+	isValidEvent,
+} from '../types/GameObjectEventType';
+
+function getCurrentCascaderValue(event: string[]) {
+	const [type, subtype] = event;
+	if (type != null && subtype != null) {
+		if (isValidEvent(type) && isEventHasNoSubtypes(EventType[type])) {
+			return [type + '_' + subtype];
+		}
+
+		return [type, type + '_' + subtype];
+	}
+
+	return null;
+}
 
 const PREFIX = 'gml_Object_';
 
@@ -16,18 +36,19 @@ export default function CodePrefixSelect({name: codeName}: Props) {
 
 	const {isPending, data: allCode} = useQuery(listCodeEntriesQueryOptions());
 
-	const navigate = useNavigate({from: '/general-info'});
+	const navigate = useNavigate({from: '/code/$name'});
 
-	if (!codeName.startsWith(PREFIX)) {
-		return null;
-	}
+	const nameSplit = codeName.split('_');
+	const currentObjectName = nameSplit.slice(2, -2).join('_');
+	const searchPrefix = PREFIX + currentObjectName + '_';
 
-	const objectName = codeName.split('_').slice(2, -2).join('_');
-	const searchPrefix = PREFIX + objectName + '_';
+	const cascaderData: CascaderOption[] = useMemo(() => {
+		if (allCode == null) {
+			return [];
+		}
 
-	let events: string[] = [];
-	if (allCode != null) {
-		events = allCode.list
+		const eventsGrouped = new Map<string, number[]>();
+		allCode.list
 			.filter((code) => {
 				if (code.Name.startsWith(searchPrefix)) {
 					// Prevent `obj_shop_bg` from showing up with `obj_shop`
@@ -39,31 +60,93 @@ export default function CodePrefixSelect({name: codeName}: Props) {
 			.map((code) => {
 				return code.Name.slice(searchPrefix.length);
 			})
-			.sort();
+			.sort()
+			.forEach((code) => {
+				const [event, subtype] = code.split('_');
+				if (event == null || subtype == null) {
+					return;
+				}
+
+				if (!eventsGrouped.has(event)) {
+					eventsGrouped.set(event, []);
+				}
+				(eventsGrouped.get(event) ?? []).push(parseInt(subtype, 10));
+			});
+
+		const cascaderData = [];
+		for (const [key, value] of eventsGrouped) {
+			if (!isValidEvent(key)) {
+				continue;
+			}
+
+			const eventType = EventType[key];
+			cascaderData.push({
+				label: key,
+				value:
+					isEventHasNoSubtypes(eventType) && value[0] != null
+						? key + '_' + value[0].toString()
+						: key,
+				children: isEventHasNoSubtypes(eventType)
+					? undefined
+					: value
+							.sort((a, b) => {
+								if (a < b) {
+									return -1;
+								} else if (a > b) {
+									return 1;
+								}
+
+								return 0;
+							})
+							.map((subtype) => {
+								return {
+									label: `${getLabelForEventSubtype(eventType, subtype)} (${key}_${subtype.toString()})`,
+									value: key + '_' + subtype.toString(),
+								};
+							}),
+			});
+		}
+
+		return cascaderData;
+	}, [allCode, searchPrefix]);
+
+	if (!codeName.startsWith(PREFIX)) {
+		return null;
 	}
 
 	return (
 		<Group gap="xs">
 			<label htmlFor={id}>Event type:</label>
 
-			<Select
+			<Cascader
 				id={id}
-				data={events}
-				value={codeName.slice(searchPrefix.length)}
+				data={cascaderData}
+				value={getCurrentCascaderValue(nameSplit.slice(-2))}
 				searchable
 				onChange={(value) => {
-					if (value != null) {
+					const last = value != null ? value[value.length - 1] : undefined;
+					if (last != null) {
 						void navigate({
 							to: '/code/$name',
-							params: {name: searchPrefix + value},
+							params: {name: searchPrefix + last},
 							resetScroll: false,
 						});
 					}
 				}}
-				disabled={events.length === 0}
+				styles={{
+					column: {
+						// setting `columnWidth` prop on Cascader would set min-width
+						// https://github.com/mantinedev/mantine/blob/9.5.1/packages/%40mantine/core/src/components/Cascader/CascaderColumns.tsx#L138
+						width: 'max-content',
+					},
+				}}
+				comboboxProps={{
+					width: 'max-content',
+				}}
+				disabled={cascaderData.length === 0}
 				loading={isPending}
+				expandTrigger="hover"
 				allowDeselect={false}
-				floatingHeight="viewport"
 				flex="1"
 			/>
 
@@ -71,7 +154,7 @@ export default function CodePrefixSelect({name: codeName}: Props) {
 				component={Link}
 				to="/objects/$name"
 				// @ts-expect-error Link param not detected properly
-				params={{name: objectName}}
+				params={{name: currentObjectName}}
 				variant="default"
 			>
 				View object

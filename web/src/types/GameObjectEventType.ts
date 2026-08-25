@@ -1310,3 +1310,57 @@ export const EventSubtypeGesture = {
 } as const;
 
 export const EventSubtypeGestureValues = reverseObject(EventSubtypeGesture);
+
+export function isValidEvent(event: string): event is keyof typeof EventType {
+	return event in EventType;
+}
+
+export function isEventHasNoSubtypes(event: number) {
+	switch (event) {
+		case EventType.Create:
+		case EventType.Destroy:
+		case EventType.Trigger:
+		case EventType.CleanUp:
+		case EventType.PreCreate:
+			return true;
+
+		default:
+			return false;
+	}
+}
+
+export function getLabelForEventSubtype(
+	event: number,
+	subtype: number,
+): string {
+	switch (event) {
+		case EventType.Alarm:
+			return 'Alarm ' + subtype.toString();
+
+		case EventType.Step:
+			return EventSubtypeStepValues[subtype] ?? subtype.toString();
+
+		case EventType.Collision:
+			return 'Object ID ' + subtype.toString();
+
+		case EventType.Keyboard:
+		case EventType.KeyPress:
+		case EventType.KeyRelease:
+			return EventSubtypeKeyValues[subtype] ?? subtype.toString();
+
+		case EventType.Mouse:
+			return EventSubtypeMouseValues[subtype] ?? subtype.toString();
+
+		case EventType.Other:
+			return EventSubtypeOtherValues[subtype] ?? subtype.toString();
+
+		case EventType.Draw:
+			return EventSubtypeDrawValues[subtype] ?? subtype.toString();
+
+		case EventType.Gesture:
+			return EventSubtypeGestureValues[subtype] ?? subtype.toString();
+
+		default:
+			return subtype.toString();
+	}
+}
