@@ -66,13 +66,15 @@ function RouteComponent() {
 				{name}
 			</Title>
 
-			<Checkbox
-				checked={includePadding}
-				onChange={(event) => {
-					setIncludePadding(event.currentTarget.checked);
-				}}
-				label="Include padding"
-			/>
+			{totalPages > 1 || texturePageId !== INVALID_TEXTURE_PAGE_ID ? (
+				<Checkbox
+					checked={includePadding}
+					onChange={(event) => {
+						setIncludePadding(event.currentTarget.checked);
+					}}
+					label="Include padding"
+				/>
+			) : null}
 
 			{totalPages > 1 ? (
 				<Checkbox
@@ -138,7 +140,7 @@ function RouteComponent() {
 							enableImageActions={true}
 						/>
 					) : (
-						'(empty)'
+						'This sprite is empty.'
 					)}
 				</Suspense>
 			) : null}
