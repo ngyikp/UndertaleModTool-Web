@@ -46,6 +46,7 @@
 .filters {
 	position: sticky;
 	top: 0;
+	z-index: 5; /* Slider thumb has z-index: 3 https://github.com/mantinedev/mantine/blob/9.5.1/packages/%40mantine/core/src/components/Slider/Slider.module.css#L80 */
 	grid-area: filters;
 
 	background: color-mix(in srgb, var(--mantine-color-body) 80%, transparent);

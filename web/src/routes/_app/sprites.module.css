@@ -1,0 +1,5 @@
+.thumbnailList {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: start;
+}

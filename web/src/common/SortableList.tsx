@@ -48,6 +48,8 @@ type Props<T> = Readonly<{
 	// so fall back to array index (very inefficient)
 	itemsAreNonUnique?: boolean;
 	list: T[];
+	listClassName?: string;
+	listStyles?: React.CSSProperties;
 	onIndexPage: boolean;
 	render?: (options: {
 		text: string;
@@ -64,6 +66,8 @@ export default function SortableList<T>({
 	getNameFromList = DEFAULT_GET_NAME_FROM_LIST,
 	itemsAreNonUnique = false,
 	list: allResultsList,
+	listClassName = '',
+	listStyles,
 	onIndexPage,
 	render = renderSearchHighlight,
 }: Props<T>) {
@@ -205,7 +209,11 @@ export default function SortableList<T>({
 						</div>
 					) : null}
 
-					<ul className={styles.list} ref={listRef}>
+					<ul
+						className={(styles.list ?? '') + ' ' + listClassName}
+						style={listStyles}
+						ref={listRef}
+					>
 						{onePageList.map((item, index) => {
 							return (
 								<li
