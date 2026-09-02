@@ -1,5 +1,4 @@
 import {queryOptions} from '@tanstack/react-query';
-import {deflate, inflate} from 'pako';
 import {z} from 'zod/mini';
 
 import {sendMessageToWorkerAsPromise} from '../worker/worker-handler';
@@ -48,34 +47,26 @@ export type GetEmbeddedTextureInfoByIdRequest = {
 export type GetEmbeddedTextureInfoByIdResult = EmbeddedTextureInfoType;
 
 // Info about UndertaleEmbeddedTexture. Keep this in sync with `src/Serializers/EmbeddedTextureInfo.cs`
-export const EmbeddedTextureInfoSchema = z.pipe(
-	z.object({
-		DownloadableFileContents: z.nullable(
-			z.codec(z.base64(), z.instanceof(Uint8Array), {
-				decode: (base64String) => z.util.base64ToUint8Array(base64String),
-				encode: (bytes) => z.util.uint8ArrayToBase64(bytes),
-			}),
-		),
-		BgraCompressed: z.nullable(
-			z.codec(z.base64(), z.instanceof(Uint8Array), {
-				decode: (base64String) =>
-					inflate(z.util.base64ToUint8Array(base64String)),
-				encode: (bytes) => z.util.uint8ArrayToBase64(deflate(bytes)),
-			}),
-		),
-		Format: z.enum(ImageFormatEnum),
-		Width: z.int(),
-		Height: z.int(),
-	}),
-	// idea from here: https://github.com/colinhacks/zod/issues/486
-	z.transform((info) => {
-		const {BgraCompressed, ...rest} = info;
+export const EmbeddedTextureInfoDotNetSchema = z.object({
+	DownloadableFileContents: z.nullable(
+		z.codec(z.base64(), z.instanceof(Uint8Array), {
+			decode: (base64String) => z.util.base64ToUint8Array(base64String),
+			encode: (bytes) => z.util.uint8ArrayToBase64(bytes),
+		}),
+	),
+	BgraFileName: z.nullable(z.string()),
+	Format: z.enum(ImageFormatEnum),
+	Width: z.int(),
+	Height: z.int(),
+});
 
-		return {
-			...rest,
-			Bgra: BgraCompressed,
-		};
+// Downstream users shouldn't need to know about the virtual filesystem internals
+export const EmbeddedTextureInfoSchema = z.omit(
+	z.object({
+		...EmbeddedTextureInfoDotNetSchema.shape,
+		Bgra: z.nullable(z.instanceof(Uint8Array)),
 	}),
+	{BgraFileName: true},
 );
 
 export type EmbeddedTextureInfoType = z.infer<typeof EmbeddedTextureInfoSchema>;

@@ -1,6 +1,9 @@
 import {CodeInfoSchema} from '../messages/getCodeInfoByName';
 import {EmbeddedAudioInfoSchema} from '../messages/getEmbeddedAudioInfoById.js';
-import {EmbeddedTextureInfoSchema} from '../messages/getEmbeddedTextureInfoById.js';
+import {
+	EmbeddedTextureInfoDotNetSchema,
+	EmbeddedTextureInfoSchema,
+} from '../messages/getEmbeddedTextureInfoById.js';
 import {EntriesListInfoSchema} from '../messages/getEntriesByModelType';
 import {GameObjectInfoSchema} from '../messages/getGameObjectInfoByName.js';
 import {SoundInfoSchema} from '../messages/getSoundInfoByName';
@@ -182,18 +185,30 @@ async function onMessage(request: WorkerRequest) {
 				});
 				break;
 
-			case 'getEmbeddedTextureInfoById':
-				reply({
-					status: 'FINISHED',
-					result: EmbeddedTextureInfoSchema.parse(
-						JSON.parse(
-							dotNet.exports.UndertaleModToolWASM.Program.GetEmbeddedTextureInfoById(
-								request.message.id,
-							),
+			case 'getEmbeddedTextureInfoById': {
+				const info = EmbeddedTextureInfoDotNetSchema.parse(
+					JSON.parse(
+						dotNet.exports.UndertaleModToolWASM.Program.GetEmbeddedTextureInfoById(
+							request.message.id,
 						),
 					),
+				);
+
+				let file: Uint8Array | null = null;
+				if (info.BgraFileName != null) {
+					file = dotNet.Module.FS.readFile(info.BgraFileName);
+					dotNet.Module.FS.unlink(info.BgraFileName);
+				}
+
+				reply({
+					status: 'FINISHED',
+					result: EmbeddedTextureInfoSchema.parse({
+						...info,
+						Bgra: file,
+					}),
 				});
 				break;
+			}
 
 			case 'getTexturePageInfoById':
 				reply({
