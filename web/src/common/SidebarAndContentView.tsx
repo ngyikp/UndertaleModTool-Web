@@ -23,10 +23,11 @@ export default function SidebarAndContentView({
 			<Flex
 				flex={onIndexPage ? 1 : undefined}
 				style={{width: onIndexPage ? undefined : sidebarWidth}}
-				className={[
-					styles.sidebar,
-					onIndexPage ? styles.sidebarOnIndexPage : styles.sticky,
-				].join(' ')}
+				className={
+					(styles.sidebar ?? '') +
+					' ' +
+					((onIndexPage ? styles.sidebarOnIndexPage : styles.sticky) ?? '')
+				}
 			>
 				{sidebar}
 			</Flex>

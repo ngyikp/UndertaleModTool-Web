@@ -20,16 +20,16 @@ export default function ImageWithPlaceholder({
 	appearance,
 	alt,
 }: Props) {
-	const imageClassName = [
-		styles.image,
-		appearance === 'BLACK'
+	const imageClassName =
+		(styles.image ?? '') +
+		' ' +
+		((appearance === 'BLACK'
 			? styles.black
 			: appearance === 'WHITE'
 				? styles.white
 				: appearance === 'CHECKERBOARD'
 					? styles.checkerboard
-					: '',
-	].join(' ');
+					: '') ?? '');
 
 	return (
 		<div className={styles.scrollable}>
