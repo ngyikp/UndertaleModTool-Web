@@ -62,6 +62,5 @@ function TexturePages() {
 
 export const Route = createFileRoute('/_app/texture-pages')({
 	component: TexturePages,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(texturePagesQueryOptions),
+	loader: ({context}) => context.queryClient.query(texturePagesQueryOptions),
 });

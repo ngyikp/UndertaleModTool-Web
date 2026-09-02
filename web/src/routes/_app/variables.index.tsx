@@ -40,6 +40,5 @@ function Variables() {
 
 export const Route = createFileRoute('/_app/variables/')({
 	component: Variables,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(variablesQueryOptions),
+	loader: ({context}) => context.queryClient.query(variablesQueryOptions),
 });

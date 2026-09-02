@@ -37,6 +37,5 @@ function AudioGroups() {
 
 export const Route = createFileRoute('/_app/audio-groups/')({
 	component: AudioGroups,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(audioGroupsQueryOptions),
+	loader: ({context}) => context.queryClient.query(audioGroupsQueryOptions),
 });

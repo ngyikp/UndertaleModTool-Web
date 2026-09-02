@@ -38,6 +38,5 @@ function Tilesets() {
 
 export const Route = createFileRoute('/_app/tile-sets/')({
 	component: Tilesets,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(backgroundsQueryOptions),
+	loader: ({context}) => context.queryClient.query(backgroundsQueryOptions),
 });

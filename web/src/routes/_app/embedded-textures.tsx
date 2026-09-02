@@ -61,5 +61,5 @@ function EmbeddedTextures() {
 export const Route = createFileRoute('/_app/embedded-textures')({
 	component: EmbeddedTextures,
 	loader: ({context}) =>
-		context.queryClient.ensureQueryData(embeddedTexturesQueryOptions),
+		context.queryClient.query(embeddedTexturesQueryOptions),
 });

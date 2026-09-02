@@ -125,16 +125,14 @@ export default function DataFileInput({
 				case 'FINISHED':
 					setDataFileLoadInfo(response.result);
 
-					void queryClient
-						.fetchQuery(getGameInfoQueryOptions())
-						.then((data) => {
-							setGameInfo(data);
+					void queryClient.query(getGameInfoQueryOptions()).then((data) => {
+						setGameInfo(data);
 
-							// hack: router context is lagging a bit
-							requestAnimationFrame(() => {
-								void router.invalidate().then(onFileLoaded);
-							});
+						// hack: router context is lagging a bit
+						requestAnimationFrame(() => {
+							void router.invalidate().then(onFileLoaded);
 						});
+					});
 					break;
 
 				case 'ERROR':

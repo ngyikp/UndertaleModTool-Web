@@ -89,6 +89,5 @@ function Sprites() {
 
 export const Route = createFileRoute('/_app/sprites')({
 	component: Sprites,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(spritesQueryOptions),
+	loader: ({context}) => context.queryClient.query(spritesQueryOptions),
 });

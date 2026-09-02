@@ -78,9 +78,7 @@ export const Route = createFileRoute('/_app/embedded-audio/$id')({
 		},
 	},
 	loader: ({context, params}) =>
-		context.queryClient.ensureQueryData(
-			embeddedAudioByIdQueryOptions(params.id),
-		),
+		context.queryClient.query(embeddedAudioByIdQueryOptions(params.id)),
 	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message.startsWith('ArgumentOutOfRange')) {

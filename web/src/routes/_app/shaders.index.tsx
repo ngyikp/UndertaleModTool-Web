@@ -33,6 +33,5 @@ function Shaders() {
 
 export const Route = createFileRoute('/_app/shaders/')({
 	component: Shaders,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(shadersQueryOptions),
+	loader: ({context}) => context.queryClient.query(shadersQueryOptions),
 });

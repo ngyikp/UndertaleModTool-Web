@@ -34,6 +34,5 @@ function TextureGroups() {
 
 export const Route = createFileRoute('/_app/texture-groups/')({
 	component: TextureGroups,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(textureGroupsQueryOptions),
+	loader: ({context}) => context.queryClient.query(textureGroupsQueryOptions),
 });

@@ -33,5 +33,5 @@ function Paths() {
 
 export const Route = createFileRoute('/_app/paths/')({
 	component: Paths,
-	loader: ({context}) => context.queryClient.ensureQueryData(pathsQueryOptions),
+	loader: ({context}) => context.queryClient.query(pathsQueryOptions),
 });

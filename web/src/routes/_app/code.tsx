@@ -38,5 +38,5 @@ function Code() {
 export const Route = createFileRoute('/_app/code')({
 	component: Code,
 	loader: ({context}) =>
-		context.queryClient.ensureQueryData(listCodeEntriesQueryOptions()),
+		context.queryClient.query(listCodeEntriesQueryOptions()),
 });

@@ -39,6 +39,5 @@ function Functions() {
 
 export const Route = createFileRoute('/_app/functions/')({
 	component: Functions,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(functionsQueryOptions),
+	loader: ({context}) => context.queryClient.query(functionsQueryOptions),
 });

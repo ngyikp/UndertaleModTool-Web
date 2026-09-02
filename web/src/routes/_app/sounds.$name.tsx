@@ -106,7 +106,7 @@ function RouteComponent() {
 export const Route = createFileRoute('/_app/sounds/$name')({
 	component: RouteComponent,
 	loader: ({context, params}) =>
-		context.queryClient.ensureQueryData(soundByNameQueryOptions(params.name)),
+		context.queryClient.query(soundByNameQueryOptions(params.name)),
 	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message === 'NoMatch') {

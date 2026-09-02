@@ -33,6 +33,5 @@ function Scripts() {
 
 export const Route = createFileRoute('/_app/scripts/')({
 	component: Scripts,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(scriptsQueryOptions),
+	loader: ({context}) => context.queryClient.query(scriptsQueryOptions),
 });

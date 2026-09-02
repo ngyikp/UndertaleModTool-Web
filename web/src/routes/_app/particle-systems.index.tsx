@@ -33,6 +33,5 @@ function ParticleSystems() {
 
 export const Route = createFileRoute('/_app/particle-systems/')({
 	component: ParticleSystems,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(particleSystemsQueryOptions),
+	loader: ({context}) => context.queryClient.query(particleSystemsQueryOptions),
 });

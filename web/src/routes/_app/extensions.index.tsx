@@ -33,6 +33,5 @@ function Extensions() {
 
 export const Route = createFileRoute('/_app/extensions/')({
 	component: Extensions,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(extensionsQueryOptions),
+	loader: ({context}) => context.queryClient.query(extensionsQueryOptions),
 });

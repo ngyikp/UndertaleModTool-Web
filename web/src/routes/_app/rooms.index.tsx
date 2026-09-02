@@ -33,5 +33,5 @@ function Rooms() {
 
 export const Route = createFileRoute('/_app/rooms/')({
 	component: Rooms,
-	loader: ({context}) => context.queryClient.ensureQueryData(roomsQueryOptions),
+	loader: ({context}) => context.queryClient.query(roomsQueryOptions),
 });

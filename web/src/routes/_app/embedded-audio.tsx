@@ -61,6 +61,5 @@ function EmbeddedAudio() {
 
 export const Route = createFileRoute('/_app/embedded-audio')({
 	component: EmbeddedAudio,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(embeddedAudioQueryOptions),
+	loader: ({context}) => context.queryClient.query(embeddedAudioQueryOptions),
 });

@@ -209,9 +209,7 @@ function RouteComponent() {
 export const Route = createFileRoute('/_app/objects/$name')({
 	component: RouteComponent,
 	loader: async ({context, params}) =>
-		context.queryClient.ensureQueryData(
-			gameObjectInfoByNameQueryOptions(params.name),
-		),
+		context.queryClient.query(gameObjectInfoByNameQueryOptions(params.name)),
 	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message === 'NoMatch') {

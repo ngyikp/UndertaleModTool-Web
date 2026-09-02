@@ -89,11 +89,11 @@ export const Route = createFileRoute('/_app/texture-pages/$id')({
 		},
 	},
 	loader: async ({context, params}) => {
-		const texturePageData = await context.queryClient.ensureQueryData(
+		const texturePageData = await context.queryClient.query(
 			texturePageByIdQueryOptions(params.id),
 		);
 
-		await context.queryClient.ensureQueryData(
+		await context.queryClient.query(
 			embeddedTexturesInfoByIdQueryOptions(texturePageData.EmbeddedTextureID),
 		);
 

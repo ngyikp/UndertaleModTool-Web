@@ -75,7 +75,7 @@ function RouteComponent() {
 				// which compiles to the same as originalCode (due to
 				// decompiler reformatting and removing comments),
 				// so we need to set the editor value here
-				const {DecompiledCode: newCode} = await queryClient.fetchQuery(
+				const {DecompiledCode: newCode} = await queryClient.query(
 					codeInfoByNameQueryOptions(name),
 				);
 				if (newCode != null && newCode !== modifiedValue) {
@@ -210,9 +210,7 @@ function RouteComponent() {
 export const Route = createFileRoute('/_app/code/$name')({
 	component: RouteComponent,
 	loader: ({context, params}) =>
-		context.queryClient.ensureQueryData(
-			codeInfoByNameQueryOptions(params.name),
-		),
+		context.queryClient.query(codeInfoByNameQueryOptions(params.name)),
 	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message === 'NoMatch') {

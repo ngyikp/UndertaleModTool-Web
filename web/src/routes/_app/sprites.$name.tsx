@@ -1,5 +1,5 @@
 import {Checkbox, Pagination, Title} from '@mantine/core';
-import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
+import {noop, useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {Suspense} from 'react';
 
@@ -47,7 +47,7 @@ function RouteComponent() {
 		}
 
 		const prefetchPage = () => {
-			void queryClient.prefetchQuery(texturePageByIdQueryOptions(newPage));
+			void queryClient.query(texturePageByIdQueryOptions(newPage)).catch(noop);
 		};
 
 		// todo these event listeners don't always fire, such as the user using keyboard
@@ -174,7 +174,7 @@ function RouteComponent() {
 export const Route = createFileRoute('/_app/sprites/$name')({
 	component: RouteComponent,
 	loader: async ({context, params}) => {
-		const spriteInfo = await context.queryClient.ensureQueryData(
+		const spriteInfo = await context.queryClient.query(
 			spriteInfoByNameQueryOptions(params.name),
 		);
 
@@ -183,11 +183,11 @@ export const Route = createFileRoute('/_app/sprites/$name')({
 			spriteInfo.TexturePageIDs[0] &&
 			spriteInfo.TexturePageIDs[0] !== INVALID_TEXTURE_PAGE_ID
 		) {
-			const texturePageData = await context.queryClient.ensureQueryData(
+			const texturePageData = await context.queryClient.query(
 				texturePageByIdQueryOptions(spriteInfo.TexturePageIDs[0]),
 			);
 
-			await context.queryClient.ensureQueryData(
+			await context.queryClient.query(
 				embeddedTexturesInfoByIdQueryOptions(texturePageData.EmbeddedTextureID),
 			);
 		}

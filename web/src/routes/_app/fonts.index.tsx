@@ -33,5 +33,5 @@ function Fonts() {
 
 export const Route = createFileRoute('/_app/fonts/')({
 	component: Fonts,
-	loader: ({context}) => context.queryClient.ensureQueryData(fontsQueryOptions),
+	loader: ({context}) => context.queryClient.query(fontsQueryOptions),
 });

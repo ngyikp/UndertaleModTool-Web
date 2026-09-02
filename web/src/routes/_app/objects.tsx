@@ -60,6 +60,5 @@ function Objects() {
 
 export const Route = createFileRoute('/_app/objects')({
 	component: Objects,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(objectsQueryOptions),
+	loader: ({context}) => context.queryClient.query(objectsQueryOptions),
 });

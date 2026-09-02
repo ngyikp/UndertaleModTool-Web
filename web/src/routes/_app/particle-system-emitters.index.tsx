@@ -35,5 +35,5 @@ function ParticleSystemEmitters() {
 export const Route = createFileRoute('/_app/particle-system-emitters/')({
 	component: ParticleSystemEmitters,
 	loader: ({context}) =>
-		context.queryClient.ensureQueryData(particleSystemEmittersQueryOptions),
+		context.queryClient.query(particleSystemEmittersQueryOptions),
 });

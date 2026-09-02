@@ -33,6 +33,5 @@ function Timelines() {
 
 export const Route = createFileRoute('/_app/timelines/')({
 	component: Timelines,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(timelinesQueryOptions),
+	loader: ({context}) => context.queryClient.query(timelinesQueryOptions),
 });

@@ -39,6 +39,5 @@ function CodeLocals() {
 
 export const Route = createFileRoute('/_app/code-locals/')({
 	component: CodeLocals,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(codeLocalsQueryOptions),
+	loader: ({context}) => context.queryClient.query(codeLocalsQueryOptions),
 });

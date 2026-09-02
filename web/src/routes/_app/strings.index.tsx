@@ -43,6 +43,5 @@ function Strings() {
 
 export const Route = createFileRoute('/_app/strings/')({
 	component: Strings,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(stringsQueryOptions),
+	loader: ({context}) => context.queryClient.query(stringsQueryOptions),
 });

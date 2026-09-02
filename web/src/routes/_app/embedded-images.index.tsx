@@ -33,6 +33,5 @@ function EmbeddedImages() {
 
 export const Route = createFileRoute('/_app/embedded-images/')({
 	component: EmbeddedImages,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(embeddedImagesQueryOptions),
+	loader: ({context}) => context.queryClient.query(embeddedImagesQueryOptions),
 });

@@ -56,6 +56,5 @@ function Sounds() {
 
 export const Route = createFileRoute('/_app/sounds')({
 	component: Sounds,
-	loader: ({context}) =>
-		context.queryClient.ensureQueryData(soundsQueryOptions),
+	loader: ({context}) => context.queryClient.query(soundsQueryOptions),
 });

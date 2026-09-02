@@ -57,5 +57,5 @@ function GlobalInitScripts() {
 export const Route = createFileRoute('/_app/global-init')({
 	component: GlobalInitScripts,
 	loader: ({context}) =>
-		context.queryClient.ensureQueryData(globalInitScriptsQueryOptions),
+		context.queryClient.query(globalInitScriptsQueryOptions),
 });
