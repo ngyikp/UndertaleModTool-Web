@@ -13,8 +13,7 @@
 
     <PublishDir>$(MSBuildProjectDirectory)/../web/public/dotnet/</PublishDir>
 
-    <!-- Improves performance but higher file size -->
-    <!-- <RunAOTCompilation>true</RunAOTCompilation> -->
+    <RunAOTCompilation>true</RunAOTCompilation> <!-- https://github.com/ngyikp/UndertaleModTool-Web/issues/11 -->
     <WasmStripILAfterAOT>true</WasmStripILAfterAOT>
     <InvariantGlobalization>true</InvariantGlobalization>
     <InvariantTimezone>true</InvariantTimezone>
