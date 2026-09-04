@@ -1,6 +1,9 @@
-import {Tooltip} from '@mantine/core';
+import {Loader, Tooltip} from '@mantine/core';
+import {useIntersection} from '@mantine/hooks';
 import {Link} from '@tanstack/react-router';
+import {Suspense} from 'react';
 
+import ErrorBoundary from '../common/ErrorBoundary';
 import renderSearchHighlight from '../common/renderSearchHighlight';
 import {useSpritesDataStore} from '../stores/sprites-data-store';
 
@@ -18,6 +21,8 @@ export default function SpriteSidebarItemThumbnailLink({
 }: Props) {
 	const thumbnailSize = useSpritesDataStore((state) => state.thumbnailSize);
 
+	const {ref, entry} = useIntersection();
+
 	return (
 		<Tooltip label={text}>
 			<Link
@@ -29,11 +34,18 @@ export default function SpriteSidebarItemThumbnailLink({
 				resetScroll={false}
 				className={styles.link}
 			>
-				<SpriteSidebarItemThumbnailImage
-					imageClassName={styles.image}
-					spriteName={text}
-					wrapClassName={styles.imageWrap}
-				/>
+				<div className={styles.imageWrap} ref={ref}>
+					{entry?.isIntersecting ? (
+						<ErrorBoundary fallback={null}>
+							<Suspense fallback={<Loader color="blue" size="xs" />}>
+								<SpriteSidebarItemThumbnailImage
+									imageClassName={styles.image}
+									spriteName={text}
+								/>
+							</Suspense>
+						</ErrorBoundary>
+					) : null}
+				</div>
 
 				{thumbnailSize > 50 ? (
 					<span className={styles.text ?? ''}>

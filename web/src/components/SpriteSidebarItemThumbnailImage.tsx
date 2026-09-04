@@ -1,7 +1,5 @@
 import {Loader} from '@mantine/core';
-import {useIntersection} from '@mantine/hooks';
-import {useQuery} from '@tanstack/react-query';
-import {useEffect, useState} from 'react';
+import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 
 import drawTexturePageImage from '../common/image/drawTexturePageImage';
 import useBlobAsUrl from '../common/image/useBlobAsUrl';
@@ -9,85 +7,50 @@ import {embeddedTexturesInfoByIdQueryOptions} from '../messages/getEmbeddedTextu
 import {spriteInfoByNameQueryOptions} from '../messages/getSpriteInfoByName';
 import {texturePageByIdQueryOptions} from '../messages/getTexturePageInfoById';
 
+// todo consider generalize this
+// todo look into https://github.com/TanStack/query/discussions/872#discussioncomment-14084248
+const drawTexturePageImageQueryOptions = (spriteName: string) =>
+	queryOptions({
+		queryKey: ['sprites', spriteName, 'blob'],
+		async queryFn({client}) {
+			const spriteInfo = await client.query(
+				spriteInfoByNameQueryOptions(spriteName),
+			);
+
+			const pageId = spriteInfo.TexturePageIDs[0];
+			if (pageId == null || pageId === -1) {
+				throw new Error('Empty sprite');
+			}
+
+			const texturePageData = await client.query(
+				texturePageByIdQueryOptions(pageId),
+			);
+
+			const embeddedTextureData = await client.query(
+				embeddedTexturesInfoByIdQueryOptions(texturePageData.EmbeddedTextureID),
+			);
+
+			return drawTexturePageImage(texturePageData, embeddedTextureData, false);
+		},
+	});
+
 type Props = Readonly<{
 	imageClassName?: string;
 	spriteName: string;
-	wrapClassName?: string;
 }>;
 
 export default function SpriteSidebarItemThumbnailImage({
 	imageClassName,
 	spriteName,
-	wrapClassName,
 }: Props) {
-	const {ref, entry} = useIntersection();
-	const isIntersecting = entry?.isIntersecting ?? false;
-
-	const {
-		data: spriteInfo,
-		isLoading,
-		isError,
-	} = useQuery({
-		...spriteInfoByNameQueryOptions(spriteName),
-		enabled: isIntersecting,
-	});
-	const pageId = spriteInfo?.TexturePageIDs[0];
-
-	const {
-		data: texturePageData,
-		isLoading: isLoading2,
-		isError: isError2,
-	} = useQuery({
-		...texturePageByIdQueryOptions(pageId ?? 0),
-		enabled: pageId != null && isIntersecting,
-	});
-
-	const {
-		data: embeddedTextureData,
-		isLoading: isLoading3,
-		isError: isError3,
-	} = useQuery({
-		...embeddedTexturesInfoByIdQueryOptions(
-			texturePageData?.EmbeddedTextureID ?? 0,
-		),
-		enabled: texturePageData != null && isIntersecting,
-	});
-
-	const [blob, setBlob] = useState<Blob | null>(null);
-	const [error, setError] = useState<Error | null>(null);
-
-	useEffect(() => {
-		if (
-			pageId != null &&
-			texturePageData != null &&
-			embeddedTextureData != null
-		) {
-			drawTexturePageImage(texturePageData, embeddedTextureData, false)
-				.then(setBlob)
-				.catch(setError);
-		}
-
-		return () => {
-			setBlob(null);
-			setError(null);
-		};
-	}, [pageId, embeddedTextureData, texturePageData]);
+	const {data: blob} = useSuspenseQuery(
+		drawTexturePageImageQueryOptions(spriteName),
+	);
 
 	const blobUrl = useBlobAsUrl(blob);
-
-	if (error || isError || isError2 || isError3) {
-		return <div className={wrapClassName} />;
+	if (!blobUrl) {
+		return <Loader color="blue" size="xs" />;
 	}
 
-	return (
-		<div className={wrapClassName} ref={ref}>
-			{isLoading || isLoading2 || isLoading3 || !blobUrl ? (
-				isIntersecting ? (
-					<Loader color="blue" size="xs" />
-				) : null
-			) : (
-				<img src={blobUrl} alt="" className={imageClassName} />
-			)}
-		</div>
-	);
+	return <img src={blobUrl} alt="" className={imageClassName} />;
 }
