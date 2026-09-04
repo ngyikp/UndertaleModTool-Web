@@ -1,10 +1,9 @@
-import {useSuspenseQuery} from '@tanstack/react-query';
-import {useEffect, useState} from 'react';
+import {useQuery, useSuspenseQuery} from '@tanstack/react-query';
 
 import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
 
-import drawTexturePageImage from './drawTexturePageImage';
+import drawTexturePageImageQueryOptions from './drawTexturePageImageQueryOptions';
 import ImageViewer from './ImageViewer';
 
 type Props = Readonly<{
@@ -27,19 +26,9 @@ export default function TexturePageImageViewer({
 		embeddedTexturesInfoByIdQueryOptions(texturePageData.EmbeddedTextureID),
 	);
 
-	const [blob, setBlob] = useState<Blob | null>(null);
-	const [error, setError] = useState<Error | null>(null);
-
-	useEffect(() => {
-		drawTexturePageImage(texturePageData, embeddedTextureData, includePadding)
-			.then(setBlob)
-			.catch(setError);
-
-		return () => {
-			setBlob(null);
-			setError(null);
-		};
-	}, [embeddedTextureData, includePadding, texturePageData]);
+	const {data: blob, error} = useQuery(
+		drawTexturePageImageQueryOptions(texturePageId, includePadding),
+	);
 
 	if (error) {
 		throw error;
@@ -47,7 +36,7 @@ export default function TexturePageImageViewer({
 
 	return (
 		<ImageViewer
-			blob={blob}
+			blob={blob ?? null}
 			fileName={fileName}
 			width={
 				includePadding
