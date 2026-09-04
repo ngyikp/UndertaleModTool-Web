@@ -64,6 +64,7 @@ export const EmbeddedTextureInfoDotNetSchema = z.object({
 export const EmbeddedTextureInfoSchema = z.omit(
 	z.object({
 		...EmbeddedTextureInfoDotNetSchema.shape,
+		DownloadableFileContents: z.nullable(z.instanceof(Uint8Array)),
 		Bgra: z.nullable(z.instanceof(Uint8Array)),
 	}),
 	{BgraFileName: true},
