@@ -1,12 +1,4 @@
-import {
-	Alert,
-	Button,
-	Checkbox,
-	Group,
-	Popover,
-	Title,
-	Tooltip,
-} from '@mantine/core';
+import {Alert, Button, Checkbox, Group, Popover, Tooltip} from '@mantine/core';
 import {useDisclosure, useHotkeys} from '@mantine/hooks';
 import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useParams} from '@tanstack/react-router';
@@ -21,6 +13,7 @@ import CustomCopyButton from '../../common/CustomCopyButton';
 import DocumentTitle from '../../common/DocumentTitle';
 import isMac from '../../common/isMac';
 import MonacoEditor from '../../common/monaco/MonacoEditor';
+import TitleWithId from '../../common/TitleWithId';
 import CodePrefixSelect from '../../components/CodePrefixSelect';
 import {useDataStore} from '../../data-store';
 import {useEditCodeTextByNameMutation} from '../../messages/editCodeTextByName';
@@ -92,9 +85,7 @@ function RouteComponent() {
 		<ContentViewWithPadding>
 			<DocumentTitle text={[name, 'Code']} />
 
-			<Title order={2} className="break-word">
-				{name}
-			</Title>
+			<TitleWithId id={data.Id} name={name} />
 
 			<CodePrefixSelect name={name} />
 

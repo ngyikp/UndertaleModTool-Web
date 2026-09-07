@@ -12,6 +12,7 @@ export type GetSpriteInfoByNameResult = SpriteInfoType;
 
 // Info about UndertaleSprite. Keep this in sync with `src/Serializers/SpriteInfo.cs`
 export const SpriteInfoSchema = z.object({
+	Id: z.int(),
 	TexturePageIDs: z.array(z.int()),
 });
 

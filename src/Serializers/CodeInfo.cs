@@ -9,6 +9,11 @@ namespace UndertaleModToolWASM.Serializers;
 /// </summary>
 public record CodeInfo
 {
+    /// <summary>
+    /// Index of the code entry in <see cref="UndertaleData"/>.
+    /// </summary>
+    public required int Id { get; set; }
+
     public string? DecompiledCode { get; set; }
 
     /// <seealso cref="UndertaleCode.ParentEntry"/>

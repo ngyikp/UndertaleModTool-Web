@@ -6,6 +6,7 @@ import ContentViewAlert from '../../common/ContentViewAlert';
 import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
+import TitleWithId from '../../common/TitleWithId';
 import GameObjectEventList from '../../components/GameObjectEventList';
 import {
 	type GameObjectEventAllType,
@@ -56,9 +57,7 @@ function RouteComponent() {
 		<ContentViewWithPadding>
 			<DocumentTitle text={[name, 'Objects']} />
 
-			<Title order={2} className="break-word">
-				{name}
-			</Title>
+			<TitleWithId id={data.Id} name={name} />
 
 			{data.SpriteName ? (
 				<p>

@@ -1,4 +1,4 @@
-import {Checkbox, Pagination, Title} from '@mantine/core';
+import {Checkbox, Pagination} from '@mantine/core';
 import {noop, useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {Suspense} from 'react';
@@ -11,6 +11,7 @@ import DocumentTitle from '../../common/DocumentTitle';
 import ImageAppearanceSelect from '../../common/image/ImageAppearanceSelect';
 import TexturePageImageViewer from '../../common/image/TexturePageImageViewer';
 import {NumberedList, NumberedListItem} from '../../common/NumberedList';
+import TitleWithId from '../../common/TitleWithId';
 import {embeddedTexturesInfoByIdQueryOptions} from '../../messages/getEmbeddedTextureInfoById';
 import {spriteInfoByNameQueryOptions} from '../../messages/getSpriteInfoByName';
 import {texturePageByIdQueryOptions} from '../../messages/getTexturePageInfoById';
@@ -62,9 +63,7 @@ function RouteComponent() {
 		<ContentViewWithPadding>
 			<DocumentTitle text={[name, 'Sprites']} />
 
-			<Title order={2} className="break-word">
-				{name}
-			</Title>
+			<TitleWithId id={data.Id} name={name} />
 
 			{totalPages > 1 || texturePageId !== INVALID_TEXTURE_PAGE_ID ? (
 				<Checkbox

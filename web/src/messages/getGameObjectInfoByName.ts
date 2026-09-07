@@ -82,6 +82,7 @@ const GameObjectEventAllSchemas = z.object({
 
 // Info about UndertaleGameObject. Keep this in sync with `src/Serializers/GameObjectInfo.cs`
 export const GameObjectInfoSchema = z.object({
+	Id: z.int(),
 	SpriteName: z.nullable(z.string()),
 	Visible: z.boolean(),
 	Persistent: z.boolean(),

@@ -9,6 +9,11 @@ namespace UndertaleModToolWASM.Serializers;
 /// </summary>
 public record SpriteInfo
 {
+    /// <summary>
+    /// Index of the sprite in <see cref="UndertaleData"/>.
+    /// </summary>
+    public required int Id { get; set; }
+
     /// <seealso cref="UndertaleSprite.Textures"/>
     public required int[] TexturePageIDs { get; set; }
 }

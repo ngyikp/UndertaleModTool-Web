@@ -396,10 +396,12 @@ public partial class Program
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
-        UndertaleSprite sprite = gameData.Sprites.First(sprite => name == sprite?.Name.Content);
+        int index = gameData.Sprites.IndexOfName(name);
+        UndertaleSprite sprite = gameData.Sprites[index];
 
         SpriteInfo spriteInfo = new()
         {
+            Id = index,
             TexturePageIDs = sprite.Textures.Select(entry => gameData.TexturePageItems.IndexOf(entry.Texture)).ToArray(),
         };
 
@@ -411,7 +413,8 @@ public partial class Program
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
-        UndertaleGameObject gameObject = gameData.GameObjects.First(gameObject => name == gameObject.Name.Content);
+        int index = gameData.GameObjects.IndexOfName(name);
+        UndertaleGameObject gameObject = gameData.GameObjects[index];
 
         Dictionary<int, List<GameObjectEvent>> events = new();
         for (int i = 0; i < gameObject.Events.Count; i += 1)
@@ -425,6 +428,7 @@ public partial class Program
 
         GameObjectInfo gameObjectInfo = new()
         {
+            Id = index,
             SpriteName = gameObject.Sprite?.Name.Content,
             Visible = gameObject.Visible,
             Persistent = gameObject.Persistent,
@@ -472,9 +476,13 @@ public partial class Program
             throw new Exception("This game has no code entries.");
         }
 
-        UndertaleCode code = gameData.Code.First(code => name == code.Name.Content);
+        int index = gameData.Code.IndexOfName(name);
+        UndertaleCode code = gameData.Code[index];
 
-        CodeInfo codeInfo = new();
+        CodeInfo codeInfo = new()
+        {
+            Id = index,
+        };
 
         if (code.ParentEntry is not null)
         {
@@ -532,10 +540,12 @@ public partial class Program
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
-        UndertaleSound sound = gameData.Sounds.First(sound => name == sound.Name.Content);
+        int index = gameData.Sounds.IndexOfName(name);
+        UndertaleSound sound = gameData.Sounds[index];
 
         SoundInfo soundInfo = new()
         {
+            Id = index,
             // Some sounds don't have IsEmbedded flag, but AudioFile points to the previous sound -_-
             //
             // UMT's behavior is to check for the IsEmbedded flag first before considering AudioFile

@@ -1,4 +1,4 @@
-import {Alert, Button, Title} from '@mantine/core';
+import {Alert, Button} from '@mantine/core';
 import {queryOptions, useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, useParams} from '@tanstack/react-router';
 import {useMemo} from 'react';
@@ -10,6 +10,7 @@ import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import detectMimeType from '../../common/detectMimeType';
 import DocumentTitle from '../../common/DocumentTitle';
 import useBlobAsUrl from '../../common/image/useBlobAsUrl';
+import TitleWithId from '../../common/TitleWithId';
 import {
 	AudioEntryFlags,
 	getSoundInfoByName,
@@ -32,6 +33,7 @@ function RouteComponent() {
 
 	const {data} = useSuspenseQuery(soundByNameQueryOptions(name));
 	const {
+		Id: id,
 		FileContents: fileContents,
 		Flags: flags,
 		ExternalFileName: externalFileName,
@@ -56,9 +58,7 @@ function RouteComponent() {
 		<ContentViewWithPadding>
 			<DocumentTitle text={[name, 'Sounds']} />
 
-			<Title order={2} className="break-word">
-				{name}
-			</Title>
+			<TitleWithId id={id} name={name} />
 
 			{blobUrl ? (
 				<div>
