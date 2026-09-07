@@ -7,6 +7,7 @@ import ContentViewLoading from '../../common/ContentViewLoading';
 import ContentViewWithPadding from '../../common/ContentViewWithPadding';
 import DocumentTitle from '../../common/DocumentTitle';
 import TitleWithId from '../../common/TitleWithId';
+import YycWarningAlert from '../../common/YycWarningAlert';
 import GameObjectEventList from '../../components/GameObjectEventList';
 import {
 	type GameObjectEventAllType,
@@ -93,6 +94,8 @@ function RouteComponent() {
 
 			{hasAnyEvents(data.Events) ? (
 				<>
+					<YycWarningAlert />
+
 					<GameObjectEventList
 						allEvents={data.Events}
 						type={EventType.Create}

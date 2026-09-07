@@ -32,7 +32,7 @@ export default function GameObjectEventList({
 			{header}
 			<List>
 				{events.map((event, index) => {
-					const codeNames = event.ActionsCodeNames.filter(Boolean) as string[];
+					const codeNames = event.ActionsCodeNames;
 					if (codeNames.length === 0) {
 						return null;
 					}
@@ -45,13 +45,17 @@ export default function GameObjectEventList({
 							{codeNames.map((code, index) => {
 								return (
 									<Fragment key={code}>
-										<Link
-											to="/code/$name"
-											params={{name: code}}
-											preload="intent"
-										>
-											{code}
-										</Link>
+										{code != null ? (
+											<Link
+												to="/code/$name"
+												params={{name: code}}
+												preload="intent"
+											>
+												{code}
+											</Link>
+										) : (
+											'(empty)'
+										)}
 										{index + 1 !== codeNames.length ? ', ' : null}
 									</Fragment>
 								);
