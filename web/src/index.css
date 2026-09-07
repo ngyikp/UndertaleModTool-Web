@@ -12,6 +12,11 @@ body {
 
 a {
 	color: var(--mantine-color-anchor, light-dark(#228be6, #4dabf7));
+	text-decoration: none;
+}
+
+a:hover:not(.mantine-UnstyledButton-root) {
+	text-decoration: underline;
 }
 
 pre {
