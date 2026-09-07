@@ -29,9 +29,9 @@ function RouteComponent() {
 
 	return (
 		<ContentViewWithPadding>
-			<DocumentTitle text={['Texture ' + id.toString(), 'Texture pages']} />
+			<DocumentTitle text={['PageItem ' + id.toString(), 'Texture pages']} />
 
-			<Title order={2}>Texture {id}</Title>
+			<Title order={2}>PageItem {id}</Title>
 
 			<p>
 				Source position: {texturePageData.SourceX}x{texturePageData.SourceY}
@@ -72,7 +72,7 @@ function RouteComponent() {
 			<TexturePageImageViewer
 				texturePageId={id}
 				includePadding={includePadding}
-				fileName={'Texture ' + id.toString()}
+				fileName={'PageItem ' + id.toString()}
 				enableImageActions={true}
 			/>
 		</ContentViewWithPadding>
