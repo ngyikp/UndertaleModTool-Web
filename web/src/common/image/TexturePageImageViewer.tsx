@@ -11,6 +11,7 @@ type Props = Readonly<{
 	includePadding: boolean;
 	fileName: string;
 	enableImageActions: boolean;
+	extraSideActions?: React.ReactNode;
 }>;
 
 export default function TexturePageImageViewer({
@@ -18,6 +19,7 @@ export default function TexturePageImageViewer({
 	includePadding,
 	fileName,
 	enableImageActions,
+	extraSideActions,
 }: Props) {
 	const {data: texturePageData} = useSuspenseQuery(
 		texturePageByIdQueryOptions(texturePageId),
@@ -52,6 +54,7 @@ export default function TexturePageImageViewer({
 			downloadButtonText={
 				embeddedTextureData.Format === 'Png' ? 'Export image' : 'Export as PNG'
 			}
+			extraSideActions={extraSideActions}
 		/>
 	);
 }

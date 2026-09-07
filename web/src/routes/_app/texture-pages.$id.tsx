@@ -52,15 +52,6 @@ function RouteComponent() {
 				{texturePageData.BoundingHeight}
 			</p>
 
-			<p>
-				<Link
-					to="/embedded-textures/$id"
-					params={{id: texturePageData.EmbeddedTextureID}}
-				>
-					Go to embedded texture {texturePageData.EmbeddedTextureID}
-				</Link>
-			</p>
-
 			<Checkbox
 				checked={includePadding}
 				onChange={(event) => {
@@ -74,6 +65,15 @@ function RouteComponent() {
 				includePadding={includePadding}
 				fileName={'PageItem ' + id.toString()}
 				enableImageActions={true}
+				extraSideActions={
+					<Link
+						to="/embedded-textures/$id"
+						params={{id: texturePageData.EmbeddedTextureID}}
+						preload="intent"
+					>
+						View embedded texture {texturePageData.EmbeddedTextureID}
+					</Link>
+				}
 			/>
 		</ContentViewWithPadding>
 	);

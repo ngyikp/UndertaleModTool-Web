@@ -7,22 +7,27 @@ import ImageAppearanceSelect from './ImageAppearanceSelect';
 type Props = Readonly<{
 	blob: Blob | null;
 	blobUrl: string | null;
-	fileName?: string;
 
 	downloadButtonText?: string;
+	extraSideActions?: React.ReactNode;
+	fileName?: string;
 }>;
 
 export default function ImageViewerActions({
 	blob,
 	blobUrl,
-	fileName,
+
 	downloadButtonText = 'Export image',
+	extraSideActions,
+	fileName,
 }: Props) {
 	return (
 		<Group>
 			<Flex mr="auto">
 				<ImageAppearanceSelect />
 			</Flex>
+
+			{extraSideActions}
 
 			<Button.Group>
 				<Button

@@ -17,6 +17,7 @@ type Props = Readonly<{
 
 	withActions?: boolean;
 	downloadButtonText?: string;
+	extraSideActions?: React.ReactNode;
 }>;
 
 export default function ImageViewer({
@@ -27,6 +28,7 @@ export default function ImageViewer({
 
 	withActions = false,
 	downloadButtonText,
+	extraSideActions,
 }: Props) {
 	const settings = useDataStore((state) => state.imageViewerSettings);
 
@@ -38,8 +40,9 @@ export default function ImageViewer({
 				<ImageViewerActions
 					blob={blob}
 					blobUrl={blobUrl}
-					fileName={fileName}
 					downloadButtonText={downloadButtonText}
+					extraSideActions={extraSideActions}
+					fileName={fileName}
 				/>
 			) : null}
 

@@ -95,6 +95,7 @@ function RouteComponent() {
 					<Link
 						to="/code/$name"
 						params={{name: data.ParentEntryName}}
+						preload="intent"
 						resetScroll={false}
 					>
 						{data.ParentEntryName}

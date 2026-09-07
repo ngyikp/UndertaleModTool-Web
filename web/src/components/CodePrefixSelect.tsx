@@ -1,4 +1,4 @@
-import {Button, Cascader, type CascaderOption, Group} from '@mantine/core';
+import {Cascader, type CascaderOption, Group} from '@mantine/core';
 import {useId} from '@mantine/hooks';
 import {useQuery} from '@tanstack/react-query';
 import {Link, useNavigate} from '@tanstack/react-router';
@@ -115,50 +115,50 @@ export default function CodePrefixSelect({name: codeName}: Props) {
 	}
 
 	return (
-		<Group gap="xs">
-			<label htmlFor={id}>Event type:</label>
+		<Group>
+			<Group gap="xs" flex="1">
+				<label htmlFor={id}>Event type:</label>
 
-			<Cascader
-				id={id}
-				data={cascaderData}
-				value={getCurrentCascaderValue(nameSplit.slice(-2))}
-				searchable
-				onChange={(value) => {
-					const last = value != null ? value[value.length - 1] : undefined;
-					if (last != null) {
-						void navigate({
-							to: '/code/$name',
-							params: {name: searchPrefix + last},
-							resetScroll: false,
-						});
-					}
-				}}
-				styles={{
-					column: {
-						// setting `columnWidth` prop on Cascader would set min-width
-						// https://github.com/mantinedev/mantine/blob/9.5.1/packages/%40mantine/core/src/components/Cascader/CascaderColumns.tsx#L138
+				<Cascader
+					id={id}
+					data={cascaderData}
+					value={getCurrentCascaderValue(nameSplit.slice(-2))}
+					searchable
+					onChange={(value) => {
+						const last = value != null ? value[value.length - 1] : undefined;
+						if (last != null) {
+							void navigate({
+								to: '/code/$name',
+								params: {name: searchPrefix + last},
+								resetScroll: false,
+							});
+						}
+					}}
+					styles={{
+						column: {
+							// setting `columnWidth` prop on Cascader would set min-width
+							// https://github.com/mantinedev/mantine/blob/9.5.1/packages/%40mantine/core/src/components/Cascader/CascaderColumns.tsx#L138
+							width: 'max-content',
+						},
+					}}
+					comboboxProps={{
 						width: 'max-content',
-					},
-				}}
-				comboboxProps={{
-					width: 'max-content',
-				}}
-				disabled={cascaderData.length === 0}
-				loading={isPending}
-				expandTrigger="hover"
-				allowDeselect={false}
-				flex="1"
-			/>
+					}}
+					disabled={cascaderData.length === 0}
+					loading={isPending}
+					expandTrigger="hover"
+					allowDeselect={false}
+					flex="1"
+				/>
+			</Group>
 
-			<Button
-				component={Link}
+			<Link
 				to="/objects/$name"
-				// @ts-expect-error Link param not detected properly
 				params={{name: currentObjectName}}
-				variant="default"
+				preload="intent"
 			>
 				View object
-			</Button>
+			</Link>
 		</Group>
 	);
 }

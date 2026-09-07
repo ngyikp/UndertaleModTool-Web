@@ -1,6 +1,6 @@
 import {Checkbox, Pagination} from '@mantine/core';
 import {noop, useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
-import {createFileRoute, useParams} from '@tanstack/react-router';
+import {createFileRoute, Link, useParams} from '@tanstack/react-router';
 import {Suspense} from 'react';
 
 import BasicLoadingMessage from '../../common/BasicLoadingMessage';
@@ -95,13 +95,13 @@ function RouteComponent() {
 								return (
 									<NumberedListItem
 										key={
-											texturePageId !== INVALID_TEXTURE_PAGE_ID
+											pageId !== INVALID_TEXTURE_PAGE_ID
 												? pageId
 												: '!empty' + index.toString()
 										}
 										index={index}
 									>
-										{texturePageId !== INVALID_TEXTURE_PAGE_ID ? (
+										{pageId !== INVALID_TEXTURE_PAGE_ID ? (
 											<TexturePageImageViewer
 												texturePageId={pageId}
 												includePadding={includePadding}
@@ -137,6 +137,15 @@ function RouteComponent() {
 									: name
 							}
 							enableImageActions={true}
+							extraSideActions={
+								<Link
+									to="/texture-pages/$id"
+									params={{id: texturePageId}}
+									preload="intent"
+								>
+									View texture page {texturePageId}
+								</Link>
+							}
 						/>
 					) : (
 						'This sprite is empty.'
