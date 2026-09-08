@@ -23,8 +23,14 @@ export default function SpriteSidebarItemThumbnailLink({
 
 	const {ref, entry} = useIntersection();
 
+	const textIsVisible = thumbnailSize > 50;
+
 	return (
-		<Tooltip label={text}>
+		<Tooltip
+			label={text}
+			position={textIsVisible ? 'bottom' : undefined}
+			offset={textIsVisible ? -39 : undefined}
+		>
 			<Link
 				to="/sprites/$name"
 				params={{name: text}}
@@ -47,8 +53,8 @@ export default function SpriteSidebarItemThumbnailLink({
 					) : null}
 				</div>
 
-				{thumbnailSize > 50 ? (
-					<span className={styles.text ?? ''}>
+				{textIsVisible ? (
+					<span className={styles.text}>
 						{renderSearchHighlight({text, searchHighlight})}
 					</span>
 				) : null}
