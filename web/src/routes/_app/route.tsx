@@ -237,7 +237,7 @@ function AppLayout() {
 	);
 }
 
-function GameDataNotLoadedComponent({error}: {error: Error}) {
+function GameDataNotLoadedComponent({error}: {error: unknown}) {
 	if (error instanceof GameDataNotLoadedError) {
 		return (
 			<GenericHeaderAndFooter>

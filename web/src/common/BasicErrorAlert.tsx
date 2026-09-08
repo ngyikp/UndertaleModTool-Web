@@ -2,7 +2,7 @@ import {Alert} from '@mantine/core';
 
 type Props = Readonly<{
 	title?: React.ReactNode;
-	error?: string | Error | null;
+	error?: unknown; // string | Error | null
 }>;
 
 export default function BasicErrorAlert({
@@ -16,7 +16,11 @@ export default function BasicErrorAlert({
 			title={title}
 			style={{alignSelf: 'start', whiteSpace: 'pre-wrap'}}
 		>
-			{typeof error === 'string' ? error : error?.message}
+			{typeof error === 'string'
+				? error
+				: error instanceof Error
+					? error.message
+					: ''}
 		</Alert>
 	);
 }
