@@ -89,8 +89,11 @@ export const Route = createFileRoute('/_app/embedded-textures/$id')({
 			};
 		},
 	},
-	loader: ({context, params}) =>
-		context.queryClient.query(embeddedTexturesInfoByIdQueryOptions(params.id)),
+	loader: async ({context, params}) => [
+		await context.queryClient.query(
+			embeddedTexturesInfoByIdQueryOptions(params.id),
+		),
+	],
 	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
 			if (error.message.startsWith('ArgumentOutOfRange')) {
