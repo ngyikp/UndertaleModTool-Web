@@ -205,7 +205,7 @@ export const Route = createFileRoute('/_app/code/$name')({
 		context.queryClient.query(codeInfoByNameQueryOptions(params.name)),
 	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
-			if (error.message === 'NoMatch') {
+			if (error.message.startsWith('ArgumentOutOfRange_IndexMustBeLess')) {
 				return <ContentViewAlert title="This code name does not exist." />;
 			}
 		}

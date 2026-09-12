@@ -217,7 +217,7 @@ export const Route = createFileRoute('/_app/objects/$name')({
 		context.queryClient.query(gameObjectInfoByNameQueryOptions(params.name)),
 	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
-			if (error.message === 'NoMatch') {
+			if (error.message.startsWith('ArgumentOutOfRange_IndexMustBeLess')) {
 				return <ContentViewAlert title="This object does not exist." />;
 			}
 		}

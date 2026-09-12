@@ -204,7 +204,7 @@ export const Route = createFileRoute('/_app/sprites/$name')({
 	},
 	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
-			if (error.message === 'NoMatch') {
+			if (error.message.startsWith('ArgumentOutOfRange_IndexMustBeLess')) {
 				return <ContentViewAlert title="This sprite does not exist." />;
 			}
 		}

@@ -109,7 +109,7 @@ export const Route = createFileRoute('/_app/sounds/$name')({
 		context.queryClient.query(soundByNameQueryOptions(params.name)),
 	errorComponent({error}) {
 		if (error instanceof ManagedErrorFromDotNet) {
-			if (error.message === 'NoMatch') {
+			if (error.message.startsWith('ArgumentOutOfRange_IndexMustBeLess')) {
 				return <ContentViewAlert title="This sound does not exist." />;
 			}
 		}
