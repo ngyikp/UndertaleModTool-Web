@@ -1,4 +1,5 @@
 import {Alert, Group, Stack, Tabs, Text, Title, Tooltip} from '@mantine/core';
+import {useSuspenseQuery} from '@tanstack/react-query';
 import {
 	createFileRoute,
 	Link,
@@ -12,7 +13,7 @@ import GenericHeaderAndFooter from '../../common/GenericHeaderAndFooter';
 import getGameDisplayName from '../../common/getGameDisplayName';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
 import SaveDataFile from '../../components/SaveDataFile';
-import {useDataStore} from '../../data-store';
+import {getGameInfoQueryOptions} from '../../messages/getGameInfo';
 
 function TabLink({link, text}: {link: string; text: string}) {
 	return (
@@ -42,11 +43,11 @@ function TabLinkHideIfEmpty({
 }
 
 function AppLayout() {
-	const info = useDataStore((state) => state.gameInfo);
-
 	const pathname = useLocation({
 		select: (location) => location.pathname,
 	});
+
+	const {data: info} = useSuspenseQuery(getGameInfoQueryOptions());
 
 	if (info == null) {
 		throw new GameDataNotLoadedError();
@@ -262,7 +263,7 @@ class GameDataNotLoadedError extends Error {}
 export const Route = createFileRoute('/_app')({
 	component: AppLayout,
 	beforeLoad: ({context}) => {
-		if (context.gameInfo == null) {
+		if (context.queryClient.getQueryData(['game-info']) == null) {
 			throw new GameDataNotLoadedError();
 		}
 	},

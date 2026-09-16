@@ -1,4 +1,5 @@
 import {Alert, Button, Group, List, Stack} from '@mantine/core';
+import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Link, useNavigate} from '@tanstack/react-router';
 
 import CollapsibleListBox from '../../common/CollapsibleListBox';
@@ -9,14 +10,17 @@ import getTileSetsLabel from '../../common/getTileSetsLabel';
 import useUnloadGame from '../../common/useUnloadGame';
 import YycWarningAlert from '../../common/YycWarningAlert';
 import {useDataStore} from '../../data-store';
+import {getGameInfoQueryOptions} from '../../messages/getGameInfo';
 import {stopWorker} from '../../worker/worker-handler';
 
 function GeneralInfo() {
-	const info = useDataStore((state) => state.gameInfo);
-	const dataFileLoadInfo = useDataStore((state) => state.dataFileLoadInfo);
-	const unloadGame = useUnloadGame();
-
 	const navigate = useNavigate({from: '/general-info'});
+
+	const dataFileLoadInfo = useDataStore((state) => state.dataFileLoadInfo);
+
+	const {data: info} = useSuspenseQuery(getGameInfoQueryOptions());
+
+	const unloadGame = useUnloadGame();
 
 	if (info == null) {
 		return null;

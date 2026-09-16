@@ -9,7 +9,7 @@ import DocumentTitle from '../../common/DocumentTitle';
 import TitleWithId from '../../common/TitleWithId';
 import YycWarningAlert from '../../common/YycWarningAlert';
 import GameObjectEventList from '../../components/GameObjectEventList';
-import {useDataStore} from '../../data-store';
+import {getGameInfoQueryOptions} from '../../messages/getGameInfo';
 import {
 	type GameObjectEventAllType,
 	gameObjectInfoByNameQueryOptions,
@@ -48,13 +48,12 @@ function renderSubtypeEnum(obj: {[key: string]: string}) {
 }
 
 function RouteComponent() {
-	const gameInfo = useDataStore((state) => state.gameInfo);
-
 	const name = useParams({
 		from: '/_app/objects/$name',
 		select: (params) => params.name,
 	});
 
+	const {data: gameInfo} = useSuspenseQuery(getGameInfoQueryOptions());
 	const {data} = useSuspenseQuery(gameObjectInfoByNameQueryOptions(name));
 
 	return (

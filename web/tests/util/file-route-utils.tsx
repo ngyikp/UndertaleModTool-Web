@@ -5,6 +5,7 @@ import {createMemoryHistory, createRouter} from '@tanstack/react-router';
 import {render} from '@testing-library/react';
 
 import CustomMantine from '../../src/CustomMantine';
+import type {MyRouterContext} from '../../src/main';
 import RouterProviderWithContext from '../../src/RouterProviderWithContext';
 import {routeTree} from '../../src/routeTree.gen';
 
@@ -17,9 +18,8 @@ const queryClient = new QueryClient({
 });
 
 const DEFAULT_CONTEXT = {
-	gameInfo: null,
 	queryClient,
-};
+} satisfies MyRouterContext;
 
 // Create test router with generated route tree
 function createTestRouterFromFiles(initialLocation = '/') {

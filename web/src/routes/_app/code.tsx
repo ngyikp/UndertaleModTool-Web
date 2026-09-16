@@ -1,3 +1,4 @@
+import {useSuspenseQuery} from '@tanstack/react-query';
 import {createFileRoute, Outlet, useChildMatches} from '@tanstack/react-router';
 import {Suspense} from 'react';
 
@@ -6,19 +7,19 @@ import DocumentTitle from '../../common/DocumentTitle';
 import SidebarAndContentView from '../../common/SidebarAndContentView';
 import YycWarningAlert from '../../common/YycWarningAlert';
 import CodeListSidebar from '../../components/CodeListSidebar';
-import {useDataStore} from '../../data-store';
+import {getGameInfoQueryOptions} from '../../messages/getGameInfo';
 import {listCodeEntriesQueryOptions} from '../../messages/listCodeEntries';
 
 function Code() {
-	const info = useDataStore((state) => state.gameInfo);
-
 	const onIndexPage = useChildMatches().length === 0;
+
+	const {data: gameInfo} = useSuspenseQuery(getGameInfoQueryOptions());
 
 	return (
 		<>
 			<DocumentTitle text="Code" />
 
-			{info?.IsYYC && info.ItemCounts.Code === 0 ? (
+			{gameInfo?.IsYYC && gameInfo.ItemCounts.Code === 0 ? (
 				<YycWarningAlert />
 			) : (
 				<SidebarAndContentView

@@ -5,8 +5,8 @@ import {createFileRoute} from '@tanstack/react-router';
 import DocumentTitle from '../../common/DocumentTitle';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
 import SortableList from '../../common/SortableList';
-import {useDataStore} from '../../data-store';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
+import {getGameInfoQueryOptions} from '../../messages/getGameInfo';
 import {ModelType} from '../../types/ModelType';
 
 const backgroundsQueryOptions = queryOptions({
@@ -18,17 +18,16 @@ const backgroundsQueryOptions = queryOptions({
 
 // UMT calls these as 'backgrounds' internally
 function Tilesets() {
-	const info = useDataStore((state) => state.gameInfo);
-
+	const {data: gameInfo} = useSuspenseQuery(getGameInfoQueryOptions());
 	const {data} = useSuspenseQuery(backgroundsQueryOptions);
 
 	return (
 		<Stack>
-			<DocumentTitle text={getTileSetsLabel(info, true)} />
+			<DocumentTitle text={getTileSetsLabel(gameInfo, true)} />
 
 			<SortableList
 				id="backgrounds"
-				emptyListMessage={`This game has no ${getTileSetsLabel(info)}.`}
+				emptyListMessage={`This game has no ${getTileSetsLabel(gameInfo)}.`}
 				list={data.list}
 				onIndexPage={true}
 			/>

@@ -5,8 +5,8 @@ import {createFileRoute} from '@tanstack/react-router';
 import DocumentTitle from '../../common/DocumentTitle';
 import SortableList from '../../common/SortableList';
 import YycWarningAlert from '../../common/YycWarningAlert';
-import {useDataStore} from '../../data-store';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
+import {getGameInfoQueryOptions} from '../../messages/getGameInfo';
 import {ModelType} from '../../types/ModelType';
 
 const codeLocalsQueryOptions = queryOptions({
@@ -17,8 +17,7 @@ const codeLocalsQueryOptions = queryOptions({
 });
 
 function CodeLocals() {
-	const info = useDataStore((state) => state.gameInfo);
-
+	const {data: gameInfo} = useSuspenseQuery(getGameInfoQueryOptions());
 	const {data} = useSuspenseQuery(codeLocalsQueryOptions);
 
 	return (
@@ -28,7 +27,11 @@ function CodeLocals() {
 			<SortableList
 				id="code-locals"
 				emptyListMessage={
-					info?.IsYYC ? <YycWarningAlert /> : 'This game has no code locals.'
+					gameInfo?.IsYYC ? (
+						<YycWarningAlert />
+					) : (
+						'This game has no code locals.'
+					)
 				}
 				list={data.list}
 				onIndexPage={true}

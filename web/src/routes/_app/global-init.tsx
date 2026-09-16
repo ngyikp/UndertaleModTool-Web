@@ -6,8 +6,8 @@ import DocumentTitle from '../../common/DocumentTitle';
 import renderSearchHighlight from '../../common/renderSearchHighlight';
 import SortableList from '../../common/SortableList';
 import YycWarningAlert from '../../common/YycWarningAlert';
-import {useDataStore} from '../../data-store';
 import {getEntriesByModelType} from '../../messages/getEntriesByModelType';
+import {getGameInfoQueryOptions} from '../../messages/getGameInfo';
 import {ModelType} from '../../types/ModelType';
 
 const globalInitScriptsQueryOptions = queryOptions({
@@ -18,8 +18,7 @@ const globalInitScriptsQueryOptions = queryOptions({
 });
 
 function GlobalInitScripts() {
-	const info = useDataStore((state) => state.gameInfo);
-
+	const {data: gameInfo} = useSuspenseQuery(getGameInfoQueryOptions());
 	const {data} = useSuspenseQuery(globalInitScriptsQueryOptions);
 
 	return (
@@ -29,7 +28,7 @@ function GlobalInitScripts() {
 			<SortableList
 				id="global-init"
 				emptyListMessage={
-					info?.IsYYC ? (
+					gameInfo?.IsYYC ? (
 						<YycWarningAlert />
 					) : (
 						'This game has no global init scripts.'
