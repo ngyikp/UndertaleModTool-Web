@@ -4,12 +4,12 @@ import {createRouter} from '@tanstack/react-router';
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 
-import BasicErrorAlert from './common/BasicErrorAlert';
 import BasicLoadingMessage from './common/BasicLoadingMessage';
 import CustomMantine from './CustomMantine';
 import PageNotFound from './PageNotFound';
 import RouterProviderWithContext from './RouterProviderWithContext';
 import {routeTree} from './routeTree.gen';
+import TopErrorComponent from './TopErrorComponent';
 import {ManagedErrorFromDotNet} from './worker/ManagedErrorFromDotNet';
 
 import './index.css';
@@ -50,17 +50,7 @@ const router = createRouter({
 			console.error('Exception in .NET:\n\n' + error.stack);
 		}
 	},
-	defaultErrorComponent({error}) {
-		if (error instanceof ManagedErrorFromDotNet) {
-			if (error.message.endsWith('NativeMagickSettings')) {
-				return (
-					<BasicErrorAlert error="This functionality requires ImageMagick which is not implemented on the web version yet." />
-				);
-			}
-		}
-
-		return <BasicErrorAlert error={error} />;
-	},
+	defaultErrorComponent: TopErrorComponent,
 	defaultNotFoundComponent: () => <PageNotFound />,
 	defaultPendingComponent: () => <BasicLoadingMessage />,
 	// https://tanstack.com/router/latest/docs/guide/data-loading#passing-all-loader-events-to-an-external-cache

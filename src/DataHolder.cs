@@ -4,9 +4,11 @@ namespace UndertaleModToolWASM;
 
 public partial class DataHolder
 {
+    // Only support one data file loaded in one worker process
+    // to prevent reaching memory limit
     private static UndertaleData? Data;
 
-    public static void SetData(UndertaleData data)
+    public static void SetData(UndertaleData? data)
     {
         Data = data;
     }

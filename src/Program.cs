@@ -177,6 +177,18 @@ public partial class Program
         return true;
     }
 
+    // Only used in tests, otherwise just stop the web worker
+    [JSExport]
+    public static void UnloadDataFile()
+    {
+        if (DataHolder.IsDataLoaded())
+        {
+            DataHolder.GetNonNullData().Dispose();
+        }
+
+        DataHolder.SetData(null);
+    }
+
     [JSExport]
     [SupportedOSPlatform("browser")]
     public static string GetGameInfo()

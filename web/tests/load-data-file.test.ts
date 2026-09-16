@@ -64,6 +64,7 @@ describe.runIf(dataFileTestsRaw !== '')('loads data files', () => {
 			dotNet.Module.FS.writeFile('data.win', file);
 
 			// Load info
+			dotNet.exports.UndertaleModToolWASM.Program.UnloadDataFile();
 			const loadInfo = DataFileLoadInfoSchema.parse(
 				JSON.parse(
 					dotNet.exports.UndertaleModToolWASM.Program.ReadFile(
@@ -82,6 +83,8 @@ describe.runIf(dataFileTestsRaw !== '')('loads data files', () => {
 			await expect(generalInfo).toMatchFileSnapshot(
 				'./__snapshots__/load-data-file/' + data.name + '.snap',
 			);
+
+			dotNet.exports.UndertaleModToolWASM.Program.UnloadDataFile();
 		},
 	);
 });

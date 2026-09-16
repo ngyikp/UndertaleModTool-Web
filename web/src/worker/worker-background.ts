@@ -1,5 +1,6 @@
 /// <reference lib="webworker" />
 
+import GameDataNotLoadedError from '../common/GameDataNotLoadedError.js';
 import {CodeInfoSchema} from '../messages/getCodeInfoByName';
 import {EmbeddedAudioInfoSchema} from '../messages/getEmbeddedAudioInfoById.js';
 import {
@@ -37,16 +38,20 @@ async function onMessage(port: MessagePort, request: WorkerRequest) {
 		});
 	};
 
-	if (request.message.type === 'stopWorker') {
-		self.close();
-		return;
-	}
-
 	try {
-		if (!dotNet) {
-			reply({status: 'LOADING'});
+		if (request.message.type === 'stopWorker') {
+			stopWorker();
+			return;
+		}
 
-			dotNet = await loadAssembly(LOADER_URL, import.meta.env.DEV);
+		if (!dotNet) {
+			if (request.message.type === 'readFile') {
+				reply({status: 'LOADING'});
+
+				dotNet = await loadAssembly(LOADER_URL, import.meta.env.DEV);
+			} else {
+				throw new GameDataNotLoadedError();
+			}
 		}
 
 		reply({status: 'PROCESSING'});
@@ -300,7 +305,6 @@ self.onconnect = ({ports}) => {
 	port.onmessage = (ev: MessageEvent<WorkerRequest>) => {
 		void onMessage(port, ev.data);
 	};
-	port.start();
 };
 
 globalThis.receiveMessageFromDotNet = (
@@ -321,6 +325,17 @@ globalThis.receiveMessageFromDotNet = (
 		},
 	});
 };
+
+function stopWorker() {
+	allPorts.forEach((port) => {
+		port.postMessage({
+			response: {
+				status: 'STOPPING',
+			},
+		});
+	});
+	self.close();
+}
 
 declare global {
 	function receiveMessageFromDotNet(

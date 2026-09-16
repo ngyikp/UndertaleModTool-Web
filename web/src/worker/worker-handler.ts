@@ -1,5 +1,7 @@
 // Based on https://github.com/dotnet/blazor-samples/blob/main/10.0/DotNetOnWebWorkersReact/react/src/
 
+import GameDataNotLoadedError from '../common/GameDataNotLoadedError';
+
 import {ManagedErrorFromDotNet} from './ManagedErrorFromDotNet';
 import type {
 	AllResults,
@@ -31,11 +33,17 @@ function startWorker() {
 		messageId: number;
 		response: AllWorkerResponses;
 	}>) => {
-		const port = messagePorts.get(data.messageId);
-		if (!port) {
+		if (data.response.status === 'STOPPING') {
+			messagePorts.clear();
+			worker = null;
 			return;
 		}
-		port(data.response);
+
+		const respond = messagePorts.get(data.messageId);
+		if (!respond) {
+			return;
+		}
+		respond(data.response);
 
 		if (
 			data.response.status === 'FINISHED' ||
@@ -43,6 +51,10 @@ function startWorker() {
 		) {
 			messagePorts.delete(data.messageId);
 		}
+	};
+
+	worker.port.onmessageerror = (ev) => {
+		console.error(ev);
 	};
 
 	return worker;
@@ -57,16 +69,24 @@ export function stopWorker() {
 			() => {},
 		);
 	}
-
-	messagePorts.clear();
-	worker = null;
 }
 
 export function sendMessageToWorker<FinishedResult extends AllResults>(
 	message: WorkerRequest['message'],
 	onStatusChanged: (response: SpecificWorkerResponses<FinishedResult>) => void,
 ) {
-	worker = startWorker();
+	if (!worker) {
+		if (
+			message.type === 'readFile' ||
+			// If we navigate to specific URL, then we need to start worker to
+			// figure out if data is already loaded
+			message.type === 'getGameInfo'
+		) {
+			worker = startWorker();
+		} else {
+			throw new GameDataNotLoadedError();
+		}
+	}
 
 	messageNewId += 1;
 	// @ts-expect-error this is a headache to fix

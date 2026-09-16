@@ -9,6 +9,7 @@ import {
 
 import BasicLoadingMessage from '../../common/BasicLoadingMessage';
 import DataFileInput from '../../common/DataFileInput';
+import DocumentTitle from '../../common/DocumentTitle';
 import GameDataNotLoadedError from '../../common/GameDataNotLoadedError';
 import GenericHeaderAndFooter from '../../common/GenericHeaderAndFooter';
 import getGameDisplayName from '../../common/getGameDisplayName';
@@ -243,6 +244,8 @@ function GameDataNotLoadedComponent({error}: {error: unknown}) {
 	if (error instanceof GameDataNotLoadedError) {
 		return (
 			<GenericHeaderAndFooter>
+				<DocumentTitle text="" />
+
 				<DataFileInput
 					initialStatusMessage={
 						<Alert

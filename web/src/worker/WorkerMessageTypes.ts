@@ -57,7 +57,8 @@ export type WorkerStatuses =
 	| 'PROCESSING'
 	| 'MESSAGE_FROM_DOTNET'
 	| 'FINISHED'
-	| 'ERROR';
+	| 'ERROR'
+	| 'STOPPING';
 
 export type WorkerRequest = {
 	messageId: number;
