@@ -118,6 +118,11 @@ public partial class Program
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleTexturePageItem))]
     public static string ReadFile(int portId, int messageId, string fileName)
     {
+        if (DataHolder.IsDataLoaded())
+        {
+            throw new Exception("Data file is already loaded, try reloading the page.");
+        }
+
         bool hadImportantWarnings = false;
         List<string> warnings = [];
 

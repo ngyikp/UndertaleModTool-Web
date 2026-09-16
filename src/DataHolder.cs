@@ -11,6 +11,11 @@ public partial class DataHolder
         Data = data;
     }
 
+    public static bool IsDataLoaded()
+    {
+        return Data is not null;
+    }
+
     public static UndertaleData GetNonNullData()
     {
         if (Data is null)
