@@ -19,7 +19,7 @@ public partial class Program
     }
 
     [JSImport("globalThis.receiveMessageFromDotNet")]
-    public static partial void SendMessageToWorker(int messageId, string text);
+    public static partial void SendMessageToWorker(int portId, int messageId, string text);
 
     [JSExport]
     [SupportedOSPlatform("browser")]
@@ -116,7 +116,7 @@ public partial class Program
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSprite.TextureEntry))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSprite.NineSlice))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleTexturePageItem))]
-    public static string ReadFile(int messageId, string fileName)
+    public static string ReadFile(int portId, int messageId, string fileName)
     {
         bool hadImportantWarnings = false;
         List<string> warnings = [];
@@ -136,7 +136,7 @@ public partial class Program
                 }
             }, (string message) =>
             {
-                SendMessageToWorker(messageId, message);
+                SendMessageToWorker(portId, messageId, message);
             });
         }
         finally
@@ -159,14 +159,14 @@ public partial class Program
 
     [JSExport]
     [SupportedOSPlatform("browser")]
-    public static bool SaveDataFile(int messageId, string fileName)
+    public static bool SaveDataFile(int portId, int messageId, string fileName)
     {
         UndertaleData gameData = DataHolder.GetNonNullData();
 
         using FileStream fs = new(fileName, FileMode.Create, FileAccess.Write);
         UndertaleIO.Write(fs, gameData, (string message) =>
         {
-            SendMessageToWorker(messageId, message);
+            SendMessageToWorker(portId, messageId, message);
         });
 
         return true;

@@ -124,11 +124,9 @@ export default function DataFileInput({
 				case 'FINISHED':
 					setDataFileLoadInfo(response.result);
 
+					// Load the query into cache now
 					void queryClient.query(getGameInfoQueryOptions()).then(() => {
-						// hack: router context is lagging a bit
-						requestAnimationFrame(() => {
-							void router.invalidate().then(onFileLoaded);
-						});
+						void router.invalidate().then(onFileLoaded);
 					});
 					break;
 

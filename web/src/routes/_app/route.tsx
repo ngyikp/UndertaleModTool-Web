@@ -9,6 +9,7 @@ import {
 
 import BasicLoadingMessage from '../../common/BasicLoadingMessage';
 import DataFileInput from '../../common/DataFileInput';
+import GameDataNotLoadedError from '../../common/GameDataNotLoadedError';
 import GenericHeaderAndFooter from '../../common/GenericHeaderAndFooter';
 import getGameDisplayName from '../../common/getGameDisplayName';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
@@ -258,12 +259,11 @@ function GameDataNotLoadedComponent({error}: {error: unknown}) {
 	throw error;
 }
 
-class GameDataNotLoadedError extends Error {}
-
 export const Route = createFileRoute('/_app')({
 	component: AppLayout,
-	beforeLoad: ({context}) => {
-		if (context.queryClient.getQueryData(['game-info']) == null) {
+	beforeLoad: async ({context}) => {
+		const gameInfo = await context.queryClient.query(getGameInfoQueryOptions());
+		if (gameInfo == null) {
 			throw new GameDataNotLoadedError();
 		}
 	},

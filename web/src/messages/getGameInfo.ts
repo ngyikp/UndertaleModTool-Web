@@ -18,9 +18,9 @@ function getGameInfo() {
 export const getGameInfoQueryOptions = () =>
 	queryOptions({
 		queryKey: ['game-info'],
-		queryFn() {
+		async queryFn() {
 			try {
-				return getGameInfo();
+				return await getGameInfo();
 			} catch {
 				return null;
 			}

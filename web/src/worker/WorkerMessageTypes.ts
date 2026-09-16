@@ -62,6 +62,9 @@ export type WorkerStatuses =
 export type WorkerRequest = {
 	messageId: number;
 	message:
+		| {
+				type: 'stopWorker';
+		  }
 		| ReadFileRequest
 		| SaveDataFileRequest
 		| DeleteDataFileRequest

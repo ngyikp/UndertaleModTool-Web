@@ -67,6 +67,7 @@ describe.runIf(dataFileTestsRaw !== '')('loads data files', () => {
 			const loadInfo = DataFileLoadInfoSchema.parse(
 				JSON.parse(
 					dotNet.exports.UndertaleModToolWASM.Program.ReadFile(
+						0,
 						messageId,
 						'data.win',
 					),
@@ -99,7 +100,11 @@ function parseDataFileTests(list: string) {
 
 const dotNetMessages = new Map<number, string[]>();
 
-globalThis.receiveMessageFromDotNet = (messageId: number, text: string) => {
+globalThis.receiveMessageFromDotNet = (
+	_portId: number,
+	messageId: number,
+	text: string,
+) => {
 	if (!dotNetMessages.has(messageId)) {
 		dotNetMessages.set(messageId, []);
 	}

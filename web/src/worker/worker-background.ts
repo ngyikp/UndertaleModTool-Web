@@ -1,3 +1,5 @@
+/// <reference lib="webworker" />
+
 import {CodeInfoSchema} from '../messages/getCodeInfoByName';
 import {EmbeddedAudioInfoSchema} from '../messages/getEmbeddedAudioInfoById.js';
 import {
@@ -17,20 +19,28 @@ import type {DotNetType} from './DotNetType';
 import loadAssembly from './loadAssembly';
 import type {AllWorkerResponses, WorkerRequest} from './WorkerMessageTypes';
 
+declare const self: SharedWorkerGlobalScope;
+
 const LOADER_URL = new URL(
 	'/dotnet/wwwroot/_framework/' + (DOTNET_JS_PATH ?? 'dotnet.js'),
 	import.meta.url,
 ).href;
 
+const allPorts: MessagePort[] = [];
 let dotNet: DotNetType | null = null;
 
-async function onMessage(request: WorkerRequest) {
+async function onMessage(port: MessagePort, request: WorkerRequest) {
 	const reply = (response: AllWorkerResponses) => {
-		self.postMessage({
+		port.postMessage({
 			messageId: request.messageId,
 			response,
 		});
 	};
+
+	if (request.message.type === 'stopWorker') {
+		self.close();
+		return;
+	}
 
 	try {
 		if (!dotNet) {
@@ -50,6 +60,7 @@ async function onMessage(request: WorkerRequest) {
 					result: DataFileLoadInfoSchema.parse(
 						JSON.parse(
 							dotNet.exports.UndertaleModToolWASM.Program.ReadFile(
+								allPorts.indexOf(port),
 								request.messageId,
 								'data.win',
 							),
@@ -61,6 +72,7 @@ async function onMessage(request: WorkerRequest) {
 
 			case 'saveDataFile':
 				dotNet.exports.UndertaleModToolWASM.Program.SaveDataFile(
+					allPorts.indexOf(port),
 					request.messageId,
 					request.message.fileName,
 				);
@@ -278,16 +290,30 @@ async function onMessage(request: WorkerRequest) {
 	}
 }
 
-self.addEventListener(
-	'message',
-	(ev: MessageEvent<WorkerRequest>) => {
-		void onMessage(ev.data);
-	},
-	false,
-);
+self.onconnect = ({ports}) => {
+	const port = ports[0];
+	if (!port) {
+		return;
+	}
+	allPorts.push(port);
 
-globalThis.receiveMessageFromDotNet = (messageId: number, text: string) => {
-	self.postMessage({
+	port.onmessage = (ev: MessageEvent<WorkerRequest>) => {
+		void onMessage(port, ev.data);
+	};
+	port.start();
+};
+
+globalThis.receiveMessageFromDotNet = (
+	portId: number,
+	messageId: number,
+	text: string,
+) => {
+	const port = allPorts[portId];
+	if (!port) {
+		return;
+	}
+
+	port.postMessage({
 		messageId,
 		response: {
 			status: 'MESSAGE_FROM_DOTNET',
@@ -297,5 +323,9 @@ globalThis.receiveMessageFromDotNet = (messageId: number, text: string) => {
 };
 
 declare global {
-	function receiveMessageFromDotNet(messageId: number, text: string): void;
+	function receiveMessageFromDotNet(
+		portId: number,
+		messageId: number,
+		text: string,
+	): void;
 }

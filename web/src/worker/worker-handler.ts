@@ -14,46 +14,51 @@ const messagePorts = new Map<
 >();
 let messageNewId = 0;
 
-let worker: Worker | null = null;
+let worker: SharedWorker | null = null;
 
 function startWorker() {
 	if (worker) {
 		return worker;
 	}
 
-	worker = new Worker(new URL('./worker-background', import.meta.url), {
+	worker = new SharedWorker(new URL('./worker-background', import.meta.url), {
 		type: 'module',
 	});
 
-	worker.addEventListener(
-		'message',
-		({
-			data,
-		}: MessageEvent<{
-			messageId: number;
-			response: AllWorkerResponses;
-		}>) => {
-			const port = messagePorts.get(data.messageId);
-			if (!port) {
-				return;
-			}
-			port(data.response);
+	worker.port.onmessage = ({
+		data,
+	}: MessageEvent<{
+		messageId: number;
+		response: AllWorkerResponses;
+	}>) => {
+		const port = messagePorts.get(data.messageId);
+		if (!port) {
+			return;
+		}
+		port(data.response);
 
-			if (
-				data.response.status === 'FINISHED' ||
-				data.response.status === 'ERROR'
-			) {
-				messagePorts.delete(data.messageId);
-			}
-		},
-		false,
-	);
+		if (
+			data.response.status === 'FINISHED' ||
+			data.response.status === 'ERROR'
+		) {
+			messagePorts.delete(data.messageId);
+		}
+	};
 
 	return worker;
 }
 
 export function stopWorker() {
-	worker?.terminate();
+	if (worker) {
+		sendMessageToWorker(
+			{
+				type: 'stopWorker',
+			},
+			() => {},
+		);
+	}
+
+	messagePorts.clear();
 	worker = null;
 }
 
@@ -67,7 +72,7 @@ export function sendMessageToWorker<FinishedResult extends AllResults>(
 	// @ts-expect-error this is a headache to fix
 	messagePorts.set(messageNewId, onStatusChanged);
 
-	worker.postMessage({
+	worker.port.postMessage({
 		messageId: messageNewId,
 		message,
 	});
