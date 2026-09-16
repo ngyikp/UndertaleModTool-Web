@@ -202,46 +202,49 @@ public partial class Program
         UndertaleData gameData = DataHolder.GetNonNullData();
 
         // Special check for audio groups
-        int audioGroupsCount = gameData.AudioGroups.Count;
-        if (audioGroupsCount == 1 && gameData.AudioGroups[0] is null)
+        int audioGroupsCount = gameData.AudioGroups?.Count ?? 0;
+        if (audioGroupsCount == 1 && gameData.AudioGroups is not null && gameData.AudioGroups[0] is null)
         {
             audioGroupsCount = 0;
         }
 
-        // todo doesn't work for audiogroup*.dat
+        // A bunch of nulls to support audiogroup*.dat
         GameInfo gameInfo = new()
         {
-            ProjectName = gameData.GeneralInfo.Name.Content,
-            DisplayName = gameData.GeneralInfo.DisplayName.Content,
+            HasGeneralInfo = gameData.GeneralInfo is not null,
+            ProjectName = gameData.GeneralInfo?.Name.Content,
+            DisplayName = gameData.GeneralInfo?.DisplayName.Content,
             IsGameMaker2 = gameData.IsGameMaker2(),
             IsYYC = gameData.IsYYC(),
-            IsDebuggerDisabled = gameData.GeneralInfo.IsDebuggerDisabled,
+            IsDebuggerDisabled = gameData.GeneralInfo?.IsDebuggerDisabled ?? true,
             IsUnsupportedBytecodeVersion = gameData.UnsupportedBytecodeVersion,
-            Version = new()
+            Version = gameData.GeneralInfo is not null ? new()
             {
                 Major = gameData.GeneralInfo.Major,
                 Minor = gameData.GeneralInfo.Minor,
                 Release = gameData.GeneralInfo.Release,
                 Build = gameData.GeneralInfo.Build,
-            },
+            } : null,
 
-            BytecodeVersion = gameData.GeneralInfo.BytecodeVersion,
-            ConfigurationName = gameData.GeneralInfo.Config.Content,
+            BytecodeVersion = gameData.GeneralInfo?.BytecodeVersion,
+            ConfigurationName = gameData.GeneralInfo?.Config.Content,
+
+            // todo consider moving this to GetDataFileLoadInfo
             ItemCounts = new()
             {
-                Sprites = gameData.Sprites.Count,
-                Sounds = gameData.Sounds.Count,
+                Sprites = gameData.Sprites?.Count ?? 0,
+                Sounds = gameData.Sounds?.Count ?? 0,
                 AudioGroups = audioGroupsCount,
-                Backgrounds = gameData.Backgrounds.Count,
-                Paths = gameData.Paths.Count,
-                Scripts = gameData.Scripts.Count,
-                Shaders = gameData.Shaders.Count,
-                Fonts = gameData.Fonts.Count,
-                Timelines = gameData.Timelines.Count,
-                GameObjects = gameData.GameObjects.Count,
-                Rooms = gameData.Rooms.Count,
-                Extensions = gameData.Extensions.Count,
-                TexturePageItems = gameData.TexturePageItems.Count,
+                Backgrounds = gameData.Backgrounds?.Count ?? 0,
+                Paths = gameData.Paths?.Count ?? 0,
+                Scripts = gameData.Scripts?.Count ?? 0,
+                Shaders = gameData.Shaders?.Count ?? 0,
+                Fonts = gameData.Fonts?.Count ?? 0,
+                Timelines = gameData.Timelines?.Count ?? 0,
+                GameObjects = gameData.GameObjects?.Count ?? 0,
+                Rooms = gameData.Rooms?.Count ?? 0,
+                Extensions = gameData.Extensions?.Count ?? 0,
+                TexturePageItems = gameData.TexturePageItems?.Count ?? 0,
                 TextureGroupInfo = gameData.TextureGroupInfo?.Count ?? 0,
 
                 // could be null if YYC
@@ -250,9 +253,9 @@ public partial class Program
                 Functions = gameData.Functions?.Count ?? 0,
                 CodeLocals = gameData.CodeLocals?.Count ?? 0,
 
-                Strings = gameData.Strings.Count,
+                Strings = gameData.Strings?.Count ?? 0,
                 GlobalInitScripts = gameData.GlobalInitScripts?.Count ?? 0,
-                EmbeddedTextures = gameData.EmbeddedTextures.Count,
+                EmbeddedTextures = gameData.EmbeddedTextures?.Count ?? 0,
                 EmbeddedImages = gameData.EmbeddedImages?.Count ?? 0,
                 EmbeddedAudio = gameData.EmbeddedAudio.Count,
                 ParticleSystems = gameData.ParticleSystems?.Count ?? 0,

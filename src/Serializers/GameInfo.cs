@@ -9,6 +9,11 @@ namespace UndertaleModToolWASM.Serializers;
 /// </summary>
 public record GameInfo
 {
+    /// <summary>
+    /// Is the GEN8 chunk available? Can be false for audiogroup*.dat
+    /// </summary>
+    public bool HasGeneralInfo { get; set; }
+
     /// <seealso cref="UndertaleGeneralInfo.Name"/>
     public string? ProjectName { get; set; }
 
@@ -27,10 +32,10 @@ public record GameInfo
     /// <seealso cref="UndertaleData.UnsupportedBytecodeVersion"/>
     public bool IsUnsupportedBytecodeVersion { get; set; }
 
-    public required GameInfoVersion Version { get; set; }
+    public required GameInfoVersion? Version { get; set; }
 
     /// <seealso cref="UndertaleGeneralInfo.BytecodeVersion"/>
-    public int BytecodeVersion { get; set; }
+    public int? BytecodeVersion { get; set; }
 
     /// <seealso cref="UndertaleGeneralInfo.Config"/>
     public string? ConfigurationName { get; set; }

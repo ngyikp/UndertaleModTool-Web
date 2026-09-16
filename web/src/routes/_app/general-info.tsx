@@ -41,7 +41,7 @@ function GeneralInfo() {
 						void navigate({to: '/'});
 					}}
 				>
-					Unload game
+					Unload {info.HasGeneralInfo ? 'game' : 'data'}
 				</Button>
 			</Group>
 
@@ -49,7 +49,7 @@ function GeneralInfo() {
 				<Alert
 					variant="light"
 					color="yellow"
-					title={`Only bytecode versions 13 to 17 are properly supported, this game data is bytecode version ${info.BytecodeVersion.toString()}.`}
+					title={`Only bytecode versions 13 to 17 are properly supported, this game data is bytecode version ${info.BytecodeVersion ? info.BytecodeVersion.toString() : 'unknown'}.`}
 				/>
 			) : null}
 
@@ -73,27 +73,34 @@ function GeneralInfo() {
 				/>
 			) : null}
 
-			<p>Display name: {info.DisplayName}</p>
-			<p>Project name: {info.ProjectName}</p>
+			{info.HasGeneralInfo ? (
+				<>
+					<p>Display name: {info.DisplayName}</p>
+					<p>Project name: {info.ProjectName}</p>
 
-			<p>Is GMS2: {info.IsGameMaker2 ? 'Yes' : 'No'}</p>
-			<p>
-				<ExternalLinkInNewWindow href="https://manual.gamemaker.io/monthly/en/Settings/YoYo_Compiler.htm">
-					Is YYC:
-				</ExternalLinkInNewWindow>{' '}
-				{info.IsYYC ? 'Yes' : 'No'}
-			</p>
-			<p>Bytecode version: {info.BytecodeVersion}</p>
-			<p>
-				<ExternalLinkInNewWindow href="https://manual.gamemaker.io/monthly/en/Settings/Configurations.htm">
-					Configuration name:
-				</ExternalLinkInNewWindow>{' '}
-				{info.ConfigurationName}
-			</p>
-			<p>
-				Engine version: {info.Version.Major}.{info.Version.Minor}.
-				{info.Version.Release}.{info.Version.Build}
-			</p>
+					<p>Is GMS2: {info.IsGameMaker2 ? 'Yes' : 'No'}</p>
+					<p>
+						<ExternalLinkInNewWindow href="https://manual.gamemaker.io/monthly/en/Settings/YoYo_Compiler.htm">
+							Is YYC:
+						</ExternalLinkInNewWindow>{' '}
+						{info.IsYYC ? 'Yes' : 'No'}
+					</p>
+					<p>Bytecode version: {info.BytecodeVersion}</p>
+					<p>
+						<ExternalLinkInNewWindow href="https://manual.gamemaker.io/monthly/en/Settings/Configurations.htm">
+							Configuration name:
+						</ExternalLinkInNewWindow>{' '}
+						{info.ConfigurationName}
+					</p>
+				</>
+			) : null}
+
+			{info.Version != null ? (
+				<p>
+					Engine version: {info.Version.Major}.{info.Version.Minor}.
+					{info.Version.Release}.{info.Version.Build}
+				</p>
+			) : null}
 
 			<List>
 				<List.Item>

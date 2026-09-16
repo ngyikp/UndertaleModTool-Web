@@ -2,20 +2,23 @@ import {z} from 'zod/mini';
 
 // General info of the game. Keep this in sync with `src/Serializers/GameInfo.cs`
 export const GameInfoSchema = z.object({
+	HasGeneralInfo: z.boolean(),
 	ProjectName: z.nullable(z.string()),
 	DisplayName: z.nullable(z.string()),
 	IsGameMaker2: z.boolean(),
 	IsYYC: z.boolean(),
 	IsDebuggerDisabled: z.boolean(),
 	IsUnsupportedBytecodeVersion: z.boolean(),
-	Version: z.object({
-		Major: z.int(),
-		Minor: z.int(),
-		Release: z.int(),
-		Build: z.int(),
-	}),
+	Version: z.nullable(
+		z.object({
+			Major: z.int(),
+			Minor: z.int(),
+			Release: z.int(),
+			Build: z.int(),
+		}),
+	),
 
-	BytecodeVersion: z.int(),
+	BytecodeVersion: z.nullable(z.int()),
 	ConfigurationName: z.nullable(z.string()),
 	ItemCounts: z.object({
 		Sprites: z.int(),

@@ -1,4 +1,4 @@
-import {Alert, Button, Stack, Text} from '@mantine/core';
+import {Button, Stack, Text} from '@mantine/core';
 import '@mantine/dropzone/styles.css';
 import {Dropzone} from '@mantine/dropzone';
 import {useQueryClient} from '@tanstack/react-query';
@@ -82,21 +82,14 @@ export default function DataFileInput({
 	const [status, setStatus] = useState<WorkerStatuses | null>(null);
 	const [loadingDetail, setLoadingDetail] = useState('');
 	const [error, setError] = useState<Error | null>(null);
-	const [showAudioGroupError, setShowAudioGroupError] = useState(false);
 
 	async function processFile(file: File) {
 		console.log('Starting...');
-
-		if (file.name.startsWith('audiogroup') && file.name.endsWith('.dat')) {
-			setShowAudioGroupError(true);
-			return;
-		}
 
 		setFileName(file.name);
 		setStatus('LOADING');
 		setLoadingDetail('');
 		setError(null);
-		setShowAudioGroupError(false);
 
 		// If the user goes back to main page without clicking 'unload game'
 		unloadGame();
@@ -168,11 +161,7 @@ export default function DataFileInput({
 			status !== 'PROCESSING' &&
 			status !== 'FINISHED' ? (
 				<Stack>
-					{showAudioGroupError ? (
-						<Alert title="Audio group data files are not supported yet." />
-					) : status !== 'ERROR' ? (
-						initialStatusMessage
-					) : null}
+					{status !== 'ERROR' ? initialStatusMessage : null}
 
 					<Dropzone
 						multiple={false}
@@ -190,7 +179,7 @@ export default function DataFileInput({
 							<div>
 								<Button>Select GameMaker data file</Button>
 							</div>
-							.win, .unx, .ios, .droid{/*, audiogroup*.dat*/}
+							.win, .unx, .ios, .droid, audiogroup*.dat
 						</Stack>
 					</Dropzone>
 

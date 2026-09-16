@@ -5,13 +5,11 @@ export default function getTileSetsLabel(
 	info: GameInfoType | null,
 	capitalized: boolean = false,
 ): string {
+	const majorVersion = info?.Version?.Major ?? 0;
+
 	if (capitalized) {
-		return info && info.Version.Major >= 2
-			? 'Tile sets'
-			: 'Tile sets/Backgrounds';
+		return majorVersion >= 2 ? 'Tile sets' : 'Tile sets/Backgrounds';
 	}
 
-	return info && info.Version.Major >= 2
-		? 'tile sets'
-		: 'tile sets/backgrounds';
+	return majorVersion >= 2 ? 'tile sets' : 'tile sets/backgrounds';
 }

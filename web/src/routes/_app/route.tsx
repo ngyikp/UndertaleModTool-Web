@@ -265,6 +265,7 @@ function GameDataNotLoadedComponent({error}: {error: unknown}) {
 export const Route = createFileRoute('/_app')({
 	component: AppLayout,
 	beforeLoad: async ({context}) => {
+		// todo cannot differentiate unloaded vs data load error
 		const gameInfo = await context.queryClient.query(getGameInfoQueryOptions());
 		if (gameInfo == null) {
 			throw new GameDataNotLoadedError();
