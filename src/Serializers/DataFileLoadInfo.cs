@@ -4,7 +4,7 @@ namespace UndertaleModToolWASM.Serializers;
 
 /// <summary>
 /// Information about the loaded data file, such as any warnings.
-/// Keep this in sync with <c>web/src/messages/readFile.ts</c>
+/// Keep this in sync with <c>web/src/messages/getDataFileLoadInfo.ts</c>
 /// </summary>
 public record DataFileLoadInfo
 {

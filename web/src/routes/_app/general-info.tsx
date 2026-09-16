@@ -9,16 +9,17 @@ import Footer from '../../common/Footer';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
 import useUnloadGame from '../../common/useUnloadGame';
 import YycWarningAlert from '../../common/YycWarningAlert';
-import {useDataStore} from '../../data-store';
+import {getDataFileLoadInfoQueryOptions} from '../../messages/getDataFileLoadInfo';
 import {getGameInfoQueryOptions} from '../../messages/getGameInfo';
 import {stopWorker} from '../../worker/worker-handler';
 
 function GeneralInfo() {
 	const navigate = useNavigate({from: '/general-info'});
 
-	const dataFileLoadInfo = useDataStore((state) => state.dataFileLoadInfo);
-
 	const {data: info} = useSuspenseQuery(getGameInfoQueryOptions());
+	const {data: dataFileLoadInfo} = useSuspenseQuery(
+		getDataFileLoadInfoQueryOptions(),
+	);
 
 	const unloadGame = useUnloadGame();
 
@@ -261,4 +262,8 @@ function GeneralInfo() {
 
 export const Route = createFileRoute('/_app/general-info')({
 	component: GeneralInfo,
+	loader: async ({context}) => {
+		await context.queryClient.query(getGameInfoQueryOptions());
+		await context.queryClient.query(getDataFileLoadInfoQueryOptions());
+	},
 });

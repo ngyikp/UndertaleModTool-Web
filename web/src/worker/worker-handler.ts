@@ -78,9 +78,10 @@ export function sendMessageToWorker<FinishedResult extends AllResults>(
 	if (!worker) {
 		if (
 			message.type === 'readFile' ||
-			// If we navigate to specific URL, then we need to start worker to
+			// If we navigate to specific URL, then we need to start web worker to
 			// figure out if data is already loaded
-			message.type === 'getGameInfo'
+			message.type === 'getGameInfo' ||
+			message.type === 'getDataFileLoadInfo'
 		) {
 			worker = startWorker();
 		} else {

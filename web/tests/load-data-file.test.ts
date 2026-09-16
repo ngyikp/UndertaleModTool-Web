@@ -8,7 +8,7 @@ import {parse as jsoncParse} from 'jsonc-parser';
 import {describe, expect, test} from 'vitest';
 import {z} from 'zod/mini';
 
-import {DataFileLoadInfoSchema} from '../src/messages/readFile';
+import {DataFileLoadInfoSchema} from '../src/messages/getDataFileLoadInfo';
 import {GameInfoSchema} from '../src/types/GameInfoType';
 import loadAssembly from '../src/worker/loadAssembly';
 

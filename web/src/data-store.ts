@@ -2,12 +2,8 @@ import {create} from 'zustand';
 
 import type {ImageViewerSettings} from './common/image/ImageViewer';
 import type {SortableListSettings} from './common/SortableList';
-import type {DataFileLoadInfoType} from './messages/readFile';
 
 type DataStore = {
-	dataFileLoadInfo: DataFileLoadInfoType | null;
-	setDataFileLoadInfo: (newInfo: DataFileLoadInfoType | null) => void;
-
 	sortableListSettings: Map<string, SortableListSettings>;
 	setSortableListSettings: (
 		id: string,
@@ -27,15 +23,6 @@ type DataStore = {
 };
 
 export const useDataStore = create<DataStore>((set, _get, store) => ({
-	dataFileLoadInfo: null,
-	setDataFileLoadInfo(newInfo) {
-		set(() => {
-			return {
-				dataFileLoadInfo: newInfo,
-			};
-		});
-	},
-
 	sortableListSettings: new Map(),
 	setSortableListSettings(id, newSettings) {
 		set((state) => {

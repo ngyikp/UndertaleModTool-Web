@@ -7,6 +7,8 @@ export type AppExports = {
 			ReadFile(portId: number, messageId: number, fileName: string): string;
 			SaveDataFile(portId: number, messageId: number, fileName: string): true;
 			UnloadDataFile(): void;
+			GetDataFileLoadInfo(): string;
+
 			GetGameInfo(): string;
 
 			ListEntriesByModelType(modelType: ModelTypeKeys): string;

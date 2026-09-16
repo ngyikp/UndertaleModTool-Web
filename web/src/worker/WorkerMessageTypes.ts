@@ -11,6 +11,10 @@ import type {
 	GetCodeInfoByNameResult,
 } from '../messages/getCodeInfoByName';
 import type {
+	GetDataFileLoadInfoRequest,
+	GetDataFileLoadInfoResult,
+} from '../messages/getDataFileLoadInfo';
+import type {
 	GetEmbeddedAudioInfoByIdRequest,
 	GetEmbeddedAudioInfoByIdResult,
 } from '../messages/getEmbeddedAudioInfoById';
@@ -69,6 +73,7 @@ export type WorkerRequest = {
 		| ReadFileRequest
 		| SaveDataFileRequest
 		| DeleteDataFileRequest
+		| GetDataFileLoadInfoRequest
 		| ListCodeEntriesRequest
 		| EditCodeTextByNameRequest
 		| GetCodeInfoByNameRequest
@@ -87,6 +92,7 @@ export type AllResults =
 	| ReadFileResult
 	| SaveDataFileResult
 	| DeleteDataFileResult
+	| GetDataFileLoadInfoResult
 	| ListCodeEntriesResult
 	| EditCodeTextByNameResult
 	| GetCodeInfoByNameResult

@@ -1,19 +1,19 @@
 /// <reference lib="webworker" />
 
-import GameDataNotLoadedError from '../common/GameDataNotLoadedError.js';
+import GameDataNotLoadedError from '../common/GameDataNotLoadedError';
 import {CodeInfoSchema} from '../messages/getCodeInfoByName';
-import {EmbeddedAudioInfoSchema} from '../messages/getEmbeddedAudioInfoById.js';
+import {DataFileLoadInfoSchema} from '../messages/getDataFileLoadInfo';
+import {EmbeddedAudioInfoSchema} from '../messages/getEmbeddedAudioInfoById';
 import {
 	EmbeddedTextureInfoDotNetSchema,
 	EmbeddedTextureInfoSchema,
-} from '../messages/getEmbeddedTextureInfoById.js';
+} from '../messages/getEmbeddedTextureInfoById';
 import {EntriesListInfoSchema} from '../messages/getEntriesByModelType';
-import {GameObjectInfoSchema} from '../messages/getGameObjectInfoByName.js';
+import {GameObjectInfoSchema} from '../messages/getGameObjectInfoByName';
 import {SoundInfoSchema} from '../messages/getSoundInfoByName';
-import {SpriteInfoSchema} from '../messages/getSpriteInfoByName.js';
-import {TexturePageInfoSchema} from '../messages/getTexturePageInfoById.js';
-import {CodeEntryListInfoSchema} from '../messages/listCodeEntries.js';
-import {DataFileLoadInfoSchema} from '../messages/readFile.js';
+import {SpriteInfoSchema} from '../messages/getSpriteInfoByName';
+import {TexturePageInfoSchema} from '../messages/getTexturePageInfoById';
+import {CodeEntryListInfoSchema} from '../messages/listCodeEntries';
 import {GameInfoSchema} from '../types/GameInfoType';
 
 import type {DotNetType} from './DotNetType';
@@ -94,6 +94,17 @@ async function onMessage(port: MessagePort, request: WorkerRequest) {
 				reply({
 					status: 'FINISHED',
 					result: true,
+				});
+				break;
+
+			case 'getDataFileLoadInfo':
+				reply({
+					status: 'FINISHED',
+					result: DataFileLoadInfoSchema.parse(
+						JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.Program.GetDataFileLoadInfo(),
+						),
+					),
 				});
 				break;
 

@@ -1,11 +1,12 @@
 import {Divider, Stack, Text} from '@mantine/core';
+import {useQuery} from '@tanstack/react-query';
 
-import {useDataStore} from '../data-store';
+import {getDataFileLoadInfoQueryOptions} from '../messages/getDataFileLoadInfo';
 
 import ExternalLinkInNewWindow from './ExternalLinkInNewWindow';
 
 export default function Footer() {
-	const info = useDataStore((state) => state.dataFileLoadInfo);
+	const {data: info} = useQuery(getDataFileLoadInfoQueryOptions());
 
 	return (
 		<Stack>

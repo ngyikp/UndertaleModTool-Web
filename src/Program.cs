@@ -151,7 +151,7 @@ public partial class Program
 
         DataHolder.SetData(gameData);
 
-        DataFileLoadInfo info = new()
+        DataHolder.LoadInfo = new()
         {
             Successful = true,
             HadImportantWarnings = hadImportantWarnings,
@@ -159,7 +159,7 @@ public partial class Program
             UMTLibVersion = Assembly.GetAssembly(typeof(UndertaleData))?.GetName().Version?.ToString() ?? "",
         };
 
-        return JsonSerializer.Serialize(info, DataFileLoadInfoContext.Default.DataFileLoadInfo);
+        return GetDataFileLoadInfo();
     }
 
     [JSExport]
@@ -187,6 +187,12 @@ public partial class Program
         }
 
         DataHolder.SetData(null);
+    }
+
+    [JSExport]
+    public static string GetDataFileLoadInfo()
+    {
+        return JsonSerializer.Serialize(DataHolder.LoadInfo, DataFileLoadInfoContext.Default.DataFileLoadInfo);
     }
 
     [JSExport]

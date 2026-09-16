@@ -5,8 +5,7 @@ import {useQueryClient} from '@tanstack/react-query';
 import {useRouter} from '@tanstack/react-router';
 import {useState} from 'react';
 
-import {useDataStore} from '../data-store';
-import {getGameInfoQueryOptions} from '../messages/getGameInfo';
+import {getDataFileLoadInfoQueryOptions} from '../messages/getDataFileLoadInfo';
 import {readFile} from '../messages/readFile';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
@@ -74,9 +73,6 @@ export default function DataFileInput({
 	initialStatusMessage,
 	onFileLoaded,
 }: Props) {
-	const setDataFileLoadInfo = useDataStore(
-		(state) => state.setDataFileLoadInfo,
-	);
 	const unloadGame = useUnloadGame();
 
 	const router = useRouter();
@@ -122,12 +118,12 @@ export default function DataFileInput({
 					break;
 
 				case 'FINISHED':
-					setDataFileLoadInfo(response.result);
+					queryClient.setQueryData(
+						getDataFileLoadInfoQueryOptions().queryKey,
+						response.result,
+					);
 
-					// Load the query into cache now
-					void queryClient.query(getGameInfoQueryOptions()).then(() => {
-						void router.invalidate().then(onFileLoaded);
-					});
+					void router.invalidate().then(onFileLoaded);
 					break;
 
 				case 'ERROR':
