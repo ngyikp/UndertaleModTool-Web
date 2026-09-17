@@ -2,6 +2,7 @@
   "BytecodeVersion": 17,
   "ConfigurationName": "Default",
   "DisplayName": "DELTARUNE Chapter 1",
+  "HasGeneralInfo": true,
   "IsDebuggerDisabled": true,
   "IsGameMaker2": true,
   "IsUnsupportedBytecodeVersion": false,

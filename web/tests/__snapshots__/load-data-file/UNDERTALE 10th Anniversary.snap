@@ -2,6 +2,7 @@
   "BytecodeVersion": 17,
   "ConfigurationName": "Default",
   "DisplayName": "UNDERTALE 10th Anniversary",
+  "HasGeneralInfo": true,
   "IsDebuggerDisabled": true,
   "IsGameMaker2": true,
   "IsUnsupportedBytecodeVersion": false,
