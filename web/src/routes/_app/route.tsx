@@ -12,7 +12,6 @@ import DataFileInput from '../../common/DataFileInput';
 import DocumentTitle from '../../common/DocumentTitle';
 import GameDataNotLoadedError from '../../common/GameDataNotLoadedError';
 import GenericHeaderAndFooter from '../../common/GenericHeaderAndFooter';
-import getGameDisplayName from '../../common/getGameDisplayName';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
 import SaveDataFile from '../../components/SaveDataFile';
 import {getDataFileLoadInfoQueryOptions} from '../../messages/getDataFileLoadInfo';
@@ -62,7 +61,7 @@ function AppLayout() {
 		<Stack>
 			<Group>
 				<Title className="break-word" mr="auto">
-					{getGameDisplayName(info)}
+					{dataFileLoadInfo.DisplayTitle}
 				</Title>
 
 				<SaveDataFile fileName={dataFileLoadInfo.FileName} />

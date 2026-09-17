@@ -159,6 +159,7 @@ public partial class Program
             HadImportantWarnings = hadImportantWarnings,
             Warnings = warnings,
             FileName = userFileName,
+            DisplayTitle = Helpers.GetDisplayTitle(gameData.GeneralInfo, userFileName),
             UMTLibVersion = Assembly.GetAssembly(typeof(UndertaleData))?.GetName().Version?.ToString() ?? "",
         };
 

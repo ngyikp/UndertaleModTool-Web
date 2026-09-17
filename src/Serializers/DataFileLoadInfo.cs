@@ -17,6 +17,12 @@ public record DataFileLoadInfo
     public required string FileName { get; set; }
 
     /// <summary>
+    /// The display name and project name of this data file,
+    /// if those aren't available, the filename of the data file.
+    /// </summary>
+    public required string DisplayTitle { get; set; }
+
+    /// <summary>
     /// Version of UndertaleModLib
     /// </summary>
     public required string UMTLibVersion { get; set; }

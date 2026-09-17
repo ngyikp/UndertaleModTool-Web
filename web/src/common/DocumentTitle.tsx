@@ -1,19 +1,17 @@
 import {useQuery} from '@tanstack/react-query';
 
-import {getGameInfoQueryOptions} from '../messages/getGameInfo';
-
-import getGameDisplayName from './getGameDisplayName';
+import {getDataFileLoadInfoQueryOptions} from '../messages/getDataFileLoadInfo';
 
 type Props = Readonly<{
 	text: string | string[];
 }>;
 
 export default function DocumentTitle({text}: Props) {
-	const {data: gameInfo} = useQuery(getGameInfoQueryOptions());
+	const {data: dataFileLoadInfo} = useQuery(getDataFileLoadInfoQueryOptions());
 
 	const segments = typeof text === 'string' ? [text] : [...text];
-	if (gameInfo) {
-		segments.push(getGameDisplayName(gameInfo));
+	if (dataFileLoadInfo) {
+		segments.push(dataFileLoadInfo.DisplayTitle);
 	}
 	segments.push(
 		(import.meta.env.DEV ? '(DEV) ' : '') + 'UndertaleModTool on the Web',
