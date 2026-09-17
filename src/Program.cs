@@ -151,7 +151,7 @@ public partial class Program
             File.Delete(fsName);
         }
 
-        DataHolder.SetData(gameData);
+        DataHolder.Data = gameData;
 
         DataHolder.LoadInfo = new()
         {
@@ -190,7 +190,7 @@ public partial class Program
             DataHolder.GetNonNullData().Dispose();
         }
 
-        DataHolder.SetData(null);
+        DataHolder.Data = null;
     }
 
     [JSExport]
