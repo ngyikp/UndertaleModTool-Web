@@ -64,7 +64,10 @@ function AppLayout() {
 					{dataFileLoadInfo.DisplayTitle}
 				</Title>
 
-				<SaveDataFile fileName={dataFileLoadInfo.FileName} />
+				<SaveDataFile
+					buttonLabel={info.HasGeneralInfo ? 'Save game' : 'Save data'}
+					fileName={dataFileLoadInfo.FileName}
+				/>
 			</Group>
 
 			<Tabs value={'/' + (pathname.split('/')[1] ?? '')}>

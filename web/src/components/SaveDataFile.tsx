@@ -9,10 +9,11 @@ import {saveDataFile} from '../messages/saveDataFile';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
 type Props = Readonly<{
+	buttonLabel: string;
 	fileName: string;
 }>;
 
-export default function SaveDataFile({fileName}: Props) {
+export default function SaveDataFile({buttonLabel, fileName}: Props) {
 	const [opened, {open: openModal, close: closeModal}] = useDisclosure(false, {
 		onClose() {
 			saveSessionIdRef.current = 0;
@@ -89,7 +90,7 @@ export default function SaveDataFile({fileName}: Props) {
 				onClick={process}
 				loading={status === 'LOADING' || status === 'PROCESSING'}
 			>
-				Save game
+				{buttonLabel}
 			</Button>
 
 			<Modal
