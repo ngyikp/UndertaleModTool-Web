@@ -8,7 +8,11 @@ import {deleteDataFile} from '../messages/deleteDataFile';
 import {saveDataFile} from '../messages/saveDataFile';
 import type {WorkerStatuses} from '../worker/WorkerMessageTypes';
 
-export default function SaveDataFile() {
+type Props = Readonly<{
+	fileName: string;
+}>;
+
+export default function SaveDataFile({fileName}: Props) {
 	const [opened, {open: openModal, close: closeModal}] = useDisclosure(false, {
 		onClose() {
 			saveSessionIdRef.current = 0;
@@ -54,8 +58,7 @@ export default function SaveDataFile() {
 
 							const link = document.createElement('a');
 							link.setAttribute('href', blobUrl);
-							// todo reuse file name used on initial load
-							link.setAttribute('download', 'data.win');
+							link.setAttribute('download', fileName);
 							link.click();
 							link.remove();
 							window.URL.revokeObjectURL(blobUrl);

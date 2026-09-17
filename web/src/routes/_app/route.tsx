@@ -15,6 +15,7 @@ import GenericHeaderAndFooter from '../../common/GenericHeaderAndFooter';
 import getGameDisplayName from '../../common/getGameDisplayName';
 import getTileSetsLabel from '../../common/getTileSetsLabel';
 import SaveDataFile from '../../components/SaveDataFile';
+import {getDataFileLoadInfoQueryOptions} from '../../messages/getDataFileLoadInfo';
 import {getGameInfoQueryOptions} from '../../messages/getGameInfo';
 
 function TabLink({link, text}: {link: string; text: string}) {
@@ -49,9 +50,11 @@ function AppLayout() {
 		select: (location) => location.pathname,
 	});
 
+	const {data: dataFileLoadInfo} = useSuspenseQuery(
+		getDataFileLoadInfoQueryOptions(),
+	);
 	const {data: info} = useSuspenseQuery(getGameInfoQueryOptions());
-
-	if (info == null) {
+	if (dataFileLoadInfo == null || info == null) {
 		throw new GameDataNotLoadedError();
 	}
 
@@ -62,7 +65,7 @@ function AppLayout() {
 					{getGameDisplayName(info)}
 				</Title>
 
-				<SaveDataFile />
+				<SaveDataFile fileName={dataFileLoadInfo.FileName} />
 			</Group>
 
 			<Tabs value={'/' + (pathname.split('/')[1] ?? '')}>
@@ -266,6 +269,13 @@ export const Route = createFileRoute('/_app')({
 	component: AppLayout,
 	beforeLoad: async ({context}) => {
 		// todo cannot differentiate unloaded vs data load error
+		const dataFileLoadInfo = await context.queryClient.query(
+			getDataFileLoadInfoQueryOptions(),
+		);
+		if (dataFileLoadInfo == null) {
+			throw new GameDataNotLoadedError();
+		}
+
 		const gameInfo = await context.queryClient.query(getGameInfoQueryOptions());
 		if (gameInfo == null) {
 			throw new GameDataNotLoadedError();
