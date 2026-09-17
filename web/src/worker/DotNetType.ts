@@ -4,7 +4,12 @@ import type {ModelTypeKeys} from '../types/ModelType';
 export type AppExports = {
 	UndertaleModToolWASM: {
 		Program: {
-			ReadFile(portId: number, messageId: number, fileName: string): string;
+			ReadFile(
+				portId: number,
+				messageId: number,
+				fsName: string,
+				userFileName: string,
+			): string;
 			SaveDataFile(portId: number, messageId: number, fileName: string): true;
 			UnloadDataFile(): void;
 			GetDataFileLoadInfo(): string;

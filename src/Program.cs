@@ -21,6 +21,8 @@ public partial class Program
     [JSImport("globalThis.receiveMessageFromDotNet")]
     public static partial void SendMessageToWorker(int portId, int messageId, string text);
 
+    /// <param name="fsName">The file to read from the file system.</param>
+    /// <param name="userFileName">Custom user-provided file name that will be saved to <c>DataFileLoadInfo</c></param>
     [JSExport]
     [SupportedOSPlatform("browser")]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Underanalyzer.Decompiler.GameSpecific.GameSpecificRegistry))]
@@ -116,7 +118,7 @@ public partial class Program
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSprite.TextureEntry))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleSprite.NineSlice))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(UndertaleTexturePageItem))]
-    public static string ReadFile(int portId, int messageId, string fileName)
+    public static string ReadFile(int portId, int messageId, string fsName, string userFileName)
     {
         if (DataHolder.IsDataLoaded())
         {
@@ -129,7 +131,7 @@ public partial class Program
         UndertaleData gameData;
         try
         {
-            using FileStream fs = new FileStream(fileName, FileMode.Open);
+            using FileStream fs = new FileStream(fsName, FileMode.Open);
             gameData = UndertaleIO.Read(fs, (string warning, bool isImportant) =>
             {
                 Console.WriteLine($"[WARNING]: {warning}");
@@ -146,7 +148,7 @@ public partial class Program
         }
         finally
         {
-            File.Delete(fileName);
+            File.Delete(fsName);
         }
 
         DataHolder.SetData(gameData);
@@ -156,6 +158,7 @@ public partial class Program
             Successful = true,
             HadImportantWarnings = hadImportantWarnings,
             Warnings = warnings,
+            FileName = userFileName,
             UMTLibVersion = Assembly.GetAssembly(typeof(UndertaleData))?.GetName().Version?.ToString() ?? "",
         };
 

@@ -15,6 +15,7 @@ export const DataFileLoadInfoSchema = z.object({
 	Successful: z.boolean(),
 	HadImportantWarnings: z.boolean(),
 	Warnings: z.array(z.string()),
+	FileName: z.string(),
 	UMTLibVersion: z.string(),
 });
 

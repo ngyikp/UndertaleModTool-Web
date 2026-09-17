@@ -14,6 +14,8 @@ public record DataFileLoadInfo
 
     public required List<string> Warnings { get; set; }
 
+    public required string FileName { get; set; }
+
     /// <summary>
     /// Version of UndertaleModLib
     /// </summary>

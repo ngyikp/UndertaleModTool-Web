@@ -58,7 +58,8 @@ async function onMessage(port: MessagePort, request: WorkerRequest) {
 
 		switch (request.message.type) {
 			case 'readFile': {
-				dotNet.Module.FS.writeFile('data.win', request.message.bytes);
+				const fsName = 'data.win';
+				dotNet.Module.FS.writeFile(fsName, request.message.bytes);
 
 				reply({
 					status: 'FINISHED',
@@ -67,7 +68,8 @@ async function onMessage(port: MessagePort, request: WorkerRequest) {
 							dotNet.exports.UndertaleModToolWASM.Program.ReadFile(
 								allPorts.indexOf(port),
 								request.messageId,
-								'data.win',
+								fsName,
+								request.message.fileName,
 							),
 						),
 					),

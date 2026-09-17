@@ -23,7 +23,7 @@ function GeneralInfo() {
 
 	const unloadGame = useUnloadGame();
 
-	if (info == null) {
+	if (info == null || dataFileLoadInfo == null) {
 		return null;
 	}
 
@@ -53,7 +53,7 @@ function GeneralInfo() {
 				/>
 			) : null}
 
-			{dataFileLoadInfo?.HadImportantWarnings ? (
+			{dataFileLoadInfo.HadImportantWarnings ? (
 				<Alert
 					variant="light"
 					color="yellow"
@@ -72,6 +72,8 @@ function GeneralInfo() {
 					title="This game is set to run with the GameMaker debugger and the normal runtime will simply hang after loading if the debugger is not running."
 				/>
 			) : null}
+
+			<p>Filename: {dataFileLoadInfo.FileName}</p>
 
 			{info.HasGeneralInfo ? (
 				<>

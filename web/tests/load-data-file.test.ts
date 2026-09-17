@@ -71,6 +71,7 @@ describe.runIf(dataFileTestsRaw !== '')('loads data files', () => {
 						0,
 						messageId,
 						'data.win',
+						'data.win',
 					),
 				),
 			);

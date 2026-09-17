@@ -99,7 +99,7 @@ export default function DataFileInput({
 				? await file.bytes()
 				: new Uint8Array(await file.arrayBuffer());
 
-		readFile(bytes, (response) => {
+		readFile(file.name, bytes, (response) => {
 			if (response.status !== 'MESSAGE_FROM_DOTNET') {
 				setStatus(response.status);
 			}
