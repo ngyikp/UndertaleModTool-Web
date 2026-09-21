@@ -9,6 +9,7 @@ import {
 	EmbeddedTextureInfoSchema,
 } from '../messages/getEmbeddedTextureInfoById';
 import {EntriesListInfoSchema} from '../messages/getEntriesByModelType';
+import {ExtensionInfoSchema} from '../messages/getExtensionInfoByName';
 import {GameObjectInfoSchema} from '../messages/getGameObjectInfoByName';
 import {SoundInfoSchema} from '../messages/getSoundInfoByName';
 import {SpriteInfoSchema} from '../messages/getSpriteInfoByName';
@@ -208,6 +209,19 @@ async function onMessage(port: MessagePort, request: WorkerRequest) {
 					result: SoundInfoSchema.parse(
 						JSON.parse(
 							dotNet.exports.UndertaleModToolWASM.Program.GetSoundInfoByName(
+								request.message.name,
+							),
+						),
+					),
+				});
+				break;
+
+			case 'getExtensionInfoByName':
+				reply({
+					status: 'FINISHED',
+					result: ExtensionInfoSchema.parse(
+						JSON.parse(
+							dotNet.exports.UndertaleModToolWASM.Program.GetExtensionInfoByName(
 								request.message.name,
 							),
 						),

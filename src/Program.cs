@@ -593,6 +593,33 @@ public partial class Program
     }
 
     [JSExport]
+    public static string GetExtensionInfoByName(string name)
+    {
+        UndertaleData gameData = DataHolder.GetNonNullData();
+
+        int index = gameData.Extensions.IndexOfName(name);
+        UndertaleExtension extension = gameData.Extensions[index];
+
+        ExtensionInfo extensionInfo = new()
+        {
+            Id = index,
+            Version = extension.Version?.Content,
+            FileNames = extension.Files.Select(file => file.Filename.Content).ToList(),
+            Options = extension.Options.Select(option =>
+            {
+                return new ExtensionOption()
+                {
+                    Name = option.Name.Content,
+                    Value = option.Value.Content,
+                    Kind = option.Kind,
+                };
+            }).ToList()
+        };
+
+        return JsonSerializer.Serialize(extensionInfo, ExtensionInfoContext.Default.ExtensionInfo);
+    }
+
+    [JSExport]
     [SupportedOSPlatform("browser")]
     public static string GetEmbeddedTextureInfoById(int id)
     {

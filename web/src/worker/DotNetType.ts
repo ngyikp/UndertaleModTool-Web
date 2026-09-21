@@ -27,6 +27,7 @@ export type AppExports = {
 			EditCodeTextByName(name: string, sourceCode: string): true;
 
 			GetSoundInfoByName(name: string): string;
+			GetExtensionInfoByName(name: string): string;
 			GetEmbeddedTextureInfoById(id: number): string;
 			GetTexturePageInfoById(id: number): string;
 			GetEmbeddedAudioInfoById(id: number): string;

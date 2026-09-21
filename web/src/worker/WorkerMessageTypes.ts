@@ -27,6 +27,10 @@ import type {
 	GetEntriesByModelTypeResult,
 } from '../messages/getEntriesByModelType';
 import type {
+	GetExtensionInfoByNameRequest,
+	GetExtensionInfoByNameResult,
+} from '../messages/getExtensionInfoByName';
+import type {
 	GetGameInfoRequest,
 	GetGameInfoResult,
 } from '../messages/getGameInfo';
@@ -80,6 +84,7 @@ export type WorkerRequest = {
 		| GetEmbeddedAudioInfoByIdRequest
 		| GetEmbeddedTextureInfoByIdRequest
 		| GetEntriesByModelTypeRequest
+		| GetExtensionInfoByNameRequest
 		| GetGameInfoRequest
 		| GetGameObjectInfoByNameRequest
 		| GetSoundInfoByNameRequest
@@ -99,6 +104,7 @@ export type AllResults =
 	| GetEmbeddedAudioInfoByIdResult
 	| GetEmbeddedTextureInfoByIdResult
 	| GetEntriesByModelTypeResult
+	| GetExtensionInfoByNameResult
 	| GetGameInfoResult
 	| GetGameObjectInfoByNameResult
 	| GetSoundInfoByNameResult

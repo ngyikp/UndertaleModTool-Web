@@ -19,6 +19,9 @@ type DataStore = {
 	codeEditorWordWrap: boolean;
 	setCodeEditorWordWrap: (codeEditorWordWrap: boolean) => void;
 
+	extensionShowRawValues: boolean;
+	setExtensionShowRawValues: (showRaw: boolean) => void;
+
 	reset: () => void;
 };
 
@@ -60,6 +63,15 @@ export const useDataStore = create<DataStore>((set, _get, store) => ({
 		set(() => {
 			return {
 				codeEditorWordWrap,
+			};
+		});
+	},
+
+	extensionShowRawValues: false,
+	setExtensionShowRawValues(showRaw) {
+		set(() => {
+			return {
+				extensionShowRawValues: showRaw,
 			};
 		});
 	},
